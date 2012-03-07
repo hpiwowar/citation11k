@@ -6,12 +6,12 @@
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
-> library(knitr)  
-> knit("stats_knit_.md")  
+  > library(knitr)  
+  > knit("stats_knit_.md")  # has underscores around the knit but md displays badly
 
 <!--begin.rcode setup, include=FALSE
 render_gfm() # use GFM hooks for output
-opts_knit$set(base.url='./')
+opts_knit$set(base.url='')
 end.rcode-->
 
 Get the data:
@@ -81,7 +81,7 @@ end.rcode-->
 
 ## Now look at attributes with citation
 
-<!--begin.rcode libraries
+<!--begin.rcode libraries, echo=FALSE
 library(rms)
 source("PLoSONE2011_helper.R")
 source("preprocess_raw_data.R")
@@ -102,7 +102,7 @@ dat.raw = dfCitationsAttributes
 end.rcode-->
 
 
-<!--begin.rcode preprocessing, warning=FALSE
+<!--begin.rcode preprocessing, warning=FALSE, echo=FALSE
 
 dat = preprocess.raw.data(dat.raw)
 dat.nums = get.dat.nums(dat.raw)
@@ -136,6 +136,8 @@ library(ggplot2)
 qplot(nCitedBy, data=dfCitationsAttributes)
 
 end.rcode-->
+
+<!--begin.rcode therest, eval=FALSE, echo=FALSE
 
 qplot(nCitedBy, data=dfCitationsAttributes, log="y")
 with(dfCitationsAttributes, table(pubmed_year_published))
@@ -408,5 +410,8 @@ factor(pubmed.is.cancer) +
 factor(dataset.in.geo.or.ae)
            , dat.subset)
 anova(fit)
-print(calcCI.exp(fit, "dataset.in.geo.or.ae.L"))   
+print(calcCI.exp(fit, "dataset.in.geo.or.ae.L")) 
+
+end.rcode-->
+
 
