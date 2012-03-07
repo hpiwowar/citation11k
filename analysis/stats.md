@@ -136,7 +136,8 @@ qplot(nCitedBy, data = dfCitationsAttributes)
 ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk viz](viz.png) 
+<img src="http://i.imgur.com/kvSFu.png" class="plot" />
+
 
 
 

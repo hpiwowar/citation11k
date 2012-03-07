@@ -11,7 +11,11 @@ To run this I start R, set the working directory to match where this file is, th
 
 <!--begin.rcode setup, include=FALSE
 render_gfm() # use GFM hooks for output
-opts_knit$set(base.url='')
+#opts_knit$set(base.url='')
+#opts_knit$set(imgur.key = '')
+opts_knit$set(upload = TRUE)
+#knit_hooks$set(output = function(x, options) paste("1\n", sep = ""), source = function(x, options) paste("1\n", sep = ""), plot = hook_plot_html)
+knit_hooks$set(plot = hook_plot_html)
 end.rcode-->
 
 Get the data:
