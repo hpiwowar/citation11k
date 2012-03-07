@@ -3,6 +3,7 @@
 # citation11k stats 
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
+ * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -47,7 +48,7 @@ dfCitationsAttributes = merge(dfAttributes, dfCitations, by.x="pmid", by.y="PubM
 # Clean the data, get variables in useful formats
 dfCitationsAttributes$nCitedBy = as.numeric(dfCitationsAttributes$Cited.by)
 
-# tell me how big it is
+# How big is the dataset
 dim(dfCitationsAttributes)
 
 # do saves
@@ -76,14 +77,14 @@ load("dfCitationsAttributes.RData")
 end.rcode-->
 
 
-## Tell me how big it is
+# How big is the dataset?
 
 <!--begin.rcode checkdata
 dim(dfCitationsAttributes)
 end.rcode-->
 
 
-## Now look at attributes with citation
+# Citations patterns
 
 <!--begin.rcode libraries, echo=FALSE
 library(rms)
@@ -114,7 +115,7 @@ dat.nums = get.dat.nums(dat.raw)
 end.rcode-->
 
 
-<!--begin.rcode attributesWithCitation
+<!--begin.rcode attributesWithCitation, echo=FALSE
 
 dat.all = dat
 dat.subset = subset(dat, !is.na(dat$nCitedBy))
@@ -130,33 +131,34 @@ library(Hmisc)
 dim(dfCitationsAttributes)
 with(dfCitationsAttributes, summary(nCitedBy))
 
+library(ggplot2)
 end.rcode-->
 
-###VIZ
-
-<!--begin.rcode viz
-
-library(ggplot2)
+### Raw histogram of citations
+<!--begin.rcode histogramsNoLog
 qplot(nCitedBy, data=dfCitationsAttributes)
+end.rcode-->
 
+### Histogram of citations, log scale
+<!--begin.rcode histogramsLog
+qplot(nCitedBy, data=dfCitationsAttributes, log="y")
+end.rcode-->
+
+## Other variables that correlate with citations
+### Year of publication
+<!--begin.rcode citationTables
+with(dfCitationsAttributes, table(pubmed_year_published))
+with(dfCitationsAttributes, summary(log(1+nCitedBy)~pubmed_year_published))
+qplot(Year, nCitedBy, data=dfCitationsAttributes, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1)
+end.rcode-->
+
+### Number of authors
+<!--begin.rcode Number of authors
+qplot(pubmed_number_authors, data=dfCitationsAttributes, log="y")
+qplot(log(pubmed_number_authors), log(1+nCitedBy), data=dfCitationsAttributes) + geom_smooth()
 end.rcode-->
 
 <!--begin.rcode therest, eval=FALSE, echo=FALSE
-
-qplot(nCitedBy, data=dfCitationsAttributes, log="y")
-with(dfCitationsAttributes, table(pubmed_year_published))
-with(dfCitationsAttributes, summary(log(1+nCitedBy)~pubmed_year_published))
-
-
-qplot(Year, nCitedBy, data=dfCitationsAttributes, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1)
-
-qplot(pubmed_number_authors, data=dfCitationsAttributes)
-qplot(log(pubmed_number_authors), log(1+nCitedBy), data=dfCitationsAttributes) + geom_smooth()
-
-
-
-    
-qplot(nCitedBy, data=dat, log="y")
 
 # A quick summary of the data
 print("Number of papers")
