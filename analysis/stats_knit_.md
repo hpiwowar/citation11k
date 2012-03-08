@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=TRUE -->
+<!--roptions dev='pdf', fig.width=5, fig.height=5, tidy=TRUE, cache=FALSE -->
 
 # citation11k stats 
  * author Heather Piwowar, <hpiwowar@gmail.com>
@@ -18,6 +18,106 @@ opts_knit$set(upload = TRUE)
 #knit_hooks$set(output = function(x, options) paste("1\n", sep = ""), source = function(x, options) paste("1\n", sep = ""), plot = hook_plot_html)
 knit_hooks$set(plot = hook_plot_html)
 end.rcode-->
+
+
+# Data availability citation boost consistent with observed rates of data reuse
+
+
+## Goal
+1. Is there an association between data availability and citation rate, independently of important known citation predictors?
+1. Is there evidence any increase in citations is related to data reuse?
+
+## Abstract
+
+### Background
+Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
+
+### Methods and Results
+In a multivariate linear regression on 10589 studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 12% (95% confidence interval: 8% to 16%) more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 6% (95% CI: 3% to 11%) of citations to those studies were in the context of data reuse attribution.
+
+### Discussion
+This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.
+
+
+## Introduction
+
+"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection.” [Piwowar, Sharing] 
+
+When research data is made publicly available, is there a demonstrable benefit to scientific progress and the study investigators?  
+
+Citations are often used as a proxy for the scientific contribution of a paper.  Citations are also used in research funding and promotion decisions; Boosting citation rate is thus is a potentially important motivator for publication authors.
+
+Previous studies have explored the relationship between the citation rate of a publication and whether its data was made publicly available.  The first study we know about..... In 2007, co-authors and I published a report that found … .  Others have also found correlations between citation rate and data availability.
+
+Here, we report an analysis based on a large cohort of relatively homogenious studies.  The size our cohort has facilitated controlling for many more variables than previous studies, allowing us to make further progress in isolating the citation rate relationship with data archiving itself.
+
+Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse valuable for reuse [butte] and well-supported by data sharing standards and infrastructure [], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar]
+
+## Methods
+
+### Identification of relevant studies
+
+### Assessment of data availability
+
+### Study attributes
+
+### Citation data
+
+### Statistical methods
+
+### Data and script availability
+
+### Efficient article writing through the power of Open Access
+Rewriting text for the sake of variation is a poor use of resources.  Quoted text in this paper comes verbatim from an article that licenced under CC-BY, eliminating concerns about fair use.
+
+## Results
+
+## Discussion
+
+### Limitations
+- Underestimate of total reuse (not indexed, attributed in citations in SI, by accession number)
+- Citations are not the main reason to make data available
+- Other metrics of reuse.  practicioners, educational use
+- These don’t just increase its impact by 10%, opens it up to whole new avenues of use.  It would be interesting to understand the impact these papers made in the papers that cited them; my guess would be that it is higher for the incremental citations for papers whose data is avail.
+
+## References
+
+### Other studies of citation benefit:
+
+- Gleditsch, Nils Petter & Håvard Strand, 2003. 'Posting Your Data: Will You Be Scooped or Will You Be Famous?', International Studies Perspectives 4(1): 89–97.
+- Henneken, Edwin A and Accomazzi, Alberto.  Linking to Data - Effect on Citation Rates in Astronomy. eprint arXiv:1111.3618 11/2011
+- Ioannidis et al. Repeatability of published microarray gene expression analyses  Nature Genetics 41, 149 - 155 (2009) .  doi:10.1038/ng.295
+- Pienta et al The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+- Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
+- Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
+
+### Used in this analysis
+
+- Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
+- Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
+- Heather A Piwowar, Wendy W Chapman (2010)  Recall and bias of retrieving gene expression microarray datasets through PubMed identifiers  Journal of Biomedical Discovery and Collaboration.  J Biomed Discov Collab. 2010; 5: 7–20.
+- Heather A. Piwowar; Jonathan D. Carlson; and Todd J. Vision. Beginning to Track 1000 Datasets from Public Repositories into the Published Literature.  ASIS&T 2011.
+
+### Also relevant:
+
+- (Data Usage Index):  Chavan, V. S., & Ingwersen, P. (2009). Towards a data publishing framework for primary biodiversity data: challenges and potentials for the biodiversity informatics community. BMC Bioinformatics, 10(Suppl 14), S2. Retrieved from http://www.biomedcentral.com/1471-2105/10/S14/S2
+- Piwowar, H. A., Vision, T. J., & Whitlock, M. C. (2011). Data archiving is a good investment. Nature, 473(7347), 285-285. Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved. Retrieved from http://dx.doi.org/10.1038/473285a
+- Bollen J, Van de Sompel H, Hagberg A, Chute R (2009) A Principal Component Analysis of 39 Scientific Impact Measures. PLoS ONE 4(6): e6022. doi:10.1371/journal.pone.0006022
+- Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., & McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991
+- Definitely some things about move to citation of datasets themselves
+- altmetrics on CV, away from impact factor
+
+### Other studies of correlation with citations:
+
+- Bioinformatics, 25, 3303-3309 (2009). "Predicting citation count of Bioinformatics papers within four years of publication. Ibanez, A., Larrañaga, P. and Bielza, C.  http://bioinformatics.oxfordjournals.org/content/25/24/3303.full
+
+## Acknowledgements
+
+- CISTI for Scopus access
+- British Library
+- Angus, Todd, Jonathan, Estephanie
+- my funding, Jonathan + Estephanie’s funding
 
 Get the data:
 
@@ -153,12 +253,15 @@ qplot(Year, nCitedBy, data=dfCitationsAttributes, geom="boxplot", log="y") + geo
 end.rcode-->
 
 ### Number of authors
-<!--begin.rcode Number of authors
+<!--begin.rcode numberAuthors
 qplot(pubmed_number_authors, data=dfCitationsAttributes, log="y")
 qplot(log(pubmed_number_authors), log(1+nCitedBy), data=dfCitationsAttributes) + geom_smooth()
 end.rcode-->
 
-<!--begin.rcode therest, eval=FALSE, echo=FALSE
+
+Some more looks
+
+<!--begin.rcode therest, fig.width=9, fig.height=9
 
 # A quick summary of the data
 print("Number of papers")
@@ -213,18 +316,25 @@ panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
   text(0.5, 0.5, txt, cex = cex.cor)
 }
  
-pairs(dat.uni[1:1000,20:34], lower.panel=panel.smooth, upper.panel=panel.cor)
+# pairs(dat.uni[1:1000,20:34], lower.panel=panel.smooth, upper.panel=panel.cor)
  
-mycor.uni = mycor[univarate.citation.predictors, univarate.citation.predictors]
-heatmap.2(mycor.uni, col=bluered(16), cexRow=0.5, cexCol = .8, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
+#mycor.uni = mycor[univarate.citation.predictors, univarate.citation.predictors]
+#heatmap.2(mycor.uni, col=bluered(16), cexRow=0.5, cexCol = .8, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 
   
   
 library(gplots)    
 heatmap.2(mycor, col=bluered(16), cexRow=0.5, cexCol = .8, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
     
-heatmap.3(mycor)
+#heatmap.3(mycor)
 #heatmap.3(mycor, col=bluered(16), cexRow=0.5, cexCol = .8, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
+
+end.rcode-->
+
+
+Some more looks
+
+<!--begin.rcode therest2, eval=FALSE, echo=FALSE
 
 ###### ANALYSIS
   
