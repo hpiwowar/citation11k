@@ -1,4 +1,5 @@
-Please use this research!  Attribute according to best practices.
+Please use this research!  I ask that you attribute according to best practices and common sense, but it is not a licensing condition.
+
 
 # Data and text
 
