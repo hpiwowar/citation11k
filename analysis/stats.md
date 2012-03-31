@@ -7,8 +7,8 @@
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
-  > library(knitr)  
-  > knit("stats_knit_.md")  # has underscores around the knit but md displays badly
+    library(knitr)  
+    knit("stats_knit_.md")
 
 
 
@@ -203,7 +203,7 @@ qplot(nCitedBy, data = dfCitationsAttributes)
 ## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-<img src="http://i.imgur.com/BO9lJ.png" class="plot" />
+<img src="http://i.imgur.com/EmpfW.png" class="plot" />
 
 
 
@@ -227,7 +227,7 @@ qplot(nCitedBy, data = dfCitationsAttributes,
 ## Warning message: Stacking not well defined when ymin != 0
 ```
 
-<img src="http://i.imgur.com/66ASO.png" class="plot" />
+<img src="http://i.imgur.com/eGcGC.png" class="plot" />
 
 
 
@@ -260,14 +260,14 @@ with(dfCitationsAttributes, summary(log(1 + nCitedBy) ~
 ## log(1 + nCitedBy)    N=10521, 173 Missing
 ## 
 ## +---------------------+-----------+-----+-----------------+
-## |                     |           |N    |log(1 + nCitedBy)|
+## |                     |           |    N|log(1 + nCitedBy)|
 ## +---------------------+-----------+-----+-----------------+
-## |pubmed_year_published|[2000,2005)| 2674|3.709            |
-## |                     |[2005,2007)| 2636|3.098            |
-## |                     |[2007,2009)| 3577|2.546            |
-## |                     |[2009,2010]| 1634|1.912            |
+## |pubmed_year_published|[2000,2005)| 2674|            3.709|
+## |                     |[2005,2007)| 2636|            3.098|
+## |                     |[2007,2009)| 3577|            2.546|
+## |                     |[2009,2010]| 1634|            1.912|
 ## +---------------------+-----------+-----+-----------------+
-## |Overall              |           |10521|2.881            |
+## |              Overall|           |10521|            2.881|
 ## +---------------------+-----------+-----+-----------------+
 ```
 
@@ -291,7 +291,7 @@ qplot(Year, nCitedBy, data = dfCitationsAttributes,
 ## Warning message: Removed 173 rows containing missing values (geom_point).
 ```
 
-<img src="http://i.imgur.com/HvzVk.png" class="plot" />
+<img src="http://i.imgur.com/cN9bi.png" class="plot" />
 
 
 
@@ -315,7 +315,7 @@ qplot(pubmed_number_authors, data = dfCitationsAttributes,
 ## Warning message: Stacking not well defined when ymin != 0
 ```
 
-<img src="http://i.imgur.com/pSCwR.png" class="plot" />
+<img src="http://i.imgur.com/zq4G0.png" class="plot" />
 
 
 ```r
@@ -335,7 +335,7 @@ qplot(log(pubmed_number_authors), log(1 + nCitedBy),
 ## Warning message: Removed 173 rows containing missing values (geom_point).
 ```
 
-<img src="http://i.imgur.com/EYseT.png" class="plot" />
+<img src="http://i.imgur.com/cFhQr.png" class="plot" />
 
 
 
@@ -445,7 +445,7 @@ boxplot(nCitedBy ~ dataset.in.geo.or.ae.int, data = dat,
     log = "y")
 ```
 
-<img src="http://i.imgur.com/itfJ4.png" class="plot" />
+<img src="http://i.imgur.com/5spIR.png" class="plot" />
 
 
 ```r
@@ -1246,13 +1246,13 @@ heatmap.2(topcor, col = bluered(16), cexRow = 0.5,
     keysize = 0.1)
 ```
 
-<img src="http://i.imgur.com/oflKk.png" class="plot" />
 
 
 ```
 ## Error: figure margins too large
 ```
 
+<img src="http://i.imgur.com/kD2Co.png" class="plot" />
 
 
 ```r
@@ -1292,13 +1292,13 @@ heatmap.2(mycor, col = bluered(16), cexRow = 0.5,
     keysize = 0.1)
 ```
 
-<img src="http://i.imgur.com/XtBk5.png" class="plot" />
 
 
 ```
 ## Error: figure margins too large
 ```
 
+<img src="http://i.imgur.com/ewPsn.png" class="plot" />
 
 
 ```r
@@ -1310,6 +1310,165 @@ heatmap.2(mycor, col = bluered(16), cexRow = 0.5,
 #   keysize=0.1)
 ```
 
+
+
+
+
+Some more looks
+
+
+
+```
+## Analysis of Variance Table
+## 
+## Response: nCitedBy.log
+##                                                Df Sum Sq Mean Sq F value
+## rcs(num.authors.tr, 3)                          2    146      73  147.91
+## rcs(pubmed.date.in.pubmed, 3)                   2   1524     762 1538.98
+## rcs(first.author.num.prev.pubs.tr, 3)           2      5       3    5.43
+## rcs(first.author.num.prev.pmc.cites.tr, 3)      2    180      90  181.68
+## rcs(last.author.num.prev.pubs.tr, 3)            2      4       2    3.93
+## rcs(last.author.num.prev.pmc.cites.tr, 3)       2    106      53  107.34
+## country.usa                                     1      3       3    6.38
+## rcs(institution.mean.norm.citation.score, 3)    2     11       5   10.76
+## rcs(journal.num.articles.2008.tr, 3)            2     38      19   38.70
+## rcs(journal.cited.halflife, 3)                  2      7       4    7.21
+## rcs(journal.impact.factor.tr, 3)                2    323     162  326.31
+## factor(pubmed.is.cancer)                        1     10      10   20.32
+## factor(pubmed.is.animals)                       1     12      12   24.15
+## factor(pubmed.is.plants)                        1     17      17   33.84
+## factor(pubmed.is.core.clinical.journal)         1      4       4    7.91
+## factor(dataset.in.geo.or.ae)                    1     18      18   35.40
+## Residuals                                    4205   2082       0        
+##                                               Pr(>F)    
+## rcs(num.authors.tr, 3)                       < 2e-16 ***
+## rcs(pubmed.date.in.pubmed, 3)                < 2e-16 ***
+## rcs(first.author.num.prev.pubs.tr, 3)        0.00440 ** 
+## rcs(first.author.num.prev.pmc.cites.tr, 3)   < 2e-16 ***
+## rcs(last.author.num.prev.pubs.tr, 3)         0.01969 *  
+## rcs(last.author.num.prev.pmc.cites.tr, 3)    < 2e-16 ***
+## country.usa                                  0.01155 *  
+## rcs(institution.mean.norm.citation.score, 3) 2.2e-05 ***
+## rcs(journal.num.articles.2008.tr, 3)         < 2e-16 ***
+## rcs(journal.cited.halflife, 3)               0.00075 ***
+## rcs(journal.impact.factor.tr, 3)             < 2e-16 ***
+## factor(pubmed.is.cancer)                     6.7e-06 ***
+## factor(pubmed.is.animals)                    9.3e-07 ***
+## factor(pubmed.is.plants)                     6.4e-09 ***
+## factor(pubmed.is.core.clinical.journal)      0.00495 ** 
+## factor(dataset.in.geo.or.ae)                 2.9e-09 ***
+## Residuals                                               
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+```
+
+
+
+```
+## $param
+## [1] "factor(dataset.in.geo.or.ae).L"
+## 
+## $est
+## Estimate 
+##     1.11 
+## 
+## $CI
+## Estimate Estimate 
+##     1.07     1.15 
+## 
+## $p
+## Pr(>|t|) 
+##        0 
+## 
+```
+
+<img src="http://i.imgur.com/UrOkC.png" class="plot" />
+
+
+```
+##   2002   2003   2004   2005   2006   2007   2008   2009 
+## 89.473 60.290 45.573 34.427 29.123 20.982 14.676  8.735 
+```
+
+<img src="http://i.imgur.com/kVLnW.png" class="plot" />
+<img src="http://i.imgur.com/XBC3v.png" class="plot" />
+
+
+```
+## Warning message: Removed 577 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 168 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 745 rows containing missing values (geom_point).
+```
+
+<img src="http://i.imgur.com/LNXbG.png" class="plot" />
+<img src="http://i.imgur.com/ii9DI.png" class="plot" />
+
+
+```
+## Warning message: Removed 162 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 39 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 201 rows containing missing values (geom_point).
+```
+
+<img src="http://i.imgur.com/sapyu.png" class="plot" />
+
+
+```
+## Warning message: Removed 171 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 39 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 210 rows containing missing values (geom_point).
+```
+
+<img src="http://i.imgur.com/IJZmL.png" class="plot" />
+
+
+```
+## Warning message: Removed 4108 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 1291 rows containing missing values (stat_smooth).
+```
+
+
+
+```
+## Warning message: Removed 5399 rows containing missing values (geom_point).
+```
+
+<img src="http://i.imgur.com/xhfFF.png" class="plot" />
 
 
 

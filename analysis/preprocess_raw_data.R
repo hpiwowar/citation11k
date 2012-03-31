@@ -237,8 +237,7 @@ preprocess.raw.data = function
 
     dat$dataset.in.geo.or.ae.int = dat.nums$in.ae.or.geo
 
-    dat$nCitedBy = dat.nums$nCitedBy
-    dat$nCitedBy.log = log.tr(dat.nums$nCitedBy)
+    dat$nCitedBy = dat.raw$nCitedBy
     #dim(dat)
 
     #save(dat, file="dat.Rdata")

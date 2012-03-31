@@ -1,4 +1,4 @@
-<!--roptions dev='pdf', fig.width=5, fig.height=5, tidy=TRUE, cache=FALSE -->
+<!--roptions dev='pdf', fig.width=5, fig.height=5, tidy=TRUE, cache=TRUE -->
 
 # citation11k stats 
  * author Heather Piwowar, <hpiwowar@gmail.com>
@@ -7,17 +7,19 @@
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
-  > library(knitr)  
-  > knit("stats_knit_.md")  # has underscores around the knit but md displays badly
+    library(knitr)  
+    knit("stats_knit_.md")
 
 <!--begin.rcode setup, include=FALSE
 render_gfm() # use GFM hooks for output
-#opts_knit$set(base.url='')
-#opts_knit$set(imgur.key = '')
+#opts_knit$set(base.url='') #only needed if going to upload to github etc
+
 opts_knit$set(upload = TRUE)
 #knit_hooks$set(output = function(x, options) paste("1\n", sep = ""), source = function(x, options) paste("1\n", sep = ""), plot = hook_plot_html)
 knit_hooks$set(plot = hook_plot_html)
 end.rcode-->
+
+Generated on <!--rinline date() -->
 
 
 # Data availability citation boost consistent with observed rates of data reuse
@@ -124,13 +126,25 @@ Get the data:
 <!--begin.rcode getdata, echo=FALSE, cache=TRUE, eval=FALSE
 
 # Read in data
-setwd("~/Documents/Projects/citation benefit in 11k study/citation11k/analysis")
 
 dfCitations = read.csv("scopus_all.csv", header=TRUE, stringsAsFactors=F)
 
 dfAnnotations = read.csv("Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
 
 dfAttributes = read.csv("PLoSONE2011_rawdata.txt", sep="\t", header=TRUE, stringsAsFactors=F)
+
+# Merge together attributes with citation information
+dfCitationsAttributes = merge(dfAttributes, dfCitations, by.x="pmid", by.y="PubMed.ID")
+
+# How big is the dataset
+dim(dfCitationsAttributes)
+
+end.rcode-->
+
+The dataset has <!--rinline dfCitationsAttributes[1] --> rows and <!--rinline dfCitationsAttributes[2] -->  columns.
+
+<!--begin.rcode saves, echo=FALSE, cache=TRUE, eval=FALSE
+
 
 # Get subset that has been annotated
 dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
@@ -142,14 +156,18 @@ dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", b
 dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
 dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
 
-# Merge together attributes with citation information
-dfCitationsAttributes = merge(dfAttributes, dfCitations, by.x="pmid", by.y="PubMed.ID")
 
 # Clean the data, get variables in useful formats
 dfCitationsAttributes$nCitedBy = as.numeric(dfCitationsAttributes$Cited.by)
 
 # How big is the dataset
 dim(dfCitationsAttributes)
+
+end.rcode-->
+
+The dataset has <!--rinline dfCitationsAttributes[1] --> rows and <!--rinline dfCitationsAttributes[2] -->  columns.
+
+<!--begin.rcode saves, echo=FALSE, cache=TRUE, eval=FALSE
 
 # do saves
 save(dfCitations, file = "dfCitations.RData")
@@ -334,7 +352,7 @@ end.rcode-->
 
 Some more looks
 
-<!--begin.rcode therest2, eval=FALSE, echo=FALSE
+<!--begin.rcode more3, eval=TRUE, echo=FALSE
 
 ###### ANALYSIS
   
@@ -403,30 +421,6 @@ plot(fit)
 
 with(dat.subset, tapply(nCitedBy, pubmed.year.published, mean, na.rm=T))
 
-
-hetcor(dat.subset[,c("num.authors.tr", "pubmed.date.in.pubmed", "country.usa", "journal.impact.factor.tr", "pubmed.is.cancer", "dataset.in.geo.or.ae")])
-
-fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-#rcs(first.author.num.prev.pubs.tr, 3) +           
-#rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-#rcs(last.author.num.prev.pubs.tr, 3) +           
-#rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-country.usa +                            
-#rcs(institution.mean.norm.citation.score, 3) +
-#rcs(journal.num.articles.2008.tr, 3) +           
-#rcs(journal.cited.halflife, 3) +                 
-#rcs(journal.microarray.creating.count.tr, 3) +   
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(dataset.in.geo.or.ae)
-           , dat.subset)
-anova(fit)
-print(calcCI.exp(fit, "dataset.in.geo.or.ae.L"))    
-
-
-
-
 library(ggplot2)
 
 
@@ -451,6 +445,40 @@ qplot(last.author.num.prev.pubs.tr, nCitedBy, color=factor(dataset.in.geo.or.ae)
 
 x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
 qplot(institution.mean.norm.citation.score, nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+
+
+
+end.rcode-->
+
+
+Some more looks
+
+<!--begin.rcode therest2, eval=FALSE, echo=FALSE
+
+
+
+hetcor(dat.subset[,c("num.authors.tr", "pubmed.date.in.pubmed", "country.usa", "journal.impact.factor.tr", "pubmed.is.cancer", "dataset.in.geo.or.ae")])
+
+fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
+rcs(pubmed.date.in.pubmed, 3) +
+#rcs(first.author.num.prev.pubs.tr, 3) +           
+#rcs(first.author.num.prev.pmc.cites.tr, 3) +     
+#rcs(last.author.num.prev.pubs.tr, 3) +           
+#rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+country.usa +                            
+#rcs(institution.mean.norm.citation.score, 3) +
+#rcs(journal.num.articles.2008.tr, 3) +           
+#rcs(journal.cited.halflife, 3) +                 
+#rcs(journal.microarray.creating.count.tr, 3) +   
+rcs(journal.impact.factor.tr, 3) +               
+factor(pubmed.is.cancer) +
+factor(dataset.in.geo.or.ae)
+           , dat.subset)
+anova(fit)
+print(calcCI.exp(fit, "dataset.in.geo.or.ae.L"))    
+
+
+
 
 
 
