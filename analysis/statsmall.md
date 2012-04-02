@@ -8,7 +8,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Mon Apr  2 04:14:09 2012`
+ * Generated on `Mon Apr  2 04:35:26 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -71,7 +71,7 @@ dfCitationsAttributesRaw = merge(dfAttributes, dfCitations, by.x="pmid", by.y="P
 
 
 
-The dataset has `1.0694 &times; 10<sup>4</sup>` rows and `196`  columns.  
+The dataset has `10694` rows and `196`  columns.  
 
 This is a lot of columns: all the columns from the PLoS study plus all of the Scopus columns.  We will only use a subset of them in this study.
 
@@ -144,7 +144,7 @@ options(scipen=8)
 
 
 
-The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns. 
+The dataset has `10342` rows and `86`  columns. 
 
 
 ## Results
@@ -154,9 +154,9 @@ The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns.
 
 #### Description of cohort
 
-The PLoS study had `1.1603 &times; 10<sup>4</sup>` rows.  For this study we exclude extreme years.
+The PLoS study had `11603` rows.  For this study we exclude extreme years.
 
-The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns.  
+The dataset has `10342` rows and `86`  columns.  
 
 
 Distribution by journal
@@ -226,7 +226,7 @@ gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttribute
 
 Distribution by citation
 
-The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns.  
+The dataset has `10342` rows and `86`  columns.  
 
 
 
@@ -236,8 +236,7 @@ library(ggplot2)
 qplot(nCitedBy.log, data=dfCitationsAttributes)
 ```
 
-<img src="libraryggplot2.png" class="plot" />
-
+![plot of chunk libraryggplot2](http://i.imgur.com/bDLBn.png) 
 
 
 
@@ -339,8 +338,7 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 ```
 
-<img src="unnamed-chunk-10.png" class="plot" />
-
+![plot of chunk unnamed-chunk-9](http://i.imgur.com/kKxqO.png) 
 
     
 
@@ -478,8 +476,7 @@ library(gplots)
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 ```
 
-<img src="univariatecorrnowarnings.png" class="plot" />
-
+![plot of chunk univariatecorrnowarnings](http://i.imgur.com/VEohu.png) 
 
 ```
 ## Error: figure margins too large
@@ -537,16 +534,14 @@ with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), media
 qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots1.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/GIixh.png) 
 
 ```r
 
 qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots2.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/YPQGd.png) 
 
 ```r
 
@@ -555,24 +550,21 @@ x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots3.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/ry4IP.png) 
 
 ```r
 
 qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots4.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/xTR1Q.png) 
 
 ```r
 
 qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots5.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/qapZ8.png) 
 
 ```r
 
@@ -580,8 +572,7 @@ x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
 qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots6.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/fFpKI.png) 
 
 ```r
 
@@ -589,8 +580,7 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
 qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots7.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/FthFw.png) 
 
 ```r
 
@@ -598,8 +588,7 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
 qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots8.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/xpbnt.png) 
 
 ```r
 
@@ -607,8 +596,7 @@ x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
 qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-<img src="univariateqplots9.png" class="plot" />
-
+![plot of chunk univariateqplots](http://i.imgur.com/ixAts.png) 
 
 ```r
 

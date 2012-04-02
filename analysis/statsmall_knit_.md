@@ -1,13 +1,13 @@
-<!--begin.rcode echo=FALSE
+<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
+
+<!--begin.rcode setup, echo=FALSE, cache=FALSE
 render_gfm() # use GFM hooks for output
 
 # use imgur for hosting figures.  This is the default.
-opts_knit$set(upload = TRUE)
-knit_hooks$set(plot = hook_plot_html)
+opts_knit$set(upload.fun=imgur_upload) # upload all images to imgur.com
 build_dep()
+ 
 end.rcode-->
-
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
 
 
 # citation11k stats 
@@ -27,7 +27,7 @@ or, from the command line
     pandoc -r markdown -w html statsmall.md > test.html
     file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/test.html
 
-<!--begin.rcode setup, messages=FALSE, echo=FALSE
+<!--begin.rcode workspace, messages=FALSE, echo=FALSE
 # Clear the workspace and load package dependencies: 
 rm(list=ls())   
 require(ggplot2)
