@@ -1,3 +1,23 @@
+
+require(plyr)
+
+# transform for count data
+# using sqrt with minimum value of 1, as per advice at
+# http://www.webcitation.org/query?url=http%3A%2F%2Fpareonline.net%2Fgetvn.asp%3Fv%3D8%26n%3D6&date=2010-02-11
+tr = function(x) return(sqrt(1 + x))
+
+log.tr = function(x) return(log(1 + x))
+
+undo.tr = function(y) return(y^2 - 1)
+
+undo.log.tr = function(y) return(exp(y) - 1)
+
+get.dat.nums = function (dat.raw) {
+    dat.nums = colwise(as.numeric)(dat.raw)  ##<<details this produces warnings
+    return(dat.nums)
+}
+
+
 preprocess.raw.data = function
 ### Do preprocessing on raw data
 ### change variables to ordered factors, integers, etc as appropriate
@@ -238,6 +258,7 @@ preprocess.raw.data = function
     dat$dataset.in.geo.or.ae.int = dat.nums$in.ae.or.geo
 
     dat$nCitedBy = dat.raw$nCitedBy
+    dat$nCitedBy.log = log.tr(dat$nCitedBy)
     #dim(dat)
 
     #save(dat, file="dat.Rdata")
