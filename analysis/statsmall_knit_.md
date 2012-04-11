@@ -421,6 +421,67 @@ end.rcode-->
 
 ### Subset, manual classification of data availability 
 
+<!--begin.rcode
+
+dfAnnotations = read.csv("data/Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
+
+# Get subset that has been annotated
+dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
+
+# Merge together annotations with citation information
+dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", by.y="PubMed.ID")
+
+# Clean the data, get variables in useful formats
+dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
+dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
+
+
+end.rcode-->
+
+
+<!--begin.rcode
+
+# Dig in to looking at annotated subset
+
+dim(dfCitationsAnnotated)
+with(dfCitationsAnnotated, table(isCreated))
+with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
+with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
+
+library(ggplot2)
+
+rm(.Random.seed) 
+set.seed(42)
+
+# Do they look different
+qplot(nCitedBy, data=dfCitationsAnnotated)
+qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
+qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") + 
+  geom_jitter(position=position_jitter(width=.1), color="blue")
+  
+# Do they have different distributions
+with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
+with(dfCitationsAnnotated, print(t.test(log(1+nCitedBy)~isCreated)))
+with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
+
+# Now look if just created has the same pattern 
+
+dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
+dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
+
+library(rms)
+
+fit.annotated.merged = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
+rcs(pubmed.date.in.pubmed, 3) + 
+rcs(journal.impact.factor.tr, 3) +   
+ dataset.in.geo.or.ae
+           , dat.annotated.merged.created)
+anova(fit.annotated.merged)
+print(calcCI.exp(fit.annotated.merged, "dataset.in.geo.or.ae.L")) 
+dim(dat.annotated.merged.created)
+
+end.rcode-->
+
 #### Description
 
 #### Univariate

@@ -8,7 +8,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Wed Apr 11 07:25:45 2012`
+ * Generated on `Wed Apr 11 07:53:41 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -1212,6 +1212,239 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 
 ### Subset, manual classification of data availability 
+
+
+
+```r
+
+dfAnnotations = read.csv("data/Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
+
+# Get subset that has been annotated
+dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
+
+# Merge together annotations with citation information
+dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", by.y="PubMed.ID")
+
+# Clean the data, get variables in useful formats
+dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
+dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
+
+```
+
+
+
+
+
+
+
+```r
+
+# Dig in to looking at annotated subset
+
+dim(dfCitationsAnnotated)
+```
+
+
+
+```
+## [1] 230  62
+```
+
+
+
+```r
+with(dfCitationsAnnotated, table(isCreated))
+```
+
+
+
+```
+## isCreated
+##     created-microarray-data created-microarray-data-not 
+##                         210                          20 
+```
+
+
+
+```r
+with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
+```
+
+
+
+```
+##  Length   Class    Mode 
+##       3 formula    call 
+```
+
+
+
+```r
+with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
+```
+
+
+
+```
+##  Length   Class    Mode 
+##       3 formula    call 
+```
+
+
+
+```r
+
+library(ggplot2)
+
+rm(.Random.seed) 
+set.seed(42)
+
+# Do they look different
+qplot(nCitedBy, data=dfCitationsAnnotated)
+```
+
+<img src="http://i.imgur.com/fcXJO.png" class="plot" />
+
+
+```r
+qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
+```
+
+<img src="http://i.imgur.com/aMyMM.png" class="plot" />
+
+
+```r
+qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") + 
+  geom_jitter(position=position_jitter(width=.1), color="blue")
+```
+
+<img src="http://i.imgur.com/zjll1.png" class="plot" />
+
+
+```r
+  
+# Do they have different distributions
+with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
+```
+
+
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  nCitedBy by isCreated 
+## t = 0.5747, df = 22.61, p-value = 0.5712
+## alternative hypothesis: true difference in means is not equal to 0 
+## 95 percent confidence interval:
+##  -14.47  25.59 
+## sample estimates:
+##     mean in group created-microarray-data 
+##                                     31.86 
+## mean in group created-microarray-data-not 
+##                                     26.30 
+## 
+```
+
+
+
+```r
+with(dfCitationsAnnotated, print(t.test(log(1+nCitedBy)~isCreated)))
+```
+
+
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  log(1 + nCitedBy) by isCreated 
+## t = 1.331, df = 21.77, p-value = 0.1968
+## alternative hypothesis: true difference in means is not equal to 0 
+## 95 percent confidence interval:
+##  -0.2003  0.9175 
+## sample estimates:
+##     mean in group created-microarray-data 
+##                                     2.991 
+## mean in group created-microarray-data-not 
+##                                     2.632 
+## 
+```
+
+
+
+```r
+with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
+```
+
+
+
+```
+## 
+## 	Wilcoxon rank sum test with continuity correction
+## 
+## data:  nCitedBy by isCreated 
+## W = 2440, p-value = 0.1733
+## alternative hypothesis: true location shift is not equal to 0 
+## 
+```
+
+
+
+```r
+
+# Now look if just created has the same pattern 
+
+dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
+dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
+
+library(rms)
+
+fit.annotated.merged = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
+rcs(pubmed.date.in.pubmed, 3) + 
+rcs(journal.impact.factor.tr, 3) +   
+ dataset.in.geo.or.ae
+           , dat.annotated.merged.created)
+anova(fit.annotated.merged)
+```
+
+
+
+```
+## Analysis of Variance Table
+## 
+## Response: nCitedBy.log
+##                                   Df Sum Sq Mean Sq F value  Pr(>F)    
+## rcs(num.authors.tr, 3)             2   11.1     5.6    9.62 0.00011 ***
+## rcs(pubmed.date.in.pubmed, 3)      2   82.3    41.1   71.00 < 2e-16 ***
+## rcs(journal.impact.factor.tr, 3)   2   13.6     6.8   11.76 1.6e-05 ***
+## dataset.in.geo.or.ae               1    5.5     5.5    9.51 0.00235 ** 
+## Residuals                        186  107.7     0.6                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+```
+
+
+
+```r
+print(calcCI.exp(fit.annotated.merged, "dataset.in.geo.or.ae.L")) 
+```
+
+
+
+```
+##                           param  est ciLow ciHigh     p
+## Estimate dataset.in.geo.or.ae.L 1.31   1.1   1.55 0.002
+```
+
+
+
+```r
+
+```
+
+
+
 
 #### Description
 
