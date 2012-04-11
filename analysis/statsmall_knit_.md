@@ -31,10 +31,13 @@ or, from the command line
 <!--begin.rcode workspace, messages=FALSE, echo=FALSE
 # Clear the workspace and load package dependencies: 
 rm(list=ls())   
-require(ggplot2)
-require(Hmisc)
-require(plyr)
-require(rms)
+require(ggplot2, quietly=T)
+require(gplots, quietly=T)
+require(plyr, quietly=T)
+require(rms, quietly=T)
+require(polycor, quietly=T)
+require(ascii, quietly=T)
+
 options(scipen=8)
 end.rcode-->
 
@@ -95,7 +98,7 @@ This is a lot of columns: all the columns from the PLoS study plus all of the Sc
 Limit to just those published after 2001 and before 2010.
 
 <!--begin.rcode
-dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published > 2001)
+dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published > 2000)
 dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published < 2010)
 dim(dfCitationsAttributesRaw)
 end.rcode-->
@@ -134,20 +137,17 @@ The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinli
 
 Distribution by journal
 <!--begin.rcode
-library(ascii)
 a = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10]
 gfm_table(cbind(names(a), round(a, 2)))
 end.rcode-->
 
 Distribution by year
 <!--begin.rcode
-library(ascii)
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year)/nrow(dfCitationsAttributesRaw))
 end.rcode-->
 
 Distribution by data availability
 <!--begin.rcode
-library(ascii)
 gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttributesRaw))
 end.rcode-->
 
@@ -157,7 +157,6 @@ The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinli
 
 
 <!--begin.rcode libraryggplot2, message=FALSE
-library(ggplot2)
 qplot(nCitedBy.log, data=dfCitationsAttributes)
 end.rcode-->
 
@@ -193,8 +192,6 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
 end.rcode-->
     
 <!--begin.rcode univariatecorrnowarnings, warning=FALSE, fig.width=9, fig.height=9
-library(polycor)
-library(Hmisc)
 source("helpers.R")
 
 dat = dfCitationsAttributes
@@ -213,7 +210,6 @@ length(univarate.citation.predictors)
 topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
 
 
-library(gplots)
 
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 
@@ -222,7 +218,6 @@ end.rcode-->
     
 <!--begin.rcode univariateqplots, fig.width=9, fig.height=9
  
-library(ggplot2)
 
 dat.subset = dfCitationsAttributes
 with(dat.subset, tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
@@ -300,8 +295,6 @@ calcCI.noexp= function(res, param) {
 }
 
       
-library(rms)
-
 
 #### Looks like this is the analysis
 fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
@@ -323,10 +316,9 @@ factor(pubmed.is.animals) +
 factor(pubmed.is.plants) +
 factor(pubmed.is.core.clinical.journal) +
 factor(dataset.in.geo.or.ae)
-           , dat.subset)
+           , dfCitationsAttributes)
 
 
-library(ascii)
 gfm_table(anova(fit))
 
 fit
@@ -340,7 +332,6 @@ end.rcode-->
 
 <!--begin.rcode
 
-library(ascii)
 do_analysis = function(mydat) {
   myfit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
   rcs(pubmed.date.in.pubmed, 3) +
@@ -367,20 +358,63 @@ do_analysis = function(mydat) {
 
   myfit
 
-  print(calcCI.exp(myfit, "factor(dataset.in.geo.or.ae).L"))   
+  calcCI.exp(myfit, "factor(dataset.in.geo.or.ae).L")
 }
 
-a = data.frame()
-for (year in seq(2002, 2009)) {
-  dat.subset.year = subset(dat.subset, pubmed.year.published==year)
+estimates_by_year = data.frame()
+for (year in seq(2001, 2009)) {
+  dat.subset.year = subset(dfCitationsAttributes, pubmed.year.published==year)
   results = do_analysis(dat.subset.year)
   print(results)
-  a = rbind(a, cbind(year=year, results))
+  estimates_by_year = rbind(estimates_by_year, cbind(year=year, results))
 }
 
-a
-ggplot(a, aes(x=year, y=est)) + geom_line() + ylim(0, 2) + 
-  geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh))
+estimates_by_year
+
+ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() + 
+  geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh)) +
+  scale_x_continuous(name='year of publication') +
+  scale_y_continuous(limits=c(0, 2.5), name='citations proportion for \n(papers with available data)/(those without)')
+
+end.rcode-->
+
+##### Now by year
+
+<!--begin.rcode
+
+# Using analysis method of splines, consistent with current study
+
+  dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
+
+  dim(dat.subset.previous.study)
+
+  myfitprev = lm(nCitedBy.log ~ 
+    rcs(pubmed.date.in.pubmed, 3) +
+    country.usa +              
+    rcs(journal.impact.factor.tr, 3) +               
+    factor(dataset.in.geo.or.ae)
+               , dat.subset.previous.study)
+
+  gfm_table(anova(myfitprev))
+
+  myfitprev
+
+  calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
+
+# Using analysis method of linear fit, consistent with previous study
+
+  myfitprev = lm(nCitedBy.log ~ 
+    pubmed.date.in.pubmed +
+    country.usa +              
+    journal.impact.factor.tr +               
+    factor(dataset.in.geo.or.ae)
+               , dat.subset.previous.study)
+
+  gfm_table(anova(myfitprev))
+
+  myfitprev
+
+  calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
 
 end.rcode-->
 
