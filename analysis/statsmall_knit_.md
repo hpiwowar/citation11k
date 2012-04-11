@@ -1,10 +1,11 @@
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
+<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 render_gfm() # use GFM hooks for output
 
 # use imgur for hosting figures.  This is the default.
 opts_knit$set(upload.fun=imgur_upload) # upload all images to imgur.com
+knit_hooks$set(plot = hook_plot_html)
 build_dep()
  
 end.rcode-->
@@ -24,7 +25,7 @@ To run this I start R, set the working directory to match where this file is, th
 or, from the command line
 
     R -e "library(knitr); knit('statsmall_knit_.md')"
-    pandoc -r markdown -w html statsmall.md > test.html
+    pandoc -r markdown -w html -H header.html statsmall.md > temp.html
     file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/test.html
 
 <!--begin.rcode workspace, messages=FALSE, echo=FALSE
@@ -278,11 +279,11 @@ calcCI.exp= function(res, param) {
   x = coeff[1]
   stderr = coeff[2]
   p = coeff[4]
-  return(list(param = param,
+  return(data.frame(param = param,
               est = round(exp(x), 2), 
-        CI = c(round(exp(x - 1.96*stderr), 2),
-                     round(exp(x + 1.96*stderr), 2)), 
-          p = round(p, 3)))
+              ciLow = round(exp(x - 1.96*stderr), 2),
+              ciHigh = round(exp(x + 1.96*stderr), 2), 
+              p = round(p, 3)))
 }
 
 calcCI.noexp= function(res, param) {
@@ -291,15 +292,16 @@ calcCI.noexp= function(res, param) {
   x = coeff[1]
   stderr = coeff[2]
   p = coeff[4]
-  return(list(param = param,
+  return(data.frame(param = param,
               est = round(x, 2), 
-        CI = c(round(x - 1.96*stderr, 2),
-                     round(x + 1.96*stderr, 2)), 
-          p = round(p, 3)))
+              ciLow = round(x - 1.96*stderr, 2),
+              ciHigh = round(x + 1.96*stderr, 2), 
+              p = round(p, 3)))
 }
 
       
 library(rms)
+
 
 #### Looks like this is the analysis
 fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
@@ -334,81 +336,51 @@ print(calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L"))
 
 end.rcode-->
 
-##### Now for just those published in 2007
+##### Now by year
 
 <!--begin.rcode
 
-dat.subset.2007 = subset(dat.subset, pubmed.year.published==2007)
-
-#### Looks like this is the analysis
-fit.2007 = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-#rcs(first.author.num.prev.pubs.tr, 3) +           
-rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-#rcs(first.author.year.first.pub.ago.tr, 3) +     
-#rcs(last.author.num.prev.pubs.tr, 3) +           
-rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-#rcs(last.author.year.first.pub.ago.tr, 3) +
-#country.usa +              
-pubmed.is.open.access +              
-rcs(institution.mean.norm.citation.score, 3) +
-rcs(journal.num.articles.2008.tr, 3) +           
-#rcs(journal.cited.halflife, 3) +                 
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(pubmed.is.animals) +
-#factor(pubmed.is.plants) +
-#factor(pubmed.is.core.clinical.journal) +
-factor(dataset.in.geo.or.ae)
-           , dat.subset.2007)
-
-
 library(ascii)
-gfm_table(anova(fit.2007))
+do_analysis = function(mydat) {
+  myfit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
+  rcs(pubmed.date.in.pubmed, 3) +
+  #rcs(first.author.num.prev.pubs.tr, 3) +           
+  rcs(first.author.num.prev.pmc.cites.tr, 3) +     
+  #rcs(first.author.year.first.pub.ago.tr, 3) +     
+  #rcs(last.author.num.prev.pubs.tr, 3) +           
+  rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+  #rcs(last.author.year.first.pub.ago.tr, 3) +
+  #country.usa +              
+  pubmed.is.open.access +              
+  rcs(institution.mean.norm.citation.score, 3) +
+  rcs(journal.num.articles.2008.tr, 3) +           
+  #rcs(journal.cited.halflife, 3) +                 
+  rcs(journal.impact.factor.tr, 3) +               
+  factor(pubmed.is.cancer) +
+  factor(pubmed.is.animals) +
+  #factor(pubmed.is.plants) +
+  #factor(pubmed.is.core.clinical.journal) +
+  factor(dataset.in.geo.or.ae)
+             , mydat)
 
-fit.2007
+  gfm_table(anova(myfit))
 
-print(calcCI.exp(fit.2007, "factor(dataset.in.geo.or.ae).L"))   
+  myfit
 
+  print(calcCI.exp(myfit, "factor(dataset.in.geo.or.ae).L"))   
+}
 
-end.rcode-->
+a = data.frame()
+for (year in seq(2002, 2009)) {
+  dat.subset.year = subset(dat.subset, pubmed.year.published==year)
+  results = do_analysis(dat.subset.year)
+  print(results)
+  a = rbind(a, cbind(year=year, results))
+}
 
-##### Now for just those published in 2008
-
-<!--begin.rcode
-
-dat.subset.2008 = subset(dat.subset, pubmed.year.published==2008)
-
-#### Looks like this is the analysis
-fit.2008 = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-#rcs(first.author.num.prev.pubs.tr, 3) +           
-rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-#rcs(first.author.year.first.pub.ago.tr, 3) +     
-#rcs(last.author.num.prev.pubs.tr, 3) +           
-rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-#rcs(last.author.year.first.pub.ago.tr, 3) +
-#country.usa +              
-pubmed.is.open.access +              
-rcs(institution.mean.norm.citation.score, 3) +
-rcs(journal.num.articles.2008.tr, 3) +           
-#rcs(journal.cited.halflife, 3) +                 
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(pubmed.is.animals) +
-#factor(pubmed.is.plants) +
-#factor(pubmed.is.core.clinical.journal) +
-factor(dataset.in.geo.or.ae)
-           , dat.subset.2008)
-
-
-library(ascii)
-gfm_table(anova(fit.2008))
-
-fit.2008
-
-print(calcCI.exp(fit.2008, "factor(dataset.in.geo.or.ae).L"))   
-
+a
+ggplot(a, aes(x=year, y=est)) + geom_line() + ylim(0, 2) + 
+  geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh))
 
 end.rcode-->
 

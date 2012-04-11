@@ -8,7 +8,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Mon Apr  2 04:35:26 2012`
+ * Generated on `Wed Apr 11 06:29:15 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -18,7 +18,7 @@ To run this I start R, set the working directory to match where this file is, th
 or, from the command line
 
     R -e "library(knitr); knit('statsmall_knit_.md')"
-    pandoc -r markdown -w html statsmall.md > test.html
+    pandoc -r markdown -w html -H header.html statsmall.md > temp.html
     file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/test.html
 
 
@@ -71,7 +71,7 @@ dfCitationsAttributesRaw = merge(dfAttributes, dfCitations, by.x="pmid", by.y="P
 
 
 
-The dataset has `10694` rows and `196`  columns.  
+The dataset has `1.0694 &times; 10<sup>4</sup>` rows and `196`  columns.  
 
 This is a lot of columns: all the columns from the PLoS study plus all of the Scopus columns.  We will only use a subset of them in this study.
 
@@ -144,7 +144,7 @@ options(scipen=8)
 
 
 
-The dataset has `10342` rows and `86`  columns. 
+The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns. 
 
 
 ## Results
@@ -154,9 +154,9 @@ The dataset has `10342` rows and `86`  columns.
 
 #### Description of cohort
 
-The PLoS study had `11603` rows.  For this study we exclude extreme years.
+The PLoS study had `1.1603 &times; 10<sup>4</sup>` rows.  For this study we exclude extreme years.
 
-The dataset has `10342` rows and `86`  columns.  
+The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns.  
 
 
 Distribution by journal
@@ -226,7 +226,7 @@ gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttribute
 
 Distribution by citation
 
-The dataset has `10342` rows and `86`  columns.  
+The dataset has `1.0342 &times; 10<sup>4</sup>` rows and `86`  columns.  
 
 
 
@@ -236,7 +236,8 @@ library(ggplot2)
 qplot(nCitedBy.log, data=dfCitationsAttributes)
 ```
 
-![plot of chunk libraryggplot2](http://i.imgur.com/bDLBn.png) 
+<img src="http://i.imgur.com/jBSpx.png" class="plot" />
+
 
 
 
@@ -338,7 +339,8 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 ```
 
-![plot of chunk unnamed-chunk-9](http://i.imgur.com/kKxqO.png) 
+<img src="http://i.imgur.com/3qK97.png" class="plot" />
+
 
     
 
@@ -476,7 +478,8 @@ library(gplots)
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 ```
 
-![plot of chunk univariatecorrnowarnings](http://i.imgur.com/VEohu.png) 
+<img src="http://i.imgur.com/wC8pr.png" class="plot" />
+
 
 ```
 ## Error: figure margins too large
@@ -534,14 +537,16 @@ with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), media
 qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/GIixh.png) 
+<img src="http://i.imgur.com/msN2m.png" class="plot" />
+
 
 ```r
 
 qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/YPQGd.png) 
+<img src="http://i.imgur.com/19Ac9.png" class="plot" />
+
 
 ```r
 
@@ -550,21 +555,24 @@ x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/ry4IP.png) 
+<img src="http://i.imgur.com/3Z7z7.png" class="plot" />
+
 
 ```r
 
 qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/xTR1Q.png) 
+<img src="http://i.imgur.com/ZyqqA.png" class="plot" />
+
 
 ```r
 
 qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/qapZ8.png) 
+<img src="http://i.imgur.com/rnAqZ.png" class="plot" />
+
 
 ```r
 
@@ -572,7 +580,8 @@ x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
 qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/fFpKI.png) 
+<img src="http://i.imgur.com/WZPnV.png" class="plot" />
+
 
 ```r
 
@@ -580,7 +589,8 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
 qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/FthFw.png) 
+<img src="http://i.imgur.com/3TrVZ.png" class="plot" />
+
 
 ```r
 
@@ -588,7 +598,8 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
 qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/xpbnt.png) 
+<img src="http://i.imgur.com/cGmyP.png" class="plot" />
+
 
 ```r
 
@@ -596,7 +607,8 @@ x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
 qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 ```
 
-![plot of chunk univariateqplots](http://i.imgur.com/ixAts.png) 
+<img src="http://i.imgur.com/ndfbG.png" class="plot" />
+
 
 ```r
 
@@ -625,11 +637,11 @@ calcCI.exp= function(res, param) {
   x = coeff[1]
   stderr = coeff[2]
   p = coeff[4]
-  return(list(param = param,
+  return(data.frame(param = param,
               est = round(exp(x), 2), 
-        CI = c(round(exp(x - 1.96*stderr), 2),
-                     round(exp(x + 1.96*stderr), 2)), 
-          p = round(p, 3)))
+              ciLow = round(exp(x - 1.96*stderr), 2),
+              ciHigh = round(exp(x + 1.96*stderr), 2), 
+              p = round(p, 3)))
 }
 
 calcCI.noexp= function(res, param) {
@@ -638,15 +650,16 @@ calcCI.noexp= function(res, param) {
   x = coeff[1]
   stderr = coeff[2]
   p = coeff[4]
-  return(list(param = param,
+  return(data.frame(param = param,
               est = round(x, 2), 
-        CI = c(round(x - 1.96*stderr, 2),
-                     round(x + 1.96*stderr, 2)), 
-          p = round(p, 3)))
+              ciLow = round(x - 1.96*stderr, 2),
+              ciHigh = round(x + 1.96*stderr, 2), 
+              p = round(p, 3)))
 }
 
       
 library(rms)
+
 
 #### Looks like this is the analysis
 fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
@@ -802,21 +815,8 @@ print(calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L"))
 
 
 ```
-## $param
-## [1] "factor(dataset.in.geo.or.ae).L"
-## 
-## $est
-## Estimate 
-##     1.13 
-## 
-## $CI
-## Estimate Estimate 
-##     1.09     1.17 
-## 
-## $p
-## Pr(>|t|) 
-##        0 
-## 
+##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.13  1.09   1.17 0
 ```
 
 
@@ -828,44 +828,144 @@ print(calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L"))
 
 
 
-##### Now for just those published in 2007
+##### Now by year
 
 
 
 ```r
-
-dat.subset.2007 = subset(dat.subset, pubmed.year.published==2007)
-
-#### Looks like this is the analysis
-fit.2007 = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-#rcs(first.author.num.prev.pubs.tr, 3) +           
-rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-#rcs(first.author.year.first.pub.ago.tr, 3) +     
-#rcs(last.author.num.prev.pubs.tr, 3) +           
-rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-#rcs(last.author.year.first.pub.ago.tr, 3) +
-#country.usa +              
-pubmed.is.open.access +              
-rcs(institution.mean.norm.citation.score, 3) +
-rcs(journal.num.articles.2008.tr, 3) +           
-#rcs(journal.cited.halflife, 3) +                 
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(pubmed.is.animals) +
-#factor(pubmed.is.plants) +
-#factor(pubmed.is.core.clinical.journal) +
-factor(dataset.in.geo.or.ae)
-           , dat.subset.2007)
-
 
 library(ascii)
-gfm_table(anova(fit.2007))
+do_analysis = function(mydat) {
+  myfit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
+  rcs(pubmed.date.in.pubmed, 3) +
+  #rcs(first.author.num.prev.pubs.tr, 3) +           
+  rcs(first.author.num.prev.pmc.cites.tr, 3) +     
+  #rcs(first.author.year.first.pub.ago.tr, 3) +     
+  #rcs(last.author.num.prev.pubs.tr, 3) +           
+  rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+  #rcs(last.author.year.first.pub.ago.tr, 3) +
+  #country.usa +              
+  pubmed.is.open.access +              
+  rcs(institution.mean.norm.citation.score, 3) +
+  rcs(journal.num.articles.2008.tr, 3) +           
+  #rcs(journal.cited.halflife, 3) +                 
+  rcs(journal.impact.factor.tr, 3) +               
+  factor(pubmed.is.cancer) +
+  factor(pubmed.is.animals) +
+  #factor(pubmed.is.plants) +
+  #factor(pubmed.is.core.clinical.journal) +
+  factor(dataset.in.geo.or.ae)
+             , mydat)
+
+  gfm_table(anova(myfit))
+
+  myfit
+
+  print(calcCI.exp(myfit, "factor(dataset.in.geo.or.ae).L"))   
+}
+
+a = data.frame()
+for (year in seq(2002, 2009)) {
+  dat.subset.year = subset(dat.subset, pubmed.year.published==year)
+  results = do_analysis(dat.subset.year)
+  print(results)
+  a = rbind(a, cbind(year=year, results))
+}
 ```
 
 
 
 ```
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00   | 7.65   | 3.83    | 5.71    | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 2.87   | 1.43    | 2.14    | 0.12   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 1.88   | 0.94    | 1.40    | 0.25   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 13.88  | 6.94    | 10.35   | 0.00   |
+## | pubmed.is.open.access                        | 1.00   | 2.54   | 2.54    | 3.79    | 0.05   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 5.35   | 2.67    | 3.99    | 0.02   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 3.21   | 1.60    | 2.39    | 0.09   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00   | 32.42  | 16.21   | 24.19   | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.38   | 0.38    | 0.57    | 0.45   |
+## | factor(pubmed.is.animals)                    | 1.00   | 0.14   | 0.14    | 0.21    | 0.65   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.75   | 0.75    | 1.11    | 0.29   |
+## | Residuals                                    | 231.00 | 154.78 | 0.67    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.15  0.89   1.49 0.292
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.15  0.89   1.49 0.292
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00   | 11.90  | 5.95    | 10.92   | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 11.65  | 5.83    | 10.70   | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 9.87   | 4.93    | 9.06    | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 13.57  | 6.78    | 12.46   | 0.00   |
+## | pubmed.is.open.access                        | 1.00   | 0.11   | 0.11    | 0.20    | 0.65   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.46   | 1.23    | 2.26    | 0.11   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 4.79   | 2.39    | 4.39    | 0.01   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00   | 26.20  | 13.10   | 24.05   | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 1.57   | 1.57    | 2.88    | 0.09   |
+## | factor(pubmed.is.animals)                    | 1.00   | 0.34   | 0.34    | 0.62    | 0.43   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 2.22   | 2.22    | 4.08    | 0.04   |
+## | Residuals                                    | 355.00 | 193.32 | 0.54    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.19  1.01   1.41 0.044
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.19  1.01   1.41 0.044
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00   | 24.77  | 12.39   | 20.71   | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 5.73   | 2.87    | 4.79    | 0.01   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 22.94  | 11.47   | 19.18   | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 23.95  | 11.97   | 20.03   | 0.00   |
+## | pubmed.is.open.access                        | 1.00   | 6.66   | 6.66    | 11.14   | 0.00   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.72   | 1.36    | 2.28    | 0.10   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 9.60   | 4.80    | 8.03    | 0.00   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00   | 43.34  | 21.67   | 36.24   | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 4.04   | 4.04    | 6.75    | 0.01   |
+## | factor(pubmed.is.animals)                    | 1.00   | 0.14   | 0.14    | 0.23    | 0.63   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 9.82   | 9.82    | 16.43   | 0.00   |
+## | Residuals                                    | 492.00 | 294.18 | 0.60    |         |        |
+##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.29  1.14   1.45 0
+##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.29  1.14   1.45 0
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00   | 25.81  | 12.90   | 27.77   | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 0.60   | 0.30    | 0.65    | 0.52   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 23.89  | 11.94   | 25.70   | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 12.34  | 6.17    | 13.28   | 0.00   |
+## | pubmed.is.open.access                        | 1.00   | 0.04   | 0.04    | 0.10    | 0.76   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 7.80   | 3.90    | 8.39    | 0.00   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 15.58  | 7.79    | 16.77   | 0.00   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00   | 51.76  | 25.88   | 55.70   | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 11.58  | 11.58   | 24.93   | 0.00   |
+## | factor(pubmed.is.animals)                    | 1.00   | 2.03   | 2.03    | 4.37    | 0.04   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 13.58  | 13.58   | 29.22   | 0.00   |
+## | Residuals                                    | 568.00 | 263.90 | 0.46    |         |        |
+##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.33   1.2   1.47 0
+##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.33   1.2   1.47 0
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00   | 35.85  | 17.92   | 33.66   | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 2.45   | 1.23    | 2.30    | 0.10   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 19.51  | 9.75    | 18.32   | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 17.65  | 8.83    | 16.58   | 0.00   |
+## | pubmed.is.open.access                        | 1.00   | 0.23   | 0.23    | 0.43    | 0.51   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.80   | 1.40    | 2.63    | 0.07   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 8.04   | 4.02    | 7.55    | 0.00   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00   | 64.29  | 32.14   | 60.37   | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 9.53   | 9.53    | 17.90   | 0.00   |
+## | factor(pubmed.is.animals)                    | 1.00   | 7.44   | 7.44    | 13.97   | 0.00   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 4.96   | 4.96    | 9.31    | 0.00   |
+## | Residuals                                    | 562.00 | 299.25 | 0.53    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.16  1.06   1.28 0.002
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.16  1.06   1.28 0.002
 ## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------------------|--------|--------|---------|---------|--------|
 ## | rcs(num.authors.tr, 3)                       | 2.00   | 24.19  | 12.10   | 23.96   | 0.00   |
@@ -880,143 +980,10 @@ gfm_table(anova(fit.2007))
 ## | factor(pubmed.is.animals)                    | 1.00   | 0.85   | 0.85    | 1.69    | 0.19   |
 ## | factor(dataset.in.geo.or.ae)                 | 1.00   | 2.03   | 2.03    | 4.02    | 0.05   |
 ## | Residuals                                    | 712.00 | 359.35 | 0.50    |         |        |
-```
-
-
-
-```r
-
-fit.2007
-```
-
-
-
-```
-## 
-## Call:
-## lm(formula = nCitedBy.log ~ rcs(num.authors.tr, 3) + rcs(pubmed.date.in.pubmed, 
-##     3) + rcs(first.author.num.prev.pmc.cites.tr, 3) + rcs(last.author.num.prev.pmc.cites.tr, 
-##     3) + pubmed.is.open.access + rcs(institution.mean.norm.citation.score, 
-##     3) + rcs(journal.num.articles.2008.tr, 3) + rcs(journal.impact.factor.tr, 
-##     3) + factor(pubmed.is.cancer) + factor(pubmed.is.animals) + 
-##     factor(dataset.in.geo.or.ae), data = dat.subset.2007)
-## 
-## Coefficients:
-##                                                                       (Intercept)  
-##                                                                         23.712188  
-##                                              rcs(num.authors.tr, 3)num.authors.tr  
-##                                                                          0.174961  
-##                                             rcs(num.authors.tr, 3)num.authors.tr'  
-##                                                                         -0.000348  
-##                                rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
-##                                                                         -0.000630  
-##                               rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
-##                                                                          0.000122  
-##      rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr  
-##                                                                          0.010718  
-##     rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr'  
-##                                                                         -0.001795  
-##        rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr  
-##                                                                         -0.003931  
-##       rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr'  
-##                                                                          0.007599  
-##                                                           pubmed.is.open.access.L  
-##                                                                         -0.047440  
-##  rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score  
-##                                                                          0.164025  
-## rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score'  
-##                                                                         -0.161652  
-##                  rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr  
-##                                                                         -0.007571  
-##                 rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr'  
-##                                                                          0.010150  
-##                          rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
-##                                                                          0.974877  
-##                         rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
-##                                                                         -0.693618  
-##                                                        factor(pubmed.is.cancer).L  
-##                                                                         -0.050286  
-##                                                       factor(pubmed.is.animals).L  
-##                                                                         -0.047061  
-##                                                    factor(dataset.in.geo.or.ae).L  
-##                                                                          0.080848  
-## 
-```
-
-
-
-```r
-
-print(calcCI.exp(fit.2007, "factor(dataset.in.geo.or.ae).L"))   
-```
-
-
-
-```
-## $param
-## [1] "factor(dataset.in.geo.or.ae).L"
-## 
-## $est
-## Estimate 
-##     1.08 
-## 
-## $CI
-## Estimate Estimate 
-##     1.00     1.17 
-## 
-## $p
-## Pr(>|t|) 
-##    0.045 
-## 
-```
-
-
-
-```r
-
-```
-
-
-
-
-##### Now for just those published in 2008
-
-
-
-```r
-
-dat.subset.2008 = subset(dat.subset, pubmed.year.published==2008)
-
-#### Looks like this is the analysis
-fit.2008 = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-#rcs(first.author.num.prev.pubs.tr, 3) +           
-rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-#rcs(first.author.year.first.pub.ago.tr, 3) +     
-#rcs(last.author.num.prev.pubs.tr, 3) +           
-rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-#rcs(last.author.year.first.pub.ago.tr, 3) +
-#country.usa +              
-pubmed.is.open.access +              
-rcs(institution.mean.norm.citation.score, 3) +
-rcs(journal.num.articles.2008.tr, 3) +           
-#rcs(journal.cited.halflife, 3) +                 
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(pubmed.is.animals) +
-#factor(pubmed.is.plants) +
-#factor(pubmed.is.core.clinical.journal) +
-factor(dataset.in.geo.or.ae)
-           , dat.subset.2008)
-
-
-library(ascii)
-gfm_table(anova(fit.2008))
-```
-
-
-
-```
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.08     1   1.17 0.045
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.08     1   1.17 0.045
 ## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------------------|--------|--------|---------|---------|--------|
 ## | rcs(num.authors.tr, 3)                       | 2.00   | 40.91  | 20.46   | 36.33   | 0.00   |
@@ -1031,102 +998,59 @@ gfm_table(anova(fit.2008))
 ## | factor(pubmed.is.animals)                    | 1.00   | 6.81   | 6.81    | 12.10   | 0.00   |
 ## | factor(dataset.in.geo.or.ae)                 | 1.00   | 1.83   | 1.83    | 3.25    | 0.07   |
 ## | Residuals                                    | 667.00 | 375.50 | 0.56    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.08  0.99   1.18 0.072
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.08  0.99   1.18 0.072
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00   | 43.96  | 21.98   | 43.45   | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 15.57  | 7.78    | 15.39   | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 7.31   | 3.65    | 7.22    | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 10.94  | 5.47    | 10.82   | 0.00   |
+## | pubmed.is.open.access                        | 1.00   | 0.57   | 0.57    | 1.12    | 0.29   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 8.23   | 4.11    | 8.13    | 0.00   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 7.82   | 3.91    | 7.73    | 0.00   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00   | 58.49  | 29.24   | 57.81   | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.09   | 0.09    | 0.19    | 0.67   |
+## | factor(pubmed.is.animals)                    | 1.00   | 2.48   | 2.48    | 4.90    | 0.03   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.02   | 0.02    | 0.04    | 0.84   |
+## | Residuals                                    | 533.00 | 269.64 | 0.51    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.01  0.92   1.11 0.838
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.01  0.92   1.11 0.838
 ```
 
 
 
 ```r
 
-fit.2008
+a
 ```
 
 
 
 ```
-## 
-## Call:
-## lm(formula = nCitedBy.log ~ rcs(num.authors.tr, 3) + rcs(pubmed.date.in.pubmed, 
-##     3) + rcs(first.author.num.prev.pmc.cites.tr, 3) + rcs(last.author.num.prev.pmc.cites.tr, 
-##     3) + pubmed.is.open.access + rcs(institution.mean.norm.citation.score, 
-##     3) + rcs(journal.num.articles.2008.tr, 3) + rcs(journal.impact.factor.tr, 
-##     3) + factor(pubmed.is.cancer) + factor(pubmed.is.animals) + 
-##     factor(dataset.in.geo.or.ae), data = dat.subset.2008)
-## 
-## Coefficients:
-##                                                                       (Intercept)  
-##                                                                         49.207435  
-##                                              rcs(num.authors.tr, 3)num.authors.tr  
-##                                                                          0.207273  
-##                                             rcs(num.authors.tr, 3)num.authors.tr'  
-##                                                                         -0.012847  
-##                                rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
-##                                                                         -0.001311  
-##                               rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
-##                                                                          0.000616  
-##      rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr  
-##                                                                          0.002312  
-##     rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr'  
-##                                                                          0.000572  
-##        rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr  
-##                                                                          0.003834  
-##       rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr'  
-##                                                                         -0.001687  
-##                                                           pubmed.is.open.access.L  
-##                                                                         -0.081573  
-##  rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score  
-##                                                                          0.177104  
-## rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score'  
-##                                                                         -0.170950  
-##                  rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr  
-##                                                                         -0.008635  
-##                 rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr'  
-##                                                                          0.013777  
-##                          rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
-##                                                                          1.082618  
-##                         rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
-##                                                                         -0.877505  
-##                                                        factor(pubmed.is.cancer).L  
-##                                                                         -0.091871  
-##                                                       factor(pubmed.is.animals).L  
-##                                                                         -0.143821  
-##                                                    factor(dataset.in.geo.or.ae).L  
-##                                                                          0.080480  
-## 
+##           year                          param  est ciLow ciHigh     p
+## Estimate  2002 factor(dataset.in.geo.or.ae).L 1.15  0.89   1.49 0.292
+## Estimate1 2003 factor(dataset.in.geo.or.ae).L 1.19  1.01   1.41 0.044
+## Estimate2 2004 factor(dataset.in.geo.or.ae).L 1.29  1.14   1.45 0.000
+## Estimate3 2005 factor(dataset.in.geo.or.ae).L 1.33  1.20   1.47 0.000
+## Estimate4 2006 factor(dataset.in.geo.or.ae).L 1.16  1.06   1.28 0.002
+## Estimate5 2007 factor(dataset.in.geo.or.ae).L 1.08  1.00   1.17 0.045
+## Estimate6 2008 factor(dataset.in.geo.or.ae).L 1.08  0.99   1.18 0.072
+## Estimate7 2009 factor(dataset.in.geo.or.ae).L 1.01  0.92   1.11 0.838
 ```
 
 
 
 ```r
-
-print(calcCI.exp(fit.2008, "factor(dataset.in.geo.or.ae).L"))   
+ggplot(a, aes(x=year, y=est)) + geom_line() + ylim(0, 2) + 
+  geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh))
 ```
 
-
-
-```
-## $param
-## [1] "factor(dataset.in.geo.or.ae).L"
-## 
-## $est
-## Estimate 
-##     1.08 
-## 
-## $CI
-## Estimate Estimate 
-##     0.99     1.18 
-## 
-## $p
-## Pr(>|t|) 
-##    0.072 
-## 
-```
-
-
-
-```r
-
-```
-
+<img src="http://i.imgur.com/coc2y.png" class="plot" />
 
 
 
