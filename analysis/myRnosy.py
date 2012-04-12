@@ -6,8 +6,8 @@ import stat
 import time 
 import sys
 
-command1 = """R -e "library(knitr); knit('statsmall_knit_.md')" """
-command2 = """pandoc -r markdown -w html --include-in-header header.html statsmall.md > statsmall.html"""
+command1 = """R -e "library(knitr); knit('stats_knit_.md')" """
+command2 = """pandoc -r markdown -w html --include-in-header header.html stats.md > stats.html"""
 
 '''
 Watch for changes in all relevant files, in all subdirectories. 

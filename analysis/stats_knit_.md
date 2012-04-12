@@ -27,13 +27,16 @@ end.rcode-->
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
     library(knitr)  
-    knit("statsmall_knit_.md")
+    knit("stats_knit_.md")
 
 or, from the command line
 
-    R -e "library(knitr); knit('statsmall_knit_.md')"
-    pandoc -r markdown -w html -H header.html statsmall.md > statsmall.html
-    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/statsmall.html
+    R -e "library(knitr); knit('stats_knit_.md')"
+    pandoc -r markdown -w html -H header.html stats.md > stats.html
+    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
+
+to see just the R code in a separate .R file called stats_knit_.R, run 
+    R -e "library(knitr); knit('stats_knit_.md', tangle=T)"
 
 <!--begin.rcode workspace, messages=FALSE, echo=FALSE
 # Clear the workspace and load package dependencies: 
@@ -65,7 +68,7 @@ end.rcode-->
 <!--begin.rcode colours, echo=FALSE
 #colourblind friendly palettes from http://wiki.stdout.org/rcookbook/Graphs/Colors%20(ggplot2)
 library(ggplot2)
-cbgRaw = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbgRaw = c("#56B4E9", "#009E73", "#999999", "#E69F00", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbgFillPalette <- scale_fill_manual(values=cbgRaw)
 cbgColourPalette <- scale_colour_manual(values=cbgRaw)
 cbgColorPalette = cbgColourPalette
@@ -297,7 +300,7 @@ qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), dat
 x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
-qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 

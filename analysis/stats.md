@@ -8,18 +8,23 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Thu Apr 12 07:58:13 2012`
+ * Generated on `Thu Apr 12 08:40:25 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
     library(knitr)  
-    knit("statsmall_knit_.md")
+    knit("stats_knit_.md")
 
 or, from the command line
 
-    R -e "library(knitr); knit('statsmall_knit_.md')"
-    pandoc -r markdown -w html -H header.html statsmall.md > statsmall.html
-    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/statsmall.html
+    R -e "library(knitr); knit('stats_knit_.md')"
+    pandoc -r markdown -w html -H header.html stats.md > stats.html
+    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
+
+to see just the R code in a separate .R file called stats_knit_.R, run 
+    R -e "library(knitr); knit('stats_knit_.md', tangle=T)"
+
+
 
 
 
@@ -56,7 +61,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on `Thu Apr 12 07:58:13 2012`.
+Analysis run on `Thu Apr 12 08:40:30 2012`.
 
 ### Identification of relevant studies
 
@@ -246,10 +251,10 @@ gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitations
 ```r
 
 library(ggplot2)
-qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1)
+qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/sV7ia.png" class="plot" />
+<img src="http://i.imgur.com/k3ySA.png" class="plot" />
 
 
 
@@ -279,10 +284,10 @@ The dataset has `1.0555 &times; 10<sup>4</sup>` rows and `86`  columns.
 
 
 ```r
-qplot(nCitedBy.log, data=dfCitationsAttributes)
+qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/fptHb.png" class="plot" />
+<img src="http://i.imgur.com/3b6Yz.png" class="plot" />
 
 
 
@@ -576,80 +581,80 @@ with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), media
 ```r
 
 
-qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/REDbU.png" class="plot" />
+<img src="http://i.imgur.com/Incq4.png" class="plot" />
 
 
 ```r
 
-qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/URkGh.png" class="plot" />
+<img src="http://i.imgur.com/Wdlzd.png" class="plot" />
 
 
 ```r
 
 
 x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
-qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/l4DZq.png" class="plot" />
+<img src="http://i.imgur.com/TK1p9.png" class="plot" />
 
 
 ```r
 
-qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/99TCy.png" class="plot" />
+<img src="http://i.imgur.com/Fdbyc.png" class="plot" />
 
 
 ```r
 
-qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/RV9zp.png" class="plot" />
+<img src="http://i.imgur.com/M2Z57.png" class="plot" />
 
 
 ```r
 
 x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
-qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/ApqeP.png" class="plot" />
+<img src="http://i.imgur.com/7OIuM.png" class="plot" />
 
 
 ```r
 
 x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
-qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/a29c7.png" class="plot" />
+<img src="http://i.imgur.com/ZCDiy.png" class="plot" />
 
 
 ```r
 
 x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
-qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/zod1N.png" class="plot" />
+<img src="http://i.imgur.com/zbF7B.png" class="plot" />
 
 
 ```r
 
 x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
-qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/IRwpS.png" class="plot" />
+<img src="http://i.imgur.com/1MkoQ.png" class="plot" />
 
 
 ```r
