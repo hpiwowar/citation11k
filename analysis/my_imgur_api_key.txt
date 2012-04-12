@@ -1,3 +1,3 @@
 key
-ada612be66fcde0cb8d1f5d7b1ca0942
+REPLACE_THIS_LINE_WITH_YOUR_API_KEY
 #Register for your own imgur key at http://imgur.com/register/api_anon and include it above.  50 uploads per hour.
