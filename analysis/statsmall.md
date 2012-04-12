@@ -8,7 +8,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Wed Apr 11 07:53:41 2012`
+ * Generated on `Thu Apr 12 07:58:13 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -18,8 +18,8 @@ To run this I start R, set the working directory to match where this file is, th
 or, from the command line
 
     R -e "library(knitr); knit('statsmall_knit_.md')"
-    pandoc -r markdown -w html -H header.html statsmall.md > temp.html
-    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/test.html
+    pandoc -r markdown -w html -H header.html statsmall.md > statsmall.html
+    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/statsmall.html
 
 
 
@@ -31,7 +31,48 @@ or, from the command line
 
 # Data availability citation boost consistent with observed rates of data reuse
 
+
+## Goal
+1. Is there an association between data availability and citation rate, independently of important known citation predictors?
+1. Is there evidence any increase in citations is related to data reuse?
+
+## Abstract
+
+see the bottom of this document.
+
+## Introduction
+
+"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection.” [Piwowar, Sharing] 
+
+When research data is made publicly available, is there a demonstrable benefit to scientific progress and the study investigators?  
+
+Citations are often used as a proxy for the scientific contribution of a paper.  Citations are also used in research funding and promotion decisions; Boosting citation rate is thus is a potentially important motivator for publication authors.
+
+Previous studies have explored the relationship between the citation rate of a publication and whether its data was made publicly available.  The first study we know about..... In 2007, co-authors and I published a report that found … .  Others have also found correlations between citation rate and data availability.
+
+Here, we report an analysis based on a large cohort of relatively homogenious studies.  The size our cohort has facilitated controlling for many more variables than previous studies, allowing us to make further progress in isolating the citation rate relationship with data archiving itself.
+
+Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse valuable for reuse [butte] and well-supported by data sharing standards and infrastructure [], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar]
+
 ## Methods
+
+Analysis run on `Thu Apr 12 07:58:13 2012`.
+
+### Identification of relevant studies
+
+### Assessment of data availability
+
+### Study attributes
+
+### Citation data
+
+### Statistical methods
+
+### Data and script availability
+
+### Efficient article writing through the power of Open Access
+Rewriting text for the sake of variation is a poor use of resources.  Quoted text in this paper comes verbatim from an article that licenced under CC-BY, eliminating concerns about fair use.
+
 
 ### Assemble citation dataset
 
@@ -78,6 +119,7 @@ This is a lot of columns: all the columns from the PLoS study plus all of the Sc
 ### Statistical analysis
 
 
+## Results
 
 ####Preprocessing
 
@@ -147,7 +189,6 @@ options(scipen=8)
 The dataset has `1.0555 &times; 10<sup>4</sup>` rows and `86`  columns. 
 
 
-## Results
 
 
 ### Analysis of 11k PLoS articles based on automated determination of data availability
@@ -189,7 +230,7 @@ Distribution by year
 
 
 ```r
-gfm_table(table(dfCitationsAttributesRaw$pubmed_year)/nrow(dfCitationsAttributesRaw))
+gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
 ```
 
 
@@ -200,6 +241,15 @@ gfm_table(table(dfCitationsAttributesRaw$pubmed_year)/nrow(dfCitationsAttributes
 ## | 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
 ```
 
+
+
+```r
+
+library(ggplot2)
+qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1)
+```
+
+<img src="http://i.imgur.com/sV7ia.png" class="plot" />
 
 
 
@@ -246,7 +296,7 @@ summary(dfCitationsAttributes$nCitedBy)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     0.0     7.0    16.0    29.5    34.0  2560.0 
+##     0.0     7.0    16.0    31.5    35.0  2640.0 
 ```
 
 
@@ -335,7 +385,7 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 ```
 
-<img src="http://i.imgur.com/X9kD2.png" class="plot" />
+<img src="http://i.imgur.com/vr55s.png" class="plot" />
 
 
     
@@ -682,26 +732,26 @@ gfm_table(anova(fit))
 ```
 ## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------------------|---------|---------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00    | 157.47  | 78.74   | 148.18  | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1625.79 | 812.90  | 1529.82 | 0.00   |
-## | rcs(first.author.num.prev.pubs.tr, 3)        | 2.00    | 6.63    | 3.32    | 6.24    | 0.00   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00    | 185.61  | 92.80   | 174.65  | 0.00   |
-## | rcs(first.author.year.first.pub.ago.tr, 3)   | 2.00    | 3.42    | 1.71    | 3.22    | 0.04   |
-## | rcs(last.author.num.prev.pubs.tr, 3)         | 2.00    | 6.14    | 3.07    | 5.78    | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00    | 113.18  | 56.59   | 106.50  | 0.00   |
-## | rcs(last.author.year.first.pub.ago.tr, 3)    | 2.00    | 2.95    | 1.48    | 2.78    | 0.06   |
-## | country.usa                                  | 1.00    | 4.37    | 4.37    | 8.22    | 0.00   |
-## | pubmed.is.open.access                        | 1.00    | 4.52    | 4.52    | 8.50    | 0.00   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00    | 11.08   | 5.54    | 10.43   | 0.00   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00    | 40.96   | 20.48   | 38.54   | 0.00   |
-## | rcs(journal.cited.halflife, 3)               | 2.00    | 5.25    | 2.63    | 4.94    | 0.01   |
-## | rcs(journal.impact.factor.tr, 3)             | 2.00    | 351.48  | 175.74  | 330.73  | 0.00   |
-## | factor(pubmed.is.cancer)                     | 1.00    | 14.15   | 14.15   | 26.64   | 0.00   |
-## | factor(pubmed.is.animals)                    | 1.00    | 12.49   | 12.49   | 23.51   | 0.00   |
-## | factor(pubmed.is.plants)                     | 1.00    | 15.35   | 15.35   | 28.89   | 0.00   |
-## | factor(pubmed.is.core.clinical.journal)      | 1.00    | 3.89    | 3.89    | 7.32    | 0.01   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00    | 21.69   | 21.69   | 40.82   | 0.00   |
-## | Residuals                                    | 4240.00 | 2253.00 | 0.53    |         |        |
+## | rcs(num.authors.tr, 3)                       | 2.00    | 165.11  | 82.56   | 154.71  | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1833.50 | 916.75  | 1717.97 | 0.00   |
+## | rcs(first.author.num.prev.pubs.tr, 3)        | 2.00    | 6.08    | 3.04    | 5.70    | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00    | 186.36  | 93.18   | 174.61  | 0.00   |
+## | rcs(first.author.year.first.pub.ago.tr, 3)   | 2.00    | 3.22    | 1.61    | 3.02    | 0.05   |
+## | rcs(last.author.num.prev.pubs.tr, 3)         | 2.00    | 7.51    | 3.76    | 7.04    | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00    | 122.47  | 61.24   | 114.76  | 0.00   |
+## | rcs(last.author.year.first.pub.ago.tr, 3)    | 2.00    | 3.29    | 1.64    | 3.08    | 0.05   |
+## | country.usa                                  | 1.00    | 4.13    | 4.13    | 7.74    | 0.01   |
+## | pubmed.is.open.access                        | 1.00    | 4.45    | 4.45    | 8.34    | 0.00   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00    | 10.68   | 5.34    | 10.00   | 0.00   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00    | 41.15   | 20.57   | 38.55   | 0.00   |
+## | rcs(journal.cited.halflife, 3)               | 2.00    | 4.25    | 2.13    | 3.98    | 0.02   |
+## | rcs(journal.impact.factor.tr, 3)             | 2.00    | 354.74  | 177.37  | 332.39  | 0.00   |
+## | factor(pubmed.is.cancer)                     | 1.00    | 13.70   | 13.70   | 25.68   | 0.00   |
+## | factor(pubmed.is.animals)                    | 1.00    | 13.38   | 13.38   | 25.08   | 0.00   |
+## | factor(pubmed.is.plants)                     | 1.00    | 15.19   | 15.19   | 28.46   | 0.00   |
+## | factor(pubmed.is.core.clinical.journal)      | 1.00    | 4.48    | 4.48    | 8.39    | 0.00   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00    | 22.79   | 22.79   | 42.71   | 0.00   |
+## | Residuals                                    | 4341.00 | 2316.46 | 0.53    |         |        |
 ```
 
 
@@ -728,69 +778,69 @@ fit
 ## 
 ## Coefficients:
 ##                                                                       (Intercept)  
-##                                                                         21.293330  
+##                                                                         21.615597  
 ##                                              rcs(num.authors.tr, 3)num.authors.tr  
-##                                                                          0.221304  
+##                                                                          0.231614  
 ##                                             rcs(num.authors.tr, 3)num.authors.tr'  
-##                                                                         -0.000298  
+##                                                                         -0.004523  
 ##                                rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
-##                                                                         -0.000564  
+##                                                                         -0.000572  
 ##                               rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
-##                                                                         -0.000247  
+##                                                                         -0.000229  
 ##                rcs(first.author.num.prev.pubs.tr, 3)first.author.num.prev.pubs.tr  
-##                                                                         -0.025108  
+##                                                                         -0.025957  
 ##               rcs(first.author.num.prev.pubs.tr, 3)first.author.num.prev.pubs.tr'  
-##                                                                          0.000182  
+##                                                                          0.002993  
 ##      rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr  
-##                                                                          0.044084  
+##                                                                          0.040807  
 ##     rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr'  
-##                                                                         -0.040443  
+##                                                                         -0.036931  
 ##      rcs(first.author.year.first.pub.ago.tr, 3)first.author.year.first.pub.ago.tr  
-##                                                                         -0.071372  
+##                                                                         -0.064497  
 ##     rcs(first.author.year.first.pub.ago.tr, 3)first.author.year.first.pub.ago.tr'  
-##                                                                          0.033941  
+##                                                                          0.027324  
 ##                  rcs(last.author.num.prev.pubs.tr, 3)last.author.num.prev.pubs.tr  
-##                                                                         -0.023844  
+##                                                                         -0.025988  
 ##                 rcs(last.author.num.prev.pubs.tr, 3)last.author.num.prev.pubs.tr'  
-##                                                                          0.023037  
+##                                                                          0.024304  
 ##        rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr  
-##                                                                          0.008025  
+##                                                                          0.008248  
 ##       rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr'  
-##                                                                         -0.005013  
+##                                                                         -0.004732  
 ##        rcs(last.author.year.first.pub.ago.tr, 3)last.author.year.first.pub.ago.tr  
-##                                                                          0.027816  
+##                                                                          0.033737  
 ##       rcs(last.author.year.first.pub.ago.tr, 3)last.author.year.first.pub.ago.tr'  
-##                                                                         -0.050297  
+##                                                                         -0.055195  
 ##                                                                     country.usa.L  
-##                                                                          0.034654  
+##                                                                          0.034038  
 ##                                                           pubmed.is.open.access.L  
-##                                                                         -0.073598  
+##                                                                         -0.071783  
 ##  rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score  
-##                                                                          0.095489  
+##                                                                          0.085859  
 ## rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score'  
-##                                                                         -0.083236  
+##                                                                         -0.070439  
 ##                  rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr  
-##                                                                         -0.002671  
+##                                                                         -0.002509  
 ##                 rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr'  
-##                                                                          0.005990  
+##                                                                          0.005606  
 ##                              rcs(journal.cited.halflife, 3)journal.cited.halflife  
-##                                                                          0.003874  
+##                                                                          0.003019  
 ##                             rcs(journal.cited.halflife, 3)journal.cited.halflife'  
-##                                                                          0.007259  
+##                                                                          0.009822  
 ##                          rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
-##                                                                          0.938648  
+##                                                                          0.923689  
 ##                         rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
-##                                                                         -0.519853  
+##                                                                         -0.489480  
 ##                                                        factor(pubmed.is.cancer).L  
-##                                                                         -0.061754  
+##                                                                         -0.060094  
 ##                                                       factor(pubmed.is.animals).L  
-##                                                                         -0.053626  
+##                                                                         -0.056189  
 ##                                                        factor(pubmed.is.plants).L  
-##                                                                          0.170622  
+##                                                                          0.168610  
 ##                                         factor(pubmed.is.core.clinical.journal).L  
-##                                                                         -0.077720  
+##                                                                         -0.082508  
 ##                                                    factor(dataset.in.geo.or.ae).L  
-##                                                                          0.119718  
+##                                                                          0.122251  
 ## 
 ```
 
@@ -1042,7 +1092,7 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
   scale_y_continuous(limits=c(0, 2.5), name='citations proportion for \n(papers with available data)/(those without)')
 ```
 
-<img src="http://i.imgur.com/Y4TSC.png" class="plot" />
+<img src="http://i.imgur.com/xQOIe.png" class="plot" />
 
 
 
@@ -1062,7 +1112,7 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 
 ```
-## [1] 209  86
+## [1] 308  86
 ```
 
 
@@ -1084,11 +1134,11 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 ```
 ## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)    | 2.00   | 0.86   | 0.43    | 0.56    | 0.57   |
-## | country.usa                      | 1.00   | 0.14   | 0.14    | 0.18    | 0.67   |
-## | rcs(journal.impact.factor.tr, 3) | 2.00   | 49.59  | 24.80   | 32.18   | 0.00   |
-## | factor(dataset.in.geo.or.ae)     | 1.00   | 1.74   | 1.74    | 2.26    | 0.13   |
-## | Residuals                        | 196.00 | 151.03 | 0.77    |         |        |
+## | rcs(pubmed.date.in.pubmed, 3)    | 2.00   | 5.33   | 2.67    | 3.27    | 0.04   |
+## | country.usa                      | 1.00   | 0.00   | 0.00    | 0.01    | 0.94   |
+## | rcs(journal.impact.factor.tr, 3) | 2.00   | 68.86  | 34.43   | 42.26   | 0.00   |
+## | factor(dataset.in.geo.or.ae)     | 1.00   | 4.35   | 4.35    | 5.34    | 0.02   |
+## | Residuals                        | 294.00 | 239.53 | 0.81    |         |        |
 ```
 
 
@@ -1109,19 +1159,19 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 ## 
 ## Coefficients:
 ##                                               (Intercept)  
-##                                                  42.12347  
+##                                                 26.970315  
 ##        rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
-##                                                  -0.00113  
+##                                                 -0.000699  
 ##       rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
-##                                                   0.00141  
+##                                                  0.000211  
 ##                                             country.usa.L  
-##                                                  -0.00261  
+##                                                  0.015396  
 ##  rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
-##                                                   0.98676  
+##                                                  0.908247  
 ## rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
-##                                                  -0.13818  
+##                                                 -0.080694  
 ##                            factor(dataset.in.geo.or.ae).L  
-##                                                   0.27128  
+##                                                  0.383500  
 ## 
 ```
 
@@ -1136,7 +1186,7 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 ```
 ##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.31  0.92   1.87 0.134
+## Estimate factor(dataset.in.geo.or.ae).L 1.47  1.06   2.03 0.021
 ```
 
 
@@ -1160,11 +1210,11 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 ```
 ## |                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |------------------------------|--------|--------|---------|---------|--------|
-## | pubmed.date.in.pubmed        | 1.00   | 0.42   | 0.42    | 0.55    | 0.46   |
-## | country.usa                  | 1.00   | 0.12   | 0.12    | 0.16    | 0.69   |
-## | journal.impact.factor.tr     | 1.00   | 48.17  | 48.17   | 62.53   | 0.00   |
-## | factor(dataset.in.geo.or.ae) | 1.00   | 2.09   | 2.09    | 2.72    | 0.10   |
-## | Residuals                    | 198.00 | 152.55 | 0.77    |         |        |
+## | pubmed.date.in.pubmed        | 1.00   | 4.87   | 4.87    | 6.01    | 0.01   |
+## | country.usa                  | 1.00   | 0.00   | 0.00    | 0.01    | 0.94   |
+## | journal.impact.factor.tr     | 1.00   | 68.74  | 68.74   | 84.83   | 0.00   |
+## | factor(dataset.in.geo.or.ae) | 1.00   | 4.60   | 4.60    | 5.67    | 0.02   |
+## | Residuals                    | 296.00 | 239.87 | 0.81    |         |        |
 ```
 
 
@@ -1185,11 +1235,11 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 ## 
 ## Coefficients:
 ##                    (Intercept)           pubmed.date.in.pubmed  
-##                      -7.13e-01                        7.64e-05  
+##                      20.818070                       -0.000519  
 ##                  country.usa.L        journal.impact.factor.tr  
-##                       1.23e-05                        7.93e-01  
+##                       0.016077                        0.800118  
 ## factor(dataset.in.geo.or.ae).L  
-##                       2.95e-01  
+##                       0.392178  
 ## 
 ```
 
@@ -1204,7 +1254,7 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 ```
 ##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.34  0.95   1.91 0.101
+## Estimate factor(dataset.in.geo.or.ae).L 1.48  1.07   2.04 0.018
 ```
 
 
@@ -1273,8 +1323,16 @@ with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
 
 
 ```
-##  Length   Class    Mode 
-##       3 formula    call 
+## nCitedBy    N=226, 4 Missing
+## 
+## +---------+---------------------------+---+--------+
+## |         |                           |  N|nCitedBy|
+## +---------+---------------------------+---+--------+
+## |isCreated|    created-microarray-data|206|   31.86|
+## |         |created-microarray-data-not| 20|   26.30|
+## +---------+---------------------------+---+--------+
+## |  Overall|                           |226|   31.37|
+## +---------+---------------------------+---+--------+
 ```
 
 
@@ -1286,8 +1344,16 @@ with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
 
 
 ```
-##  Length   Class    Mode 
-##       3 formula    call 
+## log(1 + nCitedBy)    N=226, 4 Missing
+## 
+## +---------+---------------------------+---+-----------------+
+## |         |                           |  N|log(1 + nCitedBy)|
+## +---------+---------------------------+---+-----------------+
+## |isCreated|    created-microarray-data|206|            2.991|
+## |         |created-microarray-data-not| 20|            2.632|
+## +---------+---------------------------+---+-----------------+
+## |  Overall|                           |226|            2.959|
+## +---------+---------------------------+---+-----------------+
 ```
 
 
@@ -1298,19 +1364,30 @@ library(ggplot2)
 
 rm(.Random.seed) 
 set.seed(42)
+```
+
+
+
+```
+## Error: .Random.seed is not an integer vector but of type 'promise'
+```
+
+
+
+```r
 
 # Do they look different
 qplot(nCitedBy, data=dfCitationsAnnotated)
 ```
 
-<img src="http://i.imgur.com/fcXJO.png" class="plot" />
+<img src="http://i.imgur.com/AGvQY.png" class="plot" />
 
 
 ```r
 qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
 ```
 
-<img src="http://i.imgur.com/aMyMM.png" class="plot" />
+<img src="http://i.imgur.com/r4F1y.png" class="plot" />
 
 
 ```r
@@ -1318,7 +1395,12 @@ qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") +
   geom_jitter(position=position_jitter(width=.1), color="blue")
 ```
 
-<img src="http://i.imgur.com/zjll1.png" class="plot" />
+
+
+```
+## Error: .Random.seed is not an integer vector but of type 'promise'
+```
+
 
 
 ```r
@@ -1440,7 +1522,13 @@ print(calcCI.exp(fit.annotated.merged, "dataset.in.geo.or.ae.L"))
 
 
 ```r
+dim(dat.annotated.merged.created)
+```
 
+
+
+```
+## [1] 210 147
 ```
 
 
@@ -1457,4 +1545,64 @@ print(calcCI.exp(fit.annotated.merged, "dataset.in.geo.or.ae.L"))
 #### Description
 
 #### Univariate
+
+## Discussion
+
+### Limitations
+- Underestimate of total reuse (not indexed, attributed in citations in SI, by accession number)
+- Citations are not the main reason to make data available
+- Other metrics of reuse.  practicioners, educational use
+- These don’t just increase its impact by 10%, opens it up to whole new avenues of use.  It would be interesting to understand the impact these papers made in the papers that cited them; my guess would be that it is higher for the incremental citations for papers whose data is avail.
+
+## References
+
+### Other studies of citation benefit:
+
+- Gleditsch, Nils Petter & Håvard Strand, 2003. 'Posting Your Data: Will You Be Scooped or Will You Be Famous?', International Studies Perspectives 4(1): 89–97.
+- Henneken, Edwin A and Accomazzi, Alberto.  Linking to Data - Effect on Citation Rates in Astronomy. eprint arXiv:1111.3618 11/2011
+- Ioannidis et al. Repeatability of published microarray gene expression analyses  Nature Genetics 41, 149 - 155 (2009) .  doi:10.1038/ng.295
+- Pienta et al The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+- Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
+- Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
+
+### Used in this analysis
+
+- Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
+- Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
+- Heather A Piwowar, Wendy W Chapman (2010)  Recall and bias of retrieving gene expression microarray datasets through PubMed identifiers  Journal of Biomedical Discovery and Collaboration.  J Biomed Discov Collab. 2010; 5: 7–20.
+- Heather A. Piwowar; Jonathan D. Carlson; and Todd J. Vision. Beginning to Track 1000 Datasets from Public Repositories into the Published Literature.  ASIS&T 2011.
+
+### Also relevant:
+
+- (Data Usage Index):  Chavan, V. S., & Ingwersen, P. (2009). Towards a data publishing framework for primary biodiversity data: challenges and potentials for the biodiversity informatics community. BMC Bioinformatics, 10(Suppl 14), S2. Retrieved from http://www.biomedcentral.com/1471-2105/10/S14/S2
+- Piwowar, H. A., Vision, T. J., & Whitlock, M. C. (2011). Data archiving is a good investment. Nature, 473(7347), 285-285. Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved. Retrieved from http://dx.doi.org/10.1038/473285a
+- Bollen J, Van de Sompel H, Hagberg A, Chute R (2009) A Principal Component Analysis of 39 Scientific Impact Measures. PLoS ONE 4(6): e6022. doi:10.1371/journal.pone.0006022
+- Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., & McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991
+- Definitely some things about move to citation of datasets themselves
+- altmetrics on CV, away from impact factor
+
+### Other studies of correlation with citations:
+
+- Bioinformatics, 25, 3303-3309 (2009). "Predicting citation count of Bioinformatics papers within four years of publication. Ibanez, A., Larrañaga, P. and Bielza, C.  http://bioinformatics.oxfordjournals.org/content/25/24/3303.full
+
+## Acknowledgements
+
+- CISTI for Scopus access
+- British Library
+- Angus, Todd, Jonathan, Estephanie
+- my funding, Jonathan + Estephanie’s funding
+
+
+## Abstract
+
+### Background
+Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
+
+### Methods and Results
+In a multivariate linear regression on 10589 studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 12% (95% confidence interval: 8% to 16%) more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 6% (95% CI: 3% to 11%) of citations to those studies were in the context of data reuse attribution.
+
+### Discussion
+This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.
+
 

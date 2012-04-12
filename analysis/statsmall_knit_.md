@@ -3,8 +3,15 @@
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 render_gfm() # use GFM hooks for output
 
-# use imgur for hosting figures.  This is the default.
-opts_knit$set(upload.fun=imgur_upload) # upload all images to imgur.com
+# use imgur for hosting figures
+# go to my_imgur_api_key.txt and add your own api key
+
+opts_knit$set(upload.fun=function(file) {
+  my_imgur_api_key = read.table("my_imgur_api_key.txt", header=TRUE, sep="\t")
+  imgur_upload(file, key=my_imgur_api_key$key)
+  })
+
+# use html style links to plots, rather than markdown style         
 knit_hooks$set(plot = hook_plot_html)
 build_dep()
  
@@ -25,8 +32,8 @@ To run this I start R, set the working directory to match where this file is, th
 or, from the command line
 
     R -e "library(knitr); knit('statsmall_knit_.md')"
-    pandoc -r markdown -w html -H header.html statsmall.md > temp.html
-    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/test.html
+    pandoc -r markdown -w html -H header.html statsmall.md > statsmall.html
+    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/statsmall.html
 
 <!--begin.rcode workspace, messages=FALSE, echo=FALSE
 # Clear the workspace and load package dependencies: 
@@ -41,7 +48,7 @@ require(ascii, quietly=T)
 options(scipen=8)
 end.rcode-->
 
-<!-- begin.rcode gfmtable, echo=FALSE
+<!--begin.rcode gfmtable, echo=FALSE
 # From https://gist.github.com/2050761
 gfm_table <- function(x, ...){
   require(ascii)
@@ -53,13 +60,62 @@ gfm_table <- function(x, ...){
 } 
 #library(ascii)
 #gfm_table(anova(fit))
-end.rcode -->
+end.rcode-->
 
+<!--begin.rcode colours, echo=FALSE
+#colourblind friendly palettes from http://wiki.stdout.org/rcookbook/Graphs/Colors%20(ggplot2)
+library(ggplot2)
+cbgRaw = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbgFillPalette <- scale_fill_manual(values=cbgRaw)
+cbgColourPalette <- scale_colour_manual(values=cbgRaw)
+cbgColorPalette = cbgColourPalette
+end.rcode-->
 
 
 # Data availability citation boost consistent with observed rates of data reuse
 
+
+## Goal
+1. Is there an association between data availability and citation rate, independently of important known citation predictors?
+1. Is there evidence any increase in citations is related to data reuse?
+
+## Abstract
+
+see the bottom of this document.
+
+## Introduction
+
+"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection.” [Piwowar, Sharing] 
+
+When research data is made publicly available, is there a demonstrable benefit to scientific progress and the study investigators?  
+
+Citations are often used as a proxy for the scientific contribution of a paper.  Citations are also used in research funding and promotion decisions; Boosting citation rate is thus is a potentially important motivator for publication authors.
+
+Previous studies have explored the relationship between the citation rate of a publication and whether its data was made publicly available.  The first study we know about..... In 2007, co-authors and I published a report that found … .  Others have also found correlations between citation rate and data availability.
+
+Here, we report an analysis based on a large cohort of relatively homogenious studies.  The size our cohort has facilitated controlling for many more variables than previous studies, allowing us to make further progress in isolating the citation rate relationship with data archiving itself.
+
+Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse valuable for reuse [butte] and well-supported by data sharing standards and infrastructure [], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar]
+
 ## Methods
+
+Analysis run on <!--rinline date() -->.
+
+### Identification of relevant studies
+
+### Assessment of data availability
+
+### Study attributes
+
+### Citation data
+
+### Statistical methods
+
+### Data and script availability
+
+### Efficient article writing through the power of Open Access
+Rewriting text for the sake of variation is a poor use of resources.  Quoted text in this paper comes verbatim from an article that licenced under CC-BY, eliminating concerns about fair use.
+
 
 ### Assemble citation dataset
 
@@ -91,6 +147,7 @@ This is a lot of columns: all the columns from the PLoS study plus all of the Sc
 ### Statistical analysis
 
 
+## Results
 
 ####Preprocessing
 
@@ -123,7 +180,6 @@ end.rcode-->
 The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinline dim(dfCitationsAttributes)[2] -->  columns. 
 
 
-## Results
 
 
 ### Analysis of 11k PLoS articles based on automated determination of data availability
@@ -143,7 +199,11 @@ end.rcode-->
 
 Distribution by year
 <!--begin.rcode
-gfm_table(table(dfCitationsAttributesRaw$pubmed_year)/nrow(dfCitationsAttributesRaw))
+gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
+
+library(ggplot2)
+qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
+
 end.rcode-->
 
 Distribution by data availability
@@ -157,7 +217,7 @@ The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinli
 
 
 <!--begin.rcode libraryggplot2, message=FALSE
-qplot(nCitedBy.log, data=dfCitationsAttributes)
+qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
 end.rcode-->
 
 <!--begin.rcode 
@@ -229,29 +289,29 @@ citation_breaks = c(1, 10, 40, 100, 400, 1000)
 with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
 
 
-qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
-qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 
 x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
-qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
 
-qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
-qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
-qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
-qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
-qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks)
+qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 
 
@@ -493,4 +553,64 @@ end.rcode-->
 #### Description
 
 #### Univariate
+
+## Discussion
+
+### Limitations
+- Underestimate of total reuse (not indexed, attributed in citations in SI, by accession number)
+- Citations are not the main reason to make data available
+- Other metrics of reuse.  practicioners, educational use
+- These don’t just increase its impact by 10%, opens it up to whole new avenues of use.  It would be interesting to understand the impact these papers made in the papers that cited them; my guess would be that it is higher for the incremental citations for papers whose data is avail.
+
+## References
+
+### Other studies of citation benefit:
+
+- Gleditsch, Nils Petter & Håvard Strand, 2003. 'Posting Your Data: Will You Be Scooped or Will You Be Famous?', International Studies Perspectives 4(1): 89–97.
+- Henneken, Edwin A and Accomazzi, Alberto.  Linking to Data - Effect on Citation Rates in Astronomy. eprint arXiv:1111.3618 11/2011
+- Ioannidis et al. Repeatability of published microarray gene expression analyses  Nature Genetics 41, 149 - 155 (2009) .  doi:10.1038/ng.295
+- Pienta et al The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+- Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
+- Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
+
+### Used in this analysis
+
+- Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
+- Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
+- Heather A Piwowar, Wendy W Chapman (2010)  Recall and bias of retrieving gene expression microarray datasets through PubMed identifiers  Journal of Biomedical Discovery and Collaboration.  J Biomed Discov Collab. 2010; 5: 7–20.
+- Heather A. Piwowar; Jonathan D. Carlson; and Todd J. Vision. Beginning to Track 1000 Datasets from Public Repositories into the Published Literature.  ASIS&T 2011.
+
+### Also relevant:
+
+- (Data Usage Index):  Chavan, V. S., & Ingwersen, P. (2009). Towards a data publishing framework for primary biodiversity data: challenges and potentials for the biodiversity informatics community. BMC Bioinformatics, 10(Suppl 14), S2. Retrieved from http://www.biomedcentral.com/1471-2105/10/S14/S2
+- Piwowar, H. A., Vision, T. J., & Whitlock, M. C. (2011). Data archiving is a good investment. Nature, 473(7347), 285-285. Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved. Retrieved from http://dx.doi.org/10.1038/473285a
+- Bollen J, Van de Sompel H, Hagberg A, Chute R (2009) A Principal Component Analysis of 39 Scientific Impact Measures. PLoS ONE 4(6): e6022. doi:10.1371/journal.pone.0006022
+- Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., & McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991
+- Definitely some things about move to citation of datasets themselves
+- altmetrics on CV, away from impact factor
+
+### Other studies of correlation with citations:
+
+- Bioinformatics, 25, 3303-3309 (2009). "Predicting citation count of Bioinformatics papers within four years of publication. Ibanez, A., Larrañaga, P. and Bielza, C.  http://bioinformatics.oxfordjournals.org/content/25/24/3303.full
+
+## Acknowledgements
+
+- CISTI for Scopus access
+- British Library
+- Angus, Todd, Jonathan, Estephanie
+- my funding, Jonathan + Estephanie’s funding
+
+
+## Abstract
+
+### Background
+Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
+
+### Methods and Results
+In a multivariate linear regression on 10589 studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 12% (95% confidence interval: 8% to 16%) more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 6% (95% CI: 3% to 11%) of citations to those studies were in the context of data reuse attribution.
+
+### Discussion
+This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.
+
 
