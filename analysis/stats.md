@@ -8,7 +8,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Wed May  9 09:23:00 2012`
+ * Generated on `Thu May 10 09:26:35 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -43,7 +43,7 @@ to see just the R code in a separate .R file called stats_knit_.R, run
 
 ## Abstract
 
-see the bottom of this document.
+See the [end of this document](#abstract-1) (at the end so it can pull in results from the R analysis).
 
 ## Introduction
 
@@ -61,7 +61,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on `Wed May  9 09:23:01 2012`.
+Analysis run on `Thu May 10 09:26:37 2012`.
 
 ### Identification of relevant studies
 
@@ -260,7 +260,7 @@ set.seed(42)
 qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/9Le90.png" class="plot" />
+<img src="http://i.imgur.com/VRGRt.png" class="plot" />
 
 
 ```r
@@ -308,7 +308,7 @@ set.seed(42)
 qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/csPaT.png" class="plot" />
+<img src="http://i.imgur.com/EZs6X.png" class="plot" />
 
 
 
@@ -421,7 +421,7 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 ```
 
-<img src="http://i.imgur.com/OLx0S.png" class="plot" />
+<img src="http://i.imgur.com/sInsA.png" class="plot" />
 
 
 ```r
@@ -564,7 +564,7 @@ topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 ```
 
-<img src="http://i.imgur.com/JIdQr.png" class="plot" />
+<img src="http://i.imgur.com/Gi15z.png" class="plot" />
 
 
 ```
@@ -622,7 +622,7 @@ with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), media
 qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/Mtemo.png" class="plot" />
+<img src="http://i.imgur.com/5KpB6.png" class="plot" />
 
 
 ```r
@@ -630,7 +630,7 @@ qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.s
 qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/t67Lf.png" class="plot" />
+<img src="http://i.imgur.com/vfDDU.png" class="plot" />
 
 
 ```r
@@ -640,7 +640,7 @@ x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/69hCg.png" class="plot" />
+<img src="http://i.imgur.com/T0vky.png" class="plot" />
 
 
 ```r
@@ -648,7 +648,7 @@ qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), 
 qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/gvkKa.png" class="plot" />
+<img src="http://i.imgur.com/1Bv3l.png" class="plot" />
 
 
 ```r
@@ -656,7 +656,7 @@ qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.o
 qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/djttN.png" class="plot" />
+<img src="http://i.imgur.com/JMTpy.png" class="plot" />
 
 
 ```r
@@ -665,7 +665,7 @@ x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
 qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/nmhGA.png" class="plot" />
+<img src="http://i.imgur.com/hrdS1.png" class="plot" />
 
 
 ```r
@@ -674,7 +674,7 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
 qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/hJcmq.png" class="plot" />
+<img src="http://i.imgur.com/WXO6D.png" class="plot" />
 
 
 ```r
@@ -683,7 +683,7 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
 qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/WKKjy.png" class="plot" />
+<img src="http://i.imgur.com/z9IzE.png" class="plot" />
 
 
 ```r
@@ -692,7 +692,7 @@ x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
 qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/qn5mA.png" class="plot" />
+<img src="http://i.imgur.com/JylVs.png" class="plot" />
 
 
 ```r
@@ -890,8 +890,8 @@ fit
 
 
 ```r
-
-print(calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L"))   
+citation.boost.coefs = calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L")
+print(citation.boost.coefs)
 ```
 
 
@@ -903,11 +903,12 @@ print(calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L"))
 
 
 
-```r
 
-```
-
-
+Estimate of citation boost is 
+`13`%
+with 95% confidence intervals [`9`%
+, `17`% ]
+(p=`0.00`)
 
 
 ##### Now by year
@@ -1135,7 +1136,7 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
   scale_y_continuous(limits=c(0, 2.5), name='citations proportion for \n(papers with available data)/(those without)')
 ```
 
-<img src="http://i.imgur.com/QZWK3.png" class="plot" />
+<img src="http://i.imgur.com/830PK.png" class="plot" />
 
 
 
@@ -1412,14 +1413,14 @@ set.seed(42)
 qplot(nCitedBy, data=dfCitationsAnnotated)
 ```
 
-<img src="http://i.imgur.com/02FRJ.png" class="plot" />
+<img src="http://i.imgur.com/6nlM6.png" class="plot" />
 
 
 ```r
 qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
 ```
 
-<img src="http://i.imgur.com/KhdWX.png" class="plot" />
+<img src="http://i.imgur.com/qs3D8.png" class="plot" />
 
 
 ```r
@@ -1427,7 +1428,7 @@ qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") +
   geom_jitter(position=position_jitter(width=.1), color="blue")
 ```
 
-<img src="http://i.imgur.com/SlQ8G.png" class="plot" />
+<img src="http://i.imgur.com/ldKei.png" class="plot" />
 
 
 
@@ -1565,6 +1566,46 @@ dim(dat.annotated.merged.created)
 
 
 
+## Dig into tracking 1k
+
+
+
+```r
+
+dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
+
+dim(dfTracking1k)
+```
+
+
+
+```
+## [1] 852  38
+```
+
+
+
+```r
+#names(dfTracking1k)
+
+dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
+
+num.GEO.total = dim(dfTracking1k.GEO.subset)[1]
+num.GEO.reused = dim(subset(dfTracking1k.GEO.subset, TAG.dataset.reused=="dataset reused"))[1]
+
+annotated.prop = binconf(num.GEO.reused, num.GEO.total)
+```
+
+
+
+
+
+Proportion of citations to datasets that were in the context of data use (n=`138`):
+`6`%
+with 95% confidence intervals [`3`%
+, `11`% ]
+
+
 #### Description
 
 #### Univariate
@@ -1633,7 +1674,16 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
 
 ### Methods and Results
-In a multivariate linear regression on 10589 studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 12% (95% confidence interval: 8% to 16%) more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 6% (95% CI: 3% to 11%) of citations to those studies were in the context of data reuse attribution.
+In a multivariate linear regression on `10555` studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
+`13`%
+(95% confidence interval: [`9`%
+to `17`%)
+more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 
+`6`%
+(95% CI: `3`%
+to `11`%, 
+n=`138`)
+of citations to those studies were in the context of data reuse attribution.
 
 ### Discussion
 This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.

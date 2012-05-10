@@ -6,7 +6,7 @@ render_gfm() # use GFM hooks for output
 # use imgur for hosting figures
 # go to my_imgur_api_key.txt and add your own api key
 
-upload_images = TRUE
+upload_images = FALSE
 
 if (upload_images) {
  opts_knit$set(upload.fun=function(file) {
@@ -92,7 +92,7 @@ end.rcode-->
 
 ## Abstract
 
-see the bottom of this document.
+See the [end of this document](#abstract-1) (at the end so it can pull in results from the R analysis).
 
 ## Introduction
 
@@ -409,11 +409,17 @@ factor(dataset.in.geo.or.ae)
 gfm_table(anova(fit))
 
 fit
-
-print(calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L"))   
-
+citation.boost.coefs = calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L")
+print(citation.boost.coefs)
 
 end.rcode-->
+
+Estimate of citation boost is 
+<!--rinline 100*(citation.boost.coefs$est-1) -->%
+with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs$ciLow-1) -->%
+, <!--rinline 100*(citation.boost.coefs$ciHigh-1) -->% ]
+(p=<!--rinline format(citation.boost.coefs$p, nsmall = 2) -->)
+
 
 ##### Now by year
 
@@ -574,6 +580,31 @@ dim(dat.annotated.merged.created)
 
 end.rcode-->
 
+## Dig into tracking 1k
+
+<!--begin.rcode
+
+dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
+
+dim(dfTracking1k)
+#names(dfTracking1k)
+
+dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
+
+num.GEO.total = dim(dfTracking1k.GEO.subset)[1]
+num.GEO.reused = dim(subset(dfTracking1k.GEO.subset, TAG.dataset.reused=="dataset reused"))[1]
+
+annotated.prop = binconf(num.GEO.reused, num.GEO.total)
+
+end.rcode-->
+
+
+Proportion of citations to datasets that were in the context of data use (n=<!--rinline num.GEO.total -->):
+<!--rinline 100*(round(annotated.prop[1], 2)) -->%
+with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->%
+, <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
+
+
 #### Description
 
 #### Univariate
@@ -642,7 +673,16 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
 
 ### Methods and Results
-In a multivariate linear regression on 10589 studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 12% (95% confidence interval: 8% to 16%) more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 6% (95% CI: 3% to 11%) of citations to those studies were in the context of data reuse attribution.
+In a multivariate linear regression on <!--rinline dim(dfCitationsAttributesRaw)[1] --> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
+<!--rinline 100*(citation.boost.coefs$est-1) -->%
+(95% confidence interval: [<!--rinline 100*(citation.boost.coefs$ciLow-1) -->%
+to <!--rinline 100*(citation.boost.coefs$ciHigh-1) -->%)
+more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 
+<!--rinline 100*(round(annotated.prop[1], 2)) -->%
+(95% CI: <!--rinline 100*(round(annotated.prop[2], 2)) -->%
+to <!--rinline 100*(round(annotated.prop[3], 2)) -->%, 
+n=<!--rinline num.GEO.total -->)
+of citations to those studies were in the context of data reuse attribution.
 
 ### Discussion
 This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.
