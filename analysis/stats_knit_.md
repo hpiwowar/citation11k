@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
+<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 render_gfm() # use GFM hooks for output
@@ -6,10 +6,14 @@ render_gfm() # use GFM hooks for output
 # use imgur for hosting figures
 # go to my_imgur_api_key.txt and add your own api key
 
-opts_knit$set(upload.fun=function(file) {
+upload_images = TRUE
+
+if (upload_images) {
+ opts_knit$set(upload.fun=function(file) {
   my_imgur_api_key = read.table("my_imgur_api_key.txt", header=TRUE, sep="\t")
   imgur_upload(file, key=my_imgur_api_key$key)
   })
+}
 
 # use html style links to plots, rather than markdown style         
 knit_hooks$set(plot = hook_plot_html)
@@ -49,29 +53,33 @@ require(polycor, quietly=T)
 require(ascii, quietly=T)
 
 options(scipen=8)
+
+source("helpers.R")
+source("preprocess_raw_data.R")
+
 end.rcode-->
 
-<!--begin.rcode gfmtable, echo=FALSE
+<!--begin.rcode gfmtable, echo=FALSE, cache=FALSE
 # From https://gist.github.com/2050761
 gfm_table <- function(x, ...){
-  require(ascii)
   y <- capture.output(print(ascii(x, ...), type = 'org'))
   # substitute + with | for table markup
   # TODO: modify regex so that only + signs in markup, like -+- are substituted
   y <- gsub('[+]', '|', y)
   return(writeLines(y))
 } 
-#library(ascii)
+
 #gfm_table(anova(fit))
+
 end.rcode-->
 
 <!--begin.rcode colours, echo=FALSE
 #colourblind friendly palettes from http://wiki.stdout.org/rcookbook/Graphs/Colors%20(ggplot2)
-library(ggplot2)
 cbgRaw = c("#56B4E9", "#009E73", "#999999", "#E69F00", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbgFillPalette <- scale_fill_manual(values=cbgRaw)
 cbgColourPalette <- scale_colour_manual(values=cbgRaw)
 cbgColorPalette = cbgColourPalette
+
 end.rcode-->
 
 
@@ -129,6 +137,7 @@ PLoS papers, as identified in PLoS ONE study:
 
 <!--begin.rcode
 dfAttributes = read.csv("data/PLoSONE2011_rawdata.txt", sep="\t", header=TRUE, stringsAsFactors=F)
+
 end.rcode-->
 
 Got the citations from Scopus:
@@ -170,9 +179,6 @@ dfCitationsAttributesRaw$nCitedBy = as.numeric(dfCitationsAttributesRaw$Cited.by
 dfCitationsAttributesRaw[which(is.na(dfCitationsAttributesRaw$nCitedBy)),]$nCitedBy=0
 dim(dfCitationsAttributesRaw)
  
-source("helpers.R")
-source("preprocess_raw_data.R")
- 
 dfCitationsAttributes = preprocess.raw.data(dfCitationsAttributesRaw)
 dim(dfCitationsAttributes)
 options(scipen=8)
@@ -198,20 +204,28 @@ Distribution by journal
 <!--begin.rcode
 a = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10]
 gfm_table(cbind(names(a), round(a, 2)))
+
+set.seed(42)
+
 end.rcode-->
 
 Distribution by year
 <!--begin.rcode
+set.seed(42)
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
+set.seed(42)
 
-library(ggplot2)
+#library(ggplot2)
 qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
+set.seed(42)
 
 end.rcode-->
 
 Distribution by data availability
-<!--begin.rcode
+<!--begin.rcode test
+set.seed(42)
 gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttributesRaw))
+set.seed(42)
 end.rcode-->
 
 Distribution by citation
@@ -220,16 +234,24 @@ The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinli
 
 
 <!--begin.rcode libraryggplot2, message=FALSE
+set.seed(42)
+
 qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
 end.rcode-->
 
-<!--begin.rcode 
+<!--begin.rcode
 summary(dfCitationsAttributes$nCitedBy)
+
+set.seed(42)
+
 end.rcode-->
 
 #### Univariate
 
 <!--begin.rcode
+
+set.seed(42)
+
 dat = dfCitationsAttributes
 
 # Number of papers vs Data availability
@@ -252,12 +274,14 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         names=c("Data Not Shared", "Data Shared"), 
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 
+set.seed(42)
+
 end.rcode-->
     
 <!--begin.rcode univariatecorrnowarnings, warning=FALSE, fig.width=9, fig.height=9
-source("helpers.R")
 
 dat = dfCitationsAttributes
+set.seed(42)
 myhetcorr = hetcor.modified(dat, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
 mycor = myhetcorr$correlations
 colnames(mycor) = colnames(myhetcorr$correlations)    
@@ -511,9 +535,9 @@ with(dfCitationsAnnotated, table(isCreated))
 with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
 with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
 
-library(ggplot2)
+#library(ggplot2)
 
-rm(.Random.seed) 
+#rm(.Random.seed) 
 set.seed(42)
 
 # Do they look different
@@ -521,6 +545,11 @@ qplot(nCitedBy, data=dfCitationsAnnotated)
 qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
 qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") + 
   geom_jitter(position=position_jitter(width=.1), color="blue")
+
+end.rcode-->
+
+
+<!--begin.rcode
   
 # Do they have different distributions
 with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
@@ -532,7 +561,7 @@ with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
 dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
 dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
 
-library(rms)
+#library(rms)
 
 fit.annotated.merged = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
 rcs(pubmed.date.in.pubmed, 3) + 
@@ -576,6 +605,8 @@ end.rcode-->
 The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
 - Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
 - Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
+- http://www.komfor.net/blog/unbenanntemitteilung
+
 
 ### Used in this analysis
 

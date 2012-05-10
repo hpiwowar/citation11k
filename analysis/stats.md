@@ -8,7 +8,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Thu Apr 12 08:40:25 2012`
+ * Generated on `Wed May  9 09:23:00 2012`
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -61,7 +61,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on `Thu Apr 12 08:40:30 2012`.
+Analysis run on `Wed May  9 09:23:01 2012`.
 
 ### Identification of relevant studies
 
@@ -117,7 +117,7 @@ dfCitationsAttributesRaw = merge(dfAttributes, dfCitations, by.x="pmid", by.y="P
 
 
 
-The dataset has `1.0694 &times; 10<sup>4</sup>` rows and `196`  columns.  
+The dataset has `10694` rows and `196`  columns.  
 
 This is a lot of columns: all the columns from the PLoS study plus all of the Scopus columns.  We will only use a subset of them in this study.
 
@@ -168,9 +168,6 @@ dim(dfCitationsAttributesRaw)
 
 ```r
  
-source("helpers.R")
-source("preprocess_raw_data.R")
- 
 dfCitationsAttributes = preprocess.raw.data(dfCitationsAttributesRaw)
 dim(dfCitationsAttributes)
 ```
@@ -191,7 +188,7 @@ options(scipen=8)
 
 
 
-The dataset has `1.0555 &times; 10<sup>4</sup>` rows and `86`  columns. 
+The dataset has `10555` rows and `86`  columns. 
 
 
 
@@ -200,9 +197,9 @@ The dataset has `1.0555 &times; 10<sup>4</sup>` rows and `86`  columns.
 
 #### Description of cohort
 
-The PLoS study had `1.1603 &times; 10<sup>4</sup>` rows.  For this study we exclude extreme years.
+The PLoS study had `11603` rows.  For this study we exclude extreme years.
 
-The dataset has `1.0555 &times; 10<sup>4</sup>` rows and `86`  columns.  
+The dataset has `10555` rows and `86`  columns.  
 
 
 Distribution by journal
@@ -230,11 +227,19 @@ gfm_table(cbind(names(a), round(a, 2)))
 
 
 
+```r
+
+set.seed(42)
+```
+
+
+
 
 Distribution by year
 
 
 ```r
+set.seed(42)
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
 ```
 
@@ -249,12 +254,19 @@ gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitations
 
 
 ```r
+set.seed(42)
 
-library(ggplot2)
+#library(ggplot2)
 qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/k3ySA.png" class="plot" />
+<img src="http://i.imgur.com/9Le90.png" class="plot" />
+
+
+```r
+set.seed(42)
+```
+
 
 
 
@@ -262,6 +274,7 @@ Distribution by data availability
 
 
 ```r
+set.seed(42)
 gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttributesRaw))
 ```
 
@@ -275,19 +288,27 @@ gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttribute
 
 
 
+```r
+set.seed(42)
+```
+
+
+
 
 Distribution by citation
 
-The dataset has `1.0555 &times; 10<sup>4</sup>` rows and `86`  columns.  
+The dataset has `10555` rows and `86`  columns.  
 
 
 
 
 ```r
+set.seed(42)
+
 qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/3b6Yz.png" class="plot" />
+<img src="http://i.imgur.com/csPaT.png" class="plot" />
 
 
 
@@ -306,12 +327,22 @@ summary(dfCitationsAttributes$nCitedBy)
 
 
 
+```r
+
+set.seed(42)
+```
+
+
+
 
 #### Univariate
 
 
 
 ```r
+
+set.seed(42)
+
 dat = dfCitationsAttributes
 
 # Number of papers vs Data availability
@@ -390,16 +421,23 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 ```
 
-<img src="http://i.imgur.com/vr55s.png" class="plot" />
+<img src="http://i.imgur.com/OLx0S.png" class="plot" />
+
+
+```r
+
+set.seed(42)
+```
+
 
 
     
 
 
 ```r
-source("helpers.R")
 
 dat = dfCitationsAttributes
+set.seed(42)
 myhetcorr = hetcor.modified(dat, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
 mycor = myhetcorr$correlations
 colnames(mycor) = colnames(myhetcorr$correlations)    
@@ -526,7 +564,7 @@ topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 ```
 
-<img src="http://i.imgur.com/qnsFx.png" class="plot" />
+<img src="http://i.imgur.com/JIdQr.png" class="plot" />
 
 
 ```
@@ -584,7 +622,7 @@ with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), media
 qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/Incq4.png" class="plot" />
+<img src="http://i.imgur.com/Mtemo.png" class="plot" />
 
 
 ```r
@@ -592,7 +630,7 @@ qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.s
 qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/Wdlzd.png" class="plot" />
+<img src="http://i.imgur.com/t67Lf.png" class="plot" />
 
 
 ```r
@@ -602,7 +640,7 @@ x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/TK1p9.png" class="plot" />
+<img src="http://i.imgur.com/69hCg.png" class="plot" />
 
 
 ```r
@@ -610,7 +648,7 @@ qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), 
 qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/Fdbyc.png" class="plot" />
+<img src="http://i.imgur.com/gvkKa.png" class="plot" />
 
 
 ```r
@@ -618,7 +656,7 @@ qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.o
 qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/M2Z57.png" class="plot" />
+<img src="http://i.imgur.com/djttN.png" class="plot" />
 
 
 ```r
@@ -627,7 +665,7 @@ x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
 qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/7OIuM.png" class="plot" />
+<img src="http://i.imgur.com/nmhGA.png" class="plot" />
 
 
 ```r
@@ -636,7 +674,7 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
 qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/ZCDiy.png" class="plot" />
+<img src="http://i.imgur.com/hJcmq.png" class="plot" />
 
 
 ```r
@@ -645,7 +683,7 @@ x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
 qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/zbF7B.png" class="plot" />
+<img src="http://i.imgur.com/WKKjy.png" class="plot" />
 
 
 ```r
@@ -654,7 +692,7 @@ x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
 qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 ```
 
-<img src="http://i.imgur.com/1MkoQ.png" class="plot" />
+<img src="http://i.imgur.com/qn5mA.png" class="plot" />
 
 
 ```r
@@ -1097,7 +1135,7 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
   scale_y_continuous(limits=c(0, 2.5), name='citations proportion for \n(papers with available data)/(those without)')
 ```
 
-<img src="http://i.imgur.com/xQOIe.png" class="plot" />
+<img src="http://i.imgur.com/QZWK3.png" class="plot" />
 
 
 
@@ -1365,34 +1403,23 @@ with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
 
 ```r
 
-library(ggplot2)
+#library(ggplot2)
 
-rm(.Random.seed) 
+#rm(.Random.seed) 
 set.seed(42)
-```
-
-
-
-```
-## Error: .Random.seed is not an integer vector but of type 'promise'
-```
-
-
-
-```r
 
 # Do they look different
 qplot(nCitedBy, data=dfCitationsAnnotated)
 ```
 
-<img src="http://i.imgur.com/AGvQY.png" class="plot" />
+<img src="http://i.imgur.com/02FRJ.png" class="plot" />
 
 
 ```r
 qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
 ```
 
-<img src="http://i.imgur.com/r4F1y.png" class="plot" />
+<img src="http://i.imgur.com/KhdWX.png" class="plot" />
 
 
 ```r
@@ -1400,11 +1427,10 @@ qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") +
   geom_jitter(position=position_jitter(width=.1), color="blue")
 ```
 
+<img src="http://i.imgur.com/SlQ8G.png" class="plot" />
 
 
-```
-## Error: .Random.seed is not an integer vector but of type 'promise'
-```
+
 
 
 
@@ -1485,7 +1511,7 @@ with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
 dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
 dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
 
-library(rms)
+#library(rms)
 
 fit.annotated.merged = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
 rcs(pubmed.date.in.pubmed, 3) + 
@@ -1501,12 +1527,12 @@ anova(fit.annotated.merged)
 ## Analysis of Variance Table
 ## 
 ## Response: nCitedBy.log
-##                                   Df Sum Sq Mean Sq F value  Pr(>F)    
-## rcs(num.authors.tr, 3)             2   11.1     5.6    9.62 0.00011 ***
-## rcs(pubmed.date.in.pubmed, 3)      2   82.3    41.1   71.00 < 2e-16 ***
-## rcs(journal.impact.factor.tr, 3)   2   13.6     6.8   11.76 1.6e-05 ***
-## dataset.in.geo.or.ae               1    5.5     5.5    9.51 0.00235 ** 
-## Residuals                        186  107.7     0.6                    
+##                                   Df Sum Sq Mean Sq F value   Pr(>F)    
+## rcs(num.authors.tr, 3)             2   11.1     5.6    9.62  0.00011 ***
+## rcs(pubmed.date.in.pubmed, 3)      2   82.3    41.1   71.00  < 2e-16 ***
+## rcs(journal.impact.factor.tr, 3)   2   13.6     6.8   11.76 0.000016 ***
+## dataset.in.geo.or.ae               1    5.5     5.5    9.51  0.00235 ** 
+## Residuals                        186  107.7     0.6                     
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ```
@@ -1570,6 +1596,8 @@ dim(dat.annotated.merged.created)
 The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
 - Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
 - Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
+- http://www.komfor.net/blog/unbenanntemitteilung
+
 
 ### Used in this analysis
 
