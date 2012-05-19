@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
+<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
@@ -17,9 +17,16 @@ if (upload_images) {
 # use html style links to plots, rather than markdown style         
 knit_hooks$set(plot = hook_plot_html)
 build_dep()
+
+require(knitcitations)
+cleanbib()
+# to get knitcitations:
+#library(devtools)
+#install_github("knitcitations", "cboettig")
+
+biblio <- read.bibtex("citation11k.bib")
  
 end.rcode-->
-
 
 # citation11k stats 
  * author Heather Piwowar, <hpiwowar@gmail.com>
@@ -50,11 +57,6 @@ require(plyr, quietly=T)
 require(rms, quietly=T)
 require(polycor, quietly=T)
 require(ascii, quietly=T)
-require(knitcitations)
-# to get knitcitations:
-#library(devtools)
-#install_github("knitcitations", "cboettig")
-library(doRNG)
 
 options(scipen=8)
 
@@ -637,27 +639,20 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/)
 
 
-
-<!--begin.rcode
-
-#also in checked in BibTeX file
-
-biblio <- read.bibtex("citation11k.bib")
-citep(biblio[c("Bollen2009A-principal-com")])
-
-write.bib(c('bibtex', 'knitr', 'knitcitations'), file="r_packages.bib")
-biblio_packages <- read.bibtex("r_packages.bib")
-citep(biblio_packages[c("knitcitations")])
-citep(biblio[c("Chavan2009Towards-a-data-")])
-
+And now I want to thank Carl for his great library! 
+<!--begin.rcode echo=FALSE, results="asis", cache=FALSE
+citep(list(citation("knitcitations"))) 
+end.rcode-->. 
+Now cite everyone! 
+<!--begin.rcode echo=FALSE, results="asis", dependson="setup", cache=FALSE
+citep(biblio[names(biblio)])
 end.rcode-->
 
-And now I want to thank Carl for his great library! <!--rinline citep(biblio_packages[c("knitcitations")]) -->.
+### demo bibliography
 
-<!--begin.rcode
+<!--begin.rcode bib, results='asis', echo=FALSE, dependson="setup", cache=FALSE
 bibliography()
 end.rcode-->
-
 
 ### Other studies of citation benefit:
 

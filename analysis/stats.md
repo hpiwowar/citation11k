@@ -3,12 +3,11 @@
 
 
 
-
 # citation11k stats 
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on <code class="knitr inline">Sat May 19 10:09:46 2012</code>
+ * Generated on <code class="knitr inline">Sat May 19 12:01:19 2012</code>
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -61,7 +60,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on <code class="knitr inline">Sat May 19 10:09:51 2012</code>.
+Analysis run on <code class="knitr inline">Sat May 19 12:01:19 2012</code>.
 
 ### Identification of relevant studies
 
@@ -102,7 +101,7 @@ Now merge together attributes with citation information.
 </div></pre>
 
 
-The dataset has <code class="knitr inline">10694</code> rows and <code class="knitr inline">196</code>  columns.  
+The dataset has <code class="knitr inline">1.0694 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">196</code>  columns.  
 
 This is a lot of columns: all the columns from the PLoS study plus all of the Scopus columns.  We will only use a subset of them in this study.
 
@@ -138,7 +137,7 @@ Get citations into the right format
 
 
 
-The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns. 
+The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">86</code>  columns. 
 
 
 
@@ -147,9 +146,9 @@ The dataset has <code class="knitr inline">10555</code> rows and <code class="kn
 
 #### Description of cohort
 
-The PLoS study had <code class="knitr inline">11603</code> rows.  For this study we exclude extreme years.
+The PLoS study had <code class="knitr inline">1.1603 &times; 10<sup>4</sup></code> rows.  For this study we exclude extreme years.
 
-The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns.  
+The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">86</code>  columns.  
 
 
 Distribution by journal
@@ -180,7 +179,7 @@ Distribution by year
 
 <span class="comment">#library(ggplot2)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"boxplot"</span><span class="keyword">,</span> <span class="argument">log</span><span class="argument">=</span><span class="string">"y"</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/BwPxq.png" class="plot" />
+</div><img src="figure/unnamed-chunk-6.png" class="plot" />
 <div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 </div></pre>
 
@@ -197,13 +196,13 @@ Distribution by data availability
 
 Distribution by citation
 
-The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns.  
+The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">86</code>  columns.  
 
 
 <pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/FGSFS.png" class="plot" />
+</div><img src="figure/libraryggplot2.png" class="plot" />
 </pre>
 
 
@@ -256,7 +255,7 @@ The dataset has <code class="knitr inline">10555</code> rows and <code class="kn
         <span class="argument">boxwex</span> <span class="argument">=</span> <span class="number">0.5</span><span class="keyword">,</span>
         <span class="argument">names</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Data Not Shared"</span><span class="keyword">,</span> <span class="string">"Data Shared"</span><span class="keyword">)</span><span class="keyword">,</span>
         <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">"Number of Citations"</span><span class="keyword">,</span> <span class="argument">outline</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">,</span> <span class="argument">notch</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">,</span> <span class="argument">log</span><span class="argument">=</span><span class="string">"y"</span><span class="keyword">)</span>
-</div><img src="http://i.imgur.com/7UJK3.png" class="plot" />
+</div><img src="figure/unnamed-chunk-8.png" class="plot" />
 <div class="source">
 <span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 </div></pre>
@@ -369,7 +368,7 @@ The dataset has <code class="knitr inline">10555</code> rows and <code class="kn
     
 <pre class="knitr"><div class="source">
 <span class="functioncall">heatmap.2</span><span class="keyword">(</span><span class="symbol">topcor</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="functioncall">bluered</span><span class="keyword">(</span><span class="number">16</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">cexRow</span><span class="argument">=</span><span class="number">1</span><span class="keyword">,</span> <span class="argument">cexCol</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">,</span> <span class="argument">symm</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">dend</span> <span class="argument">=</span> <span class="string">"row"</span><span class="keyword">,</span> <span class="argument">trace</span> <span class="argument">=</span> <span class="string">"none"</span><span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"Thesis Data"</span><span class="keyword">,</span> <span class="argument">margins</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">15</span><span class="keyword">,</span><span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">key</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">keysize</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span>
-</div><img src="http://i.imgur.com/hFa3h.png" class="plot" />
+</div><img src="figure/heatmap42.png" class="plot" />
 <div class="error">## Error: figure margins too large
 </div></pre>
 
@@ -394,39 +393,39 @@ The dataset has <code class="knitr inline">10555</code> rows and <code class="kn
 <pre class="knitr"><div class="source">
 
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">num_authors_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">num_authors_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/rdwwB.png" class="plot" />
+</div><img src="figure/oneq1.png" class="plot" />
 <div class="source">
 
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/WWnlc.png" class="plot" />
+</div><img src="figure/oneq2.png" class="plot" />
 <div class="source">
 
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/kiBBW.png" class="plot" />
+</div><img src="figure/oneq3.png" class="plot" />
 <div class="source">
 
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/3TwJF.png" class="plot" />
+</div><img src="figure/oneq4.png" class="plot" />
 <div class="source">
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.is.open.access</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/3mJ9u.png" class="plot" />
+</div><img src="figure/oneq5.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/jiyfo.png" class="plot" />
+</div><img src="figure/oneq6.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/pN1zn.png" class="plot" />
+</div><img src="figure/oneq7.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/NZTrY.png" class="plot" />
+</div><img src="figure/oneq8.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="http://i.imgur.com/UErUv.png" class="plot" />
+</div><img src="figure/oneq9.png" class="plot" />
 </pre>
 
 
@@ -808,7 +807,7 @@ with 95% confidence intervals [<code class="knitr inline">9</code>%
   <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">2.5</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'citations proportion for \n(papers with available data)/(those without)'</span><span class="keyword">)</span>
-</div><img src="http://i.imgur.com/RycJF.png" class="plot" />
+</div><img src="figure/unnamed-chunk-10.png" class="plot" />
 </pre>
 
 
@@ -964,12 +963,12 @@ with 95% confidence intervals [<code class="knitr inline">9</code>%
 
 <span class="comment"># Do they look different</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">)</span>
-</div><img src="http://i.imgur.com/S08uW.png" class="plot" />
+</div><img src="figure/unnamed-chunk-131.png" class="plot" />
 <div class="source"><span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="symbol">isCreated</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"density"</span><span class="keyword">,</span> <span class="argument">binwidth</span><span class="argument">=</span><span class="number">25</span><span class="keyword">)</span>
-</div><img src="http://i.imgur.com/MxH2w.png" class="plot" />
+</div><img src="figure/unnamed-chunk-132.png" class="plot" />
 <div class="source"><span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">,</span> <span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"boxplot"</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="argument">position</span><span class="argument">=</span><span class="functioncall">position_jitter</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span><span class="keyword">)</span>
-</div><img src="http://i.imgur.com/xrvZD.png" class="plot" />
+</div><img src="figure/unnamed-chunk-133.png" class="plot" />
 </pre>
 
 
@@ -1097,46 +1096,102 @@ with 95% confidence intervals [<code class="knitr inline">3</code>%
 see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/)
 
 
+And now I want to thank Carl for his great library! 
+<div class="output">[1] "(Boettiger, 2012)"
+</div>
 
-<pre class="knitr"><div class="source">
-<span class="comment">#also in checked in BibTeX file</span>
-
-<span class="symbol">biblio</span> <span class="assignement">&lt;-</span> <span class="functioncall">read.bibtex</span><span class="keyword">(</span><span class="string">"citation11k.bib"</span><span class="keyword">)</span>
-<span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio</span><span class="keyword">[</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Bollen2009A-principal-com"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
-</div><div class="output">## [1] "(Bollen _et. al._ 2009)"
-</div><div class="source">
-<span class="functioncall">write.bib</span><span class="keyword">(</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">'bibtex'</span><span class="keyword">,</span> <span class="string">'knitr'</span><span class="keyword">,</span> <span class="string">'knitcitations'</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">file</span><span class="argument">=</span><span class="string">"r_packages.bib"</span><span class="keyword">)</span>
-<span class="symbol">biblio_packages</span> <span class="assignement">&lt;-</span> <span class="functioncall">read.bibtex</span><span class="keyword">(</span><span class="string">"r_packages.bib"</span><span class="keyword">)</span>
-<span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio_packages</span><span class="keyword">[</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"knitcitations"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
-</div><div class="output">## [1] "(Boettiger, 2012)"
-</div><div class="source"><span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio</span><span class="keyword">[</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Chavan2009Towards-a-data-"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
-</div><div class="output">## [1] "(Chavan & Ingwersen, 2009)"
-</div></pre>
+Now cite everyone! 
+<div class="output">[1] "(Bollen _et. al._ 2009; Chavan & Ingwersen, 2009; Gleditsch & Strand, 2003; Ib\\'{a}\\~{n}ez _et. al._ 2009; Ioannidis _et. al._ 2009; Ochsner _et. al._ 2008; Pienta _et. al._ 2010; Pienta _et. al._ 2006; Piwowar _et. al._ 2007; Piwowar _et. al._ 2011; Piwowar, 2011; character(0); Piwowar _et. al._ 2011; Piwowar & Chapman, 2010; Sears, 2011)"
+</div>
 
 
-And now I want to thank Carl for his great library! (Boettiger, 2012).
+### demo bibliography
 
-<pre class="knitr"><div class="source"><span class="functioncall">bibliography</span><span class="keyword">(</span><span class="keyword">)</span>
-</div><div class="output">## Bollen J, Van de Sompel H, Hagberg A and Chute R (2009). "A principal
-## component analysis of 39 scientific impact measures." _PloS one_,
-## *4*(6), pp. e6022. ISSN 1932-6203, <URL:
-## http://dx.doi.org/10.1371/journal.pone.0006022>, <URL:
-## http://dx.plos.org/10.1371/journal.pone.0006022>.
-## 
-## Boettiger C (2012). _knitcitations: Citations for knitr markdown
-## files_. R package version 0.0-1.
-## 
-## Chavan VS and Ingwersen P (2009). "Towards a data publishing framework
-## for primary biodiversity data: challenges and potentials for the
-## biodiversity informatics community." _BMC bioinformatics_, *10 Suppl
-## 1*(Suppl 14), pp. S2. ISSN 1471-2105, <URL:
-## http://dx.doi.org/10.1186/1471-2105-10-S14-S2>, <URL:
-## http://www.biomedcentral.com/1471-2105/10/S14/S2>.
-## 
-## Boettiger C (2012). _knitcitations: Citations for knitr markdown
-## files_. R package version 0.0-1.
-</div></pre>
+<div class="output">Boettiger C (2012). _knitcitations: Citations for knitr markdown
+files_. R package version 0.0-1.
 
+Bollen J, Van de Sompel H, Hagberg A and Chute R (2009). "A principal
+component analysis of 39 scientific impact measures." _PloS one_,
+*4*(6), pp. e6022. ISSN 1932-6203, <URL:
+http://dx.doi.org/10.1371/journal.pone.0006022>, <URL:
+http://dx.plos.org/10.1371/journal.pone.0006022>.
+
+Chavan VS and Ingwersen P (2009). "Towards a data publishing framework
+for primary biodiversity data: challenges and potentials for the
+biodiversity informatics community." _BMC bioinformatics_, *10 Suppl
+1*(Suppl 14), pp. S2. ISSN 1471-2105, <URL:
+http://dx.doi.org/10.1186/1471-2105-10-S14-S2>, <URL:
+http://www.biomedcentral.com/1471-2105/10/S14/S2>.
+
+Gleditsch NP and Strand H (2003). "Posting your data: will you be
+scooped or will you be famous?" _International Studies Perspectives_,
+*4*(1), pp. 89-97. <URL:
+http://www.prio.no/Research-and-Publications/Publication/?oid=55406>.
+
+Ibáñez A, Larrañaga P and Bielza C (2009). "Predicting citation count
+of Bioinformatics papers within four years of publication."
+_Bioinformatics (Oxford, England)_, *25*(24), pp. 3303-9. ISSN
+1367-4811, <URL: http://dx.doi.org/10.1093/bioinformatics/btp585>,
+<URL:
+http://bioinformatics.oxfordjournals.org/cgi/content/abstract/25/24/3303>.
+
+Ioannidis JPA, Allison DB, Ball CA, Coulibaly I, Cui X, Culhane AC,
+Falchi M, Furlanello C, Game L, Jurman G, Mangion J, Mehta T, Nitzberg
+M, Page GP, Petretto E and Noort Vv (2009). "Repeatability of published
+microarray gene expression analyses." _Nature genetics_, *41*(2), pp.
+149-55. ISSN 1546-1718, <URL: http://dx.doi.org/10.1038/ng.295>, <URL:
+http://www.ncbi.nlm.nih.gov/pubmed/19174838>.
+
+Ochsner SA, Steffen DL, Stoeckert CJ and McKenna NJ (2008). "Much room
+for improvement in deposition rates of expression microarray datasets."
+_Nature methods_, *5*(12), pp. 991. ISSN 1548-7105, <URL:
+http://dx.doi.org/10.1038/nmeth1208-991>, <URL:
+http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2975491\&tool=pmcentrez\&rendertype=abstract>.
+
+Pienta AM, Alter GC and Lyle JA (2010). "The Enduring Value of Social
+Science Research: The Use and Reuse of Primary Research Data." _The
+Organisation, Economics and Policy of Scientific Research workshop_.
+<URL: http://hdl.handle.net/2027.42/78307>.
+
+Pienta A, McNally J and Gutmann M (2006). "The Research Data Life Cycle
+and the Probability of Secondary Use in Re-Analysis." <URL:
+http://paa2006.princeton.edu/download.aspx?submissionId=61527>.
+
+Piwowar HA, Day RB and Fridsma DS (2007). "Sharing detailed research
+data is associated with increased citation rate." _PLoS ONE_, *2*(3).
+<URL: http://dx.doi.org/10.1371%2Fjournal.pone.0000308>.
+
+Piwowar HA, Vision TJ and Whitlock MC (2011). "Data archiving is a good
+investment." _Nature_, *473*(7347), pp. 285. ISSN 1476-4687, <URL:
+http://dx.doi.org/10.1038/473285a>, <URL:
+http://dx.doi.org/10.1038/473285a>.
+
+Piwowar HA (2011). "Who Shares? Who Doesn't? Factors Associated with
+Openly Archiving Raw Research Data." _PLoS ONE_, *6*(7), pp. e18657.
+ISSN 1932-6203, <URL: http://dx.doi.org/10.1371/journal.pone.0018657>,
+<URL: http://dx.plos.org/10.1371/journal.pone.0018657>.
+
+Piwowar HA (????). "Data from: Who shares? Who doesn't? Factors
+associated with openly archiving raw research data." <URL:
+http://dx.doi.org/10.5061/dryad.mf1sd>, <URL:
+http://datadryad.org/handle/10255/dryad.33858>.
+
+Piwowar HA, Carlson JD and Vision TJ (2011). "Beginning to track 1000
+datasets from public repositories into the published literature."
+_Proceedings of the American Society for Information Science and
+Technology_, *48*(1), pp. 1-4. ISSN 00447870, <URL:
+http://dx.doi.org/10.1002/meet.2011.14504801337>, <URL:
+http://doi.wiley.com/10.1002/meet.2011.14504801337>.
+
+Piwowar H and Chapman W (2010). "Recall and bias of retrieving gene
+expression microarray datasets through PubMed identifiers." _Journal of
+biomedical discovery and collaboration_, *5*, pp. 7-20. ISSN 1747-5333,
+<URL: http://www.ncbi.nlm.nih.gov/pubmed/20349403>.
+
+Sears J (2011). "Data Sharing Effect on Article Citation Rate in
+Paleoceanography - KomFor." <URL:
+http://www.komfor.net/blog/unbenanntemitteilung>.
+</div>
 
 
 ### Other studies of citation benefit:
@@ -1185,7 +1240,7 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
 
 ### Methods and Results
-In a multivariate linear regression on <code class="knitr inline">10555</code> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
+In a multivariate linear regression on <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
 <code class="knitr inline">13</code>%
 (95% confidence interval: [<code class="knitr inline">9</code>%
 to <code class="knitr inline">17</code>%)
