@@ -1,7 +1,6 @@
 <!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE-->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
-render_gfm() # use GFM hooks for output
 
 # use imgur for hosting figures
 # go to my_imgur_api_key.txt and add your own api key
