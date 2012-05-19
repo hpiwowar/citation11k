@@ -1,6 +1,7 @@
 
 
-
+<pre class="knitr"><div class="error">## Error: could not find function "render_gfm"
+</div></pre>
 
 
 
@@ -8,7 +9,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on `Thu May 10 09:26:35 2012`
+ * Generated on <code class="knitr inline">Sat May 19 09:52:07 2012</code>
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -61,7 +62,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on `Thu May 10 09:26:37 2012`.
+Analysis run on <code class="knitr inline">Sat May 19 09:52:13 2012</code>.
 
 ### Identification of relevant studies
 
@@ -86,38 +87,23 @@ PLoS papers, as identified in PLoS ONE study:
 - Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
 - Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
 
-
-
-```r
-dfAttributes = read.csv("data/PLoSONE2011_rawdata.txt", sep="\t", header=TRUE, stringsAsFactors=F)
-```
-
-
+<pre class="knitr"><div class="source"><span class="symbol">dfAttributes</span> <span class="assignement">=</span> <span class="functioncall">read.csv</span><span class="keyword">(</span><span class="string">"data/PLoSONE2011_rawdata.txt"</span><span class="keyword">,</span> <span class="argument">sep</span><span class="argument">=</span><span class="string">"\t"</span><span class="keyword">,</span> <span class="argument">header</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">)</span>
+</div></pre>
 
 
 Got the citations from Scopus:
 
-
-
-```r
-dfCitations = read.csv("data/scopus_all.csv", header=TRUE, stringsAsFactors=F)
-```
-
-
+<pre class="knitr"><div class="source"><span class="symbol">dfCitations</span> <span class="assignement">=</span> <span class="functioncall">read.csv</span><span class="keyword">(</span><span class="string">"data/scopus_all.csv"</span><span class="keyword">,</span> <span class="argument">header</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">)</span>
+</div></pre>
 
 
 Now merge together attributes with citation information.
 
+<pre class="knitr"><div class="source"><span class="symbol">dfCitationsAttributesRaw</span> <span class="assignement">=</span> <span class="functioncall">merge</span><span class="keyword">(</span><span class="symbol">dfAttributes</span><span class="keyword">,</span> <span class="symbol">dfCitations</span><span class="keyword">,</span> <span class="argument">by.x</span><span class="argument">=</span><span class="string">"pmid"</span><span class="keyword">,</span> <span class="argument">by.y</span><span class="argument">=</span><span class="string">"PubMed.ID"</span><span class="keyword">)</span>
+</div></pre>
 
 
-```r
-dfCitationsAttributesRaw = merge(dfAttributes, dfCitations, by.x="pmid", by.y="PubMed.ID")
-```
-
-
-
-
-The dataset has `10694` rows and `196`  columns.  
+The dataset has <code class="knitr inline">10694</code> rows and <code class="knitr inline">196</code>  columns.  
 
 This is a lot of columns: all the columns from the PLoS study plus all of the Scopus columns.  We will only use a subset of them in this study.
 
@@ -131,64 +117,29 @@ This is a lot of columns: all the columns from the PLoS study plus all of the Sc
 
 Limit to just those published after 2001 and before 2010.
 
-
-
-```r
-dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published > 2000)
-dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published < 2010)
-dim(dfCitationsAttributesRaw)
-```
-
-
-
-```
-## [1] 10555   196
-```
-
-
+<pre class="knitr"><div class="source"><span class="symbol">dfCitationsAttributesRaw</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_year_published</span> <span class="keyword">&gt;</span> <span class="number">2000</span><span class="keyword">)</span>
+<span class="symbol">dfCitationsAttributesRaw</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_year_published</span> <span class="keyword">&lt;</span> <span class="number">2010</span><span class="keyword">)</span>
+<span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span>
+</div><div class="output">## [1] 10555   196
+</div></pre>
 
 
 Get citations into the right format
 
-
-
-```r
-dfCitationsAttributesRaw$nCitedBy = as.numeric(dfCitationsAttributesRaw$Cited.by)
-dfCitationsAttributesRaw[which(is.na(dfCitationsAttributesRaw$nCitedBy)),]$nCitedBy=0
-dim(dfCitationsAttributesRaw)
-```
-
-
-
-```
-## [1] 10555   197
-```
+<pre class="knitr"><div class="source"><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">nCitedBy</span> <span class="assignement">=</span> <span class="functioncall">as.numeric</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">Cited.by</span><span class="keyword">)</span>
+<span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">[</span><span class="functioncall">which</span><span class="keyword">(</span><span class="functioncall">is.na</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">,</span><span class="keyword">]</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="assignement">=</span><span class="number">0</span>
+<span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span>
+</div><div class="output">## [1] 10555   197
+</div><div class="source">
+<span class="symbol">dfCitationsAttributes</span> <span class="assignement">=</span> <span class="functioncall">preprocess.raw.data</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span>
+<span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span>
+</div><div class="output">## [1] 10555    86
+</div><div class="source"><span class="functioncall">options</span><span class="keyword">(</span><span class="argument">scipen</span><span class="argument">=</span><span class="number">8</span><span class="keyword">)</span>
+</div></pre>
 
 
 
-```r
- 
-dfCitationsAttributes = preprocess.raw.data(dfCitationsAttributesRaw)
-dim(dfCitationsAttributes)
-```
-
-
-
-```
-## [1] 10555    86
-```
-
-
-
-```r
-options(scipen=8)
-```
-
-
-
-
-
-The dataset has `10555` rows and `86`  columns. 
+The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns. 
 
 
 
@@ -197,23 +148,15 @@ The dataset has `10555` rows and `86`  columns.
 
 #### Description of cohort
 
-The PLoS study had `11603` rows.  For this study we exclude extreme years.
+The PLoS study had <code class="knitr inline">11603</code> rows.  For this study we exclude extreme years.
 
-The dataset has `10555` rows and `86`  columns.  
+The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns.  
 
 
 Distribution by journal
-
-
-```r
-a = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10]
-gfm_table(cbind(names(a), round(a, 2)))
-```
-
-
-
-```
-## | Cancer Res               | 0.04 |
+<pre class="knitr"><div class="source"><span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">10</span><span class="keyword">]</span>
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## | Cancer Res               | 0.04 |
 ## | Proc Natl Acad Sci U S A | 0.04 |
 ## | J Biol Chem              | 0.04 |
 ## | BMC Genomics             | 0.03 |
@@ -223,170 +166,80 @@ gfm_table(cbind(names(a), round(a, 2)))
 ## | J Immunol                | 0.02 |
 ## | Blood                    | 0.02 |
 ## | Clin Cancer Res          | 0.02 |
-```
-
-
-
-```r
-
-set.seed(42)
-```
-
-
+</div><div class="source">
+<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+</div></pre>
 
 
 Distribution by year
-
-
-```r
-set.seed(42)
-gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
-```
-
-
-
-```
-## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
+<pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
 ## |---|------|------|------|------|------|------|------|------|------|
 ## | 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
-```
+</div><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 
-
-
-```r
-set.seed(42)
-
-#library(ggplot2)
-qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/VRGRt.png" class="plot" />
-
-
-```r
-set.seed(42)
-```
-
-
+<span class="comment">#library(ggplot2)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"boxplot"</span><span class="keyword">,</span> <span class="argument">log</span><span class="argument">=</span><span class="string">"y"</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/unnamed-chunk-6.png" class="plot" />
+<div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+</div></pre>
 
 
 Distribution by data availability
-
-
-```r
-set.seed(42)
-gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttributesRaw))
-```
-
-
-
-```
-## |   | 0    | 1    |
+<pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## |   | 0    | 1    |
 ## |---|------|------|
 ## | 1 | 0.75 | 0.25 |
-```
-
-
-
-```r
-set.seed(42)
-```
-
-
+</div><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+</div></pre>
 
 
 Distribution by citation
 
-The dataset has `10555` rows and `86`  columns.  
+The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns.  
 
 
+<pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/libraryggplot2.png" class="plot" />
+</pre>
 
 
-```r
-set.seed(42)
-
-qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/EZs6X.png" class="plot" />
-
-
-
-
-
-```r
-summary(dfCitationsAttributes$nCitedBy)
-```
-
-
-
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+<pre class="knitr"><div class="source"><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span>
+</div><div class="output">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     0.0     7.0    16.0    31.5    35.0  2640.0 
-```
-
-
-
-```r
-
-set.seed(42)
-```
-
-
+</div><div class="source">
+<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+</div></pre>
 
 
 #### Univariate
 
+<pre class="knitr"><div class="source">
+<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 
+<span class="symbol">dat</span> <span class="assignement">=</span> <span class="symbol">dfCitationsAttributes</span>
 
-```r
-
-set.seed(42)
-
-dat = dfCitationsAttributes
-
-# Number of papers vs Data availability
-tapply(dat$nCitedBy>=0,
-       dat$dataset.in.geo.or.ae.int,
-       sum)
-```
-
-
-
-```
-##    0    1 
+<span class="comment"># Number of papers vs Data availability</span>
+<span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">dat</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">&gt;=</span><span class="number">0</span><span class="keyword">,</span>
+       <span class="symbol">dat</span><span class="keyword">$</span><span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">,</span>
+       <span class="symbol">sum</span><span class="keyword">)</span>
+</div><div class="output">##    0    1 
 ## 7938 2617 
-```
-
-
-
-```r
-
-# Number of citations vs Data availability
-tapply(dat$nCitedBy,
-       dat$dataset.in.geo.or.ae.int,
-       sum)
-```
-
-
-
-```
-##      0      1 
+</div><div class="source">
+<span class="comment"># Number of citations vs Data availability</span>
+<span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">dat</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">,</span>
+       <span class="symbol">dat</span><span class="keyword">$</span><span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">,</span>
+       <span class="symbol">sum</span><span class="keyword">)</span>
+</div><div class="output">##      0      1 
 ## 250620  81892 
-```
-
-
-
-```r
-
-# Number of citations vs Data availability
-with(dat, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
-```
-
-
-
-```
-## $`0`
+</div><div class="source">
+<span class="comment"># Number of citations vs Data availability</span>
+<span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dat</span><span class="keyword">,</span> <span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">,</span> <span class="symbol">summary</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## $`0`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     0.0     7.0    16.0    31.6    35.0  2560.0 
 ## 
@@ -394,63 +247,33 @@ with(dat, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     0.0     7.0    16.0    31.3    34.0  2640.0 
 ## 
-```
-
-
-
-```r
-
-table(dat$dataset.in.geo.or.ae.int)
-```
-
-
-
-```
-## 
+</div><div class="source">
+<span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dat</span><span class="keyword">$</span><span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">)</span>
+</div><div class="output">## 
 ##    0    1 
 ## 7938 2617 
-```
-
-
-
-```r
-boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
-        data = dat,
-        boxwex = 0.5, 
-        names=c("Data Not Shared", "Data Shared"), 
-        ylab = "Number of Citations", outline=T, notch=F, log="y")
-```
-
-<img src="http://i.imgur.com/sInsA.png" class="plot" />
-
-
-```r
-
-set.seed(42)
-```
-
-
+</div><div class="source"><span class="functioncall">boxplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">+</span><span class="number">1</span> <span class="keyword">~</span> <span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">,</span>
+        <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">dat</span><span class="keyword">,</span>
+        <span class="argument">boxwex</span> <span class="argument">=</span> <span class="number">0.5</span><span class="keyword">,</span>
+        <span class="argument">names</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Data Not Shared"</span><span class="keyword">,</span> <span class="string">"Data Shared"</span><span class="keyword">)</span><span class="keyword">,</span>
+        <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">"Number of Citations"</span><span class="keyword">,</span> <span class="argument">outline</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">,</span> <span class="argument">notch</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">,</span> <span class="argument">log</span><span class="argument">=</span><span class="string">"y"</span><span class="keyword">)</span>
+</div><img src="figure/unnamed-chunk-8.png" class="plot" />
+<div class="source">
+<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+</div></pre>
 
     
+<pre class="knitr"><div class="source">
+<span class="symbol">dat</span> <span class="assignement">=</span> <span class="symbol">dfCitationsAttributes</span>
+<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+<span class="symbol">myhetcorr</span> <span class="assignement">=</span> <span class="functioncall">hetcor.modified</span><span class="keyword">(</span><span class="symbol">dat</span><span class="keyword">,</span> <span class="argument">use</span><span class="argument">=</span><span class="string">"pairwise.complete.obs"</span><span class="keyword">,</span> <span class="argument">std.err</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">pd</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span>
+<span class="symbol">mycor</span> <span class="assignement">=</span> <span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span>
+<span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
+<span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
 
-
-```r
-
-dat = dfCitationsAttributes
-set.seed(42)
-myhetcorr = hetcor.modified(dat, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
-mycor = myhetcorr$correlations
-colnames(mycor) = colnames(myhetcorr$correlations)    
-rownames(mycor) = rownames(myhetcorr$correlations)    
-
-a = sort(mycor[,"nCitedBy.log"], dec=T)
-gfm_table(cbind(names(a), round(a, 2)))
-```
-
-
-
-```
-## | nCitedBy.log                                  | 1     |
+<span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## | nCitedBy.log                                  | 1     |
 ## | pubmed.num.cites.from.pmc.tr                  | 0.76  |
 ## | years.ago.tr                                  | 0.59  |
 ## | pubmed.num.cites.from.pmc.per.year            | 0.59  |
@@ -536,171 +359,76 @@ gfm_table(cbind(names(a), round(a, 2)))
 ## | pmid                                          | -0.58 |
 ## | pubmed.year.published                         | -0.58 |
 ## | pubmed.date.in.pubmed                         | -0.59 |
-```
-
-
-
-```r
-
-    
-univarate.citation.predictors = which(abs(mycor[,"nCitedBy.log"]) > 0.1)
-#univarate.citation.predictors
-length(univarate.citation.predictors)    
-```
-
-
-
-```
-## [1] 36
-```
-
-
-
-```r
-topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
-
-
-
-heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
-```
-
-<img src="http://i.imgur.com/Gi15z.png" class="plot" />
-
-
-```
-## Error: figure margins too large
-```
-
-
-
-```r
-
-```
-
-
+</div><div class="source">
+<span class="symbol">univarate.citation.predictors</span> <span class="assignement">=</span> <span class="functioncall">which</span><span class="keyword">(</span><span class="functioncall">abs</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">)</span> <span class="keyword">&gt;</span> <span class="number">0.1</span><span class="keyword">)</span>
+<span class="comment">#univarate.citation.predictors</span>
+<span class="functioncall">length</span><span class="keyword">(</span><span class="symbol">univarate.citation.predictors</span><span class="keyword">)</span>
+</div><div class="output">## [1] 36
+</div><div class="source"><span class="symbol">topcor</span> <span class="assignement">=</span> <span class="symbol">mycor</span><span class="keyword">[</span><span class="symbol">univarate.citation.predictors</span><span class="keyword">,</span> <span class="symbol">univarate.citation.predictors</span><span class="keyword">]</span>
+</div></pre>
 
     
+<pre class="knitr"><div class="source">
+<span class="functioncall">heatmap.2</span><span class="keyword">(</span><span class="symbol">topcor</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="functioncall">bluered</span><span class="keyword">(</span><span class="number">16</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">cexRow</span><span class="argument">=</span><span class="number">1</span><span class="keyword">,</span> <span class="argument">cexCol</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">,</span> <span class="argument">symm</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">dend</span> <span class="argument">=</span> <span class="string">"row"</span><span class="keyword">,</span> <span class="argument">trace</span> <span class="argument">=</span> <span class="string">"none"</span><span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"Thesis Data"</span><span class="keyword">,</span> <span class="argument">margins</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">15</span><span class="keyword">,</span><span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">key</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">keysize</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span>
+</div><img src="figure/heatmap42.png" class="plot" />
+<div class="error">## Error: figure margins too large
+</div></pre>
 
+    
+<pre class="knitr"><div class="source">
 
-```r
- 
-
-dat.subset = dfCitationsAttributes
-with(dat.subset, tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
-```
-
-
-
-```
-## 2001 2002 2003 2004 2005 2006 2007 2008 2009 
+<span class="symbol">dat.subset</span> <span class="assignement">=</span> <span class="symbol">dfCitationsAttributes</span>
+<span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="symbol">pubmed.year.published</span><span class="keyword">,</span> <span class="symbol">median</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## 2001 2002 2003 2004 2005 2006 2007 2008 2009 
 ## 76.0 54.0 40.0 30.0 24.0 18.0 14.0  9.5  5.0 
-```
+</div><div class="source">
 
+<span class="symbol">num_authors_breaks</span> <span class="assignement">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">,</span> <span class="number">5</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">,</span> <span class="number">20</span><span class="keyword">,</span> <span class="number">40</span><span class="keyword">)</span>
+<span class="symbol">citation_breaks</span> <span class="assignement">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">,</span> <span class="number">40</span><span class="keyword">,</span> <span class="number">100</span><span class="keyword">,</span> <span class="number">400</span><span class="keyword">,</span> <span class="number">1000</span><span class="keyword">)</span>
 
-
-```r
-
-
-num_authors_breaks = c(1, 5, 10, 20, 40)
-citation_breaks = c(1, 10, 40, 100, 400, 1000)
-
-with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
-```
-
-
-
-```
-##   (1,5]  (5,10] (10,20] (20,40] 
+<span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="functioncall">cut</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="symbol">num_authors_breaks</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">median</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">##   (1,5]  (5,10] (10,20] (20,40] 
 ##      16      38      53      NA 
-```
+</div></pre>
 
+    
+<pre class="knitr"><div class="source">
 
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">num_authors_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">num_authors_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq1.png" class="plot" />
+<div class="source">
 
-```r
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq2.png" class="plot" />
+<div class="source">
 
+<span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq3.png" class="plot" />
+<div class="source">
 
-qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/5KpB6.png" class="plot" />
-
-
-```r
-
-qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/vfDDU.png" class="plot" />
-
-
-```r
-
-
-x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
-qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/T0vky.png" class="plot" />
-
-
-```r
-
-qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/1Bv3l.png" class="plot" />
-
-
-```r
-
-qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/JMTpy.png" class="plot" />
-
-
-```r
-
-x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
-qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/hrdS1.png" class="plot" />
-
-
-```r
-
-x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
-qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/WXO6D.png" class="plot" />
-
-
-```r
-
-x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
-qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/z9IzE.png" class="plot" />
-
-
-```r
-
-x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
-qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-```
-
-<img src="http://i.imgur.com/JylVs.png" class="plot" />
-
-
-```r
-
-
-```
-
-
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq4.png" class="plot" />
+<div class="source">
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.is.open.access</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq5.png" class="plot" />
+<div class="source">
+<span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq6.png" class="plot" />
+<div class="source">
+<span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq7.png" class="plot" />
+<div class="source">
+<span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq8.png" class="plot" />
+<div class="source">
+<span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="figure/oneq9.png" class="plot" />
+</pre>
 
 
 #### Multivariate
@@ -709,71 +437,63 @@ qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.
 
 ##### All years
 
+<pre class="knitr"><div class="source">
+<span class="comment">###### ANALYSIS</span>
 
+<span class="comment"># Some helper functions</span>
+<span class="symbol">calcCI.exp</span><span class="assignement">=</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">res</span><span class="keyword">,</span> <span class="formalargs">param</span><span class="keyword">)</span> <span class="keyword">{</span>
+  <span class="symbol">coefs</span> <span class="assignement">=</span> <span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">res</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">coeff</span>
+  <span class="symbol">coeff</span> <span class="assignement">=</span> <span class="symbol">coefs</span><span class="keyword">[</span><span class="symbol">param</span><span class="keyword">,</span><span class="keyword">]</span>
+  <span class="symbol">x</span> <span class="assignement">=</span> <span class="symbol">coeff</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
+  <span class="symbol">stderr</span> <span class="assignement">=</span> <span class="symbol">coeff</span><span class="keyword">[</span><span class="number">2</span><span class="keyword">]</span>
+  <span class="symbol">p</span> <span class="assignement">=</span> <span class="symbol">coeff</span><span class="keyword">[</span><span class="number">4</span><span class="keyword">]</span>
+  <span class="functioncall">return</span><span class="keyword">(</span><span class="functioncall">data.frame</span><span class="keyword">(</span><span class="argument">param</span> <span class="argument">=</span> <span class="symbol">param</span><span class="keyword">,</span>
+              <span class="argument">est</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="functioncall">exp</span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">,</span>
+              <span class="argument">ciLow</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="functioncall">exp</span><span class="keyword">(</span><span class="symbol">x</span> <span class="keyword">-</span> <span class="number">1.96</span><span class="keyword">*</span><span class="symbol">stderr</span><span class="keyword">)</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">,</span>
+              <span class="argument">ciHigh</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="functioncall">exp</span><span class="keyword">(</span><span class="symbol">x</span> <span class="keyword">+</span> <span class="number">1.96</span><span class="keyword">*</span><span class="symbol">stderr</span><span class="keyword">)</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">,</span>
+              <span class="argument">p</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">p</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="keyword">}</span>
 
-```r
-
-###### ANALYSIS
-  
-# Some helper functions
-calcCI.exp= function(res, param) {
-  coefs = summary(res)$coeff
-  coeff = coefs[param,]
-  x = coeff[1]
-  stderr = coeff[2]
-  p = coeff[4]
-  return(data.frame(param = param,
-              est = round(exp(x), 2), 
-              ciLow = round(exp(x - 1.96*stderr), 2),
-              ciHigh = round(exp(x + 1.96*stderr), 2), 
-              p = round(p, 3)))
-}
-
-calcCI.noexp= function(res, param) {
-  coefs = summary(res)$coeff
-  coeff = coefs[param,]
-  x = coeff[1]
-  stderr = coeff[2]
-  p = coeff[4]
-  return(data.frame(param = param,
-              est = round(x, 2), 
-              ciLow = round(x - 1.96*stderr, 2),
-              ciHigh = round(x + 1.96*stderr, 2), 
-              p = round(p, 3)))
-}
-
-      
-
-#### Looks like this is the analysis
-fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-rcs(first.author.num.prev.pubs.tr, 3) +           
-rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-rcs(first.author.year.first.pub.ago.tr, 3) +     
-rcs(last.author.num.prev.pubs.tr, 3) +           
-rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-rcs(last.author.year.first.pub.ago.tr, 3) +
-country.usa +              
-pubmed.is.open.access +              
-rcs(institution.mean.norm.citation.score, 3) +
-rcs(journal.num.articles.2008.tr, 3) +           
-rcs(journal.cited.halflife, 3) +                 
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(pubmed.is.animals) +
-factor(pubmed.is.plants) +
-factor(pubmed.is.core.clinical.journal) +
-factor(dataset.in.geo.or.ae)
-           , dfCitationsAttributes)
-
-
-gfm_table(anova(fit))
-```
+<span class="symbol">calcCI.noexp</span><span class="assignement">=</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">res</span><span class="keyword">,</span> <span class="formalargs">param</span><span class="keyword">)</span> <span class="keyword">{</span>
+  <span class="symbol">coefs</span> <span class="assignement">=</span> <span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">res</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">coeff</span>
+  <span class="symbol">coeff</span> <span class="assignement">=</span> <span class="symbol">coefs</span><span class="keyword">[</span><span class="symbol">param</span><span class="keyword">,</span><span class="keyword">]</span>
+  <span class="symbol">x</span> <span class="assignement">=</span> <span class="symbol">coeff</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
+  <span class="symbol">stderr</span> <span class="assignement">=</span> <span class="symbol">coeff</span><span class="keyword">[</span><span class="number">2</span><span class="keyword">]</span>
+  <span class="symbol">p</span> <span class="assignement">=</span> <span class="symbol">coeff</span><span class="keyword">[</span><span class="number">4</span><span class="keyword">]</span>
+  <span class="functioncall">return</span><span class="keyword">(</span><span class="functioncall">data.frame</span><span class="keyword">(</span><span class="argument">param</span> <span class="argument">=</span> <span class="symbol">param</span><span class="keyword">,</span>
+              <span class="argument">est</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">,</span>
+              <span class="argument">ciLow</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">x</span> <span class="keyword">-</span> <span class="number">1.96</span><span class="keyword">*</span><span class="symbol">stderr</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">,</span>
+              <span class="argument">ciHigh</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">x</span> <span class="keyword">+</span> <span class="number">1.96</span><span class="keyword">*</span><span class="symbol">stderr</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">,</span>
+              <span class="argument">p</span> <span class="argument">=</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">p</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="keyword">}</span>
 
 
 
-```
-## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
+<span class="comment">#### Looks like this is the analysis</span>
+<span class="symbol">fit</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="symbol">country.usa</span> <span class="keyword">+</span>
+<span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.cited.halflife</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.plants</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+           <span class="keyword">,</span> <span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span>
+
+
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">fit</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------------------|---------|---------|---------|---------|--------|
 ## | rcs(num.authors.tr, 3)                       | 2.00    | 165.11  | 82.56   | 154.71  | 0.00   |
 ## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1833.50 | 916.75  | 1717.97 | 0.00   |
@@ -795,19 +515,9 @@ gfm_table(anova(fit))
 ## | factor(pubmed.is.core.clinical.journal)      | 1.00    | 4.48    | 4.48    | 8.39    | 0.00   |
 ## | factor(dataset.in.geo.or.ae)                 | 1.00    | 22.79   | 22.79   | 42.71   | 0.00   |
 ## | Residuals                                    | 4341.00 | 2316.46 | 0.53    |         |        |
-```
-
-
-
-```r
-
-fit
-```
-
-
-
-```
-## 
+</div><div class="source">
+<span class="symbol">fit</span>
+</div><div class="output">## 
 ## Call:
 ## lm(formula = nCitedBy.log ~ rcs(num.authors.tr, 3) + rcs(pubmed.date.in.pubmed, 
 ##     3) + rcs(first.author.num.prev.pubs.tr, 3) + rcs(first.author.num.prev.pmc.cites.tr, 
@@ -885,80 +595,60 @@ fit
 ##                                                    factor(dataset.in.geo.or.ae).L  
 ##                                                                          0.122251  
 ## 
-```
-
-
-
-```r
-citation.boost.coefs = calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L")
-print(citation.boost.coefs)
-```
-
-
-
-```
-##                                   param  est ciLow ciHigh p
+</div><div class="source"><span class="symbol">citation.boost.coefs</span> <span class="assignement">=</span> <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">fit</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+<span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">citation.boost.coefs</span><span class="keyword">)</span>
+</div><div class="output">##                                   param  est ciLow ciHigh p
 ## Estimate factor(dataset.in.geo.or.ae).L 1.13  1.09   1.17 0
-```
-
-
+</div></pre>
 
 
 Estimate of citation boost is 
-`13`%
-with 95% confidence intervals [`9`%
-, `17`% ]
-(p=`0.00`)
+<code class="knitr inline">13</code>%
+with 95% confidence intervals [<code class="knitr inline">9</code>%
+, <code class="knitr inline">17</code>% ]
+(p=<code class="knitr inline">0.00</code>)
 
 
 ##### Now by year
 
+<pre class="knitr"><div class="source">
+<span class="symbol">do_analysis</span> <span class="assignement">=</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">mydat</span><span class="keyword">)</span> <span class="keyword">{</span>
+  <span class="symbol">myfit</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="comment">#rcs(first.author.num.prev.pubs.tr, 3) +           </span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="comment">#rcs(first.author.year.first.pub.ago.tr, 3) +     </span>
+  <span class="comment">#rcs(last.author.num.prev.pubs.tr, 3) +           </span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="comment">#rcs(last.author.year.first.pub.ago.tr, 3) +</span>
+  <span class="comment">#country.usa +              </span>
+  <span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="comment">#rcs(journal.cited.halflife, 3) +                 </span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="comment">#factor(pubmed.is.plants) +</span>
+  <span class="comment">#factor(pubmed.is.core.clinical.journal) +</span>
+  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+             <span class="keyword">,</span> <span class="symbol">mydat</span><span class="keyword">)</span>
 
+  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfit</span><span class="keyword">)</span><span class="keyword">)</span>
 
-```r
+  <span class="symbol">myfit</span>
 
-do_analysis = function(mydat) {
-  myfit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-  rcs(pubmed.date.in.pubmed, 3) +
-  #rcs(first.author.num.prev.pubs.tr, 3) +           
-  rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-  #rcs(first.author.year.first.pub.ago.tr, 3) +     
-  #rcs(last.author.num.prev.pubs.tr, 3) +           
-  rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-  #rcs(last.author.year.first.pub.ago.tr, 3) +
-  #country.usa +              
-  pubmed.is.open.access +              
-  rcs(institution.mean.norm.citation.score, 3) +
-  rcs(journal.num.articles.2008.tr, 3) +           
-  #rcs(journal.cited.halflife, 3) +                 
-  rcs(journal.impact.factor.tr, 3) +               
-  factor(pubmed.is.cancer) +
-  factor(pubmed.is.animals) +
-  #factor(pubmed.is.plants) +
-  #factor(pubmed.is.core.clinical.journal) +
-  factor(dataset.in.geo.or.ae)
-             , mydat)
+  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfit</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+<span class="keyword">}</span>
 
-  gfm_table(anova(myfit))
-
-  myfit
-
-  calcCI.exp(myfit, "factor(dataset.in.geo.or.ae).L")
-}
-
-estimates_by_year = data.frame()
-for (year in seq(2001, 2009)) {
-  dat.subset.year = subset(dfCitationsAttributes, pubmed.year.published==year)
-  results = do_analysis(dat.subset.year)
-  print(results)
-  estimates_by_year = rbind(estimates_by_year, cbind(year=year, results))
-}
-```
-
-
-
-```
-## |                                              | Df    | Sum Sq | Mean Sq | F value | Pr(>F) |
+<span class="symbol">estimates_by_year</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="keyword">for</span> <span class="keyword">(</span><span class="symbol">year</span> <span class="keyword">in</span> <span class="functioncall">seq</span><span class="keyword">(</span><span class="number">2001</span><span class="keyword">,</span> <span class="number">2009</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">{</span>
+  <span class="symbol">dat.subset.year</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="symbol">pubmed.year.published</span>==<span class="symbol">year</span><span class="keyword">)</span>
+  <span class="symbol">results</span> <span class="assignement">=</span> <span class="functioncall">do_analysis</span><span class="keyword">(</span><span class="symbol">dat.subset.year</span><span class="keyword">)</span>
+  <span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">results</span><span class="keyword">)</span>
+  <span class="symbol">estimates_by_year</span> <span class="assignement">=</span> <span class="functioncall">rbind</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">cbind</span><span class="keyword">(</span><span class="argument">year</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="symbol">results</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="keyword">}</span>
+</div><div class="output">## |                                              | Df    | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------------------|-------|--------|---------|---------|--------|
 ## | rcs(num.authors.tr, 3)                       | 2.00  | 10.07  | 5.03    | 9.18    | 0.00   |
 ## | rcs(pubmed.date.in.pubmed, 3)                | 2.00  | 0.49   | 0.24    | 0.44    | 0.64   |
@@ -1102,19 +792,9 @@ for (year in seq(2001, 2009)) {
 ## | Residuals                                    | 533.00 | 269.64 | 0.51    |         |        |
 ##                                   param  est ciLow ciHigh     p
 ## Estimate factor(dataset.in.geo.or.ae).L 1.01  0.92   1.11 0.838
-```
-
-
-
-```r
-
-estimates_by_year
-```
-
-
-
-```
-##           year                          param  est ciLow ciHigh     p
+</div><div class="source">
+<span class="symbol">estimates_by_year</span>
+</div><div class="output">##           year                          param  est ciLow ciHigh     p
 ## Estimate  2001 factor(dataset.in.geo.or.ae).L 1.37  0.83   2.25 0.218
 ## Estimate1 2002 factor(dataset.in.geo.or.ae).L 1.15  0.89   1.49 0.292
 ## Estimate2 2003 factor(dataset.in.geo.or.ae).L 1.19  1.01   1.41 0.044
@@ -1124,78 +804,43 @@ estimates_by_year
 ## Estimate6 2007 factor(dataset.in.geo.or.ae).L 1.08  1.00   1.17 0.045
 ## Estimate7 2008 factor(dataset.in.geo.or.ae).L 1.08  0.99   1.18 0.072
 ## Estimate8 2009 factor(dataset.in.geo.or.ae).L 1.01  0.92   1.11 0.838
-```
-
-
-
-```r
-
-ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() + 
-  geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh)) +
-  scale_x_continuous(name='year of publication') +
-  scale_y_continuous(limits=c(0, 2.5), name='citations proportion for \n(papers with available data)/(those without)')
-```
-
-<img src="http://i.imgur.com/830PK.png" class="plot" />
-
+</div><div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">x</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="argument">y</span><span class="argument">=</span><span class="symbol">est</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_line</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">2.5</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'citations proportion for \n(papers with available data)/(those without)'</span><span class="keyword">)</span>
+</div><img src="figure/unnamed-chunk-10.png" class="plot" />
+</pre>
 
 
 ##### Now by year
 
+<pre class="knitr"><div class="source">
+<span class="comment"># Using analysis method of splines, consistent with current study</span>
 
+  <span class="symbol">dat.subset.previous.study</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="keyword">(</span><span class="symbol">pubmed.year.published</span><span class="keyword">&lt;</span><span class="number">2003</span><span class="keyword">)</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span>==<span class="number">1</span><span class="keyword">)</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">pubmed.is.humans</span>==<span class="number">1</span><span class="keyword">)</span><span class="keyword">)</span>
 
-```r
+  <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
+</div><div class="output">## [1] 308  86
+</div><div class="source">
+  <span class="symbol">myfitprev</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+    <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+    <span class="symbol">country.usa</span> <span class="keyword">+</span>
+    <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+    <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+               <span class="keyword">,</span> <span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
 
-# Using analysis method of splines, consistent with current study
-
-  dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
-
-  dim(dat.subset.previous.study)
-```
-
-
-
-```
-## [1] 308  86
-```
-
-
-
-```r
-
-  myfitprev = lm(nCitedBy.log ~ 
-    rcs(pubmed.date.in.pubmed, 3) +
-    country.usa +              
-    rcs(journal.impact.factor.tr, 3) +               
-    factor(dataset.in.geo.or.ae)
-               , dat.subset.previous.study)
-
-  gfm_table(anova(myfitprev))
-```
-
-
-
-```
-## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------|--------|--------|---------|---------|--------|
 ## | rcs(pubmed.date.in.pubmed, 3)    | 2.00   | 5.33   | 2.67    | 3.27    | 0.04   |
 ## | country.usa                      | 1.00   | 0.00   | 0.00    | 0.01    | 0.94   |
 ## | rcs(journal.impact.factor.tr, 3) | 2.00   | 68.86  | 34.43   | 42.26   | 0.00   |
 ## | factor(dataset.in.geo.or.ae)     | 1.00   | 4.35   | 4.35    | 5.34    | 0.02   |
 ## | Residuals                        | 294.00 | 239.53 | 0.81    |         |        |
-```
-
-
-
-```r
-
-  myfitprev
-```
-
-
-
-```
-## 
+</div><div class="source">
+  <span class="symbol">myfitprev</span>
+</div><div class="output">## 
 ## Call:
 ## lm(formula = nCitedBy.log ~ rcs(pubmed.date.in.pubmed, 3) + country.usa + 
 ##     rcs(journal.impact.factor.tr, 3) + factor(dataset.in.geo.or.ae), 
@@ -1217,61 +862,31 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 ##                            factor(dataset.in.geo.or.ae).L  
 ##                                                  0.383500  
 ## 
-```
-
-
-
-```r
-
-  calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
-```
-
-
-
-```
-##                                   param  est ciLow ciHigh     p
+</div><div class="source">
+  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+</div><div class="output">##                                   param  est ciLow ciHigh     p
 ## Estimate factor(dataset.in.geo.or.ae).L 1.47  1.06   2.03 0.021
-```
+</div><div class="source">
+<span class="comment"># Using analysis method of linear fit, consistent with previous study</span>
 
+  <span class="symbol">myfitprev</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+    <span class="symbol">pubmed.date.in.pubmed</span> <span class="keyword">+</span>
+    <span class="symbol">country.usa</span> <span class="keyword">+</span>
+    <span class="symbol">journal.impact.factor.tr</span> <span class="keyword">+</span>
+    <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+               <span class="keyword">,</span> <span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
 
-
-```r
-
-# Using analysis method of linear fit, consistent with previous study
-
-  myfitprev = lm(nCitedBy.log ~ 
-    pubmed.date.in.pubmed +
-    country.usa +              
-    journal.impact.factor.tr +               
-    factor(dataset.in.geo.or.ae)
-               , dat.subset.previous.study)
-
-  gfm_table(anova(myfitprev))
-```
-
-
-
-```
-## |                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## |                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
 ## |------------------------------|--------|--------|---------|---------|--------|
 ## | pubmed.date.in.pubmed        | 1.00   | 4.87   | 4.87    | 6.01    | 0.01   |
 ## | country.usa                  | 1.00   | 0.00   | 0.00    | 0.01    | 0.94   |
 ## | journal.impact.factor.tr     | 1.00   | 68.74  | 68.74   | 84.83   | 0.00   |
 ## | factor(dataset.in.geo.or.ae) | 1.00   | 4.60   | 4.60    | 5.67    | 0.02   |
 ## | Residuals                    | 296.00 | 239.87 | 0.81    |         |        |
-```
-
-
-
-```r
-
-  myfitprev
-```
-
-
-
-```
-## 
+</div><div class="source">
+  <span class="symbol">myfitprev</span>
+</div><div class="output">## 
 ## Call:
 ## lm(formula = nCitedBy.log ~ pubmed.date.in.pubmed + country.usa + 
 ##     journal.impact.factor.tr + factor(dataset.in.geo.or.ae), 
@@ -1285,89 +900,43 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 ## factor(dataset.in.geo.or.ae).L  
 ##                       0.392178  
 ## 
-```
-
-
-
-```r
-
-  calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
-```
-
-
-
-```
-##                                   param  est ciLow ciHigh     p
+</div><div class="source">
+  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+</div><div class="output">##                                   param  est ciLow ciHigh     p
 ## Estimate factor(dataset.in.geo.or.ae).L 1.48  1.07   2.04 0.018
-```
-
-
+</div></pre>
 
 
 
 ### Subset, manual classification of data availability 
 
+<pre class="knitr"><div class="source">
+<span class="symbol">dfAnnotations</span> <span class="assignement">=</span> <span class="functioncall">read.csv</span><span class="keyword">(</span><span class="string">"data/Mendeley_annotated_250_of_11k.csv"</span><span class="keyword">,</span> <span class="argument">header</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">)</span>
 
+<span class="comment"># Get subset that has been annotated</span>
+<span class="symbol">dfAnnotationsAnnotated</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfAnnotations</span><span class="keyword">,</span> <span class="symbol">TAG.annotated</span> == <span class="string">"11k-subset-reviewed"</span><span class="keyword">)</span>
 
-```r
+<span class="comment"># Merge together annotations with citation information</span>
+<span class="symbol">dfCitationsAnnotated</span> <span class="assignement">=</span> <span class="functioncall">merge</span><span class="keyword">(</span><span class="symbol">dfAnnotationsAnnotated</span><span class="keyword">,</span> <span class="symbol">dfCitations</span><span class="keyword">,</span> <span class="argument">by.x</span><span class="argument">=</span><span class="string">"pmid"</span><span class="keyword">,</span> <span class="argument">by.y</span><span class="argument">=</span><span class="string">"PubMed.ID"</span><span class="keyword">)</span>
 
-dfAnnotations = read.csv("data/Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
-
-# Get subset that has been annotated
-dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
-
-# Merge together annotations with citation information
-dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", by.y="PubMed.ID")
-
-# Clean the data, get variables in useful formats
-dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
-dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
-
-```
+<span class="comment"># Clean the data, get variables in useful formats</span>
+<span class="symbol">dfCitationsAnnotated</span><span class="keyword">$</span><span class="symbol">isCreated</span> <span class="assignement">=</span> <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">$</span><span class="symbol">TAG.created</span><span class="keyword">)</span>
+<span class="symbol">dfCitationsAnnotated</span><span class="keyword">$</span><span class="symbol">nCitedBy</span> <span class="assignement">=</span> <span class="functioncall">as.numeric</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">$</span><span class="symbol">Cited.by</span><span class="keyword">)</span>
+</div></pre>
 
 
 
+<pre class="knitr"><div class="source">
+<span class="comment"># Dig in to looking at annotated subset</span>
 
-
-
-
-```r
-
-# Dig in to looking at annotated subset
-
-dim(dfCitationsAnnotated)
-```
-
-
-
-```
-## [1] 230  62
-```
-
-
-
-```r
-with(dfCitationsAnnotated, table(isCreated))
-```
-
-
-
-```
-## isCreated
+<span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">)</span>
+</div><div class="output">## [1] 230  62
+</div><div class="source"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## isCreated
 ##     created-microarray-data created-microarray-data-not 
 ##                         210                          20 
-```
-
-
-
-```r
-with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
-```
-
-
-
-```
-## nCitedBy    N=226, 4 Missing
+</div><div class="source"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## nCitedBy    N=226, 4 Missing
 ## 
 ## +---------+---------------------------+---+--------+
 ## |         |                           |  N|nCitedBy|
@@ -1377,18 +946,8 @@ with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
 ## +---------+---------------------------+---+--------+
 ## |  Overall|                           |226|   31.37|
 ## +---------+---------------------------+---+--------+
-```
-
-
-
-```r
-with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
-```
-
-
-
-```
-## log(1 + nCitedBy)    N=226, 4 Missing
+</div><div class="source"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">summary</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## log(1 + nCitedBy)    N=226, 4 Missing
 ## 
 ## +---------+---------------------------+---+-----------------+
 ## |         |                           |  N|log(1 + nCitedBy)|
@@ -1398,53 +957,28 @@ with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
 ## +---------+---------------------------+---+-----------------+
 ## |  Overall|                           |226|            2.959|
 ## +---------+---------------------------+---+-----------------+
-```
+</div><div class="source">
+<span class="comment">#library(ggplot2)</span>
+
+<span class="comment">#rm(.Random.seed) </span>
+<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+
+<span class="comment"># Do they look different</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">)</span>
+</div><img src="figure/unnamed-chunk-131.png" class="plot" />
+<div class="source"><span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="symbol">isCreated</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"density"</span><span class="keyword">,</span> <span class="argument">binwidth</span><span class="argument">=</span><span class="number">25</span><span class="keyword">)</span>
+</div><img src="figure/unnamed-chunk-132.png" class="plot" />
+<div class="source"><span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">,</span> <span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"boxplot"</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="argument">position</span><span class="argument">=</span><span class="functioncall">position_jitter</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span><span class="keyword">)</span>
+</div><img src="figure/unnamed-chunk-133.png" class="plot" />
+</pre>
 
 
 
-```r
-
-#library(ggplot2)
-
-#rm(.Random.seed) 
-set.seed(42)
-
-# Do they look different
-qplot(nCitedBy, data=dfCitationsAnnotated)
-```
-
-<img src="http://i.imgur.com/6nlM6.png" class="plot" />
-
-
-```r
-qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
-```
-
-<img src="http://i.imgur.com/qs3D8.png" class="plot" />
-
-
-```r
-qplot(isCreated, log(1+nCitedBy), data=dfCitationsAnnotated, geom="boxplot") + 
-  geom_jitter(position=position_jitter(width=.1), color="blue")
-```
-
-<img src="http://i.imgur.com/ldKei.png" class="plot" />
-
-
-
-
-
-
-```r
-  
-# Do they have different distributions
-with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
-```
-
-
-
-```
-## 
+<pre class="knitr"><div class="source">
+<span class="comment"># Do they have different distributions</span>
+<span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">t.test</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## 
 ## 	Welch Two Sample t-test
 ## 
 ## data:  nCitedBy by isCreated 
@@ -1458,18 +992,8 @@ with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
 ## mean in group created-microarray-data-not 
 ##                                     26.30 
 ## 
-```
-
-
-
-```r
-with(dfCitationsAnnotated, print(t.test(log(1+nCitedBy)~isCreated)))
-```
-
-
-
-```
-## 
+</div><div class="source"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">t.test</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## 
 ## 	Welch Two Sample t-test
 ## 
 ## data:  log(1 + nCitedBy) by isCreated 
@@ -1483,49 +1007,29 @@ with(dfCitationsAnnotated, print(t.test(log(1+nCitedBy)~isCreated)))
 ## mean in group created-microarray-data-not 
 ##                                     2.632 
 ## 
-```
-
-
-
-```r
-with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
-```
-
-
-
-```
-## 
+</div><div class="source"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">wilcox.test</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## 
 ## 	Wilcoxon rank sum test with continuity correction
 ## 
 ## data:  nCitedBy by isCreated 
 ## W = 2440, p-value = 0.1733
 ## alternative hypothesis: true location shift is not equal to 0 
 ## 
-```
+</div><div class="source">
+<span class="comment"># Now look if just created has the same pattern </span>
 
+<span class="symbol">dat.annotated.merged</span> <span class="assignement">=</span> <span class="functioncall">merge</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="argument">by</span><span class="argument">=</span><span class="string">"pmid"</span><span class="keyword">)</span>
+<span class="symbol">dat.annotated.merged.created</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dat.annotated.merged</span><span class="keyword">,</span> <span class="symbol">isCreated</span>==<span class="functioncall">levels</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">)</span>
 
+<span class="comment">#library(rms)</span>
 
-```r
-
-# Now look if just created has the same pattern 
-
-dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
-dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
-
-#library(rms)
-
-fit.annotated.merged = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) + 
-rcs(journal.impact.factor.tr, 3) +   
- dataset.in.geo.or.ae
-           , dat.annotated.merged.created)
-anova(fit.annotated.merged)
-```
-
-
-
-```
-## Analysis of Variance Table
+<span class="symbol">fit.annotated.merged</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+ <span class="symbol">dataset.in.geo.or.ae</span>
+           <span class="keyword">,</span> <span class="symbol">dat.annotated.merged.created</span><span class="keyword">)</span>
+<span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">fit.annotated.merged</span><span class="keyword">)</span>
+</div><div class="output">## Analysis of Variance Table
 ## 
 ## Response: nCitedBy.log
 ##                                   Df Sum Sq Mean Sq F value   Pr(>F)    
@@ -1536,74 +1040,37 @@ anova(fit.annotated.merged)
 ## Residuals                        186  107.7     0.6                     
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-```
-
-
-
-```r
-print(calcCI.exp(fit.annotated.merged, "dataset.in.geo.or.ae.L")) 
-```
-
-
-
-```
-##                           param  est ciLow ciHigh     p
+</div><div class="source"><span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">fit.annotated.merged</span><span class="keyword">,</span> <span class="string">"dataset.in.geo.or.ae.L"</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">##                           param  est ciLow ciHigh     p
 ## Estimate dataset.in.geo.or.ae.L 1.31   1.1   1.55 0.002
-```
-
-
-
-```r
-dim(dat.annotated.merged.created)
-```
-
-
-
-```
-## [1] 210 147
-```
-
-
+</div><div class="source"><span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dat.annotated.merged.created</span><span class="keyword">)</span>
+</div><div class="output">## [1] 210 147
+</div></pre>
 
 
 ## Dig into tracking 1k
 
+<pre class="knitr"><div class="source">
+<span class="symbol">dfTracking1k</span> <span class="assignement">=</span> <span class="functioncall">read.csv</span><span class="keyword">(</span><span class="string">"data/tracking1k_20111008.csv"</span><span class="keyword">,</span> <span class="argument">sep</span><span class="argument">=</span><span class="string">","</span><span class="keyword">,</span> <span class="argument">header</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">)</span>
 
+<span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfTracking1k</span><span class="keyword">)</span>
+</div><div class="output">## [1] 852  38
+</div><div class="source"><span class="comment">#names(dfTracking1k)</span>
 
-```r
+<span class="symbol">dfTracking1k.GEO.subset</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfTracking1k</span><span class="keyword">,</span> <span class="symbol">TAG.source</span>==<span class="string">"WoS"</span> <span class="keyword">&amp;</span> <span class="symbol">TAG.confidence</span><span class="keyword">!=</span><span class="string">"low confidence"</span> <span class="keyword">&amp;</span> <span class="functioncall">is.na</span><span class="keyword">(</span><span class="symbol">duplicates</span> <span class="keyword">&amp;</span> <span class="symbol">TAG.repository</span>==<span class="string">"GEO"</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset reused"</span> <span class="keyword">|</span> <span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset not reused"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
 
-dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
+<span class="symbol">num.GEO.total</span> <span class="assignement">=</span> <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfTracking1k.GEO.subset</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
+<span class="symbol">num.GEO.reused</span> <span class="assignement">=</span> <span class="functioncall">dim</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfTracking1k.GEO.subset</span><span class="keyword">,</span> <span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset reused"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
 
-dim(dfTracking1k)
-```
-
-
-
-```
-## [1] 852  38
-```
-
-
-
-```r
-#names(dfTracking1k)
-
-dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
-
-num.GEO.total = dim(dfTracking1k.GEO.subset)[1]
-num.GEO.reused = dim(subset(dfTracking1k.GEO.subset, TAG.dataset.reused=="dataset reused"))[1]
-
-annotated.prop = binconf(num.GEO.reused, num.GEO.total)
-```
+<span class="symbol">annotated.prop</span> <span class="assignement">=</span> <span class="functioncall">binconf</span><span class="keyword">(</span><span class="symbol">num.GEO.reused</span><span class="keyword">,</span> <span class="symbol">num.GEO.total</span><span class="keyword">)</span>
+</div></pre>
 
 
 
-
-
-Proportion of citations to datasets that were in the context of data use (n=`138`):
-`6`%
-with 95% confidence intervals [`3`%
-, `11`% ]
+Proportion of citations to datasets that were in the context of data use (n=<code class="knitr inline">138</code>):
+<code class="knitr inline">6</code>%
+with 95% confidence intervals [<code class="knitr inline">3</code>%
+, <code class="knitr inline">11</code>% ]
 
 
 #### Description
@@ -1627,6 +1094,51 @@ with 95% confidence intervals [`3`%
 - These don’t just increase its impact by 10%, opens it up to whole new avenues of use.  It would be interesting to understand the impact these papers made in the papers that cited them; my guess would be that it is higher for the incremental citations for papers whose data is avail.
 
 ## References
+
+see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/)
+
+
+
+<pre class="knitr"><div class="source">
+<span class="comment">#also in checked in BibTeX file</span>
+
+<span class="symbol">biblio</span> <span class="assignement">&lt;-</span> <span class="functioncall">read.bibtex</span><span class="keyword">(</span><span class="string">"citation11k.bib"</span><span class="keyword">)</span>
+<span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio</span><span class="keyword">[</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Bollen2009A-principal-com"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
+</div><div class="output">## [1] "(Bollen _et. al._ 2009)"
+</div><div class="source">
+<span class="functioncall">write.bib</span><span class="keyword">(</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">'bibtex'</span><span class="keyword">,</span> <span class="string">'knitr'</span><span class="keyword">,</span> <span class="string">'knitcitations'</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">file</span><span class="argument">=</span><span class="string">"r_packages.bib"</span><span class="keyword">)</span>
+<span class="symbol">biblio_packages</span> <span class="assignement">&lt;-</span> <span class="functioncall">read.bibtex</span><span class="keyword">(</span><span class="string">"r_packages.bib"</span><span class="keyword">)</span>
+<span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio_packages</span><span class="keyword">[</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"knitcitations"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
+</div><div class="output">## [1] "(Boettiger, 2012)"
+</div><div class="source"><span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio</span><span class="keyword">[</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Chavan2009Towards-a-data-"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
+</div><div class="output">## [1] "(Chavan & Ingwersen, 2009)"
+</div></pre>
+
+
+And now I want to thank Carl for his great library! (Boettiger, 2012).
+
+<pre class="knitr"><div class="source"><span class="functioncall">bibliography</span><span class="keyword">(</span><span class="keyword">)</span>
+</div><div class="output">## Bollen J, Van de Sompel H, Hagberg A and Chute R (2009). "A principal
+## component analysis of 39 scientific impact measures." _PloS one_,
+## *4*(6), pp. e6022. ISSN 1932-6203, <URL:
+## http://dx.doi.org/10.1371/journal.pone.0006022>, <URL:
+## http://dx.plos.org/10.1371/journal.pone.0006022>.
+## 
+## Boettiger C (2012). _knitcitations: Citations for knitr markdown
+## files_. R package version 0.0-1.
+## 
+## Chavan VS and Ingwersen P (2009). "Towards a data publishing framework
+## for primary biodiversity data: challenges and potentials for the
+## biodiversity informatics community." _BMC bioinformatics_, *10 Suppl
+## 1*(Suppl 14), pp. S2. ISSN 1471-2105, <URL:
+## http://dx.doi.org/10.1186/1471-2105-10-S14-S2>, <URL:
+## http://www.biomedcentral.com/1471-2105/10/S14/S2>.
+## 
+## Boettiger C (2012). _knitcitations: Citations for knitr markdown
+## files_. R package version 0.0-1.
+</div></pre>
+
+
 
 ### Other studies of citation benefit:
 
@@ -1674,15 +1186,15 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
 
 ### Methods and Results
-In a multivariate linear regression on `10555` studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
-`13`%
-(95% confidence interval: [`9`%
-to `17`%)
+In a multivariate linear regression on <code class="knitr inline">10555</code> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
+<code class="knitr inline">13</code>%
+(95% confidence interval: [<code class="knitr inline">9</code>%
+to <code class="knitr inline">17</code>%)
 more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 
-`6`%
-(95% CI: `3`%
-to `11`%, 
-n=`138`)
+<code class="knitr inline">6</code>%
+(95% CI: <code class="knitr inline">3</code>%
+to <code class="knitr inline">11</code>%, 
+n=<code class="knitr inline">138</code>)
 of citations to those studies were in the context of data reuse attribution.
 
 ### Discussion

@@ -51,6 +51,11 @@ require(plyr, quietly=T)
 require(rms, quietly=T)
 require(polycor, quietly=T)
 require(ascii, quietly=T)
+require(knitcitations)
+# to get knitcitations:
+#library(devtools)
+#install_github("knitcitations", "cboettig")
+library(doRNG)
 
 options(scipen=8)
 
@@ -278,7 +283,7 @@ set.seed(42)
 
 end.rcode-->
     
-<!--begin.rcode univariatecorrnowarnings, warning=FALSE, fig.width=9, fig.height=9
+<!--begin.rcode univariatecorrnowarnings, warning=FALSE
 
 dat = dfCitationsAttributes
 set.seed(42)
@@ -290,20 +295,20 @@ rownames(mycor) = rownames(myhetcorr$correlations)
 a = sort(mycor[,"nCitedBy.log"], dec=T)
 gfm_table(cbind(names(a), round(a, 2)))
 
-    
 univarate.citation.predictors = which(abs(mycor[,"nCitedBy.log"]) > 0.1)
 #univarate.citation.predictors
 length(univarate.citation.predictors)    
 topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
 
-
-
+end.rcode-->
+    
+<!--begin.rcode heatmap42, fig.width=9, fig.height=9
+    
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
-
 
 end.rcode-->
     
-<!--begin.rcode univariateqplots, fig.width=9, fig.height=9
+<!--begin.rcode univariateqplots
  
 
 dat.subset = dfCitationsAttributes
@@ -315,14 +320,20 @@ citation_breaks = c(1, 10, 40, 100, 400, 1000)
 
 with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
 
+end.rcode-->
+    
+<!--begin.rcode oneq, fig.width=9, fig.height=9
+
 
 qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
 
 qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 
 x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
 
 qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
@@ -339,9 +350,6 @@ qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo
 
 x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
 qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-
-
 end.rcode-->
 
 #### Multivariate
@@ -626,6 +634,31 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 - These don’t just increase its impact by 10%, opens it up to whole new avenues of use.  It would be interesting to understand the impact these papers made in the papers that cited them; my guess would be that it is higher for the incremental citations for papers whose data is avail.
 
 ## References
+
+see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/)
+
+
+
+<!--begin.rcode
+
+#also in checked in BibTeX file
+
+biblio <- read.bibtex("citation11k.bib")
+citep(biblio[c("Bollen2009A-principal-com")])
+
+write.bib(c('bibtex', 'knitr', 'knitcitations'), file="r_packages.bib")
+biblio_packages <- read.bibtex("r_packages.bib")
+citep(biblio_packages[c("knitcitations")])
+citep(biblio[c("Chavan2009Towards-a-data-")])
+
+end.rcode-->
+
+And now I want to thank Carl for his great library! <!--rinline citep(biblio_packages[c("knitcitations")]) -->.
+
+<!--begin.rcode
+bibliography()
+end.rcode-->
+
 
 ### Other studies of citation benefit:
 
