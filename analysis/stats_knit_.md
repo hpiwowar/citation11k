@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE -->
+<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
@@ -23,8 +23,6 @@ cleanbib()
 # to get knitcitations:
 #library(devtools)
 #install_github("knitcitations", "cboettig")
-
-biblio <- read.bibtex("citation11k.bib")
  
 end.rcode-->
 
@@ -74,14 +72,12 @@ gfm_table <- function(x, ...){
   y <- gsub('[+]', '|', y)
   return(writeLines(y))
 } 
-
 #gfm_table(anova(fit))
-
 end.rcode-->
 
 <!--begin.rcode colours, echo=FALSE
 #colourblind friendly palettes from http://wiki.stdout.org/rcookbook/Graphs/Colors%20(ggplot2)
-cbgRaw = c("#56B4E9", "#009E73", "#999999", "#E69F00", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbgRaw = c("#E69F00", "#56B4E9", "#009E73", "#999999", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbgFillPalette <- scale_fill_manual(values=cbgRaw)
 cbgColourPalette <- scale_colour_manual(values=cbgRaw)
 cbgColorPalette = cbgColourPalette
@@ -210,28 +206,20 @@ Distribution by journal
 <!--begin.rcode
 a = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10]
 gfm_table(cbind(names(a), round(a, 2)))
-
-set.seed(42)
-
 end.rcode-->
 
 Distribution by year
 <!--begin.rcode
-set.seed(42)
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
-set.seed(42)
 
 #library(ggplot2)
 qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
-set.seed(42)
 
 end.rcode-->
 
 Distribution by data availability
 <!--begin.rcode test
-set.seed(42)
 gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttributesRaw))
-set.seed(42)
 end.rcode-->
 
 Distribution by citation
@@ -240,7 +228,6 @@ The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinli
 
 
 <!--begin.rcode libraryggplot2, message=FALSE
-set.seed(42)
 
 qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
 end.rcode-->
@@ -248,15 +235,11 @@ end.rcode-->
 <!--begin.rcode
 summary(dfCitationsAttributes$nCitedBy)
 
-set.seed(42)
-
 end.rcode-->
 
 #### Univariate
 
 <!--begin.rcode
-
-set.seed(42)
 
 dat = dfCitationsAttributes
 
@@ -280,19 +263,22 @@ boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
         names=c("Data Not Shared", "Data Shared"), 
         ylab = "Number of Citations", outline=T, notch=F, log="y")
 
-set.seed(42)
-
 end.rcode-->
     
 <!--begin.rcode univariatecorrnowarnings, warning=FALSE
 
-dat = dfCitationsAttributes
-set.seed(42)
+#dat = dfCitationsAttributes
 myhetcorr = hetcor.modified(dat, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
 mycor = myhetcorr$correlations
 colnames(mycor) = colnames(myhetcorr$correlations)    
 rownames(mycor) = rownames(myhetcorr$correlations)    
 
+# Correlations with data availability
+## See if anything is so collinear it will cause problems in regression
+a = sort(mycor[,"dataset.in.geo.or.ae.int"], dec=T)
+gfm_table(cbind(names(a), round(a, 2)))
+
+# Correlations with citation
 a = sort(mycor[,"nCitedBy.log"], dec=T)
 gfm_table(cbind(names(a), round(a, 2)))
 
@@ -309,7 +295,7 @@ heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "ro
 
 end.rcode-->
     
-<!--begin.rcode univariateqplots
+<!--begin.rcode univariateqplots, fig.width=9, fig.height=9
  
 
 dat.subset = dfCitationsAttributes
@@ -321,11 +307,6 @@ citation_breaks = c(1, 10, 40, 100, 400, 1000)
 
 with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
 
-end.rcode-->
-    
-<!--begin.rcode oneq, fig.width=9, fig.height=9
-
-
 qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 
@@ -336,15 +317,42 @@ x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
 qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 
-qplot(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+##Distribution by journal
 
-qplot(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10])
+dat_most_common_journals = subset(dfCitationsAttributesRaw, (pubmed_journal %in% most_common_journals))
+
+prop.table(table(dat_most_common_journals$pubmed_journal, dat_most_common_journals$in_ae_or_geo), margin=1)  
+
+ggplot(data=dat_most_common_journals, aes(x=pubmed_date_in_pubmed, y=1+nCitedBy, color=factor(in_ae_or_geo))) + geom_point() + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette + facet_wrap(~ pubmed_journal)
+
+ggplot(dat.subset, aes(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.cancer, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.humans, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.cultured.cells, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(has.R.funding, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(country.usa, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+qplot(num.grants.via.nih.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$last.author.num.prev.microarray.creations.tr, na.rm=T)
+qplot(last.author.num.prev.microarray.creations.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
 qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 
 x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
 qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(dataset.in.geo.or.ae, last.author.num.prev.pubs.tr)) + geom_jitter() + geom_boxplot(aes(group=dataset.in.geo.or.ae)) + scale_y_continuous(trans="log10", breaks=x_breaks, labels=x_breaks)  + cbgFillPalette + cbgColourPalette + coord_flip() 
+
 
 x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
 qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
@@ -394,24 +402,24 @@ calcCI.noexp= function(res, param) {
 
 #### Looks like this is the analysis
 fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-rcs(pubmed.date.in.pubmed, 3) +
-rcs(first.author.num.prev.pubs.tr, 3) +           
-rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-rcs(first.author.year.first.pub.ago.tr, 3) +     
-rcs(last.author.num.prev.pubs.tr, 3) +           
-rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-rcs(last.author.year.first.pub.ago.tr, 3) +
-country.usa +              
-pubmed.is.open.access +              
-rcs(institution.mean.norm.citation.score, 3) +
-rcs(journal.num.articles.2008.tr, 3) +           
-rcs(journal.cited.halflife, 3) +                 
-rcs(journal.impact.factor.tr, 3) +               
-factor(pubmed.is.cancer) +
-factor(pubmed.is.animals) +
-factor(pubmed.is.plants) +
-factor(pubmed.is.core.clinical.journal) +
-factor(dataset.in.geo.or.ae)
+          rcs(pubmed.date.in.pubmed, 3) +
+          rcs(first.author.num.prev.pubs.tr, 3) +           
+          rcs(first.author.num.prev.pmc.cites.tr, 3) +     
+          rcs(first.author.year.first.pub.ago.tr, 3) +     
+          rcs(last.author.num.prev.pubs.tr, 3) +           
+          rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+          rcs(last.author.year.first.pub.ago.tr, 3) +
+          country.usa +              
+          pubmed.is.open.access +              
+          rcs(institution.mean.norm.citation.score, 3) +
+          rcs(journal.num.articles.2008.tr, 3) +           
+          rcs(journal.cited.halflife, 3) +                 
+          rcs(journal.impact.factor.tr, 3) +               
+          factor(pubmed.is.cancer) +
+          factor(pubmed.is.animals) +
+          factor(pubmed.is.plants) +
+          factor(pubmed.is.core.clinical.journal) +
+          factor(dataset.in.geo.or.ae)
            , dfCitationsAttributes)
 
 
@@ -429,6 +437,46 @@ with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs$ciLow-1) --
 , <!--rinline 100*(citation.boost.coefs$ciHigh-1) -->% ]
 (p=<!--rinline format(citation.boost.coefs$p, nsmall = 2) -->)
 
+
+##### now with journal covariates
+
+<!--begin.rcode
+
+fit_w_journal = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
+          factor(journal.impact.factor.tr) +
+          rcs(pubmed.date.in.pubmed, 3) +
+          rcs(first.author.num.prev.pubs.tr, 3) +           
+          rcs(first.author.num.prev.pmc.cites.tr, 3) +     
+          rcs(first.author.year.first.pub.ago.tr, 3) +     
+          rcs(last.author.num.prev.pubs.tr, 3) +           
+          rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+          rcs(last.author.year.first.pub.ago.tr, 3) +
+          country.usa +              
+          pubmed.is.open.access +              
+          rcs(institution.mean.norm.citation.score, 3) +
+          rcs(journal.num.articles.2008.tr, 3) +           
+          rcs(journal.cited.halflife, 3) +                 
+          #rcs(journal.impact.factor.tr, 3) +               
+          factor(pubmed.is.cancer) +
+          factor(pubmed.is.animals) +
+          factor(pubmed.is.plants) +
+          factor(pubmed.is.core.clinical.journal) +
+          factor(dataset.in.geo.or.ae)
+           , dfCitationsAttributes)
+
+gfm_table(anova(fit_w_journal))
+
+fit_w_journal
+citation.boost.coefs.journal = calcCI.exp(fit_w_journal, "factor(dataset.in.geo.or.ae).L")
+print(citation.boost.coefs.journal)
+
+end.rcode-->
+
+Estimate of citation boost is 
+<!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
+with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs.journal$ciLow-1) -->%
+, <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->% ]
+(p=<!--rinline format(citation.boost.coefs.journal$p, nsmall = 2) -->)
 
 ##### Now by year
 
@@ -552,9 +600,6 @@ with(dfCitationsAnnotated, summary(log(1+nCitedBy)~isCreated))
 
 #library(ggplot2)
 
-#rm(.Random.seed) 
-set.seed(42)
-
 # Do they look different
 qplot(nCitedBy, data=dfCitationsAnnotated)
 qplot(nCitedBy, data=dfCitationsAnnotated, color=isCreated, geom="density", binwidth=25)
@@ -588,6 +633,7 @@ print(calcCI.exp(fit.annotated.merged, "dataset.in.geo.or.ae.L"))
 dim(dat.annotated.merged.created)
 
 end.rcode-->
+
 
 ## Dig into tracking 1k
 
@@ -643,14 +689,17 @@ And now I want to thank Carl for his great library!
 <!--begin.rcode echo=FALSE, results="asis", cache=FALSE
 citep(list(citation("knitcitations"))) 
 end.rcode-->. 
+
 Now cite everyone! 
-<!--begin.rcode echo=FALSE, results="asis", dependson="setup", cache=FALSE
+<!--begin.rcode echo=FALSE, results="asis", cache=FALSE
+biblio <- read.bibtex("citation11k.bib")
+
 citep(biblio[names(biblio)])
 end.rcode-->
 
 ### demo bibliography
 
-<!--begin.rcode bib, results='asis', echo=FALSE, dependson="setup", cache=FALSE
+<!--begin.rcode bib, results='asis', echo=FALSE, cache=FALSE
 bibliography()
 end.rcode-->
 

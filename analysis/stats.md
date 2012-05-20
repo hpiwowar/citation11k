@@ -7,7 +7,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on <code class="knitr inline">Sat May 19 12:01:19 2012</code>
+ * Generated on <code class="knitr inline">Sat May 19 20:26:45 2012</code>
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -60,7 +60,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on <code class="knitr inline">Sat May 19 12:01:19 2012</code>.
+Analysis run on <code class="knitr inline">Sat May 19 20:26:48 2012</code>.
 
 ### Identification of relevant studies
 
@@ -101,7 +101,7 @@ Now merge together attributes with citation information.
 </div></pre>
 
 
-The dataset has <code class="knitr inline">1.0694 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">196</code>  columns.  
+The dataset has <code class="knitr inline">10694</code> rows and <code class="knitr inline">196</code>  columns.  
 
 This is a lot of columns: all the columns from the PLoS study plus all of the Scopus columns.  We will only use a subset of them in this study.
 
@@ -137,7 +137,7 @@ Get citations into the right format
 
 
 
-The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">86</code>  columns. 
+The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns. 
 
 
 
@@ -146,9 +146,9 @@ The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> 
 
 #### Description of cohort
 
-The PLoS study had <code class="knitr inline">1.1603 &times; 10<sup>4</sup></code> rows.  For this study we exclude extreme years.
+The PLoS study had <code class="knitr inline">11603</code> rows.  For this study we exclude extreme years.
 
-The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">86</code>  columns.  
+The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns.  
 
 
 Distribution by journal
@@ -164,61 +164,49 @@ Distribution by journal
 ## | J Immunol                | 0.02 |
 ## | Blood                    | 0.02 |
 ## | Clin Cancer Res          | 0.02 |
-</div><div class="source">
-<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 </div></pre>
 
 
 Distribution by year
-<pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
+<pre class="knitr"><div class="source"><span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
 </div><div class="output">## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
 ## |---|------|------|------|------|------|------|------|------|------|
 ## | 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
-</div><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-
+</div><div class="source">
 <span class="comment">#library(ggplot2)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"boxplot"</span><span class="keyword">,</span> <span class="argument">log</span><span class="argument">=</span><span class="string">"y"</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/unnamed-chunk-6.png" class="plot" />
-<div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-</div></pre>
+</div><img src="http://i.imgur.com/D2uNQ.png" class="plot" />
+</pre>
 
 
 Distribution by data availability
-<pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
+<pre class="knitr"><div class="source"><span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
 </div><div class="output">## |   | 0    | 1    |
 ## |---|------|------|
 ## | 1 | 0.75 | 0.25 |
-</div><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 </div></pre>
 
 
 Distribution by citation
 
-The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> rows and <code class="knitr inline">86</code>  columns.  
+The dataset has <code class="knitr inline">10555</code> rows and <code class="knitr inline">86</code>  columns.  
 
 
-<pre class="knitr"><div class="source"><span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-
+<pre class="knitr"><div class="source">
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/libraryggplot2.png" class="plot" />
+</div><img src="http://i.imgur.com/72EYJ.png" class="plot" />
 </pre>
 
 
 <pre class="knitr"><div class="source"><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span>
 </div><div class="output">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     0.0     7.0    16.0    31.5    35.0  2640.0 
-</div><div class="source">
-<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
 </div></pre>
 
 
 #### Univariate
 
 <pre class="knitr"><div class="source">
-<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-
 <span class="symbol">dat</span> <span class="assignement">=</span> <span class="symbol">dfCitationsAttributes</span>
 
 <span class="comment"># Number of papers vs Data availability</span>
@@ -255,20 +243,109 @@ The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> 
         <span class="argument">boxwex</span> <span class="argument">=</span> <span class="number">0.5</span><span class="keyword">,</span>
         <span class="argument">names</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"Data Not Shared"</span><span class="keyword">,</span> <span class="string">"Data Shared"</span><span class="keyword">)</span><span class="keyword">,</span>
         <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">"Number of Citations"</span><span class="keyword">,</span> <span class="argument">outline</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">,</span> <span class="argument">notch</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">,</span> <span class="argument">log</span><span class="argument">=</span><span class="string">"y"</span><span class="keyword">)</span>
-</div><img src="figure/unnamed-chunk-8.png" class="plot" />
-<div class="source">
-<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-</div></pre>
+</div><img src="http://i.imgur.com/vfiwc.png" class="plot" />
+</pre>
 
     
 <pre class="knitr"><div class="source">
-<span class="symbol">dat</span> <span class="assignement">=</span> <span class="symbol">dfCitationsAttributes</span>
-<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
+<span class="comment">#dat = dfCitationsAttributes</span>
 <span class="symbol">myhetcorr</span> <span class="assignement">=</span> <span class="functioncall">hetcor.modified</span><span class="keyword">(</span><span class="symbol">dat</span><span class="keyword">,</span> <span class="argument">use</span><span class="argument">=</span><span class="string">"pairwise.complete.obs"</span><span class="keyword">,</span> <span class="argument">std.err</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">pd</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span>
 <span class="symbol">mycor</span> <span class="assignement">=</span> <span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span>
 <span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
 <span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
 
+<span class="comment"># Correlations with data availability</span>
+<span class="comment">## See if anything is so collinear it will cause problems in regression</span>
+<span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"dataset.in.geo.or.ae.int"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## | dataset.in.geo                                | 1     |
+## | dataset.in.geo.or.ae                          | 1     |
+## | dataset.in.geo.or.ae.int                      | 1     |
+## | institution.stanford                          | 0.3   |
+## | pubmed.is.open.access                         | 0.23  |
+## | pubmed.date.in.pubmed                         | 0.21  |
+## | pmid                                          | 0.2   |
+## | pubmed.year.published                         | 0.2   |
+## | journal.microarray.creating.count.tr          | 0.14  |
+## | journal.immediacy.index.log                   | 0.12  |
+## | pubmed.is.funded.nih.intramural               | 0.12  |
+## | has.U.funding                                 | 0.11  |
+## | pubmed.is.funded.nih                          | 0.11  |
+## | pubmed.is.bacteria                            | 0.11  |
+## | journal.5yr.impact.factor.log                 | 0.1   |
+## | journal.impact.factor.tr                      | 0.1   |
+## | pubmed.num.cites.from.pmc.per.year            | 0.09  |
+## | journal.impact.factor.log                     | 0.09  |
+## | num.grants.via.nih.tr                         | 0.08  |
+## | nih.cumulative.years.tr                       | 0.08  |
+## | has.R.funding                                 | 0.08  |
+## | institution.mean.norm.citation.score          | 0.08  |
+## | pubmed.is.fungi                               | 0.08  |
+## | has.T.funding                                 | 0.07  |
+## | has.R01.funding                               | 0.07  |
+## | last.author.num.prev.microarray.creations.tr  | 0.07  |
+## | pubmed.is.geo.reuse                           | 0.07  |
+## | institution.international.collaboration       | 0.07  |
+## | last.author.num.prev.pmc.cites.tr             | 0.06  |
+## | max.grant.duration.tr                         | 0.06  |
+## | nih.sum.avg.dollars.tr                        | 0.06  |
+## | institution.is.govnt                          | 0.06  |
+## | nih.sum.sum.dollars.tr                        | 0.05  |
+## | nih.max.max.dollars.tr                        | 0.05  |
+## | pubmed.is.shared.other                        | 0.05  |
+## | num.grant.numbers.tr                          | 0.05  |
+## | pubmed.is.funded.non.us.govt                  | 0.05  |
+## | pubmed.is.plants                              | 0.05  |
+## | num.authors.tr                                | 0.05  |
+## | institution.is.higher.ed                      | 0.04  |
+## | first.author.num.prev.microarray.creations.tr | 0.04  |
+## | country.canada                                | 0.04  |
+## | has.K.funding                                 | 0.04  |
+## | country.usa                                   | 0.04  |
+## | country.uk                                    | 0.04  |
+## | first.author.num.prev.pmc.cites.tr            | 0.03  |
+## | country.france                                | 0.02  |
+## | pubmed.is.animals                             | 0.02  |
+## | pubmed.num.cites.from.pmc.tr                  | 0.02  |
+## | first.author.female                           | 0.02  |
+## | institution.mean.norm.impact.factor           | 0.02  |
+## | last.author.female                            | 0.02  |
+## | pubmed.is.prognosis                           | 0.02  |
+## | pubmed.is.effectiveness                       | 0.01  |
+## | pubmed.is.comparative.study                   | 0.01  |
+## | institution.research.output.tr                | 0.01  |
+## | nCitedBy.log                                  | 0     |
+## | has.P.funding                                 | 0     |
+## | country.australia                             | 0     |
+## | nCitedBy                                      | 0     |
+## | last.author.num.prev.pubs.tr                  | 0     |
+## | pubmed.is.mice                                | 0     |
+## | institution.rank                              | -0.01 |
+## | first.author.num.prev.pubs.tr                 | -0.02 |
+## | last.author.year.first.pub.ago.tr             | -0.02 |
+## | journal.num.articles.2008.tr                  | -0.02 |
+## | country.germany                               | -0.02 |
+## | nih.last.year.ago.tr                          | -0.03 |
+## | pubmed.is.core.clinical.journal               | -0.03 |
+## | pubmed.is.diagnosis                           | -0.03 |
+## | institution.harvard                           | -0.03 |
+## | nih.first.year.ago.tr                         | -0.04 |
+## | institution.is.medical                        | -0.04 |
+## | first.author.year.first.pub.ago.tr            | -0.05 |
+## | pubmed.is.viruses                             | -0.07 |
+## | first.author.gender.not.found                 | -0.08 |
+## | last.author.gender.not.found                  | -0.09 |
+## | pubmed.is.humans                              | -0.1  |
+## | journal.cited.halflife                        | -0.11 |
+## | institution.nci                               | -0.11 |
+## | pubmed.is.cultured.cells                      | -0.11 |
+## | pubmed.is.cancer                              | -0.12 |
+## | country.japan                                 | -0.14 |
+## | country.china                                 | -0.14 |
+## | country.korea                                 | -0.14 |
+## | years.ago.tr                                  | -0.19 |
+</div><div class="source">
+<span class="comment"># Correlations with citation</span>
 <span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
 </div><div class="output">## | nCitedBy.log                                  | 1     |
@@ -368,7 +445,7 @@ The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> 
     
 <pre class="knitr"><div class="source">
 <span class="functioncall">heatmap.2</span><span class="keyword">(</span><span class="symbol">topcor</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="functioncall">bluered</span><span class="keyword">(</span><span class="number">16</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">cexRow</span><span class="argument">=</span><span class="number">1</span><span class="keyword">,</span> <span class="argument">cexCol</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">,</span> <span class="argument">symm</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">dend</span> <span class="argument">=</span> <span class="string">"row"</span><span class="keyword">,</span> <span class="argument">trace</span> <span class="argument">=</span> <span class="string">"none"</span><span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"Thesis Data"</span><span class="keyword">,</span> <span class="argument">margins</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">15</span><span class="keyword">,</span><span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">key</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">keysize</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span>
-</div><img src="figure/heatmap42.png" class="plot" />
+</div><img src="http://i.imgur.com/la0Ip.png" class="plot" />
 <div class="error">## Error: figure margins too large
 </div></pre>
 
@@ -387,45 +464,89 @@ The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> 
 <span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="functioncall">cut</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="symbol">num_authors_breaks</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">median</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">)</span>
 </div><div class="output">##   (1,5]  (5,10] (10,20] (20,40] 
 ##      16      38      53      NA 
-</div></pre>
-
-    
-<pre class="knitr"><div class="source">
-
+</div><div class="source">
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">num_authors_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">num_authors_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq1.png" class="plot" />
+</div><img src="http://i.imgur.com/dGmOp.png" class="plot" />
 <div class="source">
 
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq2.png" class="plot" />
+</div><img src="http://i.imgur.com/U3WZw.png" class="plot" />
 <div class="source">
 
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq3.png" class="plot" />
+</div><img src="http://i.imgur.com/h2aGu.png" class="plot" />
 <div class="source">
 
-<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq4.png" class="plot" />
+<span class="comment">##Distribution by journal</span>
+
+<span class="symbol">most_common_journals</span> <span class="assignement">=</span> <span class="functioncall">names</span><span class="keyword">(</span><span class="functioncall">sort</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">10</span><span class="keyword">]</span><span class="keyword">)</span>
+<span class="symbol">dat_most_common_journals</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="keyword">(</span><span class="symbol">pubmed_journal</span> <span class="keyword">%in%</span> <span class="symbol">most_common_journals</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall">prop.table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dat_most_common_journals</span><span class="keyword">$</span><span class="symbol">pubmed_journal</span><span class="keyword">,</span> <span class="symbol">dat_most_common_journals</span><span class="keyword">$</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">margin</span><span class="argument">=</span><span class="number">1</span><span class="keyword">)</span>
+</div><div class="output">##                           
+##                                 0      1
+##   Blood                    0.6939 0.3061
+##   BMC Genomics             0.5199 0.4801
+##   Cancer Res               0.8171 0.1829
+##   Clin Cancer Res          0.8588 0.1412
+##   J Bacteriol              0.6696 0.3304
+##   J Biol Chem              0.8237 0.1763
+##   J Immunol                0.7264 0.2736
+##   Physiol Genomics         0.3022 0.6978
+##   PLoS One                 0.5579 0.4421
+##   Proc Natl Acad Sci U S A 0.6546 0.3454
+</div><div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="argument">data</span><span class="argument">=</span><span class="symbol">dat_most_common_journals</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">x</span><span class="argument">=</span><span class="symbol">pubmed_date_in_pubmed</span><span class="keyword">,</span> <span class="argument">y</span><span class="argument">=</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_point</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span> <span class="keyword">+</span> <span class="functioncall">facet_wrap</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">pubmed_journal</span><span class="keyword">)</span>
+</div><img src="http://i.imgur.com/tVtJA.png" class="plot" />
 <div class="source">
-<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed.is.open.access</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq5.png" class="plot" />
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/O0iJi.png" class="plot" />
+<div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">pubmed.is.open.access</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/BQ0o1.png" class="plot" />
+<div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/FT567.png" class="plot" />
+<div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">pubmed.is.humans</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/KYeG9.png" class="plot" />
+<div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">pubmed.is.cultured.cells</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/6kmKD.png" class="plot" />
+<div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">has.R.funding</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/tHiEO.png" class="plot" />
+<div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">country.usa</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/c8Pil.png" class="plot" />
+<div class="source">
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">num.grants.via.nih.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/MwdQW.png" class="plot" />
+<div class="source">
+<span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.microarray.creations.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.microarray.creations.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</div><img src="http://i.imgur.com/QoECK.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq6.png" class="plot" />
+</div><img src="http://i.imgur.com/0mnJT.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq7.png" class="plot" />
+</div><img src="http://i.imgur.com/vn7fy.png" class="plot" />
 <div class="source">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">,</span> <span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_boxplot</span><span class="keyword">(</span><span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">group</span><span class="argument">=</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span>  <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span> <span class="keyword">+</span> <span class="functioncall">coord_flip</span><span class="keyword">(</span><span class="keyword">)</span>
+</div><img src="http://i.imgur.com/OSuXL.png" class="plot" />
+<div class="source">
+
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq8.png" class="plot" />
+</div><img src="http://i.imgur.com/MhS2L.png" class="plot" />
 <div class="source">
 <span class="symbol">x_breaks</span> <span class="assignement">=</span> <span class="functioncall">quantile</span><span class="keyword">(</span><span class="symbol">dat.subset</span><span class="keyword">$</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dat.subset</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">x_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">trans</span><span class="argument">=</span><span class="string">"log10"</span><span class="keyword">,</span> <span class="argument">breaks</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="symbol">citation_breaks</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/oneq9.png" class="plot" />
+</div><img src="http://i.imgur.com/p7ZcY.png" class="plot" />
 </pre>
 
 
@@ -469,24 +590,24 @@ The dataset has <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> 
 
 <span class="comment">#### Looks like this is the analysis</span>
 <span class="symbol">fit</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="symbol">country.usa</span> <span class="keyword">+</span>
-<span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.cited.halflife</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.plants</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="symbol">country.usa</span> <span class="keyword">+</span>
+          <span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.cited.halflife</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.plants</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
            <span class="keyword">,</span> <span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span>
 
 
@@ -606,6 +727,969 @@ with 95% confidence intervals [<code class="knitr inline">9</code>%
 , <code class="knitr inline">17</code>% ]
 (p=<code class="knitr inline">0.00</code>)
 
+
+##### now with journal covariates
+
+<pre class="knitr"><div class="source">
+<span class="symbol">fit_w_journal</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="symbol">country.usa</span> <span class="keyword">+</span>
+          <span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.cited.halflife</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="comment">#rcs(journal.impact.factor.tr, 3) +               </span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.plants</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+           <span class="keyword">,</span> <span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span>
+
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|---------|---------|---------|---------|--------|
+## | rcs(num.authors.tr, 3)                       | 2.00    | 165.11  | 82.56   | 164.95  | 0.00   |
+## | factor(journal.impact.factor.tr)             | 413.00  | 1631.64 | 3.95    | 7.89    | 0.00   |
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1282.44 | 641.22  | 1281.17 | 0.00   |
+## | rcs(first.author.num.prev.pubs.tr, 3)        | 2.00    | 1.25    | 0.62    | 1.25    | 0.29   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00    | 24.19   | 12.10   | 24.17   | 0.00   |
+## | rcs(first.author.year.first.pub.ago.tr, 3)   | 2.00    | 0.82    | 0.41    | 0.82    | 0.44   |
+## | rcs(last.author.num.prev.pubs.tr, 3)         | 2.00    | 5.65    | 2.83    | 5.65    | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00    | 10.64   | 5.32    | 10.63   | 0.00   |
+## | rcs(last.author.year.first.pub.ago.tr, 3)    | 2.00    | 1.37    | 0.69    | 1.37    | 0.25   |
+## | country.usa                                  | 1.00    | 1.10    | 1.10    | 2.21    | 0.14   |
+## | pubmed.is.open.access                        | 1.00    | 0.19    | 0.19    | 0.38    | 0.54   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00    | 0.53    | 0.26    | 0.52    | 0.59   |
+## | rcs(journal.num.articles.2008.tr, 3)         | 2.00    | 5.04    | 2.52    | 5.04    | 0.01   |
+## | rcs(journal.cited.halflife, 3)               | 2.00    | 2.78    | 1.39    | 2.78    | 0.06   |
+## | factor(pubmed.is.cancer)                     | 1.00    | 0.10    | 0.10    | 0.21    | 0.65   |
+## | factor(pubmed.is.animals)                    | 1.00    | 19.50   | 19.50   | 38.97   | 0.00   |
+## | factor(pubmed.is.plants)                     | 1.00    | 3.78    | 3.78    | 7.55    | 0.01   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00    | 9.34    | 9.34    | 18.66   | 0.00   |
+## | Residuals                                    | 3931.00 | 1967.45 | 0.50    |         |        |
+</div><div class="source">
+<span class="symbol">fit_w_journal</span>
+</div><div class="output">## 
+## Call:
+## lm(formula = nCitedBy.log ~ rcs(num.authors.tr, 3) + factor(journal.impact.factor.tr) + 
+##     rcs(pubmed.date.in.pubmed, 3) + rcs(first.author.num.prev.pubs.tr, 
+##     3) + rcs(first.author.num.prev.pmc.cites.tr, 3) + rcs(first.author.year.first.pub.ago.tr, 
+##     3) + rcs(last.author.num.prev.pubs.tr, 3) + rcs(last.author.num.prev.pmc.cites.tr, 
+##     3) + rcs(last.author.year.first.pub.ago.tr, 3) + country.usa + 
+##     pubmed.is.open.access + rcs(institution.mean.norm.citation.score, 
+##     3) + rcs(journal.num.articles.2008.tr, 3) + rcs(journal.cited.halflife, 
+##     3) + factor(pubmed.is.cancer) + factor(pubmed.is.animals) + 
+##     factor(pubmed.is.plants) + factor(pubmed.is.core.clinical.journal) + 
+##     factor(dataset.in.geo.or.ae), data = dfCitationsAttributes)
+## 
+## Coefficients:
+##                                                                       (Intercept)  
+##                                                                         23.288219  
+##                                              rcs(num.authors.tr, 3)num.authors.tr  
+##                                                                          0.214018  
+##                                             rcs(num.authors.tr, 3)num.authors.tr'  
+##                                                                          0.008942  
+##                                   factor(journal.impact.factor.tr)1.3228756555323  
+##                                                                         -1.534113  
+##                                  factor(journal.impact.factor.tr)1.41067359796659  
+##                                                                         -1.640624  
+##                                  factor(journal.impact.factor.tr)1.43352711868315  
+##                                                                         -2.085640  
+##                                  factor(journal.impact.factor.tr)1.44429913799047  
+##                                                                         -0.350846  
+##                                  factor(journal.impact.factor.tr)1.47783625615289  
+##                                                                         -1.307518  
+##                                  factor(journal.impact.factor.tr)1.49197855212466  
+##                                                                         -1.480246  
+##                                  factor(journal.impact.factor.tr)1.50565600320923  
+##                                                                         -3.467558  
+##                                  factor(journal.impact.factor.tr)1.51095995976068  
+##                                                                         -2.565496  
+##                                  factor(journal.impact.factor.tr)1.53525242224202  
+##                                                                         -1.188882  
+##                                  factor(journal.impact.factor.tr)1.54434452114805  
+##                                                                         -0.665285  
+##                                  factor(journal.impact.factor.tr)1.54596248337403  
+##                                                                         -1.542946  
+##                                  factor(journal.impact.factor.tr)1.56652481627327  
+##                                                                         -1.356960  
+##                                  factor(journal.impact.factor.tr)1.56716304193278  
+##                                                                         -1.383712  
+##                                  factor(journal.impact.factor.tr)1.56748205731358  
+##                                                                         -1.347094  
+##                                  factor(journal.impact.factor.tr)1.57384878562078  
+##                                                                         -2.065764  
+##                                  factor(journal.impact.factor.tr)1.57543644746464  
+##                                                                         -1.550949  
+##                                  factor(journal.impact.factor.tr)1.57702251093635  
+##                                                                         -1.114287  
+##                                  factor(journal.impact.factor.tr)1.60717142831746  
+##                                                                         -0.050686  
+##                                  factor(journal.impact.factor.tr)1.61833247511134  
+##                                                                         -2.470791  
+##                                  factor(journal.impact.factor.tr)1.62542302186231  
+##                                                                         -1.737251  
+##                                  factor(journal.impact.factor.tr)1.62696035600134  
+##                                                                         -2.005654  
+##                                  factor(journal.impact.factor.tr)1.63340135912763  
+##                                                                         -0.401778  
+##                                   factor(journal.impact.factor.tr)1.6346253393362  
+##                                                                         -2.605724  
+##                                  factor(journal.impact.factor.tr)1.63584840373428  
+##                                                                         -1.518722  
+##                                   factor(journal.impact.factor.tr)1.6583123951777  
+##                                                                         -1.288295  
+##                                  factor(journal.impact.factor.tr)1.65861387911714  
+##                                                                         -0.467246  
+##                                  factor(journal.impact.factor.tr)1.65891530826622  
+##                                                                         -1.178896  
+##                                   factor(journal.impact.factor.tr)1.6607227342335  
+##                                                                         -0.751890  
+##                                  factor(journal.impact.factor.tr)1.66252819524963  
+##                                                                         -0.228433  
+##                                  factor(journal.impact.factor.tr)1.66583312489577  
+##                                                                          0.275894  
+##                                  factor(journal.impact.factor.tr)1.66943104080402  
+##                                                                         -1.475641  
+##                                  factor(journal.impact.factor.tr)1.69646691685986  
+##                                                                          0.027474  
+##                                  factor(journal.impact.factor.tr)1.69764542823288  
+##                                                                         -0.578118  
+##                                               factor(journal.impact.factor.tr)1.7  
+##                                                                         -0.919945  
+##                                  factor(journal.impact.factor.tr)1.70088212407562  
+##                                                                         -0.738843  
+##                                  factor(journal.impact.factor.tr)1.70499266860594  
+##                                                                         -0.649986  
+##                                  factor(journal.impact.factor.tr)1.70997075998392  
+##                                                                         -1.189106  
+##                                  factor(journal.impact.factor.tr)1.71172427686237  
+##                                                                         -1.375039  
+##                                  factor(journal.impact.factor.tr)1.71435118922582  
+##                                                                         -1.839031  
+##                                  factor(journal.impact.factor.tr)1.71639156371732  
+##                                                                         -1.027252  
+##                                  factor(journal.impact.factor.tr)1.71784749032037  
+##                                                                         -0.925113  
+##                                    factor(journal.impact.factor.tr)1.719302184027  
+##                                                                         -1.684139  
+##                                   factor(journal.impact.factor.tr)1.7239489551608  
+##                                                                         -0.697754  
+##                                  factor(journal.impact.factor.tr)1.72481883106603  
+##                                                                         -0.034216  
+##                                  factor(journal.impact.factor.tr)1.72626765016321  
+##                                                                         -0.258532  
+##                                  factor(journal.impact.factor.tr)1.72742583053513  
+##                                                                          0.174976  
+##                                   factor(journal.impact.factor.tr)1.7303178898688  
+##                                                                         -1.389604  
+##                                  factor(journal.impact.factor.tr)1.73205080756888  
+##                                                                         -1.765158  
+##                                  factor(journal.impact.factor.tr)1.73579952759528  
+##                                                                         -1.637300  
+##                                  factor(journal.impact.factor.tr)1.73781471969828  
+##                                                                         -0.603592  
+##                                  factor(journal.impact.factor.tr)1.73810241355336  
+##                                                                         -0.718566  
+##                                  factor(journal.impact.factor.tr)1.73867765845196  
+##                                                                         -1.114031  
+##                                  factor(journal.impact.factor.tr)1.74126390877431  
+##                                                                          0.976278  
+##                                  factor(journal.impact.factor.tr)1.74183810958424  
+##                                                                         -0.243847  
+##                                  factor(journal.impact.factor.tr)1.74327278416202  
+##                                                                          0.191011  
+##                                  factor(journal.impact.factor.tr)1.74384632350445  
+##                                                                         -1.273772  
+##                                  factor(journal.impact.factor.tr)1.74671119536116  
+##                                                                          0.049951  
+##                                  factor(journal.impact.factor.tr)1.74957137608044  
+##                                                                         -0.396553  
+##                                  factor(journal.impact.factor.tr)1.74985713702576  
+##                                                                         -1.951960  
+##                                   factor(journal.impact.factor.tr)1.7541379649275  
+##                                                                         -1.532389  
+##                                  factor(journal.impact.factor.tr)1.75527775579821  
+##                                                                         -2.606299  
+##                                  factor(journal.impact.factor.tr)1.75840837122666  
+##                                                                         -0.769836  
+##                                   factor(journal.impact.factor.tr)1.7606816861659  
+##                                                                         -1.522805  
+##                                    factor(journal.impact.factor.tr)1.764086165696  
+##                                                                         -1.173187  
+##                                  factor(journal.impact.factor.tr)1.76720117700278  
+##                                                                          1.599217  
+##                                  factor(journal.impact.factor.tr)1.77087548969429  
+##                                                                         -1.190740  
+##                                  factor(journal.impact.factor.tr)1.77623196683316  
+##                                                                          0.747311  
+##                                  factor(journal.impact.factor.tr)1.78605710994918  
+##                                                                         -0.697619  
+##                                  factor(journal.impact.factor.tr)1.78885438199983  
+##                                                                         -3.146757  
+##                                  factor(journal.impact.factor.tr)1.78941331167509  
+##                                                                         -1.091076  
+##                                  factor(journal.impact.factor.tr)1.79276323032351  
+##                                                                         -1.206501  
+##                                  factor(journal.impact.factor.tr)1.79359973238178  
+##                                                                         -1.172931  
+##                                  factor(journal.impact.factor.tr)1.79916647367607  
+##                                                                          0.172515  
+##                                  factor(journal.impact.factor.tr)1.79944435868409  
+##                                                                         -1.208354  
+##                                  factor(journal.impact.factor.tr)1.80111076838711  
+##                                                                         -0.424434  
+##                                  factor(journal.impact.factor.tr)1.80554700852678  
+##                                                                         -0.895146  
+##                                  factor(journal.impact.factor.tr)1.81135308540328  
+##                                                                         -0.244144  
+##                                  factor(journal.impact.factor.tr)1.81356003484858  
+##                                                                         -0.888731  
+##                                  factor(journal.impact.factor.tr)1.82181228451232  
+##                                                                         -0.905287  
+##                                  factor(journal.impact.factor.tr)1.82236110581849  
+##                                                                         -1.176347  
+##                                  factor(journal.impact.factor.tr)1.82290976189168  
+##                                                                         -0.274434  
+##                                  factor(journal.impact.factor.tr)1.82565056897534  
+##                                                                         -0.917206  
+##                                  factor(journal.impact.factor.tr)1.82811378201686  
+##                                                                         -0.635462  
+##                                  factor(journal.impact.factor.tr)1.83030052177231  
+##                                                                         -1.172219  
+##                                  factor(journal.impact.factor.tr)1.83439363278441  
+##                                                                         -1.286540  
+##                                  factor(journal.impact.factor.tr)1.83575597506858  
+##                                                                         -1.109081  
+##                                  factor(journal.impact.factor.tr)1.83738945245694  
+##                                                                         -1.542699  
+##                                  factor(journal.impact.factor.tr)1.83929334256393  
+##                                                                         -0.706972  
+##                                   factor(journal.impact.factor.tr)1.8411952639522  
+##                                                                         -1.780884  
+##                                  factor(journal.impact.factor.tr)1.84634774622767  
+##                                                                         -1.456730  
+##                                  factor(journal.impact.factor.tr)1.85175592344132  
+##                                                                         -1.340034  
+##                                  factor(journal.impact.factor.tr)1.85229587269421  
+##                                                                         -0.521767  
+##                                  factor(journal.impact.factor.tr)1.85391477689779  
+##                                                                         -0.914950  
+##                                  factor(journal.impact.factor.tr)1.85714835164022  
+##                                                                         -0.514948  
+##                                  factor(journal.impact.factor.tr)1.85903200617956  
+##                                                                         -0.149795  
+##                                  factor(journal.impact.factor.tr)1.86010752377383  
+##                                                                         -0.834636  
+##                                  factor(journal.impact.factor.tr)1.86118241986109  
+##                                                                         -0.669775  
+##                                  factor(journal.impact.factor.tr)1.86359866924185  
+##                                                                         -0.889745  
+##                                  factor(journal.impact.factor.tr)1.86708328684073  
+##                                                                         -0.093929  
+##                                  factor(journal.impact.factor.tr)1.86922443810261  
+##                                                                         -1.699510  
+##                                  factor(journal.impact.factor.tr)1.87456661658102  
+##                                                                         -0.852527  
+##                                  factor(journal.impact.factor.tr)1.87989361401118  
+##                                                                         -0.449740  
+##                                  factor(journal.impact.factor.tr)1.88042548376691  
+##                                                                          0.299378  
+##                                   factor(journal.impact.factor.tr)1.8806913622389  
+##                                                                         -0.678402  
+##                                  factor(journal.impact.factor.tr)1.88255146012001  
+##                                                                         -0.126294  
+##                                  factor(journal.impact.factor.tr)1.88759105740624  
+##                                                                         -1.478390  
+##                                  factor(journal.impact.factor.tr)1.88917971617313  
+##                                                                         -0.864146  
+##                                  factor(journal.impact.factor.tr)1.89129585205488  
+##                                                                         -0.342326  
+##                                   factor(journal.impact.factor.tr)1.8915602025841  
+##                                                                         -0.180479  
+##                                   factor(journal.impact.factor.tr)1.8918245161748  
+##                                                                         -0.668050  
+##                                   factor(journal.impact.factor.tr)1.8928814014618  
+##                                                                         -0.615526  
+##                                  factor(journal.impact.factor.tr)1.90315527480025  
+##                                                                         -0.377649  
+##                                  factor(journal.impact.factor.tr)1.90420587122296  
+##                                                                         -0.281540  
+##                                  factor(journal.impact.factor.tr)1.90630532706595  
+##                                                                         -1.215351  
+##                                  factor(journal.impact.factor.tr)1.90997382181013  
+##                                                                         -5.596598  
+##                                  factor(journal.impact.factor.tr)1.91049731745428  
+##                                                                         -0.746129  
+##                                  factor(journal.impact.factor.tr)1.91337398330802  
+##                                                                         -0.979752  
+##                                  factor(journal.impact.factor.tr)1.92067696398952  
+##                                                                         -1.226319  
+##                                  factor(journal.impact.factor.tr)1.92924855837707  
+##                                                                         -0.678921  
+##                                  factor(journal.impact.factor.tr)1.93313217344288  
+##                                                                         -0.853275  
+##                                  factor(journal.impact.factor.tr)1.93390796058137  
+##                                                                         -0.467408  
+##                                  factor(journal.impact.factor.tr)1.93597520645281  
+##                                                                         -0.728551  
+##                                  factor(journal.impact.factor.tr)1.93726611491555  
+##                                                                         -0.318224  
+##                                  factor(journal.impact.factor.tr)1.93778223750761  
+##                                                                          0.287907  
+##                                  factor(journal.impact.factor.tr)1.93958758502935  
+##                                                                         -0.415177  
+##                                  factor(journal.impact.factor.tr)1.94293592277254  
+##                                                                         -1.009340  
+##                                  factor(journal.impact.factor.tr)1.94602158261413  
+##                                                                         -2.484658  
+##                                  factor(journal.impact.factor.tr)1.94704904920241  
+##                                                                         -0.492278  
+##                                  factor(journal.impact.factor.tr)1.94756257922563  
+##                                                                         -2.617698  
+##                                  factor(journal.impact.factor.tr)1.94807597387782  
+##                                                                         -0.630465  
+##                                  factor(journal.impact.factor.tr)1.94961534667739  
+##                                                                         -0.671174  
+##                                  factor(journal.impact.factor.tr)1.95192212959431  
+##                                                                         -0.933864  
+##                                  factor(journal.impact.factor.tr)1.95524934471284  
+##                                                                         -0.159580  
+##                                  factor(journal.impact.factor.tr)1.95627196473292  
+##                                                                         -0.710473  
+##                                  factor(journal.impact.factor.tr)1.95780489324141  
+##                                                                         -0.462154  
+##                                  factor(journal.impact.factor.tr)1.95857090757521  
+##                                                                         -0.511966  
+##                                  factor(journal.impact.factor.tr)1.95908141739949  
+##                                                                         -0.956558  
+##                                  factor(journal.impact.factor.tr)1.95984693279858  
+##                                                                         -0.554285  
+##                                  factor(journal.impact.factor.tr)1.96214168703486  
+##                                                                         -0.293348  
+##                                   factor(journal.impact.factor.tr)1.9641792178923  
+##                                                                         -1.031882  
+##                                  factor(journal.impact.factor.tr)1.96443376065471  
+##                                                                         -0.387107  
+##                                  factor(journal.impact.factor.tr)1.96748570515773  
+##                                                                         -0.008666  
+##                                  factor(journal.impact.factor.tr)1.96900990347941  
+##                                                                         -0.264198  
+##                                  factor(journal.impact.factor.tr)1.97610728453695  
+##                                                                         -0.405025  
+##                                  factor(journal.impact.factor.tr)1.97914122790669  
+##                                                                         -0.425880  
+##                                  factor(journal.impact.factor.tr)1.97964643307839  
+##                                                                         -0.786192  
+##                                  factor(journal.impact.factor.tr)1.97989898732233  
+##                                                                         -0.614652  
+##                                    factor(journal.impact.factor.tr)1.981918262694  
+##                                                                         -0.832059  
+##                                  factor(journal.impact.factor.tr)1.98292712927127  
+##                                                                         -0.199678  
+##                                  factor(journal.impact.factor.tr)1.98393548282196  
+##                                                                          0.258363  
+##                                  factor(journal.impact.factor.tr)1.98645412733343  
+##                                                                          0.438584  
+##                                  factor(journal.impact.factor.tr)1.98771225281729  
+##                                                                          0.010745  
+##                                  factor(journal.impact.factor.tr)1.98922095303664  
+##                                                                         -1.250709  
+##                                  factor(journal.impact.factor.tr)1.99248588451713  
+##                                                                         -1.303068  
+##                                  factor(journal.impact.factor.tr)1.99323857076869  
+##                                                                         -1.320095  
+##                                  factor(journal.impact.factor.tr)1.99524434593861  
+##                                                                          0.278041  
+##                                                 factor(journal.impact.factor.tr)2  
+##                                                                         -0.433018  
+##                                  factor(journal.impact.factor.tr)2.00124960961895  
+##                                                                         -0.843461  
+##                                  factor(journal.impact.factor.tr)2.00449494885869  
+##                                                                         -0.933149  
+##                                  factor(journal.impact.factor.tr)2.00922870773837  
+##                                                                         -0.794155  
+##                                  factor(journal.impact.factor.tr)2.00947754403974  
+##                                                                         -0.416526  
+##                                  factor(journal.impact.factor.tr)2.01022386813011  
+##                                                                         -0.809821  
+##                                  factor(journal.impact.factor.tr)2.01519229851645  
+##                                                                         -1.122203  
+##                                  factor(journal.impact.factor.tr)2.01668044072431  
+##                                                                         -2.810714  
+##                                  factor(journal.impact.factor.tr)2.01717624415915  
+##                                                                         -0.800862  
+##                                  factor(journal.impact.factor.tr)2.01816748561659  
+##                                                                         -0.592644  
+##                                  factor(journal.impact.factor.tr)2.01866292381863  
+##                                                                         -0.179357  
+##                                  factor(journal.impact.factor.tr)2.01965343561711  
+##                                                                          0.030171  
+##                                  factor(journal.impact.factor.tr)2.02163300329214  
+##                                                                         -0.936557  
+##                                  factor(journal.impact.factor.tr)2.02188031297602  
+##                                                                         -0.247944  
+##                                  factor(journal.impact.factor.tr)2.02286924935845  
+##                                                                         -0.405264  
+##                                   factor(journal.impact.factor.tr)2.0339616515559  
+##                                                                         -1.223652  
+##                                  factor(journal.impact.factor.tr)2.03519040878243  
+##                                                                         -0.215270  
+##                                  factor(journal.impact.factor.tr)2.03887223729198  
+##                                                                         -0.594824  
+##                                  factor(journal.impact.factor.tr)2.03936264553414  
+##                                                                         -1.069488  
+##                                  factor(journal.impact.factor.tr)2.03960780543711  
+##                                                                         -0.868570  
+##                                  factor(journal.impact.factor.tr)2.03985293587553  
+##                                                                         -0.017424  
+##                                  factor(journal.impact.factor.tr)2.04230262204209  
+##                                                                         -0.291619  
+##                                  factor(journal.impact.factor.tr)2.04450483002609  
+##                                                                         -1.296844  
+##                                  factor(journal.impact.factor.tr)2.04474937339518  
+##                                                                         -0.881652  
+##                                  factor(journal.impact.factor.tr)2.04890214505232  
+##                                                                         -1.026753  
+##                                  factor(journal.impact.factor.tr)2.05012194759239  
+##                                                                         -1.190891  
+##                                  factor(journal.impact.factor.tr)2.05085348087083  
+##                                                                         -0.223867  
+##                                  factor(journal.impact.factor.tr)2.05548047910945  
+##                                                                         -1.144198  
+##                                  factor(journal.impact.factor.tr)2.05621010599598  
+##                                                                         -0.403751  
+##                                  factor(journal.impact.factor.tr)2.05961161387287  
+##                                                                         -0.397986  
+##                                  factor(journal.impact.factor.tr)2.06131026291531  
+##                                                                         -0.564088  
+##                                  factor(journal.impact.factor.tr)2.06494551986245  
+##                                                                         -0.933578  
+##                                  factor(journal.impact.factor.tr)2.06688170924221  
+##                                                                         -0.863780  
+##                                  factor(journal.impact.factor.tr)2.06712360539954  
+##                                                                         -0.140122  
+##                                  factor(journal.impact.factor.tr)2.07050718424255  
+##                                                                         -0.313798  
+##                                  factor(journal.impact.factor.tr)2.07099010137663  
+##                                                                         -1.140968  
+##                                   factor(journal.impact.factor.tr)2.0714729059295  
+##                                                                         -1.783936  
+##                                  factor(journal.impact.factor.tr)2.07316183642281  
+##                                                                         -1.536932  
+##                                  factor(journal.impact.factor.tr)2.07894203863407  
+##                                                                         -0.382921  
+##                                  factor(journal.impact.factor.tr)2.08278659492517  
+##                                                                         -1.064407  
+##                                  factor(journal.impact.factor.tr)2.08422647521808  
+##                                                                         -0.228480  
+##                                  factor(journal.impact.factor.tr)2.08901890848312  
+##                                                                         -0.386687  
+##                                  factor(journal.impact.factor.tr)2.09356155868415  
+##                                                                         -0.601355  
+##                                  factor(journal.impact.factor.tr)2.09809437347322  
+##                                                                          0.454162  
+##                                  factor(journal.impact.factor.tr)2.09880918618154  
+##                                                                         -0.104218  
+##                                  factor(journal.impact.factor.tr)2.10023808174216  
+##                                                                         -0.534229  
+##                                  factor(journal.impact.factor.tr)2.10618137870412  
+##                                                                         -0.678935  
+##                                  factor(journal.impact.factor.tr)2.10997630318447  
+##                                                                         -1.326051  
+##                                  factor(journal.impact.factor.tr)2.11021325936503  
+##                                                                          0.125801  
+##                                  factor(journal.impact.factor.tr)2.11400094607358  
+##                                                                          0.216562  
+##                                  factor(journal.impact.factor.tr)2.11541958013062  
+##                                                                         -1.271965  
+##                                  factor(journal.impact.factor.tr)2.11896201004171  
+##                                                                          0.263554  
+##                                  factor(journal.impact.factor.tr)2.11919796149392  
+##                                                                         -0.619765  
+##                                  factor(journal.impact.factor.tr)2.12226294318117  
+##                                                                         -1.396419  
+##                                  factor(journal.impact.factor.tr)2.12532350478698  
+##                                                                          0.022210  
+##                                   factor(journal.impact.factor.tr)2.1304929007157  
+##                                                                         -0.725654  
+##                                  factor(journal.impact.factor.tr)2.13096222397301  
+##                                                                         -0.042630  
+##                                  factor(journal.impact.factor.tr)2.13119684684451  
+##                                                                         -0.538802  
+##                                   factor(journal.impact.factor.tr)2.1342445970413  
+##                                                                          0.091881  
+##                                  factor(journal.impact.factor.tr)2.13447885911292  
+##                                                                         -1.288435  
+##                                  factor(journal.impact.factor.tr)2.14056067421599  
+##                                                                         -1.315327  
+##                                  factor(journal.impact.factor.tr)2.14172827408147  
+##                                                                          0.015613  
+##                                  factor(journal.impact.factor.tr)2.14615936034582  
+##                                                                         -0.519970  
+##                                  factor(journal.impact.factor.tr)2.14732391594748  
+##                                                                         -0.848877  
+##                                  factor(journal.impact.factor.tr)2.14755675128738  
+##                                                                         -0.800808  
+##                                  factor(journal.impact.factor.tr)2.14778956138631  
+##                                                                         -1.082387  
+##                                  factor(journal.impact.factor.tr)2.15313724597388  
+##                                                                         -0.747690  
+##                                  factor(journal.impact.factor.tr)2.15476216785055  
+##                                                                         -0.502848  
+##                                   factor(journal.impact.factor.tr)2.1559220765139  
+##                                                                         -1.493090  
+##                                  factor(journal.impact.factor.tr)2.15824002372303  
+##                                                                          0.542744  
+##                                  factor(journal.impact.factor.tr)2.16471707158234  
+##                                                                         -0.335823  
+##                                  factor(journal.impact.factor.tr)2.16910119634839  
+##                                                                          0.213739  
+##                                  factor(journal.impact.factor.tr)2.17990825495019  
+##                                                                         -0.388061  
+##                                  factor(journal.impact.factor.tr)2.18105479069188  
+##                                                                         -0.387134  
+##                                  factor(journal.impact.factor.tr)2.18471966164998  
+##                                                                         -0.070258  
+##                                  factor(journal.impact.factor.tr)2.18654979362465  
+##                                                                         -0.614440  
+##                                  factor(journal.impact.factor.tr)2.18883530673278  
+##                                                                         -1.152115  
+##                                  factor(journal.impact.factor.tr)2.19111843586786  
+##                                                                         -1.342274  
+##                                   factor(journal.impact.factor.tr)2.1936271333114  
+##                                                                         -0.601439  
+##                                  factor(journal.impact.factor.tr)2.19772609758359  
+##                                                                         -0.264524  
+##                                   factor(journal.impact.factor.tr)2.1988633427296  
+##                                                                         -0.572433  
+##                                               factor(journal.impact.factor.tr)2.2  
+##                                                                         -0.758625  
+##                                  factor(journal.impact.factor.tr)2.20340645365307  
+##                                                                         -0.285881  
+##                                  factor(journal.impact.factor.tr)2.20771374956084  
+##                                                                         -2.087229  
+##                                   factor(journal.impact.factor.tr)2.2113344387496  
+##                                                                         -0.509962  
+##                                  factor(journal.impact.factor.tr)2.21314256205966  
+##                                                                         -0.541541  
+##                                  factor(journal.impact.factor.tr)2.21697992773954  
+##                                                                         -1.271842  
+##                                  factor(journal.impact.factor.tr)2.21900878772483  
+##                                                                         -0.811667  
+##                                  factor(journal.impact.factor.tr)2.21945939363621  
+##                                                                         -0.304795  
+##                                  factor(journal.impact.factor.tr)2.22126090318089  
+##                                                                         -1.187220  
+##                                  factor(journal.impact.factor.tr)2.22373559579371  
+##                                                                         -1.472986  
+##                                  factor(journal.impact.factor.tr)2.22441003414389  
+##                                                                         -0.026578  
+##                                  factor(journal.impact.factor.tr)2.22957395033222  
+##                                                                         -0.386746  
+##                                  factor(journal.impact.factor.tr)2.23024662313386  
+##                                                                         -0.962957  
+##                                  factor(journal.impact.factor.tr)2.23315919719128  
+##                                                                         -0.443525  
+##                                  factor(journal.impact.factor.tr)2.23629157311832  
+##                                                                         -0.436262  
+##                                  factor(journal.impact.factor.tr)2.23651514638287  
+##                                                                          0.052341  
+##                                  factor(journal.impact.factor.tr)2.23740921603537  
+##                                                                         -1.063717  
+##                                   factor(journal.impact.factor.tr)2.2414281161795  
+##                                                                         -1.093036  
+##                                  factor(journal.impact.factor.tr)2.24276614920058  
+##                                                                         -0.346299  
+##                                   factor(journal.impact.factor.tr)2.2454398232863  
+##                                                                         -0.074763  
+##                                  factor(journal.impact.factor.tr)2.24722050542442  
+##                                                                          0.214647  
+##                                  factor(journal.impact.factor.tr)2.25432916851111  
+##                                                                         -0.554254  
+##                                  factor(journal.impact.factor.tr)2.26274169979695  
+##                                                                         -0.682338  
+##                                  factor(journal.impact.factor.tr)2.26406713681375  
+##                                                                         -0.809346  
+##                                  factor(journal.impact.factor.tr)2.26539179834306  
+##                                                                         -1.365823  
+##                                  factor(journal.impact.factor.tr)2.26627447587445  
+##                                                                         -1.033011  
+##                                  factor(journal.impact.factor.tr)2.26803880037357  
+##                                                                         -0.902682  
+##                                  factor(journal.impact.factor.tr)2.26825924444275  
+##                                                                         -0.200163  
+##                                  factor(journal.impact.factor.tr)2.27310360520589  
+##                                                                         -0.386539  
+##                                  factor(journal.impact.factor.tr)2.27376340018041  
+##                                                                         -1.223972  
+##                                  factor(journal.impact.factor.tr)2.27552191815416  
+##                                                                          0.179039  
+##                                  factor(journal.impact.factor.tr)2.28691932520585  
+##                                                                         -0.447630  
+##                                  factor(journal.impact.factor.tr)2.29085137012422  
+##                                                                          0.408075  
+##                                  factor(journal.impact.factor.tr)2.29390496751718  
+##                                                                         -0.999428  
+##                                   factor(journal.impact.factor.tr)2.3032585612562  
+##                                                                         -0.399511  
+##                                  factor(journal.impact.factor.tr)2.30412673262562  
+##                                                                         -0.335190  
+##                                  factor(journal.impact.factor.tr)2.30824608740056  
+##                                                                         -1.045950  
+##                                   factor(journal.impact.factor.tr)2.3134389985474  
+##                                                                         -1.204010  
+##                                  factor(journal.impact.factor.tr)2.31754180113326  
+##                                                                         -0.164225  
+##                                  factor(journal.impact.factor.tr)2.32572569319772  
+##                                                                         -0.410125  
+##                                  factor(journal.impact.factor.tr)2.32723011324622  
+##                                                                         -0.305241  
+##                                  factor(journal.impact.factor.tr)2.33302378899145  
+##                                                                         -0.197407  
+##                                  factor(journal.impact.factor.tr)2.33987179135952  
+##                                                                         -1.086897  
+##                                  factor(journal.impact.factor.tr)2.34029912618024  
+##                                                                         -0.818130  
+##                                  factor(journal.impact.factor.tr)2.34051276433178  
+##                                                                         -0.746542  
+##                                  factor(journal.impact.factor.tr)2.34520787991171  
+##                                                                         -0.333512  
+##                                  factor(journal.impact.factor.tr)2.35223298165807  
+##                                                                         -0.959822  
+##                                  factor(journal.impact.factor.tr)2.36220236220354  
+##                                                                          0.051564  
+##                                  factor(journal.impact.factor.tr)2.36347202225878  
+##                                                                         -0.195847  
+##                                  factor(journal.impact.factor.tr)2.36664319237185  
+##                                                                         -0.899651  
+##                                  factor(journal.impact.factor.tr)2.36748812035034  
+##                                                                         -0.592907  
+##                                  factor(journal.impact.factor.tr)2.37465787009413  
+##                                                                         -0.965772  
+##                                  factor(journal.impact.factor.tr)2.37676250391157  
+##                                                                          0.311939  
+##                                  factor(journal.impact.factor.tr)2.38285542994115  
+##                                                                         -1.137427  
+##                                  factor(journal.impact.factor.tr)2.38976986339689  
+##                                                                         -0.304284  
+##                                  factor(journal.impact.factor.tr)2.39081576036298  
+##                                                                         -0.841428  
+##                                  factor(journal.impact.factor.tr)2.39457720694072  
+##                                                                         -0.134421  
+##                                  factor(journal.impact.factor.tr)2.40208242989286  
+##                                                                         -1.018900  
+##                                  factor(journal.impact.factor.tr)2.41619535634021  
+##                                                                         -0.455510  
+##                                   factor(journal.impact.factor.tr)2.4178502848605  
+##                                                                         -0.885302  
+##                                  factor(journal.impact.factor.tr)2.41909073827337  
+##                                                                         -0.136794  
+##                                  factor(journal.impact.factor.tr)2.43515913237718  
+##                                                                         -0.231701  
+##                                  factor(journal.impact.factor.tr)2.43823706804732  
+##                                                                         -0.495076  
+##                                  factor(journal.impact.factor.tr)2.44948974278318  
+##                                                                         -0.260153  
+##                                  factor(journal.impact.factor.tr)2.45010203869145  
+##                                                                         -0.291884  
+##                                  factor(journal.impact.factor.tr)2.45316122584717  
+##                                                                          0.431486  
+##                                  factor(journal.impact.factor.tr)2.46008129946959  
+##                                                                          0.129481  
+##                                  factor(journal.impact.factor.tr)2.46048775652308  
+##                                                                          0.350258  
+##                                   factor(journal.impact.factor.tr)2.4688053791257  
+##                                                                         -0.783907  
+##                                   factor(journal.impact.factor.tr)2.4726503998746  
+##                                                                          0.819240  
+##                                  factor(journal.impact.factor.tr)2.47406548013588  
+##                                                                         -0.493526  
+##                                  factor(journal.impact.factor.tr)2.47850761548154  
+##                                                                         -0.955057  
+##                                  factor(journal.impact.factor.tr)2.48072570027401  
+##                                                                          0.096321  
+##                                  factor(journal.impact.factor.tr)2.49258901546163  
+##                                                                         -0.211684  
+##                                  factor(journal.impact.factor.tr)2.49719843024138  
+##                                                                          0.127120  
+##                                  factor(journal.impact.factor.tr)2.50019999200064  
+##                                                                         -0.584692  
+##                                   factor(journal.impact.factor.tr)2.5115732121521  
+##                                                                         -2.592973  
+##                                  factor(journal.impact.factor.tr)2.51495526799186  
+##                                                                          0.294116  
+##                                  factor(journal.impact.factor.tr)2.52230053720805  
+##                                                                         -0.512908  
+##                                  factor(journal.impact.factor.tr)2.52764712727074  
+##                                                                          0.129924  
+##                                  factor(journal.impact.factor.tr)2.52962447805994  
+##                                                                         -0.661430  
+##                                  factor(journal.impact.factor.tr)2.53673017879316  
+##                                                                         -0.656078  
+##                                  factor(journal.impact.factor.tr)2.55342906696074  
+##                                                                         -7.933855  
+##                                   factor(journal.impact.factor.tr)2.5551907952245  
+##                                                                         -2.071973  
+##                                  factor(journal.impact.factor.tr)2.55831976109321  
+##                                                                          0.357917  
+##                                  factor(journal.impact.factor.tr)2.56085923080516  
+##                                                                          0.142895  
+##                                  factor(journal.impact.factor.tr)2.56495613997589  
+##                                                                         -0.396033  
+##                                  factor(journal.impact.factor.tr)2.56963032360688  
+##                                                                         -0.685084  
+##                                  factor(journal.impact.factor.tr)2.58495647932417  
+##                                                                         -0.159670  
+##                                  factor(journal.impact.factor.tr)2.58534330408942  
+##                                                                         -0.677604  
+##                                    factor(journal.impact.factor.tr)2.587856255668  
+##                                                                         -0.073274  
+##                                  factor(journal.impact.factor.tr)2.59094577326504  
+##                                                                         -0.852843  
+##                                  factor(journal.impact.factor.tr)2.59634358281026  
+##                                                                         -0.248005  
+##                                  factor(journal.impact.factor.tr)2.62583320110018  
+##                                                                          0.531309  
+##                                  factor(journal.impact.factor.tr)2.62811719677795  
+##                                                                         -0.524864  
+##                                  factor(journal.impact.factor.tr)2.63476754192851  
+##                                                                         -0.332957  
+##                                  factor(journal.impact.factor.tr)2.63799166033557  
+##                                                                         -0.331045  
+##                                  factor(journal.impact.factor.tr)2.64575131106459  
+##                                                                         -4.075843  
+##                                  factor(journal.impact.factor.tr)2.65141471671257  
+##                                                                         -1.564263  
+##                                  factor(journal.impact.factor.tr)2.66645832519468  
+##                                                                          0.004935  
+##                                  factor(journal.impact.factor.tr)2.66889490238938  
+##                                                                         -0.296789  
+##                                  factor(journal.impact.factor.tr)2.67450930078772  
+##                                                                         -0.014093  
+##                                  factor(journal.impact.factor.tr)2.69202525991121  
+##                                                                         -0.016503  
+##                                  factor(journal.impact.factor.tr)2.70647372054487  
+##                                                                         -0.724355  
+##                                  factor(journal.impact.factor.tr)2.72360055808483  
+##                                                                         -0.233738  
+##                                  factor(journal.impact.factor.tr)2.72818621065352  
+##                                                                         -0.908470  
+##                                  factor(journal.impact.factor.tr)2.73642102023793  
+##                                                                         -1.531473  
+##                                  factor(journal.impact.factor.tr)2.73733446988124  
+##                                                                         -0.140209  
+##                                  factor(journal.impact.factor.tr)2.73843020725378  
+##                                                                          0.095296  
+##                                  factor(journal.impact.factor.tr)2.79499552772451  
+##                                                                          0.259093  
+##                                  factor(journal.impact.factor.tr)2.79910700045568  
+##                                                                         -0.366413  
+##                                  factor(journal.impact.factor.tr)2.80321244289476  
+##                                                                         -0.544391  
+##                                  factor(journal.impact.factor.tr)2.80677751166707  
+##                                                                         -1.532662  
+##                                  factor(journal.impact.factor.tr)2.83707595950479  
+##                                                                         -0.204659  
+##                                  factor(journal.impact.factor.tr)2.83830935593709  
+##                                                                         -1.291318  
+##                                  factor(journal.impact.factor.tr)2.84059852847952  
+##                                                                         -0.640338  
+##                                  factor(journal.impact.factor.tr)2.84587420663669  
+##                                                                         -0.358092  
+##                                  factor(journal.impact.factor.tr)2.86146815463671  
+##                                                                         -0.776636  
+##                                  factor(journal.impact.factor.tr)2.86635657237546  
+##                                                                         -0.967277  
+##                                  factor(journal.impact.factor.tr)2.87210724033766  
+##                                                                         -0.162516  
+##                                  factor(journal.impact.factor.tr)2.87749891398763  
+##                                                                         -0.162793  
+##                                  factor(journal.impact.factor.tr)2.89274955708233  
+##                                                                          0.071564  
+##                                  factor(journal.impact.factor.tr)2.90447929928929  
+##                                                                          0.593901  
+##                                  factor(journal.impact.factor.tr)2.90723236085456  
+##                                                                         -2.445889  
+##                                  factor(journal.impact.factor.tr)2.91787593978908  
+##                                                                         -2.148441  
+##                                  factor(journal.impact.factor.tr)2.92369629065674  
+##                                                                         -0.347748  
+##                                   factor(journal.impact.factor.tr)2.9565182225043  
+##                                                                          0.540725  
+##                                  factor(journal.impact.factor.tr)2.98010066944055  
+##                                                                         -2.605782  
+##                                  factor(journal.impact.factor.tr)3.04877024388523  
+##                                                                          0.522518  
+##                                  factor(journal.impact.factor.tr)3.06561576196365  
+##                                                                          0.024747  
+##                                  factor(journal.impact.factor.tr)3.10386855391784  
+##                                                                         -1.057931  
+##                                  factor(journal.impact.factor.tr)3.10998392278803  
+##                                                                          0.477541  
+##                                  factor(journal.impact.factor.tr)3.13592091737021  
+##                                                                          0.025837  
+##                                  factor(journal.impact.factor.tr)3.14372390645235  
+##                                                                          0.188517  
+##                                  factor(journal.impact.factor.tr)3.18119474411737  
+##                                                                          0.572018  
+##                                  factor(journal.impact.factor.tr)3.18198051533946  
+##                                                                          0.439427  
+##                                  factor(journal.impact.factor.tr)3.20873806970903  
+##                                                                          0.297829  
+##                                   factor(journal.impact.factor.tr)3.2218007387174  
+##                                                                         -7.216189  
+##                                  factor(journal.impact.factor.tr)3.25622480796397  
+##                                                                         -0.101134  
+##                                  factor(journal.impact.factor.tr)3.28115833205287  
+##                                                                          0.236164  
+##                                  factor(journal.impact.factor.tr)3.28222485518588  
+##                                                                         -1.323214  
+##                                  factor(journal.impact.factor.tr)3.28511795830835  
+##                                                                         -0.153163  
+##                                   factor(journal.impact.factor.tr)3.3149660631747  
+##                                                                          0.120358  
+##                                  factor(journal.impact.factor.tr)3.33961075576181  
+##                                                                          0.534512  
+##                                  factor(journal.impact.factor.tr)3.34305249734431  
+##                                                                          0.119463  
+##                                  factor(journal.impact.factor.tr)3.38112407344067  
+##                                                                         -2.330649  
+##                                  factor(journal.impact.factor.tr)3.43176339510754  
+##                                                                          0.495365  
+##                                  factor(journal.impact.factor.tr)3.46222471829891  
+##                                                                         -0.173825  
+##                                  factor(journal.impact.factor.tr)3.63909329366533  
+##                                                                         -0.087197  
+##                                  factor(journal.impact.factor.tr)3.67926623119339  
+##                                                                         -1.600859  
+##                                  factor(journal.impact.factor.tr)3.68659734714818  
+##                                                                         -0.049534  
+##                                  factor(journal.impact.factor.tr)3.69905393310235  
+##                                                                          0.712596  
+##                                  factor(journal.impact.factor.tr)3.72585560643458  
+##                                                                          0.279981  
+##                                  factor(journal.impact.factor.tr)3.72867268609086  
+##                                                                          0.489606  
+##                                  factor(journal.impact.factor.tr)3.82400313807403  
+##                                                                          0.834615  
+##                                  factor(journal.impact.factor.tr)3.82766247205785  
+##                                                                          1.596228  
+##                                  factor(journal.impact.factor.tr)3.88600051466801  
+##                                                                         -0.510740  
+##                                  factor(journal.impact.factor.tr)3.89486841883009  
+##                                                                          0.582471  
+##                                  factor(journal.impact.factor.tr)3.94905051879563  
+##                                                                         -0.272993  
+##                                  factor(journal.impact.factor.tr)3.99161621401657  
+##                                                                          0.466779  
+##                                   factor(journal.impact.factor.tr)4.0574622610691  
+##                                                                          0.866765  
+##                                   factor(journal.impact.factor.tr)4.1360609279845  
+##                                                                          0.698115  
+##                                  factor(journal.impact.factor.tr)4.19034604776264  
+##                                                                          1.021534  
+##                                  factor(journal.impact.factor.tr)4.22208479308505  
+##                                                                          1.165336  
+##                                  factor(journal.impact.factor.tr)4.26110314355332  
+##                                                                         -0.244339  
+##                                  factor(journal.impact.factor.tr)4.33289741397139  
+##                                                                          1.003705  
+##                                  factor(journal.impact.factor.tr)4.64532022577561  
+##                                                                          1.444628  
+##                                  factor(journal.impact.factor.tr)5.09529194453075  
+##                                                                          0.728855  
+##                                  factor(journal.impact.factor.tr)5.11008806186351  
+##                                                                          0.111547  
+##                                  factor(journal.impact.factor.tr)5.34350072518008  
+##                                                                          1.591525  
+##                                   factor(journal.impact.factor.tr)5.3947196405374  
+##                                                                          0.713769  
+##                                  factor(journal.impact.factor.tr)5.59097487027084  
+##                                                                          0.696479  
+##                                  factor(journal.impact.factor.tr)5.67917247492978  
+##                                                                          1.496836  
+##                                  factor(journal.impact.factor.tr)5.69508560076141  
+##                                                                          0.930573  
+##                                  factor(journal.impact.factor.tr)5.71996503485817  
+##                                                                          0.820095  
+##                                   factor(journal.impact.factor.tr)7.1426185674443  
+##                                                                          1.900645  
+##                                rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
+##                                                                         -0.000546  
+##                               rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
+##                                                                         -0.000283  
+##                rcs(first.author.num.prev.pubs.tr, 3)first.author.num.prev.pubs.tr  
+##                                                                         -0.046563  
+##               rcs(first.author.num.prev.pubs.tr, 3)first.author.num.prev.pubs.tr'  
+##                                                                          0.037663  
+##      rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr  
+##                                                                          0.034736  
+##     rcs(first.author.num.prev.pmc.cites.tr, 3)first.author.num.prev.pmc.cites.tr'  
+##                                                                         -0.029711  
+##      rcs(first.author.year.first.pub.ago.tr, 3)first.author.year.first.pub.ago.tr  
+##                                                                         -0.042125  
+##     rcs(first.author.year.first.pub.ago.tr, 3)first.author.year.first.pub.ago.tr'  
+##                                                                          0.014134  
+##                  rcs(last.author.num.prev.pubs.tr, 3)last.author.num.prev.pubs.tr  
+##                                                                         -0.030997  
+##                 rcs(last.author.num.prev.pubs.tr, 3)last.author.num.prev.pubs.tr'  
+##                                                                          0.035799  
+##        rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr  
+##                                                                          0.009035  
+##       rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr'  
+##                                                                         -0.007564  
+##        rcs(last.author.year.first.pub.ago.tr, 3)last.author.year.first.pub.ago.tr  
+##                                                                          0.038196  
+##       rcs(last.author.year.first.pub.ago.tr, 3)last.author.year.first.pub.ago.tr'  
+##                                                                         -0.057990  
+##                                                                     country.usa.L  
+##                                                                          0.019532  
+##                                                           pubmed.is.open.access.L  
+##                                                                         -0.073592  
+##  rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score  
+##                                                                          0.050566  
+## rcs(institution.mean.norm.citation.score, 3)institution.mean.norm.citation.score'  
+##                                                                         -0.014356  
+##                  rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr  
+##                                                                         -0.050800  
+##                 rcs(journal.num.articles.2008.tr, 3)journal.num.articles.2008.tr'  
+##                                                                          0.316060  
+##                              rcs(journal.cited.halflife, 3)journal.cited.halflife  
+##                                                                          0.156135  
+##                             rcs(journal.cited.halflife, 3)journal.cited.halflife'  
+##                                                                         -0.218984  
+##                                                        factor(pubmed.is.cancer).L  
+##                                                                          0.005610  
+##                                                       factor(pubmed.is.animals).L  
+##                                                                         -0.105151  
+##                                                        factor(pubmed.is.plants).L  
+##                                                                          0.130774  
+##                                         factor(pubmed.is.core.clinical.journal).L  
+##                                                                                NA  
+##                                                    factor(dataset.in.geo.or.ae).L  
+##                                                                          0.084393  
+## 
+</div><div class="source"><span class="symbol">citation.boost.coefs.journal</span> <span class="assignement">=</span> <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+<span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">citation.boost.coefs.journal</span><span class="keyword">)</span>
+</div><div class="output">##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.09  1.05   1.13 0
+</div></pre>
+
+
+Estimate of citation boost is 
+<code class="knitr inline">9</code>%
+with 95% confidence intervals [<code class="knitr inline">5</code>%
+, <code class="knitr inline">13</code>% ]
+(p=<code class="knitr inline">0.00</code>)
 
 ##### Now by year
 
@@ -807,7 +1891,7 @@ with 95% confidence intervals [<code class="knitr inline">9</code>%
   <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">2.5</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'citations proportion for \n(papers with available data)/(those without)'</span><span class="keyword">)</span>
-</div><img src="figure/unnamed-chunk-10.png" class="plot" />
+</div><img src="http://i.imgur.com/TuLdT.png" class="plot" />
 </pre>
 
 
@@ -958,17 +2042,14 @@ with 95% confidence intervals [<code class="knitr inline">9</code>%
 </div><div class="source">
 <span class="comment">#library(ggplot2)</span>
 
-<span class="comment">#rm(.Random.seed) </span>
-<span class="functioncall">set.seed</span><span class="keyword">(</span><span class="number">42</span><span class="keyword">)</span>
-
 <span class="comment"># Do they look different</span>
 <span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">)</span>
-</div><img src="figure/unnamed-chunk-131.png" class="plot" />
+</div><img src="http://i.imgur.com/LLZoI.png" class="plot" />
 <div class="source"><span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="symbol">isCreated</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"density"</span><span class="keyword">,</span> <span class="argument">binwidth</span><span class="argument">=</span><span class="number">25</span><span class="keyword">)</span>
-</div><img src="figure/unnamed-chunk-132.png" class="plot" />
+</div><img src="http://i.imgur.com/QYhbG.png" class="plot" />
 <div class="source"><span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">,</span> <span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="string">"boxplot"</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">geom_jitter</span><span class="keyword">(</span><span class="argument">position</span><span class="argument">=</span><span class="functioncall">position_jitter</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"blue"</span><span class="keyword">)</span>
-</div><img src="figure/unnamed-chunk-133.png" class="plot" />
+</div><img src="http://i.imgur.com/rcCAa.png" class="plot" />
 </pre>
 
 
@@ -1046,6 +2127,7 @@ with 95% confidence intervals [<code class="knitr inline">9</code>%
 </div></pre>
 
 
+
 ## Dig into tracking 1k
 
 <pre class="knitr"><div class="source">
@@ -1099,6 +2181,7 @@ see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-
 And now I want to thank Carl for his great library! 
 <div class="output">[1] "(Boettiger, 2012)"
 </div>
+
 
 Now cite everyone! 
 <div class="output">[1] "(Bollen _et. al._ 2009; Chavan & Ingwersen, 2009; Gleditsch & Strand, 2003; Ib\\'{a}\\~{n}ez _et. al._ 2009; Ioannidis _et. al._ 2009; Ochsner _et. al._ 2008; Pienta _et. al._ 2010; Pienta _et. al._ 2006; Piwowar _et. al._ 2007; Piwowar _et. al._ 2011; Piwowar, 2011; character(0); Piwowar _et. al._ 2011; Piwowar & Chapman, 2010; Sears, 2011)"
@@ -1240,7 +2323,7 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Several prior analyses have found that studies with publicly available datasets do indeed receive a higher number of citations than similar studies without available data, suggesting citations in the context of data reuse.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
 
 ### Methods and Results
-In a multivariate linear regression on <code class="knitr inline">1.0555 &times; 10<sup>4</sup></code> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
+In a multivariate linear regression on <code class="knitr inline">10555</code> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
 <code class="knitr inline">13</code>%
 (95% confidence interval: [<code class="knitr inline">9</code>%
 to <code class="knitr inline">17</code>%)
