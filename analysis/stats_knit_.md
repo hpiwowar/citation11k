@@ -1,11 +1,11 @@
-<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE -->
+<!--roptions dev='png', fig.width=5, fig.height=5, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
 # use imgur for hosting figures
 # go to my_imgur_api_key.txt and add your own api key
 
-upload_images = FALSE
+upload_images = TRUE
 
 if (upload_images) {
  opts_knit$set(upload.fun=function(file) {
@@ -39,9 +39,8 @@ To run this I start R, set the working directory to match where this file is, th
 
 or, from the command line
 
-    R -e "library(knitr); knit('stats_knit_.md')"
-    pandoc -r markdown -w html -H header.html stats.md > stats.html
-    file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
+    R -e "library(knitr); knit('stats_knit_.md')"; pandoc -r markdown -w html -H header.html stats.md > stats.html
+    view in browser: file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
 
 to see just the R code in a separate .R file called stats_knit_.R, run 
     R -e "library(knitr); knit('stats_knit_.md', tangle=T)"
@@ -75,6 +74,38 @@ gfm_table <- function(x, ...){
 #gfm_table(anova(fit))
 end.rcode-->
 
+<!--begin.rcode echo=FALSE
+
+###### ANALYSIS
+  
+# Some helper functions
+calcCI.exp= function(res, param) {
+  coefs = summary(res)$coeff
+  coeff = coefs[param,]
+  x = coeff[1]
+  stderr = coeff[2]
+  p = coeff[4]
+  return(data.frame(param = param,
+              est = round(exp(x), 2), 
+              ciLow = round(exp(x - 1.96*stderr), 2),
+              ciHigh = round(exp(x + 1.96*stderr), 2), 
+              p = round(p, 3)))
+}
+
+calcCI.noexp= function(res, param) {
+  coefs = summary(res)$coeff
+  coeff = coefs[param,]
+  x = coeff[1]
+  stderr = coeff[2]
+  p = coeff[4]
+  return(data.frame(param = param,
+              est = round(x, 2), 
+              ciLow = round(x - 1.96*stderr, 2),
+              ciHigh = round(x + 1.96*stderr, 2), 
+              p = round(p, 3)))
+}
+end.rcode-->
+
 <!--begin.rcode colours, echo=FALSE
 #colourblind friendly palettes from http://wiki.stdout.org/rcookbook/Graphs/Colors%20(ggplot2)
 cbgRaw = c("#E69F00", "#56B4E9", "#009E73", "#999999", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -98,7 +129,7 @@ See the [end of this document](#abstract-1) (at the end so it can pull in result
 
 ## Introduction
 
-"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection.” [Piwowar, Sharing] 
+"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection." [Piwowar, Sharing] 
 
 When research data is made publicly available, is there a demonstrable benefit to scientific progress and the study investigators?  
 
@@ -163,23 +194,23 @@ This is a lot of columns: all the columns from the PLoS study plus all of the Sc
 
 ## Results
 
-####Preprocessing
+### Analysis of 11k PLoS articles based on automated determination of data availability
+
+#### Description of cohort
 
 
-Limit to just those published after 2001 and before 2010.
+We begin with articles that have been identified as collecting gene expression microarray data by automatic algorithms looking for keywords in article full text (Piwowar 2011).  
 
-<!--begin.rcode
+<!--begin.rcode echo=FALSE
 dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published > 2000)
 dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published < 2010)
-dim(dfCitationsAttributesRaw)
-end.rcode-->
+#dim(dfCitationsAttributesRaw)
 
-Get citations into the right format
+# Get citations into the right format
 
-<!--begin.rcode sourcing, message=FALSE, warning=FALSE
 dfCitationsAttributesRaw$nCitedBy = as.numeric(dfCitationsAttributesRaw$Cited.by)
 dfCitationsAttributesRaw[which(is.na(dfCitationsAttributesRaw$nCitedBy)),]$nCitedBy=0
-dim(dfCitationsAttributesRaw)
+#dim(dfCitationsAttributesRaw)
  
 dfCitationsAttributes = preprocess.raw.data(dfCitationsAttributesRaw)
 dim(dfCitationsAttributes)
@@ -187,258 +218,95 @@ options(scipen=8)
 
 end.rcode-->
 
+For this analysis of citation behaviour, we retain articles published between 2001 and 2009: <!--rinline dim(dfCitationsAttributes)[1] --> articles.
 
-The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinline dim(dfCitationsAttributes)[2] -->  columns. 
+The composition of this sample is spread across XXX journals, with the top N journals accounting for XXX% of the papers.
 
-
-
-
-### Analysis of 11k PLoS articles based on automated determination of data availability
-
-#### Description of cohort
-
-The PLoS study had <!--rinline dim(dfAttributes)[1]--> rows.  For this study we exclude extreme years.
-
-The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinline dim(dfCitationsAttributes)[2] -->  columns.  
-
-
-Distribution by journal
 <!--begin.rcode
 a = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10]
 gfm_table(cbind(names(a), round(a, 2)))
 end.rcode-->
 
-Distribution by year
+Collecting gene expression micorarray data became more popular over time: XX% of articles in our sample were published in 2001, compared to YY% in 2009.
+
 <!--begin.rcode
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
 
-#library(ggplot2)
-qplot(factor(pubmed_year_published), nCitedBy, data=dfCitationsAttributesRaw, geom="boxplot", log="y") + geom_jitter(color="blue", alpha=0.1) + cbgFillPalette + cbgColourPalette
+end.rcode-->
+
+
+Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between XXX% of papers in this sample and publicly available data.  Articles published more recently were more likely to have associated datasets.
+<!--begin.rcode
+gfm_table(table(dfCitationsAttributes$dataset.in.geo.or.ae.int)/nrow(dfCitationsAttributes))
+
+table(dfCitationsAttributes$dataset.in.geo.or.ae.int)
+
+archiving_over_time = as.data.frame(prop.table(table(dfCitationsAttributes$pubmed.year.published, dfCitationsAttributes$dataset.in.geo.or.ae.int), 1))
+
+qplot(Var1, Freq, data=archiving_over_time, geom = "line", colour = Var2, group = Var2) 
 
 end.rcode-->
 
-Distribution by data availability
-<!--begin.rcode test
-gfm_table(table(dfCitationsAttributesRaw$in_ae_or_geo)/nrow(dfCitationsAttributesRaw))
-end.rcode-->
+The articles in our sample were cited between 0 and 2640 times, with an average of 32 citations per paper and a median of 16.  
 
-Distribution by citation
-
-The dataset has <!--rinline dim(dfCitationsAttributes)[1] --> rows and <!--rinline dim(dfCitationsAttributes)[2] -->  columns.  
-
-
-<!--begin.rcode libraryggplot2, message=FALSE
-
-qplot(nCitedBy.log, data=dfCitationsAttributes) + cbgFillPalette + cbgColourPalette
-end.rcode-->
+Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and there is little visible difference in the distribution of citations between these two groups.
 
 <!--begin.rcode
 summary(dfCitationsAttributes$nCitedBy)
 
-end.rcode-->
+with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
 
-#### Univariate
-
-<!--begin.rcode
-
-dat = dfCitationsAttributes
-
-# Number of papers vs Data availability
-tapply(dat$nCitedBy>=0,
-       dat$dataset.in.geo.or.ae.int,
-       sum)
-
-# Number of citations vs Data availability
-tapply(dat$nCitedBy,
-       dat$dataset.in.geo.or.ae.int,
-       sum)
-
-# Number of citations vs Data availability
-with(dat, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
-
-table(dat$dataset.in.geo.or.ae.int)
-boxplot(nCitedBy+1 ~ dataset.in.geo.or.ae.int,
-        data = dat,
-        boxwex = 0.5, 
-        names=c("Data Not Shared", "Data Shared"), 
-        ylab = "Number of Citations", outline=T, notch=F, log="y")
+ggplot(dfCitationsAttributesRaw, aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + cbgFillPalette + cbgColourPalette
 
 end.rcode-->
-    
-<!--begin.rcode univariatecorrnowarnings, warning=FALSE
 
-#dat = dfCitationsAttributes
-myhetcorr = hetcor.modified(dat, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
-mycor = myhetcorr$correlations
-colnames(mycor) = colnames(myhetcorr$correlations)    
-rownames(mycor) = rownames(myhetcorr$correlations)    
+#### Multivariate visualization
 
-# Correlations with data availability
-## See if anything is so collinear it will cause problems in regression
-a = sort(mycor[,"dataset.in.geo.or.ae.int"], dec=T)
-gfm_table(cbind(names(a), round(a, 2)))
+The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Because data archiving was relatively infrequent for articles published earlier, a difference in citation behaviour may be confounded with publication date.
 
-# Correlations with citation
-a = sort(mycor[,"nCitedBy.log"], dec=T)
-gfm_table(cbind(names(a), round(a, 2)))
-
-univarate.citation.predictors = which(abs(mycor[,"nCitedBy.log"]) > 0.1)
-#univarate.citation.predictors
-length(univarate.citation.predictors)    
-topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
-
-end.rcode-->
-    
-<!--begin.rcode heatmap42, fig.width=9, fig.height=9
-    
-heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
-
-end.rcode-->
-    
-<!--begin.rcode univariateqplots, fig.width=9, fig.height=9
- 
+Indeed, we can see that for any given publication date, papers with associated data recieve more citations than those without.
+<!--begin.rcode univariateqplots, fig.width=9, fig.height=9, echo=FALSE
 
 dat.subset = dfCitationsAttributes
 with(dat.subset, tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
-
-
-num_authors_breaks = c(1, 5, 10, 20, 40)
 citation_breaks = c(1, 10, 40, 100, 400, 1000)
+ 
+qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+end.rcode-->
+    
+This difference in citation is not driven by outliers: as shown by the distribution of citations over time, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
 
-with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
+<!--begin.rcode echo=FALSE
 
-qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+ggplot(dat.subset, aes(1+nCitedBy.log, fill=factor(dataset.in.geo.or.ae))) + geom_density(alpha=0.2) + facet_grid(pubmed.year.published~.) + cbgFillPalette + cbgColourPalette
 
+end.rcode-->
 
-qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+These differences could be because journals with high impact are more likely to require data archiving.  To investigate this, we consider the most common 12 journals in our subset.  Journal by journal, the mean citation rate for papers with data available is not always greater tahn the citation rate of papers without data available.
 
+<!--begin.rcode byjournal, fig.width=9, fig.height=9, echo=FALSE
 
-x_breaks = quantile(dat.subset$journal.impact.factor.tr, na.rm=T)
-qplot(journal.impact.factor.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-
-##Distribution by journal
-
-most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10])
+most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12])
 dat_most_common_journals = subset(dfCitationsAttributesRaw, (pubmed_journal %in% most_common_journals))
 
-prop.table(table(dat_most_common_journals$pubmed_journal, dat_most_common_journals$in_ae_or_geo), margin=1)  
+# prop.table(table(dat_most_common_journals$pubmed_journal, dat_most_common_journals$in_ae_or_geo), margin=1)  
 
-ggplot(data=dat_most_common_journals, aes(x=pubmed_date_in_pubmed, y=1+nCitedBy, color=factor(in_ae_or_geo))) + geom_point() + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette + facet_wrap(~ pubmed_journal)
+ggplot(data=dat_most_common_journals, aes(x=pubmed_date_in_pubmed, y=1+nCitedBy, color=factor(in_ae_or_geo))) + geom_point() + geom_smooth(aes(color="black", fill=factor(in_ae_or_geo))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette + facet_wrap(~pubmed_journal)
 
-ggplot(dat.subset, aes(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(pubmed.is.cancer, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(pubmed.is.humans, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(pubmed.is.cultured.cells, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(has.R.funding, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(country.usa, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-qplot(num.grants.via.nih.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-x_breaks = quantile(dat.subset$last.author.num.prev.microarray.creations.tr, na.rm=T)
-qplot(last.author.num.prev.microarray.creations.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
-qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
-qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-ggplot(dat.subset, aes(dataset.in.geo.or.ae, last.author.num.prev.pubs.tr)) + geom_jitter() + geom_boxplot(aes(group=dataset.in.geo.or.ae)) + scale_y_continuous(trans="log10", breaks=x_breaks, labels=x_breaks)  + cbgFillPalette + cbgColourPalette + coord_flip() 
-
-
-x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
-qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-
-x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
-qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth() + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
 end.rcode-->
 
-#### Multivariate
-
-
-
-##### All years
+We turn again to the distribution of citaiton rates to understand the patterns in more depth.  Considering only papers published in 2005, we see that papers with available data do tend to receive more citations than those without.  Molecular Cell Biology and Blood are perhaps exceptions to this trend.
 
 <!--begin.rcode
+ggplot(data=subset(dat_most_common_journals, (pubmed_year_published=="2005")), aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + facet_grid(pubmed_journal ~ .) + cbgFillPalette + cbgColourPalette 
 
-###### ANALYSIS
-  
-# Some helper functions
-calcCI.exp= function(res, param) {
-  coefs = summary(res)$coeff
-  coeff = coefs[param,]
-  x = coeff[1]
-  stderr = coeff[2]
-  p = coeff[4]
-  return(data.frame(param = param,
-              est = round(exp(x), 2), 
-              ciLow = round(exp(x - 1.96*stderr), 2),
-              ciHigh = round(exp(x + 1.96*stderr), 2), 
-              p = round(p, 3)))
-}
-
-calcCI.noexp= function(res, param) {
-  coefs = summary(res)$coeff
-  coeff = coefs[param,]
-  x = coeff[1]
-  stderr = coeff[2]
-  p = coeff[4]
-  return(data.frame(param = param,
-              est = round(x, 2), 
-              ciLow = round(x - 1.96*stderr, 2),
-              ciHigh = round(x + 1.96*stderr, 2), 
-              p = round(p, 3)))
-}
-
-      
-
-#### Looks like this is the analysis
-fit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
-          rcs(pubmed.date.in.pubmed, 3) +
-          rcs(first.author.num.prev.pubs.tr, 3) +           
-          rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-          rcs(first.author.year.first.pub.ago.tr, 3) +     
-          rcs(last.author.num.prev.pubs.tr, 3) +           
-          rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-          rcs(last.author.year.first.pub.ago.tr, 3) +
-          country.usa +              
-          pubmed.is.open.access +              
-          rcs(institution.mean.norm.citation.score, 3) +
-          rcs(journal.num.articles.2008.tr, 3) +           
-          rcs(journal.cited.halflife, 3) +                 
-          rcs(journal.impact.factor.tr, 3) +               
-          factor(pubmed.is.cancer) +
-          factor(pubmed.is.animals) +
-          factor(pubmed.is.plants) +
-          factor(pubmed.is.core.clinical.journal) +
-          factor(dataset.in.geo.or.ae)
-           , dfCitationsAttributes)
-
-
-gfm_table(anova(fit))
-
-fit
-citation.boost.coefs = calcCI.exp(fit, "factor(dataset.in.geo.or.ae).L")
-print(citation.boost.coefs)
+with(subset(dat_most_common_journals, (pubmed_year_published=="2005")), prop.table(table(pubmed_journal, in_ae_or_geo), margin=1))
 
 end.rcode-->
 
-Estimate of citation boost is 
-<!--rinline 100*(citation.boost.coefs$est-1) -->%
-with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs$ciLow-1) -->%
-, <!--rinline 100*(citation.boost.coefs$ciHigh-1) -->% ]
-(p=<!--rinline format(citation.boost.coefs$p, nsmall = 2) -->)
+#### Multivariate regression
 
-
-##### now with journal covariates
+Other factors are also known or suspected to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area.  Regression analysis can be useful to identify the relationship between data availability and citation rate, independently of these other variables.
 
 <!--begin.rcode
 
@@ -466,7 +334,7 @@ fit_w_journal = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) +
 
 gfm_table(anova(fit_w_journal))
 
-fit_w_journal
+# fit_w_journal
 citation.boost.coefs.journal = calcCI.exp(fit_w_journal, "factor(dataset.in.geo.or.ae).L")
 print(citation.boost.coefs.journal)
 
@@ -478,29 +346,22 @@ with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs.journal$ciL
 , <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->% ]
 (p=<!--rinline format(citation.boost.coefs.journal$p, nsmall = 2) -->)
 
-##### Now by year
+Because publication rate is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.
 
 <!--begin.rcode
 
+# has a few less covariates than full model
 do_analysis = function(mydat) {
   myfit = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
   rcs(pubmed.date.in.pubmed, 3) +
-  #rcs(first.author.num.prev.pubs.tr, 3) +           
   rcs(first.author.num.prev.pmc.cites.tr, 3) +     
-  #rcs(first.author.year.first.pub.ago.tr, 3) +     
-  #rcs(last.author.num.prev.pubs.tr, 3) +           
   rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-  #rcs(last.author.year.first.pub.ago.tr, 3) +
-  #country.usa +              
   pubmed.is.open.access +              
   rcs(institution.mean.norm.citation.score, 3) +
   rcs(journal.num.articles.2008.tr, 3) +           
-  #rcs(journal.cited.halflife, 3) +                 
-  rcs(journal.impact.factor.tr, 3) +               
+  factor(journal.impact.factor.tr) +               
   factor(pubmed.is.cancer) +
   factor(pubmed.is.animals) +
-  #factor(pubmed.is.plants) +
-  #factor(pubmed.is.core.clinical.journal) +
   factor(dataset.in.geo.or.ae)
              , mydat)
 
@@ -511,6 +372,7 @@ do_analysis = function(mydat) {
   calcCI.exp(myfit, "factor(dataset.in.geo.or.ae).L")
 }
 
+
 estimates_by_year = data.frame()
 for (year in seq(2001, 2009)) {
   dat.subset.year = subset(dfCitationsAttributes, pubmed.year.published==year)
@@ -519,16 +381,26 @@ for (year in seq(2001, 2009)) {
   estimates_by_year = rbind(estimates_by_year, cbind(year=year, results))
 }
 
+end.rcode-->
+
+The estimates of citation boost for papers published in each year, with 95% confidence intervals:
+
+<!--begin.rcode
+
 estimates_by_year
 
 ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() + 
   geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh)) +
   scale_x_continuous(name='year of publication') +
-  scale_y_continuous(limits=c(0, 2.5), name='citations proportion for \n(papers with available data)/(those without)')
+  scale_y_continuous(limits=c(0, 3.0), name='citations proportion for \n(papers with available data)/(those without)')
 
 end.rcode-->
 
-##### Now by year
+    
+
+##### Comparison with old study
+
+These results are slightly different than 
 
 <!--begin.rcode
 
@@ -584,7 +456,6 @@ dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", b
 # Clean the data, get variables in useful formats
 dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
 dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
-
 
 end.rcode-->
 
@@ -750,9 +621,9 @@ Attribution upon reuse of scientific data is important to reward data creators a
 
 ### Methods and Results
 In a multivariate linear regression on <!--rinline dim(dfCitationsAttributesRaw)[1] --> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
-<!--rinline 100*(citation.boost.coefs$est-1) -->%
-(95% confidence interval: [<!--rinline 100*(citation.boost.coefs$ciLow-1) -->%
-to <!--rinline 100*(citation.boost.coefs$ciHigh-1) -->%)
+<!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
+(95% confidence interval: [<!--rinline 100*(citation.boost.coefs.journal$ciLow-1) -->%
+to <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->%)
 more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 
 <!--rinline 100*(round(annotated.prop[1], 2)) -->%
 (95% CI: <!--rinline 100*(round(annotated.prop[2], 2)) -->%
@@ -762,5 +633,99 @@ of citations to those studies were in the context of data reuse attribution.
 
 ### Discussion
 This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.
+
+
+#### Extra results
+
+<!--begin.rcode
+
+# Number of papers vs Data availability
+tapply(dfCitationsAttributes$nCitedBy>=0,
+       dfCitationsAttributes$dataset.in.geo.or.ae.int,
+       sum)
+
+# Number of citations vs Data availability
+tapply(dfCitationsAttributes$nCitedBy,
+       dfCitationsAttributes$dataset.in.geo.or.ae.int,
+       sum)
+
+# Number of citations vs Data availability
+with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
+
+table(dfCitationsAttributes$dataset.in.geo.or.ae.int)
+end.rcode-->
+    
+<!--begin.rcode univariatecorrnowarnings, warning=FALSE
+
+myhetcorr = hetcor.modified(dfCitationsAttributes, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
+mycor = myhetcorr$correlations
+colnames(mycor) = colnames(myhetcorr$correlations)    
+rownames(mycor) = rownames(myhetcorr$correlations)    
+
+# Correlations with data availability
+## See if anything is so collinear it will cause problems in regression
+a = sort(mycor[,"dataset.in.geo.or.ae.int"], dec=T)
+gfm_table(cbind(names(a), round(a, 2)))
+
+# Correlations with citation
+a = sort(mycor[,"nCitedBy.log"], dec=T)
+gfm_table(cbind(names(a), round(a, 2)))
+
+univarate.citation.predictors = which(abs(mycor[,"nCitedBy.log"]) > 0.1)
+#univarate.citation.predictors
+length(univarate.citation.predictors)    
+topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
+
+end.rcode-->
+    
+<!--begin.rcode heatmap42, fig.width=9, fig.height=9
+    
+heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
+
+end.rcode-->
+<!--begin.rcode univariateqplots3, fig.width=9, fig.height=9
+
+##Other breakdowns
+
+num_authors_breaks = c(1, 5, 10, 20, 40)
+with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
+
+qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.cancer, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.humans, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.cultured.cells, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(has.R.funding, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(country.usa, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+qplot(num.grants.via.nih.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$last.author.num.prev.microarray.creations.tr, na.rm=T)
+qplot(last.author.num.prev.microarray.creations.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
+qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
+qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(dataset.in.geo.or.ae, last.author.num.prev.pubs.tr)) + geom_jitter() + geom_boxplot(aes(group=dataset.in.geo.or.ae)) + scale_y_continuous(trans="log10", breaks=x_breaks, labels=x_breaks)  + cbgFillPalette + cbgColourPalette + coord_flip() 
+
+
+x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
+qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
+qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+end.rcode-->
 
 
