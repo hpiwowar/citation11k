@@ -1,17 +1,19 @@
-<!--roptions dev='png', fig.width=9, fig.height=9, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE -->
+<!--roptions dev='png', fig.width=9, fig.height=9, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
 # use imgur for hosting figures
-# go to my_imgur_api_key.txt and add your own api key
+# go to static/my_imgur_api_key.txt and add your own api key
 
 upload_images = FALSE
 
 if (upload_images) {
- opts_knit$set(upload.fun=function(file) {
- my_imgur_api_key = read.table("my_imgur_api_key.txt", header=TRUE, sep="\t")
- imgur_upload(file, key=my_imgur_api_key$key)
- })
+   #opts_knit$set(upload.fun = imgur_upload)
+   opts_knit$set(upload.fun = function (file){
+      sprintf("https://www.dropbox.com/home/TrackingDataReuse/11kCitationStudy/paper/citation11k/analysis/%s", file)    
+    })
+} else {
+    opts_chunk$set(fig.path='figure/')
 }
 
 # use html style links to plots, rather than markdown style         
@@ -39,7 +41,7 @@ To run this I start R, set the working directory to match where this file is, th
 
 or, from the command line
 
-    R -e "library(knitr); knit('stats_knit_.md')"; pandoc --toc -r markdown -w html -H header.html stats.md > stats.html
+    R -e "library(knitr); knit('stats_knit_.md')"; pandoc --toc -r markdown -w html -H static/header.html stats.md > stats.html
     view in browser: file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
 
 to see just the R code in a separate .R file called stats_knit_.R, run 
@@ -74,7 +76,7 @@ gfm_table <- function(x, ...){
 #gfm_table(anova(fit))
 end.rcode-->
 
-<!--begin.rcode echo=FALSE
+<!--begin.rcode calcCI, echo=FALSE
 
 ###### ANALYSIS
   
@@ -153,7 +155,7 @@ Analysis run on <!--rinline date() -->.
 - Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
 - Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
 
-<!--begin.rcode echo=FALSE
+<!--begin.rcode dfAttributes, echo=FALSE
 dfAttributes = read.csv("data/PLoSONE2011_rawdata.txt", sep="\t", header=TRUE, stringsAsFactors=F)
 end.rcode-->
 
@@ -168,7 +170,7 @@ Summarize approach in Who shares? paper.
 ### Citation data
 
 Citations from Scopus.
-<!--begin.rcode echo=FALSE
+<!--begin.rcode dfCitations, echo=FALSE
 dfCitations = read.csv("data/scopus_all.csv", header=TRUE, stringsAsFactors=F)
 dfCitationsAttributesRaw = merge(dfAttributes, dfCitations, by.x="pmid", by.y="PubMed.ID")
 end.rcode-->
@@ -186,7 +188,7 @@ end.rcode-->
 
 We begin with articles that have been identified as collecting gene expression microarray data by automatic algorithms looking for keywords in article full text (Piwowar 2011).  
 
-<!--begin.rcode echo=FALSE
+<!--begin.rcode dfCitationsAttributesRaw, echo=FALSE
 dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published > 2000)
 dfCitationsAttributesRaw = subset(dfCitationsAttributesRaw, dfCitationsAttributesRaw$pubmed_year_published < 2010)
 #dim(dfCitationsAttributesRaw)
@@ -207,14 +209,14 @@ For this analysis of citation behaviour, we retain articles published between 20
 
 The composition of this sample is spread across XXX journals, with the top N journals accounting for XXX% of the papers.
 
-<!--begin.rcode
+<!--begin.rcode journalTable
 a = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:10]
 gfm_table(cbind(names(a), round(a, 2)))
 end.rcode-->
 
 Collecting gene expression micorarray data became more popular over time: XX% of articles in our sample were published in 2001, compared to YY% in 2009.
 
-<!--begin.rcode
+<!--begin.rcode yearTable
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
 
 end.rcode-->
@@ -241,7 +243,7 @@ The articles in our sample were cited between 0 and 2640 times, with an average 
 
 Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and there is little visible difference in the distribution of citations between these two groups.
 
-<!--begin.rcode
+<!--begin.rcode sharingVCitations
 summary(dfCitationsAttributes$nCitedBy)
 
 with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
@@ -256,7 +258,7 @@ The number of citations a paper has recieved is strongly correlated to the date 
 
 Indeed, we can see that for any given publication date, papers with associated data recieve more citations than those without.
 
-<!--begin.rcode univariateqplots, echo=FALSE
+<!--begin.rcode citationsByYearBySharing, echo=FALSE
 
 dat.subset = dfCitationsAttributes
 with(dat.subset, tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
@@ -267,7 +269,7 @@ end.rcode-->
     
 This difference in citation is not driven by outliers: as shown by the distribution of citations over time, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
 
-<!--begin.rcode echo=FALSE, 
+<!--begin.rcode citationDist, echo=FALSE 
 
 ggplot(dat.subset, aes(1+nCitedBy.log, fill=factor(dataset.in.geo.or.ae))) + geom_density(alpha=0.2) + facet_grid(pubmed.year.published~.) + cbgFillPalette + cbgColourPalette
 
@@ -275,7 +277,7 @@ end.rcode-->
 
 These differences could be because journals with high impact are more likely to require data archiving.  To investigate this, we consider the most common 12 journals in our subset.  Journal by journal, the mean citation rate for papers with data available is not always greater tahn the citation rate of papers without data available.
 
-<!--begin.rcode echo=FALSE
+<!--begin.rcode citationDistByJournal, echo=FALSE
 
 most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12])
 dat_most_common_journals = subset(dfCitationsAttributesRaw, (pubmed_journal %in% most_common_journals))
@@ -286,9 +288,9 @@ ggplot(data=dat_most_common_journals, aes(x=pubmed_date_in_pubmed, y=1+nCitedBy,
 
 end.rcode-->
 
-We turn again to the distribution of citaiton rates to understand the patterns in more depth.  Considering only papers published in 2005, we see that papers with available data do tend to receive more citations than those without.  Molecular Cell Biology and Blood are perhaps exceptions to this trend.
+We turn again to the distribution of citation rates to understand the patterns in more depth.  Considering only papers published in 2005, we see that papers with available data do tend to receive more citations than those without.  Molecular Cell Biology and Blood are perhaps exceptions to this trend.
 
-<!--begin.rcode echo=FALSE
+<!--begin.rcode citationDistByJournalOneYear, echo=FALSE
 
 ggplot(data=subset(dat_most_common_journals, (pubmed_year_published=="2005")), aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + facet_grid(pubmed_journal ~ .) + cbgFillPalette + cbgColourPalette 
 
@@ -300,7 +302,7 @@ end.rcode-->
 
 Other factors are also known or suspected to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area.  Regression analysis can be useful to identify the relationship between data availability and citation rate, independently of these other variables.
 
-<!--begin.rcode
+<!--begin.rcode regressionAll
 
 dfCitationsAttributes_with_journal = merge(dfCitationsAttributes, dfCitationsAttributesRaw[,c("pmid", "pubmed_journal")], by="pmid", )
 fit_w_journal = lm(nCitedBy.log ~ rcs(num.authors.tr, 3) + 
@@ -341,7 +343,7 @@ with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs.journal$ciL
 
 Because publication rate is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.
 
-<!--begin.rcode
+<!--begin.rcode regressionByYear
 
 # has a few less covariates than full model
 do_analysis = function(mydat) {
@@ -379,7 +381,7 @@ end.rcode-->
 
 The estimates of citation boost for papers published in each year, with 95% confidence intervals:
 
-<!--begin.rcode
+<!--begin.rcode regressionEstimatesByYear
 
 estimates_by_year
 
@@ -402,7 +404,7 @@ Second, because the Piwowar et al 2007 sample was small, Piwowar et al 2007 anal
 
 When we limit the current sample to datasets with MeSH terms "human" and "cancer" in that timeframe, we are left with 308 papers.  Running this subsample with the covariates used in the Piwowar 2007 paper finds a comperable result to that of the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
 
-<!--begin.rcode
+<!--begin.rcode RegressionAlaPrevStudy
   dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
 
   dim(dat.subset.previous.study)
@@ -422,7 +424,7 @@ end.rcode-->
 
 We found that adding in a few additional covariates to analysis with this subsample, number of authors and citation history of the last author, decreased the estimated effect to 18% and its confidence interval to span a *loss* of 17% citations to a boost of 66%.  This range is too wide to be instructive: mostly it is just useful to note it is largely consistent with previous findings.
 
-<!--begin.rcode
+<!--begin.rcode RegressionAlaPrevStudyMoreCovariates
   myfit_prev_more = lm(nCitedBy.log ~ 
   rcs(pubmed.date.in.pubmed, 3) +
   country.usa +              
@@ -442,7 +444,7 @@ end.rcode-->
 
 ### Subset analysis with manual classification of data availability 
 
-<!--begin.rcode echo=FALSE
+<!--begin.rcode manualAnnotationCreatedData, echo=FALSE
 dfAnnotations = read.csv("data/Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
 # Get subset that has been annotated
 dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
@@ -469,14 +471,14 @@ Two hundred and twenty six of the 250 articles participated in the final analysi
 
 The 20 articles that did not create gene expression data were cited less often than those that did create data: 26 times compared to 32 times.  The overall distribution for articles that did not create gene expression data is shifted downward.
 
-<!--begin.rcode
+<!--begin.rcode manualAnnotationCreatedCitations
 with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
 ggplot(dfCitationsAnnotated, aes(log(1+nCitedBy), fill=factor(isCreated))) + geom_density(alpha=0.2) + cbgFillPalette[3:4] + cbgColourPalette[3:4]
 end.rcode-->
 
 This difference, however, was found to be not statisitically significantly different, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the  citation counts.
 
-<!--begin.rcode
+<!--begin.rcode manualAnnotationCreatedStats
 with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
 with(dfCitationsAnnotated, print(t.test(log(1+nCitedBy)~isCreated)))
 with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
@@ -484,7 +486,7 @@ end.rcode-->
 
 To confirm that the erroniously-included articles were not driving the findings, we reran the analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
 
-<!--begin.rcode
+<!--begin.rcode manualAnnotationCreatedRegression
 annotated_merged_created = lm(nCitedBy.log ~ 
   rcs(pubmed.date.in.pubmed, 3) +
   country.usa +              
@@ -504,7 +506,7 @@ end.rcode-->
 
 To put data citation boost in the context of data reuse, we report evidence on the observed frequency with which papers that share gene expression microarray data are cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
 
-<!--begin.rcode
+<!--begin.rcode citationContextData
 dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
 dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
 
@@ -600,12 +602,12 @@ see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-
 
 ### Experimenting with knitr citations
 Demo citing thank Carl for his great library! 
-<!--begin.rcode echo=FALSE, results="asis", cache=FALSE
+<!--begin.rcode knitCitationsExperiment, echo=FALSE, results="asis", cache=FALSE
 citep(list(citation("knitcitations"))) 
 end.rcode-->. 
 
 Now cite everyone! 
-<!--begin.rcode echo=FALSE, results="asis", cache=FALSE
+<!--begin.rcode knitCitationsBibtexExperiment, echo=FALSE, results="asis", cache=FALSE
 biblio <- read.bibtex("citation11k.bib")
 
 citep(biblio[names(biblio)])
@@ -676,8 +678,10 @@ This analysis reveals a modest but substantiated boost in data citation rates ac
 <hr/>
 
 # Additional analysis for reference during manuscript prep
-   
-<!--begin.rcode univariatecorrnowarnings, warning=FALSE
+
+(not currently configured to evaluate... )
+
+<!--begin.rcode slush, warning=FALSE, eval=FALSE
 
 myhetcorr = hetcor.modified(dfCitationsAttributes, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
 mycor = myhetcorr$correlations
@@ -700,12 +704,13 @@ topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
 
 end.rcode-->
     
-<!--begin.rcode heatmap42
+<!--begin.rcode heatmap, eval=FALSE
     
 heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
 
 end.rcode-->
-<!--begin.rcode univariateqplots3
+
+<!--begin.rcode slush2, eval=FALSE
 
 ##Other breakdowns
 

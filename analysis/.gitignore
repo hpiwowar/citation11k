@@ -1,0 +1,5 @@
+cache/
+old/
+data/
+.R*
+static/my_imgur_api_key.txt
