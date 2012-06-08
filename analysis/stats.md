@@ -7,7 +7,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on <code class="knitr inline">Fri Jun  8 08:51:59 2012</code>
+ * Generated on <code class="knitr inline">Fri Jun  8 12:47:49 2012</code>
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -65,7 +65,7 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on <code class="knitr inline">Fri Jun  8 08:52:02 2012</code>.
+Analysis run on <code class="knitr inline">Fri Jun  8 12:47:52 2012</code>.
 
 ### Identification of relevant studies
 
@@ -180,7 +180,7 @@ Without accounting for any confounding factors, the mean number of citations bet
 ## 
 </div><div class="source">
 <span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">fill</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_density</span><span class="keyword">(</span><span class="argument">alpha</span><span class="argument">=</span><span class="number">0.2</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</div><img src="figure/sharingVCitations.png" class="plot" />
+</div><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/sharingVCitations.png" class="plot" />
 </pre>
 
 
@@ -192,25 +192,25 @@ Indeed, we can see that for any given publication date, papers with associated d
 
 <pre class="knitr"><div class="output">## 2001 2002 2003 2004 2005 2006 2007 2008 2009 
 ## 76.0 54.0 40.0 30.0 24.0 18.0 14.0  9.5  5.0 
-</div><img src="figure/citationsByYearBySharing.png" class="plot" />
+</div><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/citationsByYearBySharing.png" class="plot" />
 </pre>
 
     
 This difference in citation is not driven by outliers: as shown by the distribution of citations over time, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
 
-<pre class="knitr"><img src="figure/citationDist.png" class="plot" />
+<pre class="knitr"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/citationDist.png" class="plot" />
 </pre>
 
 
 These differences could be because journals with high impact are more likely to require data archiving.  To investigate this, we consider the most common 12 journals in our subset.  Journal by journal, the mean citation rate for papers with data available is not always greater tahn the citation rate of papers without data available.
 
-<pre class="knitr"><img src="figure/citationDistByJournal.png" class="plot" />
+<pre class="knitr"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/citationDistByJournal.png" class="plot" />
 </pre>
 
 
 We turn again to the distribution of citation rates to understand the patterns in more depth.  Considering only papers published in 2005, we see that papers with available data do tend to receive more citations than those without.  Molecular Cell Biology and Blood are perhaps exceptions to this trend.
 
-<pre class="knitr"><img src="figure/citationDistByJournalOneYear.png" class="plot" />
+<pre class="knitr"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/citationDistByJournalOneYear.png" class="plot" />
 <div class="output">##                           in_ae_or_geo
 ## pubmed_journal                  0      1
 ##   Blood                    0.8750 0.1250
@@ -499,7 +499,7 @@ The estimates of citation boost for papers published in each year, with 95% conf
   <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
   <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">3.0</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'estimated increase in citations\nfor papers with data available (95% confidence intervals)'</span><span class="keyword">)</span>
-</div><img src="figure/VizRegressionEstimatesByYear.png" class="plot" />
+</div><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/regressionEstimatesByYear.png" class="plot" />
 </pre>
 
 

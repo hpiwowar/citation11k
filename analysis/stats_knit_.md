@@ -5,12 +5,12 @@
 # use imgur for hosting figures
 # go to static/my_imgur_api_key.txt and add your own api key
 
-upload_images = FALSE
+upload_images = TRUE
 
 if (upload_images) {
    #opts_knit$set(upload.fun = imgur_upload)
    opts_knit$set(upload.fun = function (file){
-      sprintf("https://www.dropbox.com/home/TrackingDataReuse/11kCitationStudy/paper/citation11k/analysis/%s", file)    
+      sprintf("http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/%s", file)    
     })
 } else {
     opts_chunk$set(fig.path='figure/')
