@@ -529,8 +529,7 @@ Finally, we provide preliminary evidence that data reuse takes years to accumula
 A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline ofthird-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
 
 
-<img src="data/3rdpartygrowth.png" class="plot" width=600/>
-
+<img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/3rdpartygrowth.png" class="plot" />
 
 ## Discussion
 
