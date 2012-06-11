@@ -1,8 +1,6 @@
 
 
 
-
-
 # knitr citation11k manuscript
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
@@ -23,7 +21,7 @@ to see just the R code in a separate .R file called stats_knit_.R, run
     R -e "library(knitr); knit('stats_knit_.md', tangle=T)"
 
 
-
+tjv: my first comment!
 
 
 
