@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=9, fig.height=9, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
+<!--roptions dev='png', fig.width=7, fig.height=7, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
@@ -121,6 +121,11 @@ end.rcode-->
 # Data Reuse and the Open Data Citation Advantage
 *Piwowar, Carlson, Vision*
 
+## Recent Changes
+* updated introduction
+* rearranged results, put regression before univarite analysis
+* fleshed out the open data citation boost postulates in text
+* discussion rearranging and requests for feedback
 
 ## Goal
 1. Is there an association between data availability and citation rate, independently of important known citation predictors?
@@ -134,15 +139,15 @@ See the [end of this document](#abstract-1) (at the end so it can pull in result
 
 "Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection." [Piwowar, Sharing] 
 
-When research data is made publicly available, is there a demonstrable benefit to scientific progress and the study investigators?  
+Making research data publicly available also has costs.  Data archives must be created and maintained. Data must be documented, formatted, and uploaded.  Data-collecting investigators may be asked to answer questions when others try to use their data.
 
-Citations are often used as a proxy for the scientific contribution of a paper.  Citations are also used in research funding and promotion decisions; Boosting citation rate is thus is a potentially important motivator for publication authors.  Scientists report that an increase in citations is an important motivator for sharing their data [Tenopir].
+Scientists report that receiving more citations would be an important motivator for publicly archiving their data [Tenopir].
 
-Previous studies, across several disciplines, have explored the relationship between the citation rate of a publication and whether its data was made publicly available[list].  However, these studies were relatively small (confirm true for all of them) and did not include key covariates that may have conflated estimates of citation boost.  Number of authors, author experience, author institution, open access status, and subject area have been shown to predict citation rate (cite) and may also be correlated with the public availability of datasets.
+Several studies across several disciplines have found an association between data availability and number of citations recieved by a publication [list].  This evidence has been included in several new policies that encourage and require data archiving [cite citations?].  It is important, therefore, to continue to strive for an accurate estimate of possible citation benefit. 
 
-Here, we report an analysis based on a large cohort of relatively homogenious studies. The size our cohort has facilitated controlling for many more variables than previous studies, allowing us to make further progress in isolating the citation rate relationship with data archiving itself.
+The present study hopes to improve previous estimates in several ways.  First, the present study is large enough to inluce many key covariates that may have conflated estimates of citation boost in previous, smaller studies:  Number of authors, author publication experience,  institution, open access availability, and subject area.  Second, the current analysis estimates how citation boost levels may change over time.  Third, the current analysis includes evidence on the nubmer of citations that may be due to data reuse.
 
-Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse valuable for reuse [butte] and well-supported by data sharing standards and infrastructure [], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar]
+Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse [butte] and well-supported by data sharing standards and infrastructure [], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar].
 
 
 ## Methods
@@ -221,17 +226,21 @@ gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitations
 end.rcode-->
 
 
-Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between XXX% of papers in this sample and publicly available data.  Articles published more recently were more likely to have associated datasets.
-
+Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between XXX% of papers in this sample and publicly available data.  
 <!--begin.rcode sharing, fig.width=6, fig.height=6
-gfm_table(table(dfCitationsAttributes$dataset.in.geo.or.ae.int)/nrow(dfCitationsAttributes))
-
 table(dfCitationsAttributes$dataset.in.geo.or.ae.int)
 
-df.long = melt(dfCitationsAttributes, measure.vars=c('pubmed.year.published'))
-dim(df.long)
-df.long.summary = ddply(df.long, .(variable, value), summarize, proportion=sum(dataset.in.geo.or.ae.int > 0) / length(dataset.in.geo.or.ae.int))
+gfm_table(table(dfCitationsAttributes$dataset.in.geo.or.ae.int)/nrow(dfCitationsAttributes))
 
+end.rcode-->
+
+
+Articles published more recently were more likely to have associated datasets.
+
+<!--begin.rcode sharing_over_time, fig.width=6, fig.height=6
+
+df.long = melt(dfCitationsAttributes, measure.vars=c('pubmed.year.published'))
+df.long.summary = ddply(df.long, .(variable, value), summarize, proportion=sum(dataset.in.geo.or.ae.int > 0) / length(dataset.in.geo.or.ae.int))
 ggplot(data=df.long.summary, aes(x=value, y=proportion)) +
   geom_smooth() +
   facet_wrap(~variable) +
@@ -241,65 +250,22 @@ end.rcode-->
 
 The articles in our sample were cited between 0 and 2640 times, with an average of 32 citations per paper and a median of 16.  
 
-Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and there is little visible difference in the distribution of citations between these two groups.
 
 <!--begin.rcode sharingVCitations
 summary(dfCitationsAttributes$nCitedBy)
+end.rcode-->
 
+Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and there is little visible difference in the distribution of citations between these two groups.
+
+<!--begin.rcode sharingVCitations_breakdown
 with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
-
 ggplot(dfCitationsAttributesRaw, aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + cbgFillPalette + cbgColourPalette
 end.rcode-->
 
-#### Multivariate visualization
-
-The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Because data archiving was relatively infrequent for articles published earlier, a difference in citation behaviour may be confounded with publication date.
-
-Indeed, we can see that for any given publication date, papers with associated data recieve more citations than those without.
-
-<!--begin.rcode citationsByYearBySharing, echo=FALSE
-
-dat.subset = dfCitationsAttributes
-with(dat.subset, tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
-citation_breaks = c(1, 10, 40, 100, 400, 1000)
- 
-qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(fill=factor(dataset.in.geo.or.ae)), color="black") + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
-end.rcode-->
-    
-This difference in citation is not driven by outliers: as shown by the distribution of citations over time, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
-
-<!--begin.rcode citationDist, echo=FALSE 
-
-ggplot(dat.subset, aes(1+nCitedBy.log, fill=factor(dataset.in.geo.or.ae)), color="black") + geom_density(alpha=0.2) + facet_grid(pubmed.year.published~.) + cbgFillPalette + cbgColourPalette
-
-end.rcode-->
-
-These differences could be because journals with high impact are more likely to require data archiving.  To investigate this, we consider the most common 12 journals in our subset.  Journal by journal, the mean citation rate for papers with data available is not always greater than the citation rate of papers without data available.
-
-<!--begin.rcode citationDistByJournal, echo=FALSE
-
-most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12])
-dat_most_common_journals = subset(dfCitationsAttributesRaw, (pubmed_journal %in% most_common_journals))
-
-# prop.table(table(dat_most_common_journals$pubmed_journal, dat_most_common_journals$in_ae_or_geo), margin=1)  
-
-ggplot(data=dat_most_common_journals, aes(x=pubmed_date_in_pubmed, y=1+nCitedBy, color=factor(in_ae_or_geo))) + geom_point() + geom_smooth(aes(fill=factor(in_ae_or_geo))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette + facet_wrap(~pubmed_journal)
-
-end.rcode-->
-
-We turn again to the distribution of citation rates to understand the patterns in more depth.  Considering only papers published in 2005, we see that papers with available data do tend to receive more citations than those without.  Molecular Cell Biology and Blood are perhaps exceptions to this trend.
-
-<!--begin.rcode citationDistByJournalOneYear, echo=FALSE
-
-ggplot(data=subset(dat_most_common_journals, (pubmed_year_published=="2005")), aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + facet_grid(pubmed_journal ~ .) + cbgFillPalette + cbgColourPalette 
-
-with(subset(dat_most_common_journals, (pubmed_year_published=="2005")), prop.table(table(pubmed_journal, in_ae_or_geo), margin=1))
-
-end.rcode-->
 
 #### Multivariate regression
 
-Other factors are also known or suspected to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area.  Regression analysis can be useful to identify the relationship between data availability and citation rate, independently of these other variables.
+Other factors have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite].  Regression analysis can be useful to identify the relationship between data availability and citation rate, independently of these other variables.
 
 <!--begin.rcode regressionAll
 
@@ -334,13 +300,15 @@ print(citation.boost.coefs.journal)
 
 end.rcode-->
 
-Estimate of citation boost is 
+In this analysis, we found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
+
+Estimate of the independent increase of citations due to data availability is  
 <!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
 with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs.journal$ciLow-1) -->%
 , <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->% ]
 (p=<!--rinline format(citation.boost.coefs.journal$p, nsmall = 2) -->)
 
-Because publication rate is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.
+Because publication rate is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually (with a subset of the covariates).
 
 <!--begin.rcode regressionByYear
 
@@ -378,6 +346,8 @@ for (year in seq(2001, 2009)) {
 
 end.rcode-->
 
+The estimate of citation boost was different for different years of publication.
+
 The estimates of citation boost for papers published in each year, with 95% confidence intervals:
 
 <!--begin.rcode regressionEstimatesByYear
@@ -391,17 +361,65 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 end.rcode-->
 
+#### Multivariate visualization
+
+To understand these patterns in more detail we looked at several of the variables individually.
+
+The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Because data archiving was relatively infrequent for articles published earlier, a difference in citation behaviour may be confounded with publication date.
+
+Indeed, we saw that for any given publication date, papers with associated data recieve more citations than those without.
+
+<!--begin.rcode citationsByYearBySharing, echo=FALSE
+
+dat.subset = dfCitationsAttributes
+with(dat.subset, tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
+citation_breaks = c(1, 10, 40, 100, 400, 1000)
+ 
+qplot(pubmed.date.in.pubmed, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(fill=factor(dataset.in.geo.or.ae)), color="black") + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+end.rcode-->
     
+This difference in citation is not driven by outliers: as shown by the distribution of citations over time, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
+
+<!--begin.rcode citationDist, echo=FALSE 
+
+ggplot(dat.subset, aes(1+nCitedBy.log, fill=factor(dataset.in.geo.or.ae)), color="black") + geom_density(alpha=0.2) + facet_grid(pubmed.year.published~.) + cbgFillPalette + cbgColourPalette
+
+end.rcode-->
+
+These differences could be because journals with high impact are more likely to require data archiving.  To investigate this, we considered the most common 12 journals in our subset.  Journal by journal, the mean citation rate for papers with data available was sometimes but not always greater than the citation rate of papers without data available.
+
+<!--begin.rcode citationDistByJournal, echo=FALSE
+
+most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12])
+dat_most_common_journals = subset(dfCitationsAttributesRaw, (pubmed_journal %in% most_common_journals))
+
+# prop.table(table(dat_most_common_journals$pubmed_journal, dat_most_common_journals$in_ae_or_geo), margin=1)  
+
+ggplot(data=dat_most_common_journals, aes(x=pubmed_date_in_pubmed, y=1+nCitedBy, color=factor(in_ae_or_geo))) + geom_point() + geom_smooth(aes(fill=factor(in_ae_or_geo))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette + facet_wrap(~pubmed_journal)
+
+end.rcode-->
+
+We turned again to the distribution of citation rates to understand the patterns in more depth.  Considering only papers published in 2005, we saw that papers with available data did tend to receive more citations than those without.  Molecular Cell Biology and Blood were exceptions to this trend.
+
+<!--begin.rcode citationDistByJournalOneYear, echo=FALSE
+
+ggplot(data=subset(dat_most_common_journals, (pubmed_year_published=="2005")), aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + facet_grid(pubmed_journal ~ .) + cbgFillPalette + cbgColourPalette 
+
+with(subset(dat_most_common_journals, (pubmed_year_published=="2005")), prop.table(table(pubmed_journal, in_ae_or_geo), margin=1))
+
+end.rcode-->    
 
 ### Subset analysis to compare findings with Piwowar et al 2007
 
-These results differ from  those found by (Piwowar et al 2007). There are several possible reasons for this.  
+These estimates of citation boost found in the multivariate regression were different from those found by (Piwowar et al 2007), even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
 
-First, those analyses were only using human cancer microarray trials published between 1999 and 2003 <check>.  
+First, Piwowar et al 2007 included only data from human cancer microarray trials published between 1999 and 2003 <check>, whereas the current study uses all gene expression microarray data studies in PubMed from 2001 to 2009. 
 
-Second, because the Piwowar et al 2007 sample was small, Piwowar et al 2007 analysis included only a few possible covariates: publication date, journal impact factor, and country of the corresponding author.
+Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few possible covariates: publication date, journal impact factor, and country of the corresponding author.
 
-When we limit the current sample to datasets with MeSH terms "human" and "cancer" in that timeframe, we are left with 308 papers.  Running this subsample with the covariates used in the Piwowar 2007 paper finds a comperable result to that of the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+We attempted to reproduce that environment in the current study to see if we would find more comperable results.
+
+Limiting the current sample to datasets with MeSH terms "human" and "cancer" published from 2001 to 2003 retained 308 papers.  Running this subsample with  covariates from the Piwowar 2007 paper found a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
 
 <!--begin.rcode RegressionAlaPrevStudy
   dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
@@ -421,7 +439,7 @@ When we limit the current sample to datasets with MeSH terms "human" and "cancer
   calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
 end.rcode-->
 
-We found that adding in a few additional covariates to analysis with this subsample, number of authors and citation history of the last author, decreased the estimated effect to 18% and its confidence interval to span a *loss* of 17% citations to a boost of 66%.  This range is too wide to be instructive: mostly it is just useful to note it is largely consistent with previous findings.
+How is did this estimate change when we included additional covariates?  The subsample of 308 papers was large enough to include a few additional covariates:  number of authors and citation history of the last author.  Including these covariates returned  a smaller estimated effect: 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%.  This range is too wide to be instructive, other than to note its top end is close to the previous rough estimates.
 
 <!--begin.rcode RegressionAlaPrevStudyMoreCovariates
   myfit_prev_more = lm(nCitedBy.log ~ 
@@ -440,7 +458,6 @@ We found that adding in a few additional covariates to analysis with this subsam
   calcCI.exp(myfit_prev_more, "factor(dataset.in.geo.or.ae).L")
 end.rcode-->
 
-
 ### Subset analysis with manual classification of data availability 
 
 <!--begin.rcode manualAnnotationCreatedData, echo=FALSE
@@ -458,24 +475,28 @@ dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pm
 dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
 end.rcode-->
 
-Because of the limited power of text mining through boolean search queries, our method of identifying which articles create gene expression microarray data makes a nontrivial number of errors: about 10% of the identified articles do not in fact create gene expression datasets.  
+Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
 
-Because they do not create datasets, they certainly don''t have archived datasets: they are all classified in the "no archived data" group. 
+The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
 
-If it were true that these erroniously-included articles recieve many more or many fewer citatios than other articles in the group, their inclusion could influence the findings of the study.
+If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.
 
 To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.
 
-Of these, manual review of the article full-text confirmed that 206 of the studies did indeed create gene expression microarray data, and 20 of the studies did not (but satisfied the boolean-search query for other reasons).  T
+Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
 
-The 20 articles that did not create gene expression data were cited less often than those that did create data: 26 times compared to 32 times.  The overall distribution for articles that did not create gene expression data is shifted downward.
+<!--begin.rcode percent
+206/226
+end.rcode-->
+
+Examining the citations of the  20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
 
 <!--begin.rcode manualAnnotationCreatedCitations
 with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
 ggplot(dfCitationsAnnotated, aes(log(1+nCitedBy), fill=factor(isCreated))) + geom_density(alpha=0.2) + cbgFillPalette + cbgColourPalette
 end.rcode-->
 
-This difference, however, was found to be not statisitically significantly different, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the  citation counts.
+This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
 
 <!--begin.rcode manualAnnotationCreatedStats
 with(dfCitationsAnnotated, print(t.test(nCitedBy~isCreated)))
@@ -483,7 +504,7 @@ with(dfCitationsAnnotated, print(t.test(log(1+nCitedBy)~isCreated)))
 with(dfCitationsAnnotated, print(wilcox.test(nCitedBy~isCreated)))
 end.rcode-->
 
-To confirm that the erroniously-included articles were not driving the findings, we reran the analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
+To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regresssino analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
 
 <!--begin.rcode manualAnnotationCreatedRegression
 annotated_merged_created = lm(nCitedBy.log ~ 
@@ -503,7 +524,7 @@ end.rcode-->
 
 ### Complementary evidence of data reuse from citation context
 
-To put data citation boost in the context of data reuse, we report evidence on the observed frequency with which papers that share gene expression microarray data are cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
 
 <!--begin.rcode citationContextData
 dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
@@ -524,22 +545,25 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 
 ### Complementary evidence of data reuse from accession number attribution
 
-Finally, we provide preliminary evidence that data reuse takes years to accumulate.  Large-scale evidence is difficult to gather because it requires manual citation context classification, as described above.  As described in  (Piwowar, Vision, Whitlock), a partial estimate is possible due to attribution norms in some fields: count the number of times a dataset accession number is mentioned in the scientific literature.  
+Finally, to provide evidence on the timeline of data attribution, we report preliminary data on third-party data reuse.  Large-scale evidence is difficult to gather because it requires manual citation context classification, as described above.  A partial estimate is possible, however, due to attribution norms in some fields: count the number of times a dataset accession number is mentioned in the scientific literature. (Piwowar, Vision, Whitlock) 
 
-A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline ofthird-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
+A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline of third-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
 
 
-<img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/3rdpartygrowth.png" class="plot" />
+<img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/3rdpartygrowth.png" class="plot" height=300 />
 
 ## Discussion
 
 
 - summary of results
+- citation boost consistent with some previous findings.  Particularly consistent with multivariate analysis of (Milia et al).
+"Our multivariate analysis showed that time since publication and impact factor are the main factor influencing the number of citations received by datasets (see Table S5). A slight increase (8.9%) in the number of citations was observed for shared datasets, with a more pronounced advantage (20.6%) for mtDNA (Table S6), but, again, no difference was found to be associated with a statistically significant result in our multivariate analysis."
+- the number of papers that reused data was still increasing rapidly after three years.  This suggests that the relatively low level of citation boost we observe for papers published in 2007-2009 may be because not enough time has passed for reuse articles to have been written in large quantity. 
 
-*limitations. not sure it is worth including all of these, brainstorming*
+*limitations. include all of these?
 
 - automated methods were imperfect: full text to the scientific literature would permit more sophisticated and accurate retrieval techniques based on full-text.
-- This is an underestimate of total reuse (some attribution through accession number, some attribution is in citations in supplementary information which is not indexed by Scopus, some papers that may cite aren''t indexed by Scopus)
+- This is an underestimate of total reuse (some attribution through accession number, some attribution is in citations in supplementary information which is not indexed by Scopus, some papers that may cite aren''t indexed by Scopus) *maybe inlude this point in general discussion as mentioned below, rather than in limitations?*
 - Due to mechanics of accessing so many citations through Scopus website, weren''t able to get detailed timing of each citation, so all citation counts were censored as of the collection date rather than a fixed time period after the date of publication.  Also, we can''t tell if low level of citation boost in recent articles is because they have yet to accumulate or because the number of available datasets is now so large that the reuse level of any specific article has decreased.
 - (negative binomial is probably a better statistical technique than linear regression, but it isn''t standard)
 - we didn't gather evidence about when the data was made available, though previous work suggested it was usually at the time of paper publication (Piwowar 2007)
@@ -547,44 +571,25 @@ A citation boost due to public data availability would come from authors who wou
 
 *general discussion about these results*
 
-- put these findings in the context of the history of gene expression microarray data: Todd''s email.
-- potential for greater boost if authors always attributed data reuse through citations, rather than sometimes through in-text accession number (cite the "Beginning to Track 1k datasets" abstract for estimated breakdown of citations-to-papers vs attribution-through-accessionnumber for GEO data)
-- the results we present about third party reuse illustrates that papers which reuse data take  start to emerge several years after data is released: the number of papers that reused data was still increasing rapidly after three years.  This suggests that the relatively low level of citation boost we observe for papers published in 2007-2009 may be because not enough time has passed for reuse articles to have been written in large quantity.
-- citation boost consistent with previous findings of others.  Particularly consistent with multivariate analysis of (Milia et al).
-"Our multivariate analysis showed that time since publication and impact factor are the main factor influencing the number of citations received by datasets (see Table S5). A slight increase (8.9%) in the number of citations was observed for shared datasets, with a more pronounced advantage (20.6%) for mtDNA (Table S6), but, again, no difference was found to be associated with a statistically significant result in our multivariate analysis."
+- potential for greater boost if authors always attributed data reuse through citations, rather than sometimes through in-text accession number (cite the "Beginning to Track 1k datasets" abstract for estimated breakdown of citations-to-papers vs attribution-through-accessionnumber for GEO data)  *this is parallel to one of the points in the limitations section.*
+- put these findings in the context of the history of gene expression microarray data: Todd''s email.  *suggestions on the discussion angle for this?*
 
 *discussion about open data boost in general*
-<blockquote>
-direct excerpt from citep(biblio["Craig2007"]) "
-Three non-exclusive postulates have been proposed to account for the observed
-citation differences between OA and non-OA articles: an Open Access postulate,
-a Selection Bias postulate, and an Early View postulate.
-a. The Open Access (OA) postulate suggests that authors are more likely to read, and thus cite, articles that are made available in an OA model.
-b. The Selection Bias (SB) postulate suggests that the most prominent (and thus
-most citable) authors are more likely to make their articles available in an OA
-model, and that they are more to likely do so with their most important (and
-thus most citable) articles.
-c. The Early View (EV) postulate relates only to articles posted before final
-journal publication, and suggests that the period between the early posting of
-an article (either pre-print or post-print) and the appearance of the cognate
-published journal article allows for earlier accrual of citations. Failing to
-account for this effect must necessarily give a biased result.
-" </blockquote>
 
-We suggest similar postulates to account for observed citation differences between articles with and without Open Data:
+The most obvious source of increased citations for papers with available data is attribution for data reuse.  There may be additional contributions from other sources.  The literature on the "Open Access Citation Benefit" has articulated several possible sources of OA citation boost, including Selection Bias and Early View.citep(biblio["Craig2007"]).  We suggest the possible sources for an "Open Data Citation Benefit" include:
 
-a) Data Reuse postulate suggests that authors can use papers in new ways and so cite them more
+1. *Data Reuse.*  Authors can use papers in new ways, therefore additional citations may accrue due to additional reasons for attribution.
+1. *Credibility Signalling.*  The credibility of research findings may be higher for research papers with available data, such that it is preferentially used for background citations and/or the foundation of additional research.
+1. *Selection Bias.*  Authors may be more likely to make data available for papers they judge to be their best quality work, because they are most proud or confident in the results.  ALTERNATIVELY, it is possible that author self-selection bias may have a negative correlation with research impact in the case of Open Data: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection.
+1. *Increased Visibility.*  Citing authors may be more likely to encounter a research project with available data.  More artifacts associated with a research project gives the project a larger footprint, increasing the likelihood that someone finds an aspect of the research.  Citations from data to the research paper may also increase the search ranking of the research paper.  
+1. *Early View.*  When data is made available before a paper is published, it is possible that some citations may accrue earlier than otherwise because the area of research has been disclosed prior to paper publication.
 
-b) Selection Bias (SB) as with OA... authors more likely to make data avail if the paper is better because they are better paper because proud of it.  Or, higher quality papers more likely to be published in higher-impact journals, which have stricter data sharing requirements.
-ALTERNATIVELY for Open Data this Bias could be negative, when left to the authors. Authors may be willing to share their poor quality research, but want to keep propriety access to their best, most competitive research.
+The current study does not attempt to measure the relative contributions from these possible sources.  The estimated citation boost is consistent with observed data reuse alone, but the error bounds are large enough that other sources may also have contributed.
 
-c) Increased visibility (IV).  More places on the web == more artifacts and possibly higher in search rankings.  Authors may encounter these papers more often than similar papers without data available.
+Further work, with additional data, is needed to understand the contributions of all sources.  For example, hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data.  Analyses within the pubication output of a selection of data-collecting authors may enable measurement of selection bias.  Observing search behaviour of researchers, and the returned search hit results, may provide evidence of increased visibility due to data availability.  The contribution of early views to citations would depend on the data availablily timeline within the domain and datatype of study.
 
-d) Credibility Signalling.  Data availability gives credibility to the study so that it is preferentially used for citations where alternatives are available.
 
-Further work is needed to do understand the contributions of these three sources. Citation boost found in this paper is consistent with preliminary evidence on levels of data reuse.  There may also be a boost from Selection Bias and Increased Visibility: future work needed.
-
-*future work*
+*future work.  include this?*
 
 - More estimates of reuse by exploring citation context, attribution to accession number
 - explore citation impact to papers and datasets themselves as scientists begin to cite data directly
@@ -593,10 +598,9 @@ Further work is needed to do understand the contributions of these three sources
 *wrap-up thoughts*
 
 - Making data available doesn’t just increase the impact of research by a certain amount: opens it up to whole new *types* of use. 
-- Citations are not the main reason to make data available: multiple benefits to science and the individual investigator
+- article-level citation numbers are likely to become more important as the flaws in using journal impact factor for article-level assessment become more mainstream and article-level metrics become more available *maybe skip this, though relevant given that IF is still seen as so important*
 - There are other important metrics of reuse than just citation. Impact on practicioners, educational use, etc.
-- article-level citation numbers are likely to become more important as the flaws in using journal impact factor for article-level assessment become more mainstream and article-level metrics become more available 
-
+- Citations are not the main reason to make data available: multiple benefits to science and the individual investigator (increase collaboration possibilities, reputation, etc)
 
 
 ## Acknowledgements
