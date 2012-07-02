@@ -138,17 +138,18 @@ See the [end of this document](#abstract-1) (at the end so it can pull in result
 
 ## Introduction
 
-"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis[1]. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection." [Piwowar, Sharing] 
+"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection." [Piwowar, 2007]
 
-Making research data publicly available also has costs.  Data archives must be created and maintained. Data must be documented, formatted, and uploaded.  Data-collecting investigators may be asked to answer questions when others try to use their data.
+Making research data publicly available also has costs. Data archives must be created and maintained. Data must be documented, formatted, and uploaded. Data-collecting investigators may be asked to answer questions when others try to use their data.
 
 Scientists report that receiving more citations would be an important motivator for publicly archiving their data [Tenopir].
 
-Several studies across several disciplines have found an association between data availability and number of citations recieved by a publication [list].  This evidence has been included in several new policies that encourage and require data archiving [cite citations?].  It is important, therefore, to continue to strive for an accurate estimate of possible citation benefit. 
+Several studies across several disciplines have found an association between data availability and number of citations recieved by a publication [cite studies below]. This evidence has been <a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">frequently referenced</a>, including in new policies that encourage and require data archiving [<a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">http://datadryad.org/jdap</a>]. It is important, therefore, to continue to strive for an accurate estimate of possible citation benefit.
 
-The present study hopes to improve previous estimates in several ways.  First, the present study is large enough to inluce many key covariates that may have conflated estimates of citation boost in previous, smaller studies:  Number of authors, author publication experience,  institution, open access availability, and subject area.  Second, the current analysis estimates how citation boost levels may change over time.  Third, the current analysis includes evidence on the nubmer of citations that may be due to data reuse.
+The present study hopes to improve previous estimates in several ways. First, the present study is large enough to inluce many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on the nubmer of citations that may be due to data reuse.
 
-Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse [butte] and well-supported by data sharing standards and infrastructure [], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar].
+Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse [Dudley] and well-supported by data sharing standards and infrastructure [Barrett], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar 2011].
+
 
 
 ## Methods
@@ -708,6 +709,14 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 - Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., & McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991
 - Definitely some things about move to citation of datasets themselves
 - altmetrics on CV, away from impact factor
+
+<ul>
+  <li>Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., &amp; McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991</li>
+  <li>Tenopir C, Allard S, Douglass K, Aydinoglu AU, Wu L, et al. (2011) Data Sharing by Scientists: Practices and Perceptions. PLoS ONE 6(6): e21101. doi:10.1371/journal.pone.0021101</li>
+  <li>Piwowar HA (2011). "Who Shares? Who Doesn't? Factors Associated with Openly Archiving Raw Research Data." <em>PLoS ONE</em>, <em>6</em>(7), pp. e18657</li>
+  <li>Dudley JT, Robert Tibshirani, Tarangini Deshpande, Atul J Butte (2009) Disease signatures are robust across tissues and experiments.  Molecular systems biology 5 p. 307</li>
+  <li>Tanya Barrett, Dennis B Troup, Stephen E Wilhite, Pierre Ledoux, Carlos Evangelista, Irene F Kim, Maxim Tomashevsky, Kimberly A Marshall, Katherine H Phillippy, Patti M Sherman, Rolf N Muertter, Michelle Holko, Oluwabukunmi Ayanbule, Andrey Yefanov, Alexandra Soboleva (2011) NCBI GEO: archive for functional genomics data sets--10 years on.   Nucleic acids research 39 (Database issue) p. D1005-10</li>
+</ul>
 
 ### Other studies of correlation with citations:
 
