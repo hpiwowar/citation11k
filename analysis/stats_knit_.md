@@ -52,6 +52,7 @@ to see just the R code in a separate .R file called stats_knit_.R, run
 rm(list=ls())   
 require(ggplot2, quietly=T)
 require(gplots, quietly=T)
+require(reshape2, quietly=T)
 require(plyr, quietly=T)
 require(rms, quietly=T)
 require(polycor, quietly=T)
@@ -152,7 +153,6 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
-Analysis run on <!--rinline date() -->.
 
 ### Identification of relevant studies
 
@@ -173,15 +173,28 @@ Summarize approach in Who shares? paper.
 
 ### Citation data
 
-Citations from Scopus.
+We needed citation counts for thousands of articles based on identification through PubMed identifiers.  At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported this type of query.  It was supported by Elsevier's Scopus citation database, but none of our affiliated institutions subscribed to Scopus.
+
+One author (HAP) attempted to use the British Library's walk-in access of Scopus on its Reading Room computers during a trip overseas.  Unfortunately, the British Library did not permit electronic transfer of our PubMed identifier list onto the Reading Room computers, whether through internet document access or a USB drive text file transfer (see http://www.bl.uk/reshelp/inrrooms/stp/cond/conditions.html).  The Library was not willing to permit an exception to these policies, and we were unwilling to manually type ten thousand PubMed idenfiers in the Reading Room.  A personal email to someone at Scopus went unanswered.  HAP eventually obtained Scopus access through a Research Worker agreement with Canada's National Research Library (NRC-CISTI).
+
+At the time of data collection the authors were not aware of any way to access Scopus data through researcher-developed computer programs, so we queried and exported Scopus citation data through manual interaction with the Scopus website.  The Scopus website had a limit to the length of query and the number of citations that could be exported at once.  To work within these restrictions we concatenated up to 500 PubMed IDs at a time into 22 queries, where each query took the form "PMID(1234) OR PMID(5678) OR ..."
+
 <!--begin.rcode dfCitations, echo=FALSE
 dfCitations = read.csv("data/scopus_all.csv", header=TRUE, stringsAsFactors=F)
 dfCitationsAttributesRaw = merge(dfAttributes, dfCitations, by.x="pmid", by.y="PubMed.ID")
+#dim(dfCitationsAttributesRaw)
 end.rcode-->
+
+Citation counts for <!--rinline dim(dfCitationsAttributesRaw)[1] -->  papers were gathered from Scopus in November 2011. 
+
 
 ### Statistical methods
 
+Analysis run on <!--rinline date() -->.
+
 ### Data and script availability
+
+Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be supplied upon article acceptance].  Dryad and GitHub also include the markdown version of this manuscript with interleaved statistical scripts using knitr[cite].
 
 
 ## Results
@@ -237,10 +250,13 @@ end.rcode-->
 
 Articles published more recently were more likely to have associated datasets.
 
-<!--begin.rcode sharing_over_time, fig.width=6, fig.height=6
+<!--begin.rcode sharing_over_time, fig.width=6, fig.height=6, cache=FALSE
+
+library(ggplot2)
 
 df.long = melt(dfCitationsAttributes, measure.vars=c('pubmed.year.published'))
 df.long.summary = ddply(df.long, .(variable, value), summarize, proportion=sum(dataset.in.geo.or.ae.int > 0) / length(dataset.in.geo.or.ae.int))
+
 ggplot(data=df.long.summary, aes(x=value, y=proportion)) +
   geom_smooth() +
   facet_wrap(~variable) +
@@ -531,6 +547,24 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 , <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
 
 
+<!--begin.rcode
+
+#experiment
+
+most_common_journals = names(sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12])
+dat_most_common_journals = subset(dfCitationsAttributesRaw, (pubmed_journal %in% most_common_journals))
+
+a = ddply(dat_most_common_journals, c("pubmed_journal", "pubmed_year_published", "in_ae_or_geo"), function(df) mean(df$nCitedBy))
+
+b = ddply(a, c("pubmed_journal", "pubmed_year_published"), function(df) median(subset(df, in_ae_or_geo==1)$V1)/median(subset(df, in_ae_or_geo==0)$V1))
+
+qplot(pubmed_year_published, V1, data=b, color=pubmed_journal, geom=c("point")) + geom_smooth()
+
+d = melt(b, c("pubmed_journal", "pubmed_year_published"))
+
+round(cast(d, pubmed_journal~pubmed_year_published~variable, mean, na.rm=TRUE), 1)
+
+end.rcode-->
 
 ## Discussion
 
@@ -560,11 +594,11 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 
 What might be the cause of a citation boost for papers with publicly available data?  The most obvious source of is attribution for data reuse, but there may be additional contributions from other sources.  The literature on the "Open Access Citation Benefit" has articulated several possible sources of OA citation boost, including Selection Bias and Early View.citep(biblio["Craig2007"]).  We suggest the possible sources for an "Open Data Citation Benefit" include:
 
-1. *Data Reuse.*  Papers with available data can be used in additional ways than papers without available data, therefore additional citations may accrue due to new reasons for attribution.
-1. *Credibility Signalling.*  The credibility of research findings may be higher for research papers with available data.  It might then be preferentially used for background citations and/or the foundation of additional research.
-1. *Selection Bias.*  Authors may be more likely to make data available for papers they judge to be their best quality work, because they are most proud or confident in the results.  ALTERNATIVELY, it is possible that author self-selection bias may have a negative correlation with research impact in the case of Open Data: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection.
-1. *Increased Visibility.*  Citing authors may be more likely to encounter a research project with available data.  More artifacts associated with a research project gives the project a larger footprint, increasing the likelihood that someone finds an aspect of the research.  Citations from data to the research paper may also increase the search ranking of the research paper.  
-1. *Early View.*  When data is made available before a paper is published, it is possible that some citations may accrue earlier than otherwise because the area of research has been disclosed prior to paper publication.
+1. *Data Reuse*. Papers with available datasets can be used in more ways than papers without data, and therefore may receive additional attributions upon published data reuse.
+1. *Credibility Signalling*. The credibility of research findings may be higher for research papers with available data. Such papers may be preferentially chosen background citations and/or the foundation of additional research.
+1. *Increased Visibility*. Citing authors may be more likely to encounter a research project with available data. More artifacts associated with a research project gives the project a larger footprint, increasing the likelihood that someone finds an aspect of the research. Links from data to the research paper may also increase the search ranking of the research paper.
+1. *Early View*. When data is made available before a paper is published, some citations may accrue earlier than otherwise because research methods and findings are encountered prior to paper publication.
+1. *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are most proud or confident in the results. ALTERNATIVELY, it is possible that author self-selection bias may have a negative correlation with research quality in the case of Open Data: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection.
 
 The estimated citation boost in the current study is consistent with observed data reuse alone, but the error bounds are large enough that other sources may also have contributed.  Unforuntaely, given the current dataset, it is difficult to establish which sources might have caused the observed boost.Further work, with additional data, will be needed to understand the relative contributions from each source.  For example, hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of the findings.  Analyses within the pubication output of a selection of data-collecting authors may enable measurement of selection bias.  Observing search behaviour of researchers, and the returned search hit results, may provide evidence of increased visibility due to data availability.  The contribution of early views to citations would depend on the data availablily timeline within the domain and datatype of study.
 
@@ -615,8 +649,14 @@ relative to all the work that goes into a research publication.
 
 - CISTI for Scopus access
 - British Library helpers
-- Angus, Todd, Jonathan, Estephanie
+- Angus, Jonathan, Estephanie
 - my funding, Jonathan + Estephanie’s funding
+
+## Author Contributions
+
+HAP: initial idea, study design, data collection, analysis, initial manuscript draft
+TJV: study design, substantial manuscript revisions
+Both authors discussed the results and implications and commented on the manuscript at all stages.
 
 ## References
 
