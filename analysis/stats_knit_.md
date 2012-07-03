@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=7, fig.height=7, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
+<!--roptions dev='png', fig.width=7, fig.height=7, tidy=FALSE, cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
@@ -122,11 +122,6 @@ end.rcode-->
 # Data Reuse and the Open Data Citation Advantage
 *Piwowar, Carlson, Vision*
 
-## Recent Changes
-* updated introduction
-* rearranged results, put regression before univarite analysis
-* fleshed out the open data citation boost postulates in text
-* discussion rearranging and requests for feedback
 
 ## Goal
 1. Is there an association between data availability and citation rate, independently of important known citation predictors?
@@ -157,20 +152,41 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ### Identification of relevant studies
 
-- Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
-- Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
-
 <!--begin.rcode dfAttributes, echo=FALSE
 dfAttributes = read.csv("data/PLoSONE2011_rawdata.txt", sep="\t", header=TRUE, stringsAsFactors=F)
 end.rcode-->
 
+The primary analysis in this paper examines the citation count of a gene expression microarray experiment, relative to availability of the experiment's data.
+
+The sample of microarray experiments used in the current analysis was previously determined (Piwowar 2011 PLoS ONE, data from Piwowar 2011 Dryad).  Briefly, a full-text query uncovered papers with keywords associated with relevant wet-lab methods.  The full-text query had been characterized with high precision (90%, 95% confidence interval 86% to 93%) and a moderate recall (56%, 52% to 61%) for this task.  Running the query in PubMed Central, HighWire Press, and Google Scholar revealed <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers.  The papers were published between 2000 and 2009.
+
+The current analysis retained papers published between 2001 and 2009.
+
+
 ### Assessment of data availability
 
-Summarize approach in Who shares? paper.
+The independent variable of interest in this analysis is the availability of gene expression microarray data.  Data availability had been previously determined for our sample articles in Piwowar 2011, so we directly reused that dataset [Piwowar Dryad 2011].  This study limited its data hunt to just the two predominant gene expression microarray databases: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress.
 
-### Collection of study attributes
+"An earlier evaluation found that querying GEO and ArrayExpress with article PubMed identifiers located a representative 77% of all associated publicly available datasets [Piwowar 2010]. [We] used the same method for finding datasets associated with published articles in this study: [we] queried GEO for links to the PubMed identifiers in the analysis sample using the “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Articles linked from a dataset in either of these two centralized repositories were considered to have [publicly available data] for the endpoint of this study, and those without such a link were considered not to have [available] data." [Piwowar 2011]
 
-Summarize approach in Who shares? paper.
+### Study attributes
+
+Piwowar 2011 collected 124 attributes for each of the gene expression microarray studies in our sample.  The subset of attributes previously shown or suspected to correlate with citation rate were included in the current analysis:
+
+* date of publication
+* journal
+* journal impact factor (2008)
+* journal open access status
+* size of the journal
+* number of authors
+* years since first publication by the first and last author
+* number of papers published by first and last author
+* number of PubMed Central citations received by first and last author
+* country of corresponding author
+* institution of corresponding author
+* institution mean citation score
+* study topic (human/animal study, cancer/not cancer, etc.)
+* NIH funding of the study, if applicable
 
 ### Citation data
 
@@ -566,6 +582,94 @@ d = melt(b, c("pubmed_journal", "pubmed_year_published"))
 round(cast(d, pubmed_journal~pubmed_year_published~variable, mean, na.rm=TRUE), 1)
 
 end.rcode-->
+
+
+### Additional analysis for reference during manuscript prep
+
+
+<!--begin.rcode slush, warning=FALSE
+
+myhetcorr = hetcor.modified(dfCitationsAttributes, use="pairwise.complete.obs", std.err=FALSE, pd=FALSE)
+mycor = myhetcorr$correlations
+colnames(mycor) = colnames(myhetcorr$correlations)    
+rownames(mycor) = rownames(myhetcorr$correlations)    
+
+end.rcode-->
+    
+<!--begin.rcode slushB
+
+# Correlations with data availability
+## See if anything is so collinear it will cause problems in regression
+a = sort(mycor[,"dataset.in.geo.or.ae.int"], dec=T)
+gfm_table(cbind(names(a), round(a, 2)))
+
+end.rcode-->
+    
+<!--begin.rcode slushC
+
+# Correlations with citation
+a = sort(mycor[,"nCitedBy.log"], dec=T)
+gfm_table(cbind(names(a), round(a, 2)))
+
+end.rcode-->
+    
+<!--begin.rcode slushD, eval=FALSE
+
+univarate.citation.predictors = which(abs(mycor[,"nCitedBy.log"]) > 0.1)
+#univarate.citation.predictors
+length(univarate.citation.predictors)    
+topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]
+
+end.rcode-->
+    
+<!--begin.rcode heatmap, eval=FALSE
+    
+heatmap.2(topcor, col=bluered(16), cexRow=1, cexCol = 1, symm = TRUE, dend = "row", trace = "none", main = "Thesis Data", margins=c(15,15), key=FALSE, keysize=0.1)
+
+end.rcode-->
+
+<!--begin.rcode slush2, eval=FALSE
+
+##Other breakdowns
+
+num_authors_breaks = c(1, 5, 10, 20, 40)
+with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))
+
+qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.cancer, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.humans, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(pubmed.is.cultured.cells, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(has.R.funding, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+ggplot(dat.subset, aes(country.usa, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+qplot(num.grants.via.nih.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$last.author.num.prev.microarray.creations.tr, na.rm=T)
+qplot(last.author.num.prev.microarray.creations.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)
+qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)
+qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)
+qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+x_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)
+qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette
+
+end.rcode-->
+
 
 ## Discussion
 
