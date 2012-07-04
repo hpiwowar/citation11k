@@ -7,7 +7,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on <code class="knitr inline">Wed Jul  4 10:01:37 2012</code>
+ * Generated on <code class="knitr inline">Wed Jul  4 10:42:24 2012</code>
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -126,9 +126,46 @@ Using PMC, we searched the full text of papers published between 2007 and 2010 f
 
 ### Statistical methods
 
-The analyses were last run on <code class="knitr inline">Wed Jul  4 10:01:52 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+The analyses were last run on <code class="knitr inline">Wed Jul  4 10:42:38 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
-### Data and script availability
+References:
+Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
+of Statistical Software_, *21*(12), pp. 1-20. <URL:
+http://www.jstatsoft.org/v21/i12/>.
+
+Wickham H (2011). "The Split-Apply-Combine Strategy for Data Analysis."
+_Journal of Statistical Software_, *40*(1), pp. 1-29. <URL:
+http://www.jstatsoft.org/v40/i01/>.
+
+Jr FEH (2012). _rms: Regression Modeling Strategies_. R package version
+3.4-0, <URL: http://CRAN.R-project.org/package=rms>.
+
+Fox J (2010). _polycor: Polychoric and Polyserial Correlations_. R
+package version 0.7-8, <URL:
+http://CRAN.R-project.org/package=polycor>.
+
+Hajage D (2011). _ascii: Export R objects to several markup languages_.
+R package version 2.1, <URL: http://CRAN.R-project.org/package=ascii>.
+
+Wickham H (2009). _ggplot2: elegant graphics for data analysis_.
+Springer New York. ISBN 978-0-387-98140-6, <URL:
+http://had.co.nz/ggplot2/book>.
+
+Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley T,
+Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B (2011).
+_gplots: Various R programming tools for plotting data_. R package
+version 2.10.1, <URL: http://CRAN.R-project.org/package=gplots>.
+
+Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.6.7, <URL:
+http://yihui.name/knitr/>.
+
+Boettiger C (2012). _knitcitations: Citations for knitr markdown
+files_. R package version 0.0-1.
+
+
+
+#### Data and script availability
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  
 
@@ -182,46 +219,6 @@ We used ISI Web of Science to identify studies that used this method of data reu
 
 Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
 
-
-### References
-
-Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
-of Statistical Software_, *21*(12), pp. 1-20. <URL:
-http://www.jstatsoft.org/v21/i12/>.
-
-Wickham H (2011). "The Split-Apply-Combine Strategy for Data Analysis."
-_Journal of Statistical Software_, *40*(1), pp. 1-29. <URL:
-http://www.jstatsoft.org/v40/i01/>.
-
-Jr FEH (2012). _rms: Regression Modeling Strategies_. R package version
-3.4-0, <URL: http://CRAN.R-project.org/package=rms>.
-
-Fox J (2010). _polycor: Polychoric and Polyserial Correlations_. R
-package version 0.7-8, <URL:
-http://CRAN.R-project.org/package=polycor>.
-
-Hajage D (2011). _ascii: Export R objects to several markup languages_.
-R package version 2.1, <URL: http://CRAN.R-project.org/package=ascii>.
-
-Wickham H (2009). _ggplot2: elegant graphics for data analysis_.
-Springer New York. ISBN 978-0-387-98140-6, <URL:
-http://had.co.nz/ggplot2/book>.
-
-Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley T,
-Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B (2011).
-_gplots: Various R programming tools for plotting data_. R package
-version 2.10.1, <URL: http://CRAN.R-project.org/package=gplots>.
-
-Xie Y (2012). _knitr: A general-purpose package for dynamic report
-generation in R_. R package version 0.6.7, <URL:
-http://yihui.name/knitr/>.
-
-Boettiger C (2012). _knitcitations: Citations for knitr markdown
-files_. R package version 0.0-1.
-
-Xie Y (2012). _knitr: A general-purpose package for dynamic report
-generation in R_. R package version 0.6.7, <URL:
-http://yihui.name/knitr/>.
 
 
 
@@ -342,115 +339,13 @@ This difference in citation is not driven by outliers: as shown by the distribut
 
 Other factors have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite]. 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="symbol">myhetcorr</span> <span class="assignement">=</span> <span class="functioncall">hetcor.modified</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="argument">use</span><span class="argument">=</span><span class="string">"pairwise.complete.obs"</span><span class="keyword">,</span> <span class="argument">std.err</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">pd</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span>
-<span class="symbol">mycor</span> <span class="assignement">=</span> <span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span>
-<span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
-<span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
 
-<span class="comment"># Correlations with data availability</span>
-<span class="comment">## See if anything is so collinear it will cause problems in regression</span>
-<span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"dataset.in.geo.or.ae.int"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## | dataset.in.geo                                | 1     |
-## | dataset.in.geo.or.ae                          | 1     |
-## | dataset.in.geo.or.ae.int                      | 1     |
-## | institution.stanford                          | 0.3   |
-## | pubmed.is.open.access                         | 0.23  |
-## | pubmed.date.in.pubmed                         | 0.21  |
-## | pmid                                          | 0.2   |
-## | pubmed.year.published                         | 0.2   |
-## | journal.microarray.creating.count.tr          | 0.14  |
-## | journal.immediacy.index.log                   | 0.12  |
-## | pubmed.is.funded.nih.intramural               | 0.12  |
-## | has.U.funding                                 | 0.11  |
-## | pubmed.is.funded.nih                          | 0.11  |
-## | pubmed.is.bacteria                            | 0.11  |
-## | journal.5yr.impact.factor.log                 | 0.1   |
-## | journal.impact.factor.tr                      | 0.1   |
-## | pubmed.num.cites.from.pmc.per.year            | 0.09  |
-## | journal.impact.factor.log                     | 0.09  |
-## | num.grants.via.nih.tr                         | 0.08  |
-## | nih.cumulative.years.tr                       | 0.08  |
-## | has.R.funding                                 | 0.08  |
-## | institution.mean.norm.citation.score          | 0.08  |
-## | pubmed.is.fungi                               | 0.08  |
-## | has.T.funding                                 | 0.07  |
-## | has.R01.funding                               | 0.07  |
-## | last.author.num.prev.microarray.creations.tr  | 0.07  |
-## | pubmed.is.geo.reuse                           | 0.07  |
-## | institution.international.collaboration       | 0.07  |
-## | last.author.num.prev.pmc.cites.tr             | 0.06  |
-## | max.grant.duration.tr                         | 0.06  |
-## | nih.sum.avg.dollars.tr                        | 0.06  |
-## | institution.is.govnt                          | 0.06  |
-## | nih.sum.sum.dollars.tr                        | 0.05  |
-## | nih.max.max.dollars.tr                        | 0.05  |
-## | pubmed.is.shared.other                        | 0.05  |
-## | num.grant.numbers.tr                          | 0.05  |
-## | pubmed.is.funded.non.us.govt                  | 0.05  |
-## | pubmed.is.plants                              | 0.05  |
-## | num.authors.tr                                | 0.05  |
-## | institution.is.higher.ed                      | 0.04  |
-## | first.author.num.prev.microarray.creations.tr | 0.04  |
-## | country.canada                                | 0.04  |
-## | has.K.funding                                 | 0.04  |
-## | country.usa                                   | 0.04  |
-## | country.uk                                    | 0.04  |
-## | first.author.num.prev.pmc.cites.tr            | 0.03  |
-## | country.france                                | 0.02  |
-## | pubmed.is.animals                             | 0.02  |
-## | pubmed.num.cites.from.pmc.tr                  | 0.02  |
-## | first.author.female                           | 0.02  |
-## | institution.mean.norm.impact.factor           | 0.02  |
-## | last.author.female                            | 0.02  |
-## | pubmed.is.prognosis                           | 0.02  |
-## | pubmed.is.effectiveness                       | 0.01  |
-## | pubmed.is.comparative.study                   | 0.01  |
-## | institution.research.output.tr                | 0.01  |
-## | nCitedBy.log                                  | 0     |
-## | has.P.funding                                 | 0     |
-## | country.australia                             | 0     |
-## | nCitedBy                                      | 0     |
-## | last.author.num.prev.pubs.tr                  | 0     |
-## | pubmed.is.mice                                | 0     |
-## | institution.rank                              | -0.01 |
-## | first.author.num.prev.pubs.tr                 | -0.02 |
-## | last.author.year.first.pub.ago.tr             | -0.02 |
-## | journal.num.articles.2008.tr                  | -0.02 |
-## | country.germany                               | -0.02 |
-## | nih.last.year.ago.tr                          | -0.03 |
-## | pubmed.is.core.clinical.journal               | -0.03 |
-## | pubmed.is.diagnosis                           | -0.03 |
-## | institution.harvard                           | -0.03 |
-## | nih.first.year.ago.tr                         | -0.04 |
-## | institution.is.medical                        | -0.04 |
-## | first.author.year.first.pub.ago.tr            | -0.05 |
-## | pubmed.is.viruses                             | -0.07 |
-## | first.author.gender.not.found                 | -0.08 |
-## | last.author.gender.not.found                  | -0.09 |
-## | pubmed.is.humans                              | -0.1  |
-## | journal.cited.halflife                        | -0.11 |
-## | institution.nci                               | -0.11 |
-## | pubmed.is.cultured.cells                      | -0.11 |
-## | pubmed.is.cancer                              | -0.12 |
-## | country.japan                                 | -0.14 |
-## | country.china                                 | -0.14 |
-## | country.korea                                 | -0.14 |
-## | years.ago.tr                                  | -0.19 |
-</pre></div><div class="source"><pre class="knitr">
-<span class="comment"># Correlations with citation</span>
-<span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## | nCitedBy.log                                  | 1     |
-## | pubmed.num.cites.from.pmc.tr                  | 0.76  |
-## | years.ago.tr                                  | 0.59  |
-## | pubmed.num.cites.from.pmc.per.year            | 0.59  |
-## | nCitedBy                                      | 0.58  |
-## | journal.impact.factor.log                     | 0.47  |
+
+
+Cited by correlations.  It must be remembered that these are univariate correlations and so should not be interpreted without additional context.  For example, most open access publications were published recently, so relative to non-open access publications in this sample they have had less time to accumulate citations.
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | nCitedBy.log                                  | 1     |
 ## | journal.impact.factor.tr                      | 0.45  |
-## | journal.5yr.impact.factor.log                 | 0.45  |
-## | journal.immediacy.index.log                   | 0.44  |
 ## | last.author.num.prev.pmc.cites.tr             | 0.3   |
 ## | journal.num.articles.2008.tr                  | 0.25  |
 ## | last.author.year.first.pub.ago.tr             | 0.24  |
@@ -461,73 +356,91 @@ Other factors have been previously shown to be correlated with citation rate, in
 ## | first.author.year.first.pub.ago.tr            | 0.22  |
 ## | institution.stanford                          | 0.21  |
 ## | country.usa                                   | 0.18  |
-## | institution.mean.norm.impact.factor           | 0.18  |
 ## | num.authors.tr                                | 0.17  |
 ## | pubmed.is.core.clinical.journal               | 0.17  |
 ## | last.author.num.prev.pubs.tr                  | 0.15  |
-## | nih.first.year.ago.tr                         | 0.15  |
 ## | institution.nci                               | 0.14  |
-## | journal.cited.halflife                        | 0.14  |
-## | pubmed.is.shared.other                        | 0.12  |
-## | institution.research.output.tr                | 0.1   |
-## | has.T.funding                                 | 0.1   |
-## | num.grant.numbers.tr                          | 0.09  |
-## | pubmed.is.prognosis                           | 0.09  |
-## | has.R01.funding                               | 0.09  |
 ## | pubmed.is.humans                              | 0.08  |
-## | max.grant.duration.tr                         | 0.08  |
 ## | pubmed.is.funded.nih                          | 0.07  |
 ## | has.R.funding                                 | 0.07  |
 ## | pubmed.is.plants                              | 0.07  |
-## | pubmed.is.comparative.study                   | 0.06  |
 ## | first.author.num.prev.pubs.tr                 | 0.06  |
 ## | pubmed.is.cancer                              | 0.06  |
-## | has.P.funding                                 | 0.06  |
-## | nih.max.max.dollars.tr                        | 0.06  |
-## | institution.international.collaboration       | 0.05  |
-## | pubmed.is.diagnosis                           | 0.04  |
 ## | nih.cumulative.years.tr                       | 0.03  |
 ## | country.uk                                    | 0.03  |
-## | has.U.funding                                 | 0.03  |
-## | pubmed.is.effectiveness                       | 0.02  |
-## | nih.sum.sum.dollars.tr                        | 0.02  |
 ## | num.grants.via.nih.tr                         | 0.02  |
 ## | nih.sum.avg.dollars.tr                        | 0.01  |
 ## | pubmed.is.bacteria                            | 0.01  |
 ## | last.author.num.prev.microarray.creations.tr  | 0.01  |
 ## | dataset.in.geo.or.ae                          | 0.01  |
-## | pubmed.is.funded.non.us.govt                  | 0.01  |
-## | dataset.in.geo.or.ae.int                      | 0     |
-## | institution.is.medical                        | 0     |
-## | country.france                                | 0     |
-## | pubmed.is.fungi                               | 0     |
-## | first.author.gender.not.found                 | -0.01 |
 ## | pubmed.is.cultured.cells                      | -0.01 |
 ## | institution.is.govnt                          | -0.01 |
 ## | first.author.num.prev.microarray.creations.tr | -0.01 |
 ## | pubmed.is.geo.reuse                           | -0.01 |
-## | pubmed.is.mice                                | -0.02 |
-## | pubmed.is.viruses                             | -0.02 |
-## | dataset.in.geo                                | -0.02 |
-## | country.germany                               | -0.02 |
 ## | country.australia                             | -0.02 |
 ## | pubmed.is.funded.nih.intramural               | -0.03 |
-## | nih.last.year.ago.tr                          | -0.04 |
-## | has.K.funding                                 | -0.04 |
-## | last.author.gender.not.found                  | -0.04 |
 ## | country.canada                                | -0.05 |
 ## | institution.rank                              | -0.06 |
 ## | last.author.female                            | -0.07 |
-## | institution.is.higher.ed                      | -0.07 |
 ## | first.author.female                           | -0.08 |
 ## | country.japan                                 | -0.1  |
 ## | pubmed.is.animals                             | -0.11 |
 ## | country.china                                 | -0.19 |
 ## | country.korea                                 | -0.26 |
 ## | pubmed.is.open.access                         | -0.3  |
-## | pmid                                          | -0.58 |
 ## | pubmed.year.published                         | -0.58 |
 ## | pubmed.date.in.pubmed                         | -0.59 |
+</pre></div></div></div>
+
+
+Data availability correlations:
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | dataset.in.geo.or.ae                          | 1     |
+## | institution.stanford                          | 0.34  |
+## | pubmed.is.open.access                         | 0.29  |
+## | pubmed.date.in.pubmed                         | 0.28  |
+## | pubmed.year.published                         | 0.27  |
+## | journal.microarray.creating.count.tr          | 0.19  |
+## | pubmed.is.funded.nih                          | 0.15  |
+## | pubmed.is.funded.nih.intramural               | 0.15  |
+## | pubmed.is.bacteria                            | 0.14  |
+## | journal.impact.factor.tr                      | 0.13  |
+## | num.grants.via.nih.tr                         | 0.11  |
+## | nih.cumulative.years.tr                       | 0.11  |
+## | institution.mean.norm.citation.score          | 0.1   |
+## | has.R.funding                                 | 0.1   |
+## | last.author.num.prev.microarray.creations.tr  | 0.1   |
+## | pubmed.is.geo.reuse                           | 0.09  |
+## | last.author.num.prev.pmc.cites.tr             | 0.09  |
+## | nih.sum.avg.dollars.tr                        | 0.08  |
+## | institution.is.govnt                          | 0.07  |
+## | pubmed.is.plants                              | 0.06  |
+## | num.authors.tr                                | 0.06  |
+## | first.author.num.prev.microarray.creations.tr | 0.06  |
+## | country.canada                                | 0.06  |
+## | country.usa                                   | 0.05  |
+## | country.uk                                    | 0.05  |
+## | first.author.num.prev.pmc.cites.tr            | 0.04  |
+## | pubmed.is.animals                             | 0.03  |
+## | first.author.female                           | 0.03  |
+## | last.author.female                            | 0.02  |
+## | nCitedBy.log                                  | 0.01  |
+## | country.australia                             | 0     |
+## | last.author.num.prev.pubs.tr                  | -0.01 |
+## | institution.rank                              | -0.02 |
+## | first.author.num.prev.pubs.tr                 | -0.02 |
+## | last.author.year.first.pub.ago.tr             | -0.03 |
+## | journal.num.articles.2008.tr                  | -0.03 |
+## | pubmed.is.core.clinical.journal               | -0.04 |
+## | institution.harvard                           | -0.05 |
+## | first.author.year.first.pub.ago.tr            | -0.07 |
+## | pubmed.is.humans                              | -0.13 |
+## | pubmed.is.cultured.cells                      | -0.15 |
+## | pubmed.is.cancer                              | -0.16 |
+## | institution.nci                               | -0.18 |
+## | country.japan                                 | -0.21 |
+## | country.china                                 | -0.22 |
+## | country.korea                                 | -0.25 |
 </pre></div></div></div>
 
 
@@ -1098,24 +1011,6 @@ with 95% confidence intervals [<code class="knitr inline">3</code>%
 
 
 
-### Additional analysis for reference during manuscript prep
-
-
-
-    
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">univarate.citation.predictors</span> <span class="assignement">=</span> <span class="functioncall">which</span><span class="keyword">(</span><span class="functioncall">abs</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">)</span> <span class="keyword">&gt;</span> <span class="number">0.1</span><span class="keyword">)</span><span class="comment">#univarate.citation.predictorslength(univarate.citation.predictors)    topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]</span>
-</pre></div></div></div>
-
-    
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">    <span class="functioncall">heatmap.2</span><span class="keyword">(</span><span class="symbol">topcor</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="functioncall">bluered</span><span class="keyword">(</span><span class="number">16</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">cexRow</span><span class="argument">=</span><span class="number">1</span><span class="keyword">,</span> <span class="argument">cexCol</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">,</span> <span class="argument">symm</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">dend</span> <span class="argument">=</span> <span class="string">"row"</span><span class="keyword">,</span> <span class="argument">trace</span> <span class="argument">=</span> <span class="string">"none"</span><span class="keyword">,</span> <span class="argument">main</span> <span class="argument">=</span> <span class="string">"Thesis Data"</span><span class="keyword">,</span> <span class="argument">margins</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">15</span><span class="keyword">,</span><span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">key</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">keysize</span><span class="argument">=</span><span class="number">0.1</span><span class="keyword">)</span>
-</pre></div></div></div>
-
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="comment">##Other breakdownsnum_authors_breaks = c(1, 5, 10, 20, 40)with(dat.subset, tapply(nCitedBy, cut(num.authors.tr, num_authors_breaks), median, na.rm=T))qplot(num.authors.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=num_authors_breaks, labels=num_authors_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(pubmed.is.core.clinical.journal, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(pubmed.is.open.access, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(pubmed.is.cancer, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(pubmed.is.humans, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(pubmed.is.cultured.cells, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(has.R.funding, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteggplot(dat.subset, aes(country.usa, 1+nCitedBy, color=factor(dataset.in.geo.or.ae)))  + geom_jitter() + geom_boxplot() + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPaletteqplot(num.grants.via.nih.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalettex_breaks = quantile(dat.subset$last.author.num.prev.microarray.creations.tr, na.rm=T)qplot(last.author.num.prev.microarray.creations.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalettex_breaks = quantile(dat.subset$first.author.num.prev.pubs.tr, na.rm=T)qplot(first.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalettex_breaks = quantile(dat.subset$last.author.num.prev.pubs.tr, na.rm=T)qplot(last.author.num.prev.pubs.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalettex_breaks = quantile(dat.subset$last.author.num.prev.pmc.cites.tr, na.rm=T)qplot(last.author.num.prev.pmc.cites.tr, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalettex_breaks = quantile(dat.subset$institution.mean.norm.citation.score, na.rm=T)qplot(institution.mean.norm.citation.score, 1+nCitedBy, color=factor(dataset.in.geo.or.ae), data=dat.subset) + geom_smooth(aes(color="black", fill=factor(dataset.in.geo.or.ae))) + scale_x_continuous(trans="log10", breaks=x_breaks, labels=x_breaks) + scale_y_continuous(trans="log10", breaks=citation_breaks, labels=citation_breaks) + cbgFillPalette + cbgColourPalette</span>
-</pre></div></div></div>
-
-
-
 ## Discussion
 
 *1. summary of results*
@@ -1225,6 +1120,10 @@ Now cite everyone!
 
 
 ### demo bibliography
+
+Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.6.7, <URL:
+http://yihui.name/knitr/>.
 
 Boettiger C (2012). _knitcitations: Citations for knitr markdown
 files_. R package version 0.0-1.
