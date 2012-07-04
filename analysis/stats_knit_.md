@@ -29,22 +29,27 @@ cleanbib()
 end.rcode-->
 
 # knitr citation11k manuscript
- * author Heather Piwowar, <hpiwowar@gmail.com>
+ * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
- * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
+ * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
  * Generated on <!--rinline date() -->
 
-To run this I start R, set the working directory to match where this file is, then run the following in R:
+To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
     library(knitr)  
     knit("stats_knit_.md")
 
-or, from the command line
+or, from the command line, to generate an html file:
 
     R -e "library(knitr); knit('stats_knit_.md')"; pandoc --toc -r markdown -w html -H static/header.html stats.md > stats.html
-    view in browser: file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
 
-to see just the R code in a separate .R file called stats_knit_.R, run 
+The stats.html file can be viewed directly in a browser.
+The images are stored in my Public Dropbox folder.
+
+After pushing the .md files to GitHub, the stats.md file can also be viewed at [https://github.com/hpiwowar/citation11k/blob/master/analysis/stats.md](https://github.com/hpiwowar/citation11k/blob/master/analysis/stats.md) .
+
+To extract the R code in a separate .R file called stats_knit_.R, run knit with tangle set to TRUE:
+
     R -e "library(knitr); knit('stats_knit_.md', tangle=T)"
 
 <!--begin.rcode workspace, messages=FALSE, echo=FALSE
@@ -530,8 +535,10 @@ df.long.summary = ddply(df.long, .(variable, value), summarise, proportion=sum(d
 
 ggplot(data=df.long.summary, aes(x=value, y=proportion)) +
   geom_smooth() +
-  facet_wrap(~variable) +
-  scale_y_continuous(formatter='percent')
+  #facet_wrap(~variable) +
+  scale_y_continuous(name="proportion with available data\n", formatter='percent') + 
+  scale_x_continuous(name="", breaks=seq(2001,2009), labels=seq(2001,2009)) +
+  theme_bw(base_size=16)
 
 end.rcode-->
 
@@ -546,7 +553,18 @@ Without accounting for any confounding factors, the mean number of citations bet
 
 <!--begin.rcode sharingVCitations_breakdown
 with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
-ggplot(dfCitationsAttributesRaw, aes(log(1+nCitedBy), fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + cbgFillPalette + cbgColourPalette
+end.rcode-->
+
+<!--begin.rcode sharingVCitations_graph, echo=FALSE
+citation_breaks = c(0, 10, 100, 1000, 3000)
+ggplot(dfCitationsAttributesRaw, aes(1+nCitedBy, fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + 
+scale_fill_manual(name="",
+                    breaks=c("0", "1"),
+                    labels=c("data NOT available", "data available"), 
+                    values=cbgRaw) + 
+scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
+#cbgFillPalette + 
+cbgColourPalette + theme_bw(base_size=16)
 end.rcode-->
 
 
@@ -557,9 +575,9 @@ Indeed, we saw that for any given publication date, papers with associated data 
 <!--begin.rcode citationsByYearBySharing, echo=FALSE
 
 median_citations_by_year = cbind(
-dataset_available = with(subset(dfCitationsAttributes, dataset.in.geo.or.ae==0), tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
+dataset_not_available = with(subset(dfCitationsAttributes, dataset.in.geo.or.ae==0), tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
 ,
-dataset_not_available = with(subset(dfCitationsAttributes, dataset.in.geo.or.ae==1), tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
+dataset_available = with(subset(dfCitationsAttributes, dataset.in.geo.or.ae==1), tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
 )
 round(median_citations_by_year, 0)
 
@@ -569,7 +587,17 @@ This difference in citation is not driven by outliers: as shown by the distribut
 
 <!--begin.rcode citationDist, echo=FALSE 
 
-ggplot(dfCitationsAttributes, aes(1+nCitedBy.log, fill=factor(dataset.in.geo.or.ae)), color="black") + geom_density(alpha=0.2) + facet_grid(pubmed.year.published~.) + cbgFillPalette + cbgColourPalette
+ggplot(dfCitationsAttributes, aes(1+nCitedBy, fill=factor(dataset.in.geo.or.ae)), color="black") + 
+geom_density(alpha=0.2) + 
+scale_fill_manual(name="",
+                    breaks=c("0", "1"),
+                    labels=c("data NOT available", "data available"), 
+                    values=cbgRaw) + 
+facet_grid(pubmed.year.published~.) + 
+scale_y_continuous(breaks=c(0, 0.5), labels=c(0, 0.5)) + 
+scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
+#cbgFillPalette + 
+cbgColourPalette + theme_bw(base_size=16)
 
 end.rcode-->
 
@@ -594,7 +622,7 @@ end.rcode-->
 Multivariate regression analysis can be useful to identify the relationship between data availability and citation rate, independently of other variables.
 
 
-<!--begin.rcode display_regressionAll
+<!--begin.rcode display_regressionAll, echo=FALSE
 
 gfm_table(anova(fit_w_journal))
 citation.boost.coefs.journal = calcCI.exp(fit_w_journal, "factor(dataset.in.geo.or.ae).L")
@@ -617,13 +645,17 @@ The estimate of citation boost was different for different years of publication.
 The estimates of citation boost for papers published in each year, with 95% confidence intervals:
 
 <!--begin.rcode regressionEstimatesByYear
-
 estimates_by_year
+end.rcode-->
+
+<!--begin.rcode display_regressionEstimatesByYear, echo=FALSE
 
 ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() + 
   geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh)) +
-  scale_x_continuous(name='year of publication') +
-  scale_y_continuous(limits=c(0, 3.0), name='estimated increase in citations\nfor papers with data available (95% confidence intervals)')
+  scale_x_continuous(name="", breaks=seq(2001, 2009)) +
+  scale_y_continuous(name='coefficient ratio\n', limits=c(0, 2.5)) + 
+  theme_bw(base_size=16) +
+  geom_hline(color="grey50", linetype="dashed", aes(yintercept=1))
 
 end.rcode-->
 
@@ -675,7 +707,18 @@ Examining the citations of the  20 articles that did not create gene expression 
 
 <!--begin.rcode manualAnnotationCreatedCitations
 with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
-ggplot(dfCitationsAnnotated, aes(log(1+nCitedBy), fill=factor(isCreated))) + geom_density(alpha=0.2) + cbgFillPalette + cbgColourPalette
+end.rcode-->
+
+
+<!--begin.rcode display_manualAnnotationCreatedCitations, echo=FALSE
+ggplot(dfCitationsAnnotated, aes(1+nCitedBy, fill=factor(isCreated))) + geom_density(alpha=0.2) + 
+scale_fill_manual(name="",
+                    values=cbgRaw, 
+                    breaks=c("created-microarray-data", "created-microarray-data-not"),
+                    labels=c("did collect microarray data", "did NOT collect microarray data")) + 
+scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
+#cbgFillPalette + 
+cbgColourPalette + theme_bw(base_size=16)
 end.rcode-->
 
 This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.

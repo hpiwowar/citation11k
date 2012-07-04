@@ -4,22 +4,27 @@
 
 
 # knitr citation11k manuscript
- * author Heather Piwowar, <hpiwowar@gmail.com>
+ * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
- * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on <code class="knitr inline">Wed Jul  4 13:05:35 2012</code>
+ * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
+ * Generated on <code class="knitr inline">Wed Jul  4 15:17:27 2012</code>
 
-To run this I start R, set the working directory to match where this file is, then run the following in R:
+To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
     library(knitr)  
     knit("stats_knit_.md")
 
-or, from the command line
+or, from the command line, to generate an html file:
 
     R -e "library(knitr); knit('stats_knit_.md')"; pandoc --toc -r markdown -w html -H static/header.html stats.md > stats.html
-    view in browser: file:///Users/hpiwowar/Documents/Projects/citation%20benefit%20in%2011k%20study/citation11k/analysis/stats.html
 
-to see just the R code in a separate .R file called stats_knit_.R, run 
+The stats.html file can be viewed directly in a browser.
+The images are stored in my Public Dropbox folder.
+
+After pushing the .md files to GitHub, the stats.md file can also be viewed at [https://github.com/hpiwowar/citation11k/blob/master/analysis/stats.md](https://github.com/hpiwowar/citation11k/blob/master/analysis/stats.md) .
+
+To extract the R code in a separate .R file called stats_knit_.R, run knit with tangle set to TRUE:
+
     R -e "library(knitr); knit('stats_knit_.md', tangle=T)"
 
 
@@ -131,7 +136,7 @@ Using PMC, we searched the full text of papers published between 2007 and 2010 f
 
 
 
-The analyses were last run on <code class="knitr inline">Wed Jul  4 13:05:50 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+The analyses were last run on <code class="knitr inline">Wed Jul  4 15:17:43 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 References:
 Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
@@ -408,8 +413,10 @@ Without accounting for any confounding factors, the mean number of citations bet
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     0.0     7.0    16.0    31.3    34.0  2640.0 
 ## 
-</pre></div><div class="source"><pre class="knitr"><span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">fill</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">in_ae_or_geo</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_density</span><span class="keyword">(</span><span class="argument">alpha</span><span class="argument">=</span><span class="number">0.2</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/sharingVCitations_breakdown.png" class="plot" /></div></div>
+</pre></div></div></div>
+
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/sharingVCitations_graph.png" class="plot" /></div></div>
 
 
 
@@ -417,16 +424,16 @@ The number of citations a paper has recieved is strongly correlated to the date 
 
 Indeed, we saw that for any given publication date, papers with associated data recieve more citations than those without.
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##      data_not_available data_available
-## 2001                 74            134
-## 2002                 52             71
-## 2003                 38             60
-## 2004                 28             42
-## 2005                 22             34
-## 2006                 17             23
-## 2007                 13             17
-## 2008                  9             11
-## 2009                  5              6
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##      dataset_not_available dataset_available
+## 2001                    74               134
+## 2002                    52                71
+## 2003                    38                60
+## 2004                    28                42
+## 2005                    22                34
+## 2006                    17                23
+## 2007                    13                17
+## 2008                     9                11
+## 2009                     5                 6
 </pre></div></div></div>
 
     
@@ -546,9 +553,7 @@ Data availability correlations:
 Multivariate regression analysis can be useful to identify the relationship between data availability and citation rate, independently of other variables.
 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
 ## |----------------------------------------------|---------|---------|---------|---------|--------|
 ## | rcs(journal.impact.factor.tr, 3)             | 2.00    | 1134.56 | 567.28  | 1128.24 | 0.00   |
 ## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1439.09 | 719.55  | 1431.07 | 0.00   |
@@ -573,8 +578,6 @@ Multivariate regression analysis can be useful to identify the relationship betw
 ## | factor(pubmed_journal)                       | 422.00  | 364.83  | 0.86    | 1.72    | 0.00   |
 ## | factor(dataset.in.geo.or.ae)                 | 1.00    | 9.47    | 9.47    | 18.84   | 0.00   |
 ## | Residuals                                    | 3919.00 | 1970.48 | 0.50    |         |        |
-</pre></div><div class="source"><pre class="knitr"><span class="symbol">citation.boost.coefs.journal</span> <span class="assignement">=</span> <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-<span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">citation.boost.coefs.journal</span><span class="keyword">)</span>
 </pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh p
 ## Estimate factor(dataset.in.geo.or.ae).L 1.09  1.05   1.13 0
 </pre></div></div></div>
@@ -594,8 +597,7 @@ The estimate of citation boost was different for different years of publication.
 
 The estimates of citation boost for papers published in each year, with 95% confidence intervals:
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="symbol">estimates_by_year</span>
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">estimates_by_year</span>
 </pre></div><div class="output"><pre class="knitr">##           year                          param  est ciLow ciHigh     p
 ## Estimate  2001 factor(dataset.in.geo.or.ae).L 1.37  0.84   2.25 0.212
 ## Estimate1 2002 factor(dataset.in.geo.or.ae).L 1.16  0.89   1.50 0.268
@@ -606,12 +608,10 @@ The estimates of citation boost for papers published in each year, with 95% conf
 ## Estimate6 2007 factor(dataset.in.geo.or.ae).L 1.08  1.00   1.17 0.055
 ## Estimate7 2008 factor(dataset.in.geo.or.ae).L 1.08  0.99   1.18 0.077
 ## Estimate8 2009 factor(dataset.in.geo.or.ae).L 1.01  0.92   1.10 0.865
-</pre></div><div class="source"><pre class="knitr">
-<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">x</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="argument">y</span><span class="argument">=</span><span class="symbol">est</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_line</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">3.0</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'estimated increase in citations\nfor papers with data available (95% confidence intervals)'</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/regressionEstimatesByYear.png" class="plot" /></div></div>
+</pre></div></div></div>
+
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_regressionEstimatesByYear.png" class="plot" /></div></div>
 
 
 
@@ -692,8 +692,11 @@ Examining the citations of the  20 articles that did not create gene expression 
 ## +---------+---------------------------+---+--------+
 ## |  Overall|                           |226|   31.37|
 ## +---------+---------------------------+---+--------+
-</pre></div><div class="source"><pre class="knitr"><span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">fill</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_density</span><span class="keyword">(</span><span class="argument">alpha</span><span class="argument">=</span><span class="number">0.2</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/manualAnnotationCreatedCitations.png" class="plot" /></div></div>
+</pre></div></div></div>
+
+
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_manualAnnotationCreatedCitations.png" class="plot" /></div></div>
 
 
 This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
