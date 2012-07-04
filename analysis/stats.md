@@ -7,7 +7,7 @@
  * author Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Carl Boettiger and knitr for this literate programming framework!
- * Generated on <code class="knitr inline">Mon Jul  2 21:45:12 2012</code>
+ * Generated on <code class="knitr inline">Wed Jul  4 10:01:37 2012</code>
 
 To run this I start R, set the working directory to match where this file is, then run the following in R:
 
@@ -65,8 +65,9 @@ Clinical microarray data provides a useful environment for the investigation: de
 
 ## Methods
 
+### Dataset of citations to gene expression microarray studies
 
-### Identification of relevant studies
+#### Identification of relevant studies
 
 
 
@@ -78,13 +79,13 @@ The sample of microarray experiments used in the current analysis was previously
 The current analysis retained papers published between 2001 and 2009.
 
 
-### Assessment of data availability
+#### Assessment of data availability
 
 The independent variable of interest in this analysis is the availability of gene expression microarray data.  Data availability had been previously determined for our sample articles in Piwowar 2011, so we directly reused that dataset [Piwowar Dryad 2011].  This study limited its data hunt to just the two predominant gene expression microarray databases: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress.
 
 "An earlier evaluation found that querying GEO and ArrayExpress with article PubMed identifiers located a representative 77% of all associated publicly available datasets [Piwowar 2010]. [We] used the same method for finding datasets associated with published articles in this study: [we] queried GEO for links to the PubMed identifiers in the analysis sample using the “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Articles linked from a dataset in either of these two centralized repositories were considered to have [publicly available data] for the endpoint of this study, and those without such a link were considered not to have [available] data." [Piwowar 2011]
 
-### Study attributes
+#### Study attributes
 
 Piwowar 2011 collected 124 attributes for each of the gene expression microarray studies in our sample.  The subset of attributes previously shown or suspected to correlate with citation rate were included in the current analysis:
 
@@ -103,27 +104,125 @@ Piwowar 2011 collected 124 attributes for each of the gene expression microarray
 * study topic (human/animal study, cancer/not cancer, etc.)
 * NIH funding of the study, if applicable
 
-### Citation data
+#### Citation data
 
-We needed citation counts for thousands of articles based on identification through PubMed identifiers.  At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported this type of query.  It was supported by Elsevier's Scopus citation database, but none of our affiliated institutions subscribed to Scopus.
+This study required citation counts for thousands of articles identified through PubMed IDs. At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported this type of query. It was (and is) supported by Elsevier's Scopus citation database. Alas, none of our affiliated institutions subscribed to Scopus. Scopus does not offer individual subscriptions, and a personal email to a Scopus Product Manager went unanswered.
 
-One author (HAP) attempted to use the British Library's walk-in access of Scopus on its Reading Room computers during a trip overseas.  Unfortunately, the British Library did not permit electronic transfer of our PubMed identifier list onto the Reading Room computers, whether through internet document access or a USB drive text file transfer (see http://www.bl.uk/reshelp/inrrooms/stp/cond/conditions.html).  The Library was not willing to permit an exception to these policies, and we were unwilling to manually type ten thousand PubMed idenfiers in the Reading Room.  A personal email to someone at Scopus went unanswered.  HAP eventually obtained Scopus access through a Research Worker agreement with Canada's National Research Library (NRC-CISTI).
+One author (HAP) attempted to use the British Library's walk-in access of Scopus on its Reading Room computers during a trip overseas. Unfortunately, the British Library did not permit any method of electronic transfer of our PubMed identifier list onto the Reading Room computers, including internet document access, transferring a text file from a USB drive, or using the help desk as an intermediary (see related policies at http://www.bl.uk/reshelp/inrrooms/stp/cond/conditions.html). The Library was not willing to permit an exception in this case, and we were unwilling to manually type ten thousand PubMed identifiers into the Scopus search box in the Reading Room.
+HAP eventually obtained Scopus access through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate.
 
-At the time of data collection the authors were not aware of any way to access Scopus data through researcher-developed computer programs, so we queried and exported Scopus citation data through manual interaction with the Scopus website.  The Scopus website had a limit to the length of query and the number of citations that could be exported at once.  To work within these restrictions we concatenated up to 500 PubMed IDs at a time into 22 queries, where each query took the form "PMID(1234) OR PMID(5678) OR ..."
+Although Scopus now has an API that would facilitate easy programmatic access to citation counts, at the time of data collection the authors were not aware of any way to retrieve Scopus data through researcher-developed computer programs.  We queried and exported Scopus citation data manually through interaction with the Scopus website. The Scopus website had a limit to the length of query and the number of citations that could be exported at once. To work within these restrictions we concatenated up to 500 PubMed IDs at a time into 22 queries, where each query took the form "PMID(1234) OR PMID(5678) OR ..."
 
 
 
 
 Citation counts for <code class="knitr inline">10694</code>  papers were gathered from Scopus in November 2011. 
 
+### Dataset of in-text mentions of gene expression microarray studies
+
+To derive an estimate of the reuse of data in GEO, we took advantage of the conventions for citing GEO datasets through accession numbers and GEO’s integration with PubMed and PubMed Central (PMC). 
+
+Using PMC, we searched the full text of papers published between 2007 and 2010 for mention of one or more of the 2,711 accession numbers assigned to data series submitted to GEO in 2007. We excluded those papers that a) had author names in common with those who deposited the data (since the original authors would presumably have access to the data even in the absence of the archive) and b) mentioned an accession number without building upon the dataset. [Nature letter]
 
 ### Statistical methods
 
-Analysis run on <code class="knitr inline">Mon Jul  2 21:45:28 2012</code>.
+The analyses were last run on <code class="knitr inline">Wed Jul  4 10:01:52 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 ### Data and script availability
 
-Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be supplied upon article acceptance].  Dryad and GitHub also include the markdown version of this manuscript with interleaved statistical scripts using knitr[cite].
+Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  
+
+The text Markdown version of this manuscript with interleaved statistical scripts using knitr (Xie, 2012) is also included in Dryad and at GitHub [https://github.com/hpiwowar/citation11k].
+
+
+####Primary analysis of relationship between data availability and citation
+
+The analysis included several multivariate linear regressions to evaluate the association between the public availability of a study's microarray data and the number of citations (after log transformation) it received. 
+
+We began with a simple correlations between number of citations and other variables, using Pearson correlations for numberic variables and polyserial correlations for binary and factor covariates.  We also calculated correlations between data availability and other variables to investigate collinearity. 
+
+The main analysis was run across all papers in the sample with many  covariates known or found (in the correlation analysis above) to correlate with citation rate.  Covariates included the date of publication, the journal which published the study, the journal impact factor, the journal citation halflife, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.  
+
+Publishing experience was characterized by the number of years since the author's first paper in PubMed, the number of papers they have published, and the number of citations they have received in PubMed Central, estimated using Authority clusters as described in [Piwowar 2011].  The subject of the study was characterized by whether the paper was classified as cancer, animals, or plants.  For more information on study attributes see [Piwowar 2011].
+
+Citation count was log transformed to be consistent with prior literature.  Other count variables square-root transformed.  Continuous variables were represented with 3-part spines in the regression, using the rcs function in the R rms library.
+
+The independent variable of interest was represented as a 0 or 1 in the regression, describing whether or not associated data had been found in the data repositories.  The relationship of the data availability variable to  citation count was described with 95% confidence intervals after raising the regression coefficient to the power of e (since the log of the number of citations was used in the regression).
+
+Because publication date is such a strong correlate with both citation rate and data availability, we performed another analysis which stratified the sample by publication year, in addition to including publication date as a covariate.  Because the yearly regressions included fewer datapoints than the full regression, they supported a smaller number of covarites.  The yearly regressions included  date of publication, the journal which published the study, the journal impact factor, the journal's open access policy, the number of authors of the study, the citation score of the institution of the corresponding author, the previous number of PubMed Central citations recieved by the first and last author, whether the study was on cancer, and whether it used animals.
+
+####Subset analysis to compare findings with Piwowar et al 2007
+
+We ran two modified analyses to attempt to reproduce the findings of [Piwowar 2007].  First, we used a subset with roughly the same inclusion criteria as Piwowar 2007 -- studies on cancer, with humans, published prior to 2003 -- and the same regression coefficients: publication date, impact factor, and whether the corresponding author's address is in the USA.
+
+We followed that with a second regression that included several additional important covariates:  number of authors and number of previous citations by the last author.
+
+####Subset analysis with manual classification of data availability
+
+Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
+
+The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
+
+If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.
+
+We took steps to verify our assumption that the influence of articles erroniously identified these mistakenly-included articles is in fact small.  We began by manually reviewed a random 226 of the 11k (get exact number) articles to identify those which we were assuming had created gene expression microarray data but in fact had not.
+
+We compared the distribution of those with errors to those without, calculated whether they were statitically different, and ran a regression with the known-correct sample only.
+
+
+####Complementary evidence of data reuse from accession number attribution
+
+Because PMC contains only a subset of papers recorded in PubMed, we extrapolated to the expected number of articles in PubMed based on the ratios of papers in PMC to PubMed in this domain (measured as the number of articles indexed with the MeSH term “gene expression profiling” in PMC relative to the number of articles with the same MeSH term in all of PubMed; 2007:23%, 2008:32%, 2009:36%, 2010:25%). [Nature letter]
+
+####Complementary evidence of data reuse from citation context
+
+Possible reuse in the published literature over the period 2005-2010 for datasets deposited in 2005.
+
+We used ISI Web of Science to identify studies that used this method of data reuse attribution. For each dataset, we located the data collection article within ISI Web of Science and exported the list of all articles that cite this data collection article. This list of all citations was processed to subselect  150 random  citations, stratified by  the total  number of  times the data collection article had been cited.  The subselection of the ISI WoS results was saved as a  BibTeX file then uploaded to  the Mendeley group.
+
+Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
+
+
+### References
+
+Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
+of Statistical Software_, *21*(12), pp. 1-20. <URL:
+http://www.jstatsoft.org/v21/i12/>.
+
+Wickham H (2011). "The Split-Apply-Combine Strategy for Data Analysis."
+_Journal of Statistical Software_, *40*(1), pp. 1-29. <URL:
+http://www.jstatsoft.org/v40/i01/>.
+
+Jr FEH (2012). _rms: Regression Modeling Strategies_. R package version
+3.4-0, <URL: http://CRAN.R-project.org/package=rms>.
+
+Fox J (2010). _polycor: Polychoric and Polyserial Correlations_. R
+package version 0.7-8, <URL:
+http://CRAN.R-project.org/package=polycor>.
+
+Hajage D (2011). _ascii: Export R objects to several markup languages_.
+R package version 2.1, <URL: http://CRAN.R-project.org/package=ascii>.
+
+Wickham H (2009). _ggplot2: elegant graphics for data analysis_.
+Springer New York. ISBN 978-0-387-98140-6, <URL:
+http://had.co.nz/ggplot2/book>.
+
+Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley T,
+Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B (2011).
+_gplots: Various R programming tools for plotting data_. R package
+version 2.10.1, <URL: http://CRAN.R-project.org/package=gplots>.
+
+Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.6.7, <URL:
+http://yihui.name/knitr/>.
+
+Boettiger C (2012). _knitcitations: Citations for knitr markdown
+files_. R package version 0.0-1.
+
+Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.6.7, <URL:
+http://yihui.name/knitr/>.
+
 
 
 ## Results
@@ -239,608 +338,16 @@ This difference in citation is not driven by outliers: as shown by the distribut
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/citationDist.png" class="plot" /></div></div>
 
 
-#### Multivariate regression
+#### Correlations
 
-Other factors have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite].  Regression analysis can be useful to identify the relationship between data availability and citation rate, independently of these other variables.
-
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="symbol">dfCitationsAttributes_with_journal</span> <span class="assignement">=</span> <span class="functioncall">merge</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">[</span><span class="keyword">,</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pmid"</span><span class="keyword">,</span> <span class="string">"pubmed_journal"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">by</span><span class="argument">=</span><span class="string">"pmid"</span><span class="keyword">,</span> <span class="keyword">)</span>
-<span class="symbol">fit_w_journal</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="symbol">country.usa</span> <span class="keyword">+</span>
-          <span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.cited.halflife</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.plants</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">)</span> <span class="keyword">+</span>
-          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
-           <span class="keyword">,</span> <span class="symbol">dfCitationsAttributes_with_journal</span><span class="keyword">)</span>
-
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|---------|---------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00    | 165.79  | 82.90   | 164.83  | 0.00   |
-## | rcs(journal.impact.factor.tr, 3)             | 2.00    | 995.77  | 497.89  | 990.00  | 0.00   |
-## | factor(pubmed_journal)                       | 427.00  | 650.85  | 1.52    | 3.03    | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1280.36 | 640.18  | 1272.94 | 0.00   |
-## | rcs(first.author.num.prev.pubs.tr, 3)        | 2.00    | 1.39    | 0.69    | 1.38    | 0.25   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00    | 23.34   | 11.67   | 23.21   | 0.00   |
-## | rcs(first.author.year.first.pub.ago.tr, 3)   | 2.00    | 0.94    | 0.47    | 0.94    | 0.39   |
-## | rcs(last.author.num.prev.pubs.tr, 3)         | 2.00    | 5.53    | 2.76    | 5.50    | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00    | 10.53   | 5.26    | 10.47   | 0.00   |
-## | rcs(last.author.year.first.pub.ago.tr, 3)    | 2.00    | 1.35    | 0.67    | 1.34    | 0.26   |
-## | country.usa                                  | 1.00    | 1.13    | 1.13    | 2.25    | 0.13   |
-## | pubmed.is.open.access                        | 1.00    | 0.44    | 0.44    | 0.88    | 0.35   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00    | 0.58    | 0.29    | 0.57    | 0.56   |
-## | factor(pubmed.is.cancer)                     | 1.00    | 0.13    | 0.13    | 0.26    | 0.61   |
-## | factor(pubmed.is.animals)                    | 1.00    | 19.65   | 19.65   | 39.08   | 0.00   |
-## | factor(pubmed.is.plants)                     | 1.00    | 3.17    | 3.17    | 6.29    | 0.01   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00    | 9.55    | 9.55    | 18.99   | 0.00   |
-## | Residuals                                    | 3921.00 | 1971.93 | 0.50    |         |        |
-</pre></div><div class="source"><pre class="knitr">
-<span class="comment"># fit_w_journal</span>
-<span class="symbol">citation.boost.coefs.journal</span> <span class="assignement">=</span> <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-<span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">citation.boost.coefs.journal</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh p
-## Estimate factor(dataset.in.geo.or.ae).L 1.09  1.05   1.13 0
-</pre></div></div></div>
-
-
-In this analysis, we found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
-
-Estimate of the independent increase of citations due to data availability is  
-<code class="knitr inline">9</code>%
-with 95% confidence intervals [<code class="knitr inline">5</code>%
-, <code class="knitr inline">13</code>% ]
-(p=<code class="knitr inline">0.00</code>)
-
-Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually (with a subset of the covariates).
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="comment"># has a few less covariates than full model</span>
-<span class="symbol">do_analysis</span> <span class="assignement">=</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">mydat</span><span class="keyword">)</span> <span class="keyword">{</span>
-  <span class="symbol">myfit</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span> <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="symbol">pubmed.is.open.access</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
-             <span class="keyword">,</span> <span class="symbol">mydat</span><span class="keyword">)</span>
-
-  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfit</span><span class="keyword">)</span><span class="keyword">)</span>
-
-  <span class="symbol">myfit</span>
-
-  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfit</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-<span class="keyword">}</span>
-
-
-<span class="symbol">estimates_by_year</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span><span class="keyword">)</span>
-<span class="keyword">for</span> <span class="keyword">(</span><span class="symbol">year</span> <span class="keyword">in</span> <span class="functioncall">seq</span><span class="keyword">(</span><span class="number">2001</span><span class="keyword">,</span> <span class="number">2009</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">{</span>
-  <span class="symbol">dat.subset.year</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes_with_journal</span><span class="keyword">,</span> <span class="symbol">pubmed.year.published</span>==<span class="symbol">year</span><span class="keyword">)</span>
-  <span class="symbol">results</span> <span class="assignement">=</span> <span class="functioncall">do_analysis</span><span class="keyword">(</span><span class="symbol">dat.subset.year</span><span class="keyword">)</span>
-  <span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">results</span><span class="keyword">)</span>
-  <span class="symbol">estimates_by_year</span> <span class="assignement">=</span> <span class="functioncall">rbind</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">cbind</span><span class="keyword">(</span><span class="argument">year</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="symbol">results</span><span class="keyword">)</span><span class="keyword">)</span>
-<span class="keyword">}</span>
-</pre></div><div class="output"><pre class="knitr">## |                                              | Df    | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|-------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00  | 10.07  | 5.03    | 8.33    | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00  | 0.49   | 0.24    | 0.40    | 0.67   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00  | 2.52   | 1.26    | 2.09    | 0.13   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00  | 14.09  | 7.04    | 11.66   | 0.00   |
-## | pubmed.is.open.access                        | 1.00  | 0.02   | 0.02    | 0.03    | 0.87   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00  | 5.78   | 2.89    | 4.78    | 0.01   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00  | 0.96   | 0.48    | 0.79    | 0.46   |
-## | rcs(journal.impact.factor.tr)                | 4.00  | 4.06   | 1.02    | 1.68    | 0.17   |
-## | factor(pubmed_journal)                       | 32.00 | 16.68  | 0.52    | 0.86    | 0.67   |
-## | factor(pubmed.is.cancer)                     | 1.00  | 0.24   | 0.24    | 0.40    | 0.53   |
-## | factor(pubmed.is.animals)                    | 1.00  | 0.29   | 0.29    | 0.47    | 0.49   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00  | 0.40   | 0.40    | 0.66    | 0.42   |
-## | Residuals                                    | 48.00 | 28.99  | 0.60    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.31  0.68   2.54 0.422
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 7.65   | 3.83    | 7.18    | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 2.87   | 1.43    | 2.69    | 0.07   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 1.88   | 0.94    | 1.76    | 0.18   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 13.88  | 6.94    | 13.01   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 2.54   | 2.54    | 4.77    | 0.03   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 5.35   | 2.67    | 5.02    | 0.01   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 3.21   | 1.60    | 3.01    | 0.05   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 33.47  | 8.37    | 15.69   | 0.00   |
-## | factor(pubmed_journal)                       | 80.00  | 73.73  | 0.92    | 1.73    | 0.00   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 1.13   | 1.13    | 2.11    | 0.15   |
-## | factor(pubmed.is.animals)                    | 1.00   | 0.54   | 0.54    | 1.01    | 0.32   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.18   | 0.18    | 0.34    | 0.56   |
-## | Residuals                                    | 149.00 | 79.43  | 0.53    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.09  0.82   1.45 0.559
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 11.90  | 5.95    | 12.18   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 11.65  | 5.83    | 11.93   | 0.00   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 9.87   | 4.93    | 10.10   | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 13.57  | 6.78    | 13.89   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 0.11   | 0.11    | 0.22    | 0.64   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.46   | 1.23    | 2.52    | 0.08   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 4.79   | 2.39    | 4.90    | 0.01   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 26.55  | 6.64    | 13.59   | 0.00   |
-## | factor(pubmed_journal)                       | 119.00 | 78.63  | 0.66    | 1.35    | 0.03   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 1.02   | 1.02    | 2.09    | 0.15   |
-## | factor(pubmed.is.animals)                    | 1.00   | 2.80   | 2.80    | 5.74    | 0.02   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.34   | 0.34    | 0.69    | 0.41   |
-## | Residuals                                    | 234.00 | 114.31 | 0.49    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.09  0.89   1.35 0.407
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 24.77  | 12.39   | 23.64   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 5.73   | 2.87    | 5.47    | 0.00   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 22.94  | 11.47   | 21.89   | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 23.95  | 11.97   | 22.85   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 6.66   | 6.66    | 12.72   | 0.00   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.72   | 1.36    | 2.60    | 0.08   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 9.60   | 4.80    | 9.16    | 0.00   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 48.00  | 12.00   | 22.90   | 0.00   |
-## | factor(pubmed_journal)                       | 160.00 | 126.10 | 0.79    | 1.50    | 0.00   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 0.23   | 0.23    | 0.44    | 0.51   |
-## | factor(pubmed.is.animals)                    | 1.00   | 0.07   | 0.07    | 0.14    | 0.71   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 4.21   | 4.21    | 8.04    | 0.00   |
-## | Residuals                                    | 330.00 | 172.91 | 0.52    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.23  1.07   1.42 0.005
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 25.81  | 12.90   | 28.05   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 0.60   | 0.30    | 0.66    | 0.52   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 23.89  | 11.94   | 25.96   | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 12.34  | 6.17    | 13.41   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 0.04   | 0.04    | 0.10    | 0.76   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 7.80   | 3.90    | 8.48    | 0.00   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 15.58  | 7.79    | 16.93   | 0.00   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 52.61  | 13.15   | 28.59   | 0.00   |
-## | factor(pubmed_journal)                       | 186.00 | 105.98 | 0.57    | 1.24    | 0.04   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 1.42   | 1.42    | 3.09    | 0.08   |
-## | factor(pubmed.is.animals)                    | 1.00   | 0.98   | 0.98    | 2.13    | 0.15   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 7.04   | 7.04    | 15.31   | 0.00   |
-## | Residuals                                    | 380.00 | 174.80 | 0.46    |         |        |
-##                                   param est ciLow ciHigh p
-## Estimate factor(dataset.in.geo.or.ae).L 1.3  1.14   1.48 0
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 35.85  | 17.92   | 37.15   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 2.45   | 1.23    | 2.54    | 0.08   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 19.51  | 9.75    | 20.22   | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 17.65  | 8.83    | 18.30   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 0.23   | 0.23    | 0.48    | 0.49   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.80   | 1.40    | 2.91    | 0.06   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 8.04   | 4.02    | 8.33    | 0.00   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 65.35  | 16.34   | 33.86   | 0.00   |
-## | factor(pubmed_journal)                       | 177.00 | 125.97 | 0.71    | 1.48    | 0.00   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 0.14   | 0.14    | 0.28    | 0.59   |
-## | factor(pubmed.is.animals)                    | 1.00   | 8.09   | 8.09    | 16.76   | 0.00   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 1.15   | 1.15    | 2.37    | 0.12   |
-## | Residuals                                    | 383.00 | 184.77 | 0.48    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.09  0.98   1.23 0.124
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 24.19  | 12.10   | 26.67   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 5.35   | 2.67    | 5.90    | 0.00   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 11.75  | 5.88    | 12.96   | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 11.00  | 5.50    | 12.13   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 0.01   | 0.01    | 0.01    | 0.90   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 2.76   | 1.38    | 3.05    | 0.05   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 5.52   | 2.76    | 6.09    | 0.00   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 57.39  | 14.35   | 31.64   | 0.00   |
-## | factor(pubmed_journal)                       | 210.00 | 133.80 | 0.64    | 1.41    | 0.00   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 0.11   | 0.11    | 0.24    | 0.63   |
-## | factor(pubmed.is.animals)                    | 1.00   | 1.66   | 1.66    | 3.66    | 0.06   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.11   | 0.11    | 0.23    | 0.63   |
-## | Residuals                                    | 500.00 | 226.72 | 0.45    |         |        |
-##                                   param  est ciLow ciHigh    p
-## Estimate factor(dataset.in.geo.or.ae).L 1.02  0.93   1.12 0.63
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 41.30  | 20.65   | 36.27   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 15.52  | 7.76    | 13.62   | 0.00   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 6.68   | 3.34    | 5.87    | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 16.62  | 8.31    | 14.59   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 2.08   | 2.08    | 3.66    | 0.06   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 5.42   | 2.71    | 4.76    | 0.01   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 10.35  | 5.18    | 9.09    | 0.00   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 59.85  | 14.96   | 26.28   | 0.00   |
-## | factor(pubmed_journal)                       | 219.00 | 133.41 | 0.61    | 1.07    | 0.28   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 0.01   | 0.01    | 0.01    | 0.92   |
-## | factor(pubmed.is.animals)                    | 1.00   | 5.79   | 5.79    | 10.16   | 0.00   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.06   | 0.06    | 0.10    | 0.75   |
-## | Residuals                                    | 448.00 | 255.09 | 0.57    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.02  0.91   1.13 0.752
-## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(num.authors.tr, 3)                       | 2.00   | 43.96  | 21.98   | 50.23   | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 15.57  | 7.78    | 17.79   | 0.00   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 7.31   | 3.65    | 8.35    | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 10.94  | 5.47    | 12.50   | 0.00   |
-## | pubmed.is.open.access                        | 1.00   | 0.57   | 0.57    | 1.30    | 0.26   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 8.23   | 4.11    | 9.40    | 0.00   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00   | 7.82   | 3.91    | 8.93    | 0.00   |
-## | rcs(journal.impact.factor.tr)                | 4.00   | 59.57  | 14.89   | 34.04   | 0.00   |
-## | factor(pubmed_journal)                       | 200.00 | 123.27 | 0.62    | 1.41    | 0.00   |
-## | factor(pubmed.is.cancer)                     | 1.00   | 0.02   | 0.02    | 0.04    | 0.84   |
-## | factor(pubmed.is.animals)                    | 1.00   | 2.58   | 2.58    | 5.90    | 0.02   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.45   | 0.45    | 1.02    | 0.31   |
-## | Residuals                                    | 331.00 | 144.84 | 0.44    |         |        |
-##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 0.95  0.85   1.05 0.314
-</pre></div></div></div>
-
-
-The estimate of citation boost was different for different years of publication.
-
-The estimates of citation boost for papers published in each year, with 95% confidence intervals:
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="symbol">estimates_by_year</span>
-</pre></div><div class="output"><pre class="knitr">##           year                          param  est ciLow ciHigh     p
-## Estimate  2001 factor(dataset.in.geo.or.ae).L 1.31  0.68   2.54 0.422
-## Estimate1 2002 factor(dataset.in.geo.or.ae).L 1.09  0.82   1.45 0.559
-## Estimate2 2003 factor(dataset.in.geo.or.ae).L 1.09  0.89   1.35 0.407
-## Estimate3 2004 factor(dataset.in.geo.or.ae).L 1.23  1.07   1.42 0.005
-## Estimate4 2005 factor(dataset.in.geo.or.ae).L 1.30  1.14   1.48 0.000
-## Estimate5 2006 factor(dataset.in.geo.or.ae).L 1.09  0.98   1.23 0.124
-## Estimate6 2007 factor(dataset.in.geo.or.ae).L 1.02  0.93   1.12 0.630
-## Estimate7 2008 factor(dataset.in.geo.or.ae).L 1.02  0.91   1.13 0.752
-## Estimate8 2009 factor(dataset.in.geo.or.ae).L 0.95  0.85   1.05 0.314
-</pre></div><div class="source"><pre class="knitr">
-<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">x</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="argument">y</span><span class="argument">=</span><span class="symbol">est</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_line</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">3.0</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'estimated increase in citations\nfor papers with data available (95% confidence intervals)'</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/regressionEstimatesByYear.png" class="plot" /></div></div>
-
-
-
-
- 
-
-### Subset analysis to compare findings with Piwowar et al 2007
-
-These estimates of citation boost found in the multivariate regression were different from those found by (Piwowar et al 2007), even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
-
-First, Piwowar et al 2007 included only data from human cancer microarray trials published between 1999 and 2003 <check>, whereas the current study uses all gene expression microarray data studies in PubMed from 2001 to 2009. 
-
-Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few possible covariates: publication date, journal impact factor, and country of the corresponding author.
-
-We attempted to reproduce that environment in the current study to see if we would find more comperable results.
-
-Limiting the current sample to datasets with MeSH terms "human" and "cancer" published from 2001 to 2003 retained 308 papers.  Running this subsample with  covariates from the Piwowar 2007 paper found a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">  <span class="symbol">dat.subset.previous.study</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="keyword">(</span><span class="symbol">pubmed.year.published</span><span class="keyword">&lt;</span><span class="number">2003</span><span class="keyword">)</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span>==<span class="number">1</span><span class="keyword">)</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">pubmed.is.humans</span>==<span class="number">1</span><span class="keyword">)</span><span class="keyword">)</span>
-
-  <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## [1] 308  86
-</pre></div><div class="source"><pre class="knitr">
-  <span class="symbol">myfitprev</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
-    <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-    <span class="symbol">country.usa</span> <span class="keyword">+</span>
-    <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-    <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
-               <span class="keyword">,</span> <span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
-
-  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)    | 2.00   | 5.33   | 2.67    | 3.27    | 0.04   |
-## | country.usa                      | 1.00   | 0.00   | 0.00    | 0.01    | 0.94   |
-## | rcs(journal.impact.factor.tr, 3) | 2.00   | 68.86  | 34.43   | 42.26   | 0.00   |
-## | factor(dataset.in.geo.or.ae)     | 1.00   | 4.35   | 4.35    | 5.34    | 0.02   |
-## | Residuals                        | 294.00 | 239.53 | 0.81    |         |        |
-</pre></div><div class="source"><pre class="knitr">  <span class="symbol">myfitprev</span>
-</pre></div><div class="output"><pre class="knitr">## 
-## Call:
-## lm(formula = nCitedBy.log ~ rcs(pubmed.date.in.pubmed, 3) + country.usa + 
-##     rcs(journal.impact.factor.tr, 3) + factor(dataset.in.geo.or.ae), 
-##     data = dat.subset.previous.study)
-## 
-## Coefficients:
-##                                               (Intercept)  
-##                                                 26.970315  
-##        rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
-##                                                 -0.000699  
-##       rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
-##                                                  0.000211  
-##                                             country.usa.L  
-##                                                  0.015396  
-##  rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
-##                                                  0.908247  
-## rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
-##                                                 -0.080694  
-##                            factor(dataset.in.geo.or.ae).L  
-##                                                  0.383500  
-## 
-</pre></div><div class="source"><pre class="knitr">
-  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.47  1.06   2.03 0.021
-</pre></div></div></div>
-
-
-How is did this estimate change when we included additional covariates?  The subsample of 308 papers was large enough to include a few additional covariates:  number of authors and citation history of the last author.  Including these covariates returned  a smaller estimated effect: 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%.  This range is too wide to be instructive, other than to note its top end is close to the previous rough estimates.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">  <span class="symbol">myfit_prev_more</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="symbol">country.usa</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="comment">#rcs(first.author.num.prev.pmc.cites.tr, 3) +     </span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
-             <span class="keyword">,</span> <span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
-
-  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfit_prev_more</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |-------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 5.55   | 2.78    | 3.60    | 0.03   |
-## | country.usa                               | 1.00   | 0.05   | 0.05    | 0.07    | 0.79   |
-## | rcs(num.authors.tr, 3)                    | 2.00   | 37.81  | 18.90   | 24.48   | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 17.16  | 8.58    | 11.11   | 0.00   |
-## | rcs(journal.impact.factor.tr, 3)          | 2.00   | 34.49  | 17.24   | 22.33   | 0.00   |
-## | factor(dataset.in.geo.or.ae)              | 1.00   | 0.66   | 0.66    | 0.85    | 0.36   |
-## | Residuals                                 | 283.00 | 218.53 | 0.77    |         |        |
-</pre></div><div class="source"><pre class="knitr">  <span class="symbol">myfit_prev_more</span>
-</pre></div><div class="output"><pre class="knitr">## 
-## Call:
-## lm(formula = nCitedBy.log ~ rcs(pubmed.date.in.pubmed, 3) + country.usa + 
-##     rcs(num.authors.tr, 3) + rcs(last.author.num.prev.pmc.cites.tr, 
-##     3) + rcs(journal.impact.factor.tr, 3) + factor(dataset.in.geo.or.ae), 
-##     data = dat.subset.previous.study)
-## 
-## Coefficients:
-##                                                                 (Intercept)  
-##                                                                  24.4893104  
-##                          rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
-##                                                                  -0.0006343  
-##                         rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
-##                                                                   0.0000496  
-##                                                               country.usa.L  
-##                                                                   0.0319357  
-##                                        rcs(num.authors.tr, 3)num.authors.tr  
-##                                                                   0.0030413  
-##                                       rcs(num.authors.tr, 3)num.authors.tr'  
-##                                                                   0.4026870  
-##  rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr  
-##                                                                  -0.0008419  
-## rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr'  
-##                                                                   0.0113416  
-##                    rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
-##                                                                   0.8674805  
-##                   rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
-##                                                                  -0.1908536  
-##                                              factor(dataset.in.geo.or.ae).L  
-##                                                                   0.1631734  
-## 
-</pre></div><div class="source"><pre class="knitr">
-  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfit_prev_more</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.18  0.83   1.66 0.357
-</pre></div></div></div>
-
-
-### Subset analysis with manual classification of data availability 
-
-
-
-
-Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
-
-The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
-
-If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.
-
-To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.
-
-Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="number">206</span><span class="keyword">/</span><span class="number">226</span>
-</pre></div><div class="output"><pre class="knitr">## [1] 0.9115
-</pre></div></div></div>
-
-
-Examining the citations of the  20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## nCitedBy    N=226, 4 Missing
-## 
-## +---------+---------------------------+---+--------+
-## |         |                           |  N|nCitedBy|
-## +---------+---------------------------+---+--------+
-## |isCreated|    created-microarray-data|206|   31.86|
-## |         |created-microarray-data-not| 20|   26.30|
-## +---------+---------------------------+---+--------+
-## |  Overall|                           |226|   31.37|
-## +---------+---------------------------+---+--------+
-</pre></div><div class="source"><pre class="knitr"><span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">fill</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_density</span><span class="keyword">(</span><span class="argument">alpha</span><span class="argument">=</span><span class="number">0.2</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/manualAnnotationCreatedCitations.png" class="plot" /></div></div>
-
-
-This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">t.test</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## 
-## 	Welch Two Sample t-test
-## 
-## data:  nCitedBy by isCreated 
-## t = 0.5747, df = 22.61, p-value = 0.5712
-## alternative hypothesis: true difference in means is not equal to 0 
-## 95 percent confidence interval:
-##  -14.47  25.59 
-## sample estimates:
-##     mean in group created-microarray-data 
-##                                     31.86 
-## mean in group created-microarray-data-not 
-##                                     26.30 
-## 
-</pre></div><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">t.test</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## 
-## 	Welch Two Sample t-test
-## 
-## data:  log(1 + nCitedBy) by isCreated 
-## t = 1.331, df = 21.77, p-value = 0.1968
-## alternative hypothesis: true difference in means is not equal to 0 
-## 95 percent confidence interval:
-##  -0.2003  0.9175 
-## sample estimates:
-##     mean in group created-microarray-data 
-##                                     2.991 
-## mean in group created-microarray-data-not 
-##                                     2.632 
-## 
-</pre></div><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">wilcox.test</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## 
-## 	Wilcoxon rank sum test with continuity correction
-## 
-## data:  nCitedBy by isCreated 
-## W = 2440, p-value = 0.1733
-## alternative hypothesis: true location shift is not equal to 0 
-## 
-</pre></div></div></div>
-
-
-To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regresssino analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">annotated_merged_created</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="symbol">country.usa</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="comment">#rcs(first.author.num.prev.pmc.cites.tr, 3) +     </span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
-  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
-             <span class="keyword">,</span> <span class="symbol">dat.annotated.merged.created</span><span class="keyword">)</span>
-
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">annotated_merged_created</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |-------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 83.82  | 41.91   | 73.91   | 0.00   |
-## | country.usa                               | 1.00   | 0.21   | 0.21    | 0.38    | 0.54   |
-## | rcs(num.authors.tr, 3)                    | 2.00   | 11.18  | 5.59    | 9.86    | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 7.94   | 3.97    | 7.00    | 0.00   |
-## | rcs(journal.impact.factor.tr, 3)          | 2.00   | 8.23   | 4.11    | 7.26    | 0.00   |
-## | factor(dataset.in.geo.or.ae)              | 1.00   | 5.68   | 5.68    | 10.03   | 0.00   |
-## | Residuals                                 | 177.00 | 100.37 | 0.57    |         |        |
-</pre></div><div class="source"><pre class="knitr"><span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">annotated_merged_created</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
-</pre></div></div></div>
-
-
-
-### Complementary evidence of data reuse from accession number attribution
-
-Finally, to provide evidence on the timeline of data attribution, we report preliminary data on third-party data reuse.  Large-scale evidence is difficult to gather because it requires manual citation context classification, as described above.  A partial estimate is possible, however, due to attribution norms in some fields: count the number of times a dataset accession number is mentioned in the scientific literature. (Piwowar, Vision, Whitlock) 
-
-A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline of third-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
-
-
-<img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/3rdpartygrowth.png" class="plot" height=300 />
-
-
-### Complementary evidence of data reuse from citation context
-
-To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">dfTracking1k</span> <span class="assignement">=</span> <span class="functioncall">read.csv</span><span class="keyword">(</span><span class="string">"data/tracking1k_20111008.csv"</span><span class="keyword">,</span> <span class="argument">sep</span><span class="argument">=</span><span class="string">","</span><span class="keyword">,</span> <span class="argument">header</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">)</span>
-<span class="symbol">dfTracking1k.GEO.subset</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfTracking1k</span><span class="keyword">,</span> <span class="symbol">TAG.source</span>==<span class="string">"WoS"</span> <span class="keyword">&amp;</span> <span class="symbol">TAG.confidence</span><span class="keyword">!=</span><span class="string">"low confidence"</span> <span class="keyword">&amp;</span> <span class="functioncall">is.na</span><span class="keyword">(</span><span class="symbol">duplicates</span> <span class="keyword">&amp;</span> <span class="symbol">TAG.repository</span>==<span class="string">"GEO"</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset reused"</span> <span class="keyword">|</span> <span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset not reused"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="symbol">num.GEO.total</span> <span class="assignement">=</span> <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfTracking1k.GEO.subset</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
-<span class="symbol">num.GEO.reused</span> <span class="assignement">=</span> <span class="functioncall">dim</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfTracking1k.GEO.subset</span><span class="keyword">,</span> <span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset reused"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
-<span class="symbol">annotated.prop</span> <span class="assignement">=</span> <span class="functioncall">binconf</span><span class="keyword">(</span><span class="symbol">num.GEO.reused</span><span class="keyword">,</span> <span class="symbol">num.GEO.total</span><span class="keyword">)</span>
-<span class="symbol">num.GEO.total</span>
-</pre></div><div class="output"><pre class="knitr">## [1] 138
-</pre></div><div class="source"><pre class="knitr"><span class="symbol">num.GEO.reused</span>
-</pre></div><div class="output"><pre class="knitr">## [1] 8
-</pre></div><div class="source"><pre class="knitr"><span class="symbol">annotated.prop</span>
-</pre></div><div class="output"><pre class="knitr">##  PointEst   Lower  Upper
-##   0.05797 0.02966 0.1102
-</pre></div></div></div>
-
-
-Of the <code class="knitr inline">138</code> reviewed citations to articles with archived gene expression data, <code class="knitr inline">8</code> were in the context of data reuse
-<code class="knitr inline">6</code>%
-with 95% confidence intervals [<code class="knitr inline">3</code>%
-, <code class="knitr inline">11</code>% ]
-
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-<span class="comment">#experiment</span>
-
-<span class="symbol">most_common_journals</span> <span class="assignement">=</span> <span class="functioncall">names</span><span class="keyword">(</span><span class="functioncall">sort</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">12</span><span class="keyword">]</span><span class="keyword">)</span>
-<span class="symbol">dat_most_common_journals</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="keyword">(</span><span class="symbol">pubmed_journal</span> <span class="keyword">%in%</span> <span class="symbol">most_common_journals</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="symbol">dat_most_common_journals</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pubmed_journal"</span><span class="keyword">,</span> <span class="string">"pubmed_year_published"</span><span class="keyword">,</span> <span class="string">"in_ae_or_geo"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">df</span><span class="keyword">)</span> <span class="functioncall">mean</span><span class="keyword">(</span><span class="symbol">df</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="symbol">b</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pubmed_journal"</span><span class="keyword">,</span> <span class="string">"pubmed_year_published"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">df</span><span class="keyword">)</span> <span class="functioncall">median</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">df</span><span class="keyword">,</span> <span class="symbol">in_ae_or_geo</span>==<span class="number">1</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">V1</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">median</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">df</span><span class="keyword">,</span> <span class="symbol">in_ae_or_geo</span>==<span class="number">0</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">V1</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed_year_published</span><span class="keyword">,</span> <span class="symbol">V1</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">b</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="symbol">pubmed_journal</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"point"</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/unnamed-chunk-1.png" class="plot" /></div><div class="rcode">
-<div class="source"><pre class="knitr">
-<span class="symbol">d</span> <span class="assignement">=</span> <span class="functioncall">melt</span><span class="keyword">(</span><span class="symbol">b</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pubmed_journal"</span><span class="keyword">,</span> <span class="string">"pubmed_year_published"</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="functioncall">round</span><span class="keyword">(</span><span class="functioncall">cast</span><span class="keyword">(</span><span class="symbol">d</span><span class="keyword">,</span> <span class="symbol">pubmed_journal</span><span class="keyword">~</span><span class="symbol">pubmed_year_published</span><span class="keyword">~</span><span class="symbol">variable</span><span class="keyword">,</span> <span class="symbol">mean</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## , , variable = V1
-## 
-##                           pubmed_year_published
-## pubmed_journal             2001 2002 2003 2004 2005 2006 2007 2008 2009
-##   Blood                     NaN  NaN  1.1  0.6  0.8  1.8  1.2  1.2  1.0
-##   BMC Genomics              NaN  NaN  NaN  NaN  NaN  NaN  0.7  0.9  1.0
-##   Cancer Res                NaN  0.2  0.9  1.5  3.1  1.3  0.7  1.0  1.3
-##   Clin Cancer Res           NaN  NaN  NaN  NaN  1.5  1.1  2.0  1.0  1.2
-##   J Bacteriol               NaN  2.2  0.3  1.8  0.8  0.7  1.0  1.7  1.8
-##   J Biol Chem               NaN  0.6  1.6  1.4  1.6  1.2  1.0  0.7  1.4
-##   J Immunol                 NaN  1.9  0.8  0.9  1.4  2.6  1.0  1.0  0.8
-##   Mol Cell Biol             NaN  NaN  NaN  1.2  0.9  1.9  1.4  1.9  1.5
-##   Physiol Genomics          NaN  1.2  1.0  0.8  1.3  1.6  0.4  0.7  1.2
-##   Plant Physiol             NaN  NaN  0.7  1.0  1.1  1.6  1.0  1.6  1.0
-##   PLoS One                  NaN  NaN  NaN  NaN  NaN  1.2  1.4  1.9  1.1
-##   Proc Natl Acad Sci U S A  3.5  1.1  1.1  2.1  1.5  1.1  0.6  1.6  1.0
-## 
-</pre></div></div></div>
-
-
-
-### Additional analysis for reference during manuscript prep
-
+Other factors have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite]. 
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
 <span class="symbol">myhetcorr</span> <span class="assignement">=</span> <span class="functioncall">hetcor.modified</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="argument">use</span><span class="argument">=</span><span class="string">"pairwise.complete.obs"</span><span class="keyword">,</span> <span class="argument">std.err</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">pd</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span>
 <span class="symbol">mycor</span> <span class="assignement">=</span> <span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span>
 <span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">colnames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
 <span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">)</span> <span class="assignement">=</span> <span class="functioncall">rownames</span><span class="keyword">(</span><span class="symbol">myhetcorr</span><span class="keyword">$</span><span class="symbol">correlations</span><span class="keyword">)</span>
-</pre></div></div></div>
 
-    
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
 <span class="comment"># Correlations with data availability</span>
 <span class="comment">## See if anything is so collinear it will cause problems in regression</span>
 <span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"dataset.in.geo.or.ae.int"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
@@ -931,10 +438,7 @@ with 95% confidence intervals [<code class="knitr inline">3</code>%
 ## | country.china                                 | -0.14 |
 ## | country.korea                                 | -0.14 |
 ## | years.ago.tr                                  | -0.19 |
-</pre></div></div></div>
-
-    
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
+</pre></div><div class="source"><pre class="knitr">
 <span class="comment"># Correlations with citation</span>
 <span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span>
 <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
@@ -1026,6 +530,578 @@ with 95% confidence intervals [<code class="knitr inline">3</code>%
 ## | pubmed.date.in.pubmed                         | -0.59 |
 </pre></div></div></div>
 
+
+#### Multivariate regression
+ 
+Multivariate regression analysis can be useful to identify the relationship between data availability and citation rate, independently of other variables.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
+<span class="symbol">dfCitationsAttributes_with_journal</span> <span class="assignement">=</span> <span class="functioncall">merge</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">[</span><span class="keyword">,</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pmid"</span><span class="keyword">,</span> <span class="string">"pubmed_journal"</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">by</span><span class="argument">=</span><span class="string">"pmid"</span><span class="keyword">,</span> <span class="keyword">)</span>
+<span class="symbol">fit_w_journal</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.cited.halflife</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.open.access</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pubs.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.year.first.pub.ago.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">country.usa</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.plants</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.core.clinical.journal</span><span class="keyword">)</span> <span class="keyword">+</span>
+          <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+           <span class="keyword">,</span> <span class="symbol">dfCitationsAttributes_with_journal</span><span class="keyword">)</span>
+
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|---------|---------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1777.72 | 888.86  | 1767.42 | 0.00   |
+## | factor(pubmed_journal)                       | 429.00  | 1243.30 | 2.90    | 5.76    | 0.00   |
+## | factor(pubmed.is.open.access)                | 1.00    | 0.37    | 0.37    | 0.74    | 0.39   |
+## | rcs(num.authors.tr, 3)                       | 2.00    | 71.85   | 35.92   | 71.43   | 0.00   |
+## | rcs(first.author.num.prev.pubs.tr, 3)        | 2.00    | 1.37    | 0.69    | 1.36    | 0.26   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00    | 23.42   | 11.71   | 23.28   | 0.00   |
+## | rcs(first.author.year.first.pub.ago.tr, 3)   | 2.00    | 0.94    | 0.47    | 0.94    | 0.39   |
+## | rcs(last.author.num.prev.pubs.tr, 3)         | 2.00    | 5.53    | 2.76    | 5.49    | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00    | 10.56   | 5.28    | 10.49   | 0.00   |
+## | rcs(last.author.year.first.pub.ago.tr, 3)    | 2.00    | 1.27    | 0.63    | 1.26    | 0.28   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00    | 1.21    | 0.61    | 1.21    | 0.30   |
+## | factor(country.usa)                          | 1.00    | 0.47    | 0.47    | 0.93    | 0.34   |
+## | factor(pubmed.is.cancer)                     | 1.00    | 0.13    | 0.13    | 0.26    | 0.61   |
+## | factor(pubmed.is.animals)                    | 1.00    | 19.65   | 19.65   | 39.08   | 0.00   |
+## | factor(pubmed.is.plants)                     | 1.00    | 3.17    | 3.17    | 6.29    | 0.01   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00    | 9.55    | 9.55    | 18.99   | 0.00   |
+## | Residuals                                    | 3921.00 | 1971.93 | 0.50    |         |        |
+</pre></div><div class="source"><pre class="knitr">
+<span class="comment"># fit_w_journal</span>
+<span class="symbol">citation.boost.coefs.journal</span> <span class="assignement">=</span> <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">fit_w_journal</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+<span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">citation.boost.coefs.journal</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.09  1.05   1.13 0
+</pre></div></div></div>
+
+
+In this analysis, we found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
+
+Estimate of the independent increase of citations due to data availability is  
+<code class="knitr inline">9</code>%
+with 95% confidence intervals [<code class="knitr inline">5</code>%
+, <code class="knitr inline">13</code>% ]
+(p=<code class="knitr inline">0.00</code>)
+
+Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually (with a subset of the covariates).
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
+<span class="comment"># has a few less covariates than full model</span>
+<span class="symbol">do_analysis</span> <span class="assignement">=</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">mydat</span><span class="keyword">)</span> <span class="keyword">{</span>
+  <span class="symbol">myfit</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.num.articles.2008.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.open.access</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">first.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">institution.mean.norm.citation.score</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">pubmed.is.animals</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+             <span class="keyword">,</span> <span class="symbol">mydat</span><span class="keyword">)</span>
+
+  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfit</span><span class="keyword">)</span><span class="keyword">)</span>
+
+  <span class="symbol">myfit</span>
+
+  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfit</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+<span class="keyword">}</span>
+
+
+<span class="symbol">estimates_by_year</span> <span class="assignement">=</span> <span class="functioncall">data.frame</span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="keyword">for</span> <span class="keyword">(</span><span class="symbol">year</span> <span class="keyword">in</span> <span class="functioncall">seq</span><span class="keyword">(</span><span class="number">2001</span><span class="keyword">,</span> <span class="number">2009</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">{</span>
+  <span class="symbol">dat.subset.year</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes_with_journal</span><span class="keyword">,</span> <span class="symbol">pubmed.year.published</span>==<span class="symbol">year</span><span class="keyword">)</span>
+  <span class="symbol">results</span> <span class="assignement">=</span> <span class="functioncall">do_analysis</span><span class="keyword">(</span><span class="symbol">dat.subset.year</span><span class="keyword">)</span>
+  <span class="functioncall">print</span><span class="keyword">(</span><span class="symbol">results</span><span class="keyword">)</span>
+  <span class="symbol">estimates_by_year</span> <span class="assignement">=</span> <span class="functioncall">rbind</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">cbind</span><span class="keyword">(</span><span class="argument">year</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="symbol">results</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="keyword">}</span>
+</pre></div><div class="output"><pre class="knitr">## |                                              | Df    | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|-------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00  | 0.13   | 0.07    | 0.11    | 0.90   |
+## | factor(pubmed_journal)                       | 39.00 | 38.88  | 1.00    | 1.65    | 0.05   |
+## | rcs(num.authors.tr, 3)                       | 2.00  | 5.65   | 2.82    | 4.67    | 0.01   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00  | 1.73   | 0.87    | 1.43    | 0.25   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00  | 6.52   | 3.26    | 5.40    | 0.01   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00  | 1.75   | 0.88    | 1.45    | 0.24   |
+## | factor(pubmed.is.cancer)                     | 1.00  | 0.24   | 0.24    | 0.40    | 0.53   |
+## | factor(pubmed.is.animals)                    | 1.00  | 0.29   | 0.29    | 0.47    | 0.49   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00  | 0.40   | 0.40    | 0.66    | 0.42   |
+## | Residuals                                    | 48.00 | 28.99  | 0.60    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.31  0.68   2.54 0.422
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 2.82   | 1.41    | 2.64    | 0.07   |
+## | factor(pubmed_journal)                       | 87.00  | 136.99 | 1.57    | 2.95    | 0.00   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 2.77   | 1.39    | 2.60    | 0.08   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 0.20   | 0.10    | 0.19    | 0.83   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 1.43   | 0.71    | 1.34    | 0.27   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 0.36   | 0.18    | 0.34    | 0.71   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 1.13   | 1.13    | 2.11    | 0.15   |
+## | factor(pubmed.is.animals)                    | 1.00   | 0.54   | 0.54    | 1.01    | 0.32   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.18   | 0.18    | 0.34    | 0.56   |
+## | Residuals                                    | 149.00 | 79.43  | 0.53    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.09  0.82   1.45 0.559
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 9.63   | 4.81    | 9.86    | 0.00   |
+## | factor(pubmed_journal)                       | 126.00 | 140.72 | 1.12    | 2.29    | 0.00   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 4.77   | 2.39    | 4.88    | 0.01   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 2.49   | 1.24    | 2.54    | 0.08   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 1.47   | 0.73    | 1.50    | 0.23   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 0.45   | 0.22    | 0.46    | 0.63   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 1.02   | 1.02    | 2.09    | 0.15   |
+## | factor(pubmed.is.animals)                    | 1.00   | 2.80   | 2.80    | 5.74    | 0.02   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.34   | 0.34    | 0.69    | 0.41   |
+## | Residuals                                    | 234.00 | 114.31 | 0.49    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.09  0.89   1.35 0.407
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 5.48   | 2.74    | 5.16    | 0.01   |
+## | factor(pubmed_journal)                       | 166.00 | 245.63 | 1.48    | 2.79    | 0.00   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 12.20  | 6.10    | 11.49   | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 3.73   | 1.87    | 3.52    | 0.03   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 0.28   | 0.14    | 0.27    | 0.76   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 0.23   | 0.12    | 0.22    | 0.80   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.14   | 0.14    | 0.27    | 0.60   |
+## | factor(pubmed.is.animals)                    | 1.00   | 0.13   | 0.13    | 0.25    | 0.62   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 4.44   | 4.44    | 8.37    | 0.00   |
+## | Residuals                                    | 331.00 | 175.63 | 0.53    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.24  1.07   1.43 0.004
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 0.90   | 0.45    | 0.97    | 0.38   |
+## | factor(pubmed_journal)                       | 193.00 | 230.96 | 1.20    | 2.60    | 0.00   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 9.32   | 4.66    | 10.13   | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 2.30   | 1.15    | 2.50    | 0.08   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 0.03   | 0.02    | 0.04    | 0.96   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 1.15   | 0.58    | 1.25    | 0.29   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 1.42   | 1.42    | 3.09    | 0.08   |
+## | factor(pubmed.is.animals)                    | 1.00   | 0.98   | 0.98    | 2.13    | 0.15   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 7.04   | 7.04    | 15.31   | 0.00   |
+## | Residuals                                    | 380.00 | 174.80 | 0.46    |         |        |
+##                                   param est ciLow ciHigh p
+## Estimate factor(dataset.in.geo.or.ae).L 1.3  1.14   1.48 0
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 2.39   | 1.19    | 2.47    | 0.09   |
+## | factor(pubmed_journal)                       | 184.00 | 261.31 | 1.42    | 2.94    | 0.00   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 7.82   | 3.91    | 8.11    | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 3.75   | 1.88    | 3.89    | 0.02   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 1.30   | 0.65    | 1.35    | 0.26   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 1.28   | 0.64    | 1.33    | 0.27   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.14   | 0.14    | 0.28    | 0.59   |
+## | factor(pubmed.is.animals)                    | 1.00   | 8.09   | 8.09    | 16.76   | 0.00   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 1.15   | 1.15    | 2.37    | 0.12   |
+## | Residuals                                    | 383.00 | 184.77 | 0.48    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.09  0.98   1.23 0.124
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 5.95   | 2.98    | 6.55    | 0.00   |
+## | factor(pubmed_journal)                       | 215.00 | 235.60 | 1.10    | 2.41    | 0.00   |
+## | factor(pubmed.is.open.access)                | 1.00   | 0.01   | 0.01    | 0.03    | 0.87   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 5.86   | 2.93    | 6.44    | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 2.51   | 1.25    | 2.76    | 0.06   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 0.60   | 0.30    | 0.66    | 0.52   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 0.22   | 0.11    | 0.24    | 0.79   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.10   | 0.10    | 0.23    | 0.63   |
+## | factor(pubmed.is.animals)                    | 1.00   | 1.61   | 1.61    | 3.54    | 0.06   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.14   | 0.14    | 0.31    | 0.58   |
+## | Residuals                                    | 501.00 | 227.75 | 0.45    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.03  0.94   1.13 0.575
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 14.75  | 7.38    | 12.95   | 0.00   |
+## | factor(pubmed_journal)                       | 225.00 | 264.27 | 1.17    | 2.06    | 0.00   |
+## | factor(pubmed.is.open.access)                | 1.00   | 0.04   | 0.04    | 0.07    | 0.79   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 9.13   | 4.57    | 8.02    | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 0.18   | 0.09    | 0.16    | 0.85   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 1.80   | 0.90    | 1.58    | 0.21   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 1.06   | 0.53    | 0.93    | 0.40   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.01   | 0.01    | 0.01    | 0.92   |
+## | factor(pubmed.is.animals)                    | 1.00   | 5.79   | 5.79    | 10.16   | 0.00   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.06   | 0.06    | 0.10    | 0.75   |
+## | Residuals                                    | 448.00 | 255.09 | 0.57    |         |        |
+##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.02  0.91   1.13 0.752
+## |                                              | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)                | 2.00   | 10.60  | 5.30    | 12.08   | 0.00   |
+## | factor(pubmed_journal)                       | 205.00 | 258.25 | 1.26    | 2.87    | 0.00   |
+## | factor(pubmed.is.open.access)                | 1.00   | 0.05   | 0.05    | 0.11    | 0.73   |
+## | rcs(num.authors.tr, 3)                       | 2.00   | 5.32   | 2.66    | 6.06    | 0.00   |
+## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00   | 1.08   | 0.54    | 1.23    | 0.29   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00   | 0.39   | 0.20    | 0.45    | 0.64   |
+## | rcs(institution.mean.norm.citation.score, 3) | 2.00   | 0.97   | 0.49    | 1.11    | 0.33   |
+## | factor(pubmed.is.cancer)                     | 1.00   | 0.01   | 0.01    | 0.01    | 0.92   |
+## | factor(pubmed.is.animals)                    | 1.00   | 2.41   | 2.41    | 5.50    | 0.02   |
+## | factor(dataset.in.geo.or.ae)                 | 1.00   | 0.42   | 0.42    | 0.95    | 0.33   |
+## | Residuals                                    | 332.00 | 145.63 | 0.44    |         |        |
+##                                   param  est ciLow ciHigh    p
+## Estimate factor(dataset.in.geo.or.ae).L 0.95  0.85   1.06 0.33
+</pre></div></div></div>
+
+
+The estimate of citation boost was different for different years of publication.
+
+The estimates of citation boost for papers published in each year, with 95% confidence intervals:
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
+<span class="symbol">estimates_by_year</span>
+</pre></div><div class="output"><pre class="knitr">##           year                          param  est ciLow ciHigh     p
+## Estimate  2001 factor(dataset.in.geo.or.ae).L 1.31  0.68   2.54 0.422
+## Estimate1 2002 factor(dataset.in.geo.or.ae).L 1.09  0.82   1.45 0.559
+## Estimate2 2003 factor(dataset.in.geo.or.ae).L 1.09  0.89   1.35 0.407
+## Estimate3 2004 factor(dataset.in.geo.or.ae).L 1.24  1.07   1.43 0.004
+## Estimate4 2005 factor(dataset.in.geo.or.ae).L 1.30  1.14   1.48 0.000
+## Estimate5 2006 factor(dataset.in.geo.or.ae).L 1.09  0.98   1.23 0.124
+## Estimate6 2007 factor(dataset.in.geo.or.ae).L 1.03  0.94   1.13 0.575
+## Estimate7 2008 factor(dataset.in.geo.or.ae).L 1.02  0.91   1.13 0.752
+## Estimate8 2009 factor(dataset.in.geo.or.ae).L 0.95  0.85   1.06 0.330
+</pre></div><div class="source"><pre class="knitr">
+<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">estimates_by_year</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">x</span><span class="argument">=</span><span class="symbol">year</span><span class="keyword">,</span> <span class="argument">y</span><span class="argument">=</span><span class="symbol">est</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_line</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">geom_errorbar</span><span class="keyword">(</span><span class="argument">width</span><span class="argument">=</span><span class="number">.1</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">ymin</span><span class="argument">=</span><span class="symbol">ciLow</span><span class="keyword">,</span> <span class="argument">ymax</span><span class="argument">=</span><span class="symbol">ciHigh</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">'year of publication'</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span> <span class="number">3.0</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">name</span><span class="argument">=</span><span class="string">'estimated increase in citations\nfor papers with data available (95% confidence intervals)'</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/regressionEstimatesByYear.png" class="plot" /></div></div>
+
+
+
+
+ 
+
+### Subset analysis to compare findings with Piwowar et al 2007
+
+These estimates of citation boost found in the multivariate regression were different from those found by (Piwowar et al 2007), even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
+
+First, Piwowar et al 2007 included only data from human cancer microarray trials published between 1999 and 2003 <check>, whereas the current study uses all gene expression microarray data studies in PubMed from 2001 to 2009. 
+
+Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few possible covariates: publication date, journal impact factor, and country of the corresponding author.
+
+We attempted to reproduce that environment in the current study to see if we would find more comperable results.
+
+Limiting the current sample to datasets with MeSH terms "human" and "cancer" published from 2001 to 2003 retained 308 papers.  Running this subsample with  covariates from the Piwowar 2007 paper found a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">  <span class="symbol">dat.subset.previous.study</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="keyword">(</span><span class="symbol">pubmed.year.published</span><span class="keyword">&lt;</span><span class="number">2003</span><span class="keyword">)</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">pubmed.is.cancer</span>==<span class="number">1</span><span class="keyword">)</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">pubmed.is.humans</span>==<span class="number">1</span><span class="keyword">)</span><span class="keyword">)</span>
+
+  <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## [1] 308  86
+</pre></div><div class="source"><pre class="knitr">
+  <span class="symbol">myfitprev</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">country.usa</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+               <span class="keyword">,</span> <span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
+
+  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |----------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)    | 2.00   | 5.33   | 2.67    | 3.27    | 0.04   |
+## | rcs(journal.impact.factor.tr, 3) | 2.00   | 68.81  | 34.40   | 42.23   | 0.00   |
+## | factor(country.usa)              | 1.00   | 0.06   | 0.06    | 0.07    | 0.79   |
+## | factor(dataset.in.geo.or.ae)     | 1.00   | 4.35   | 4.35    | 5.34    | 0.02   |
+## | Residuals                        | 294.00 | 239.53 | 0.81    |         |        |
+</pre></div><div class="source"><pre class="knitr">  <span class="symbol">myfitprev</span>
+</pre></div><div class="output"><pre class="knitr">## 
+## Call:
+## lm(formula = nCitedBy.log ~ rcs(pubmed.date.in.pubmed, 3) + rcs(journal.impact.factor.tr, 
+##     3) + factor(country.usa) + factor(dataset.in.geo.or.ae), 
+##     data = dat.subset.previous.study)
+## 
+## Coefficients:
+##                                               (Intercept)  
+##                                                 26.970315  
+##        rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
+##                                                 -0.000699  
+##       rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
+##                                                  0.000211  
+##  rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
+##                                                  0.908247  
+## rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
+##                                                 -0.080694  
+##                                     factor(country.usa).L  
+##                                                  0.015396  
+##                            factor(dataset.in.geo.or.ae).L  
+##                                                  0.383500  
+## 
+</pre></div><div class="source"><pre class="knitr">
+  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.47  1.06   2.03 0.021
+</pre></div></div></div>
+
+
+How is did this estimate change when we included additional covariates?  The subsample of 308 papers was large enough to include a few additional covariates:  number of authors and citation history of the last author.  Including these covariates returned  a smaller estimated effect: 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%.  This range is too wide to be instructive, other than to note its top end is close to the previous rough estimates.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">  <span class="symbol">myfit_prev_more</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="comment">#rcs(first.author.num.prev.pmc.cites.tr, 3) +     </span>
+      <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">country.usa</span><span class="keyword">)</span> <span class="keyword">+</span>
+      <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+             <span class="keyword">,</span> <span class="symbol">dat.subset.previous.study</span><span class="keyword">)</span>
+
+  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfit_prev_more</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## |                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |-------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 5.55   | 2.78    | 3.60    | 0.03   |
+## | rcs(journal.impact.factor.tr, 3)          | 2.00   | 66.95  | 33.47   | 43.35   | 0.00   |
+## | rcs(num.authors.tr, 3)                    | 2.00   | 12.97  | 6.49    | 8.40    | 0.00   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 9.46   | 4.73    | 6.12    | 0.00   |
+## | factor(country.usa)                       | 1.00   | 0.13   | 0.13    | 0.17    | 0.68   |
+## | factor(dataset.in.geo.or.ae)              | 1.00   | 0.66   | 0.66    | 0.85    | 0.36   |
+## | Residuals                                 | 283.00 | 218.53 | 0.77    |         |        |
+</pre></div><div class="source"><pre class="knitr">  <span class="symbol">myfit_prev_more</span>
+</pre></div><div class="output"><pre class="knitr">## 
+## Call:
+## lm(formula = nCitedBy.log ~ rcs(pubmed.date.in.pubmed, 3) + rcs(journal.impact.factor.tr, 
+##     3) + rcs(num.authors.tr, 3) + rcs(last.author.num.prev.pmc.cites.tr, 
+##     3) + factor(country.usa) + factor(dataset.in.geo.or.ae), 
+##     data = dat.subset.previous.study)
+## 
+## Coefficients:
+##                                                                 (Intercept)  
+##                                                                  24.4893104  
+##                          rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed  
+##                                                                  -0.0006343  
+##                         rcs(pubmed.date.in.pubmed, 3)pubmed.date.in.pubmed'  
+##                                                                   0.0000496  
+##                    rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr  
+##                                                                   0.8674805  
+##                   rcs(journal.impact.factor.tr, 3)journal.impact.factor.tr'  
+##                                                                  -0.1908536  
+##                                        rcs(num.authors.tr, 3)num.authors.tr  
+##                                                                   0.0030413  
+##                                       rcs(num.authors.tr, 3)num.authors.tr'  
+##                                                                   0.4026870  
+##  rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr  
+##                                                                  -0.0008419  
+## rcs(last.author.num.prev.pmc.cites.tr, 3)last.author.num.prev.pmc.cites.tr'  
+##                                                                   0.0113416  
+##                                                       factor(country.usa).L  
+##                                                                   0.0319357  
+##                                              factor(dataset.in.geo.or.ae).L  
+##                                                                   0.1631734  
+## 
+</pre></div><div class="source"><pre class="knitr">
+  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfit_prev_more</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.18  0.83   1.66 0.357
+</pre></div></div></div>
+
+
+### Subset analysis with manual classification of data availability 
+
+
+
+
+Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
+
+The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
+
+If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.
+
+To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.
+
+Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="number">206</span><span class="keyword">/</span><span class="number">226</span>
+</pre></div><div class="output"><pre class="knitr">## [1] 0.9115
+</pre></div></div></div>
+
+
+Examining the citations of the  20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## nCitedBy    N=226, 4 Missing
+## 
+## +---------+---------------------------+---+--------+
+## |         |                           |  N|nCitedBy|
+## +---------+---------------------------+---+--------+
+## |isCreated|    created-microarray-data|206|   31.86|
+## |         |created-microarray-data-not| 20|   26.30|
+## +---------+---------------------------+---+--------+
+## |  Overall|                           |226|   31.37|
+## +---------+---------------------------+---+--------+
+</pre></div><div class="source"><pre class="knitr"><span class="functioncall">ggplot</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">fill</span><span class="argument">=</span><span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_density</span><span class="keyword">(</span><span class="argument">alpha</span><span class="argument">=</span><span class="number">0.2</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="symbol">cbgFillPalette</span> <span class="keyword">+</span> <span class="symbol">cbgColourPalette</span>
+</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/manualAnnotationCreatedCitations.png" class="plot" /></div></div>
+
+
+This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">t.test</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## 
+## 	Welch Two Sample t-test
+## 
+## data:  nCitedBy by isCreated 
+## t = 0.5747, df = 22.61, p-value = 0.5712
+## alternative hypothesis: true difference in means is not equal to 0 
+## 95 percent confidence interval:
+##  -14.47  25.59 
+## sample estimates:
+##     mean in group created-microarray-data 
+##                                     31.86 
+## mean in group created-microarray-data-not 
+##                                     26.30 
+## 
+</pre></div><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">t.test</span><span class="keyword">(</span><span class="functioncall">log</span><span class="keyword">(</span><span class="number">1</span><span class="keyword">+</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## 
+## 	Welch Two Sample t-test
+## 
+## data:  log(1 + nCitedBy) by isCreated 
+## t = 1.331, df = 21.77, p-value = 0.1968
+## alternative hypothesis: true difference in means is not equal to 0 
+## 95 percent confidence interval:
+##  -0.2003  0.9175 
+## sample estimates:
+##     mean in group created-microarray-data 
+##                                     2.991 
+## mean in group created-microarray-data-not 
+##                                     2.632 
+## 
+</pre></div><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAnnotated</span><span class="keyword">,</span> <span class="functioncall">print</span><span class="keyword">(</span><span class="functioncall">wilcox.test</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">~</span><span class="symbol">isCreated</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## 
+## 	Wilcoxon rank sum test with continuity correction
+## 
+## data:  nCitedBy by isCreated 
+## W = 2440, p-value = 0.1733
+## alternative hypothesis: true location shift is not equal to 0 
+## 
+</pre></div></div></div>
+
+
+To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regression analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">annotated_merged_created</span> <span class="assignement">=</span> <span class="functioncall">lm</span><span class="keyword">(</span><span class="symbol">nCitedBy.log</span> <span class="keyword">~</span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">pubmed.date.in.pubmed</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">journal.impact.factor.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">num.authors.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="comment">#rcs(first.author.num.prev.pmc.cites.tr, 3) +     </span>
+  <span class="functioncall">rcs</span><span class="keyword">(</span><span class="symbol">last.author.num.prev.pmc.cites.tr</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">country.usa</span><span class="keyword">)</span> <span class="keyword">+</span>
+  <span class="functioncall">factor</span><span class="keyword">(</span><span class="symbol">dataset.in.geo.or.ae</span><span class="keyword">)</span>
+             <span class="keyword">,</span> <span class="symbol">dat.annotated.merged.created</span><span class="keyword">)</span>
+
+<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">annotated_merged_created</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## |                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+## |-------------------------------------------|--------|--------|---------|---------|--------|
+## | rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 83.82  | 41.91   | 73.91   | 0.00   |
+## | rcs(journal.impact.factor.tr, 3)          | 2.00   | 18.69  | 9.35    | 16.48   | 0.00   |
+## | rcs(num.authors.tr, 3)                    | 2.00   | 4.03   | 2.01    | 3.55    | 0.03   |
+## | rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 4.79   | 2.40    | 4.22    | 0.02   |
+## | factor(country.usa)                       | 1.00   | 0.05   | 0.05    | 0.09    | 0.77   |
+## | factor(dataset.in.geo.or.ae)              | 1.00   | 5.68   | 5.68    | 10.03   | 0.00   |
+## | Residuals                                 | 177.00 | 100.37 | 0.57    |         |        |
+</pre></div><div class="source"><pre class="knitr"><span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">annotated_merged_created</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
+## Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
+</pre></div></div></div>
+
+
+
+### Complementary evidence of data reuse from accession number attribution
+
+Finally, to provide evidence on the timeline of data attribution, we report preliminary data on third-party data reuse.  Large-scale evidence is difficult to gather because it requires manual citation context classification, as described above.  A partial estimate is possible, however, due to attribution norms in some fields: count the number of times a dataset accession number is mentioned in the scientific literature. [Piwowar, Vision, Whitlock]
+
+A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline of third-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
+
+We identified 338 papers that appear to reuse the 2007 GEO datasets in a significant way.  We estimate that, as of the end of 2010, the whole of PubMed contains 1159 papers that mention GEO accession numbers in the context of novel reuse for datasets submitted in 2007 alone. Thus, for every ten datasets that it collects, we estimate that GEO contributes to at least four papers in the following three years.  [Piwowar, Vision, Whitlock]
+
+<img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/3rdpartygrowth.png" class="plot" height=300 />
+
+
+### Complementary evidence of data reuse from citation context
+
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">dfTracking1k</span> <span class="assignement">=</span> <span class="functioncall">read.csv</span><span class="keyword">(</span><span class="string">"data/tracking1k_20111008.csv"</span><span class="keyword">,</span> <span class="argument">sep</span><span class="argument">=</span><span class="string">","</span><span class="keyword">,</span> <span class="argument">header</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">stringsAsFactors</span><span class="argument">=</span><span class="symbol">F</span><span class="keyword">)</span>
+<span class="symbol">dfTracking1k.GEO.subset</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfTracking1k</span><span class="keyword">,</span> <span class="symbol">TAG.source</span>==<span class="string">"WoS"</span> <span class="keyword">&amp;</span> <span class="symbol">TAG.confidence</span><span class="keyword">!=</span><span class="string">"low confidence"</span> <span class="keyword">&amp;</span> <span class="functioncall">is.na</span><span class="keyword">(</span><span class="symbol">duplicates</span> <span class="keyword">&amp;</span> <span class="symbol">TAG.repository</span>==<span class="string">"GEO"</span> <span class="keyword">&amp;</span> <span class="keyword">(</span><span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset reused"</span> <span class="keyword">|</span> <span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset not reused"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="symbol">num.GEO.total</span> <span class="assignement">=</span> <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">dfTracking1k.GEO.subset</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
+<span class="symbol">num.GEO.reused</span> <span class="assignement">=</span> <span class="functioncall">dim</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfTracking1k.GEO.subset</span><span class="keyword">,</span> <span class="symbol">TAG.dataset.reused</span>==<span class="string">"dataset reused"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span>
+<span class="symbol">annotated.prop</span> <span class="assignement">=</span> <span class="functioncall">binconf</span><span class="keyword">(</span><span class="symbol">num.GEO.reused</span><span class="keyword">,</span> <span class="symbol">num.GEO.total</span><span class="keyword">)</span>
+<span class="symbol">num.GEO.total</span>
+</pre></div><div class="output"><pre class="knitr">## [1] 138
+</pre></div><div class="source"><pre class="knitr"><span class="symbol">num.GEO.reused</span>
+</pre></div><div class="output"><pre class="knitr">## [1] 8
+</pre></div><div class="source"><pre class="knitr"><span class="symbol">annotated.prop</span>
+</pre></div><div class="output"><pre class="knitr">##  PointEst   Lower  Upper
+##   0.05797 0.02966 0.1102
+</pre></div></div></div>
+
+
+Of the <code class="knitr inline">138</code> reviewed citations to articles with archived gene expression data, <code class="knitr inline">8</code> were in the context of data reuse
+<code class="knitr inline">6</code>%
+with 95% confidence intervals [<code class="knitr inline">3</code>%
+, <code class="knitr inline">11</code>% ]
+
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
+<span class="comment">#experiment</span>
+
+<span class="symbol">most_common_journals</span> <span class="assignement">=</span> <span class="functioncall">names</span><span class="keyword">(</span><span class="functioncall">sort</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">12</span><span class="keyword">]</span><span class="keyword">)</span>
+<span class="symbol">dat_most_common_journals</span> <span class="assignement">=</span> <span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">,</span> <span class="keyword">(</span><span class="symbol">pubmed_journal</span> <span class="keyword">%in%</span> <span class="symbol">most_common_journals</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="symbol">a</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="symbol">dat_most_common_journals</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pubmed_journal"</span><span class="keyword">,</span> <span class="string">"pubmed_year_published"</span><span class="keyword">,</span> <span class="string">"in_ae_or_geo"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">df</span><span class="keyword">)</span> <span class="functioncall">mean</span><span class="keyword">(</span><span class="symbol">df</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="symbol">b</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pubmed_journal"</span><span class="keyword">,</span> <span class="string">"pubmed_year_published"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">df</span><span class="keyword">)</span> <span class="functioncall">median</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">df</span><span class="keyword">,</span> <span class="symbol">in_ae_or_geo</span>==<span class="number">1</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">V1</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">median</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">df</span><span class="keyword">,</span> <span class="symbol">in_ae_or_geo</span>==<span class="number">0</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">V1</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall">qplot</span><span class="keyword">(</span><span class="symbol">pubmed_year_published</span><span class="keyword">,</span> <span class="symbol">V1</span><span class="keyword">,</span> <span class="argument">data</span><span class="argument">=</span><span class="symbol">b</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="symbol">pubmed_journal</span><span class="keyword">,</span> <span class="argument">geom</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="string">"point"</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_smooth</span><span class="keyword">(</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/unnamed-chunk-1.png" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr">
+<span class="symbol">d</span> <span class="assignement">=</span> <span class="functioncall">melt</span><span class="keyword">(</span><span class="symbol">b</span><span class="keyword">,</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="string">"pubmed_journal"</span><span class="keyword">,</span> <span class="string">"pubmed_year_published"</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall">round</span><span class="keyword">(</span><span class="functioncall">cast</span><span class="keyword">(</span><span class="symbol">d</span><span class="keyword">,</span> <span class="symbol">pubmed_journal</span><span class="keyword">~</span><span class="symbol">pubmed_year_published</span><span class="keyword">~</span><span class="symbol">variable</span><span class="keyword">,</span> <span class="symbol">mean</span><span class="keyword">,</span> <span class="argument">na.rm</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span>
+</pre></div><div class="output"><pre class="knitr">## , , variable = V1
+## 
+##                           pubmed_year_published
+## pubmed_journal             2001 2002 2003 2004 2005 2006 2007 2008 2009
+##   Blood                     NaN  NaN  1.1  0.6  0.8  1.8  1.2  1.2  1.0
+##   BMC Genomics              NaN  NaN  NaN  NaN  NaN  NaN  0.7  0.9  1.0
+##   Cancer Res                NaN  0.2  0.9  1.5  3.1  1.3  0.7  1.0  1.3
+##   Clin Cancer Res           NaN  NaN  NaN  NaN  1.5  1.1  2.0  1.0  1.2
+##   J Bacteriol               NaN  2.2  0.3  1.8  0.8  0.7  1.0  1.7  1.8
+##   J Biol Chem               NaN  0.6  1.6  1.4  1.6  1.2  1.0  0.7  1.4
+##   J Immunol                 NaN  1.9  0.8  0.9  1.4  2.6  1.0  1.0  0.8
+##   Mol Cell Biol             NaN  NaN  NaN  1.2  0.9  1.9  1.4  1.9  1.5
+##   Physiol Genomics          NaN  1.2  1.0  0.8  1.3  1.6  0.4  0.7  1.2
+##   Plant Physiol             NaN  NaN  0.7  1.0  1.1  1.6  1.0  1.6  1.0
+##   PLoS One                  NaN  NaN  NaN  NaN  NaN  1.2  1.4  1.9  1.1
+##   Proc Natl Acad Sci U S A  3.5  1.1  1.1  2.1  1.5  1.1  0.6  1.6  1.0
+## 
+</pre></div></div></div>
+
+
+
+### Additional analysis for reference during manuscript prep
+
+
+
     
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">univarate.citation.predictors</span> <span class="assignement">=</span> <span class="functioncall">which</span><span class="keyword">(</span><span class="functioncall">abs</span><span class="keyword">(</span><span class="symbol">mycor</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">"nCitedBy.log"</span><span class="keyword">]</span><span class="keyword">)</span> <span class="keyword">&gt;</span> <span class="number">0.1</span><span class="keyword">)</span><span class="comment">#univarate.citation.predictorslength(univarate.citation.predictors)    topcor = mycor[univarate.citation.predictors, univarate.citation.predictors]</span>
 </pre></div></div></div>
@@ -1072,7 +1148,7 @@ What might be the cause of a citation boost for papers with publicly available d
 1. *Credibility Signalling*. The credibility of research findings may be higher for research papers with available data. Such papers may be preferentially chosen background citations and/or the foundation of additional research.
 1. *Increased Visibility*. Citing authors may be more likely to encounter a research project with available data. More artifacts associated with a research project gives the project a larger footprint, increasing the likelihood that someone finds an aspect of the research. Links from data to the research paper may also increase the search ranking of the research paper.
 1. *Early View*. When data is made available before a paper is published, some citations may accrue earlier than otherwise because research methods and findings are encountered prior to paper publication.
-1. *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are most proud or confident in the results. ALTERNATIVELY, it is possible that author self-selection bias may have a negative correlation with research quality in the case of Open Data: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection.
+1. *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are most proud or confident in the results. ALTERNATIVELY, it is possible that author self-selection bias may have a negative correlation with research quality in the case of Open Data: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection. [revisit http://dx.doi.org/10.1371/journal.pone.0026828 http://dx.doi.org/10.1525/bio.2009.59.5.9 ]
 
 The estimated citation boost in the current study is consistent with observed data reuse alone, but the error bounds are large enough that other sources may also have contributed.  Unforuntaely, given the current dataset, it is difficult to establish which sources might have caused the observed boost.Further work, with additional data, will be needed to understand the relative contributions from each source.  For example, hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of the findings.  Analyses within the pubication output of a selection of data-collecting authors may enable measurement of selection bias.  Observing search behaviour of researchers, and the returned search hit results, may provide evidence of increased visibility due to data availability.  The contribution of early views to citations would depend on the data availablily timeline within the domain and datatype of study.
 
@@ -1084,6 +1160,7 @@ These estimates of data reuse could then be used to estimate the impact of polic
 
 Future work is also needed to assess other important metrics of reuse, beyond citation.  The impact on practitioners, education, data journalism, and industry research are not captured by attibution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syallabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.
 
+- mention the paper that looked at the reuse attributes
 
 *5. implications.  wrap-up thoughts*
 
