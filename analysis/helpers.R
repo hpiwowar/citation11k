@@ -1,6 +1,37 @@
 
 #### HELPER FUNCTIONS
 
+# tile multiple ggplots in one figure
+# usage: p1 = ggplot(..); p2=ggplot(..); multiplot(p1, p2)
+# From http://wiki.stdout.org/rcookbook/Graphs/Multiple%20graphs%20on%20one%20page%20(ggplot2)/
+
+multiplot <- function(..., plotlist=NULL, cols) {
+    require(grid)
+
+    # Make a list from the ... arguments and plotlist
+    plots <- c(list(...), plotlist)
+
+    numPlots = length(plots)
+
+    # Make the panel
+    plotCols = cols                          # Number of columns of plots
+    plotRows = ceiling(numPlots/plotCols) # Number of rows needed, calculated from # of cols
+
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(plotRows, plotCols)))
+    vplayout <- function(x, y)
+        viewport(layout.pos.row = x, layout.pos.col = y)
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+        curRow = ceiling(i/plotCols)
+        curCol = (i-1) %% plotCols + 1
+        print(plots[[i]], vp = vplayout(curRow, curCol ))
+    }
+
+}
+
 #### Some of my variables are extracted by looking to see if MEDLINE records have a MeSH term.
 # This is fine, but sometimes MEDLINE records are incomplete, they are in process or aren't on the list
 # of journals indexed by MeSH indexers.  This means a lack of relevant MeSH term does not mean the MeSH

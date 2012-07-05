@@ -472,7 +472,7 @@ end.rcode-->
 
 Because PMC contains only a subset of papers recorded in PubMed, we extrapolated to the expected number of articles in PubMed based on the ratios of papers in PMC to PubMed in this domain (measured as the number of articles indexed with the MeSH term “gene expression profiling” in PMC relative to the number of articles with the same MeSH term in all of PubMed; 2007:23%, 2008:32%, 2009:36%, 2010:25%). [Nature letter]
 
-<!--begin.rcode accessionReuse
+<!--begin.rcode accessionReuse, echo=FALSE
 
 dfPubmedPmcRatios = read.csv("data/pubmed_pmc_ratios.csv", header=TRUE, stringsAsFactors=F)
 
@@ -506,8 +506,8 @@ dfMentions$elapsedYears = dfMentions$paperPublishedYear  - dfMentions$dataSubmis
 dfMentions = subset(dfMentions, paperPublishedYear < 2011)
 
 
-library(ggplot2)
-library(rms)
+#library(ggplot2)
+#library(rms)
 
 df.long.summary.byyear = ddply(dfMentions, .(elapsedYears, thirdPartyReuse, dataSubmissionYear), summarise, count=length(elapsedYears))
 
@@ -516,26 +516,6 @@ df.long.summary.byyear.extrap$extrap = df.long.summary.byyear.extrap$count / df.
 
 df.long.summary.byyear.extrap = merge(df.long.summary.byyear.extrap, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
 
-ggplot(df.long.summary.byyear.extrap, aes(x=elapsedYears, y=extrap, color=thirdPartyReuse)) + geom_line() + 
-scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
-scale_y_continuous(name="") +
-facet_wrap(~dataSubmissionYear) +
-scale_color_hue(name="",
-                    breaks=c(FALSE, TRUE),
-                    labels=c("data authors", "third-party authors")) +
-theme_bw()
-
-ggplot(data=subset(df.long.summary.byyear.extrap, (dataSubmissionYear>2002) & (dataSubmissionYear<2009)), aes(x=elapsedYears, y=extrap/num_gse_ids, color=thirdPartyReuse)) + 
-geom_line() + 
-scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
-scale_y_continuous(name="") +
-facet_wrap(~dataSubmissionYear) +
-scale_color_hue(name="",
-                    breaks=c(FALSE, TRUE),
-                    labels=c("data authors", "third-party authors")) +
-theme_bw()
-
-
 df.long.summary.reuse = subset(df.long.summary.byyear.extrap, thirdPartyReuse==TRUE)
 
 
@@ -543,118 +523,11 @@ b = ddply(df.long.summary.reuse[with(df.long.summary.reuse, order(elapsedYears))
 
 b = merge(b, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
 
-ggplot(data=subset(b, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=total, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
-theme_bw()
-
 a = ddply(b[with(b, order(elapsedYears)),], c("dataSubmissionYear"), transform, NT = cumsum(total))
-
-
-# cumulative
-
-ggplot(data=subset(a, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
-theme_bw()
-
-ggplot(data=subset(a, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
-theme_bw()
-
-ggplot(data=subset(a, dataSubmissionYear>2002), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2004, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
-theme_bw()
-
-
-ggplot(data=subset(a, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
-scale_y_continuous(name="") +
-scale_color_hue(name="year of data submission") +
-theme_bw()
 
 df.long.summary.gse = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(gse, thirdPartyReuse, dataSubmissionYear), summarise, count=length(elapsedYears))
 
-# From http://wiki.stdout.org/rcookbook/Graphs/Multiple%20graphs%20on%20one%20page%20(ggplot2)/
-multiplot <- function(..., plotlist=NULL, cols) {
-    require(grid)
 
-    # Make a list from the ... arguments and plotlist
-    plots <- c(list(...), plotlist)
-
-    numPlots = length(plots)
-
-    # Make the panel
-    plotCols = cols                          # Number of columns of plots
-    plotRows = ceiling(numPlots/plotCols) # Number of rows needed, calculated from # of cols
-
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(plotRows, plotCols)))
-    vplayout <- function(x, y)
-        viewport(layout.pos.row = x, layout.pos.col = y)
-
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-        curRow = ceiling(i/plotCols)
-        curCol = (i-1) %% plotCols + 1
-        print(plots[[i]], vp = vplayout(curRow, curCol ))
-    }
-
-}
-
-year = 2001
-df.year = subset(df.long.summary.gse, dataSubmissionYear==year)
-num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-fraction = round(min(1, num_with_reuse/num_total), 2)
-p2001 = ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + scale_x_discrete(name=paste("submitted in", year), breaks=c(0)) +scale_y_continuous(name="number of third-party mentions\n") + theme_bw()
-year
-num_with_reuse
-num_total
-fraction
-
-year = 2003
-df.year = subset(df.long.summary.gse, dataSubmissionYear==year)
-num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-fraction = round(min(1, num_with_reuse/num_total), 2)
-p2003 = ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + scale_x_discrete(name=paste("submitted in", year), breaks=c(0)) +scale_y_continuous(name="number of third-party mentions\n") + theme_bw()
-year
-num_with_reuse
-num_total
-fraction
-
-year = 2005
-df.year = subset(df.long.summary.gse, dataSubmissionYear==year)
-num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-fraction = round(min(1, num_with_reuse/num_total), 2)
-p2005 = ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + scale_x_discrete(name=paste("submitted in", year), breaks=c(0)) +scale_y_continuous(name="number of third-party mentions\n") + theme_bw()
-year
-num_with_reuse
-num_total
-fraction
-
-year = 2007
-df.year = subset(df.long.summary.gse, dataSubmissionYear==year)
-num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-fraction = round(min(1, num_with_reuse/num_total), 2)
-p2007 = ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + scale_x_discrete(name=paste("submitted in", year), breaks=c(0)) +scale_y_continuous(name="number of third-party mentions\n") + theme_bw()
-year
-num_with_reuse
-num_total
-fraction
-
-
-multiplot(p2001, p2003, p2005, p2007, cols=2)
 
 end.rcode-->
 
@@ -933,7 +806,87 @@ A citation boost due to public data availability would come from authors who wou
 
 We identified 338 papers that appear to reuse the 2007 GEO datasets in a significant way.  We estimate that, as of the end of 2010, the whole of PubMed contains 1159 papers that mention GEO accession numbers in the context of novel reuse for datasets submitted in 2007 alone. Thus, for every ten datasets that it collects, we estimate that GEO contributes to at least four papers in the following three years.  [Piwowar, Vision, Whitlock]
 
-<img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/3rdpartygrowth.png" class="plot" height=300 />
+
+<!--begin.rcode display_accessionReuse, echo=FALSE
+
+ggplot(df.long.summary.byyear.extrap, aes(x=elapsedYears, y=extrap, color=thirdPartyReuse)) + geom_line() + 
+scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
+scale_y_continuous(name="") +
+facet_wrap(~dataSubmissionYear) +
+scale_color_hue(name="",
+                    breaks=c(FALSE, TRUE),
+                    labels=c("data authors", "third-party authors")) +
+theme_bw()
+
+ggplot(data=subset(df.long.summary.byyear.extrap, (dataSubmissionYear>2002) & (dataSubmissionYear<2009)), aes(x=elapsedYears, y=extrap/num_gse_ids, color=thirdPartyReuse)) + 
+geom_line() + 
+scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
+scale_y_continuous(name="") +
+facet_wrap(~dataSubmissionYear) +
+scale_color_hue(name="",
+                    breaks=c(FALSE, TRUE),
+                    labels=c("data authors", "third-party authors")) +
+theme_bw()
+
+
+
+ggplot(data=subset(b, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=total, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+scale_x_continuous(name="", limits=c(2001, 2010)) +
+scale_y_continuous(name="", formatter="comma") +
+scale_color_hue(name="year of data submission") +
+theme_bw()
+
+
+
+# cumulative
+
+ggplot(data=subset(a, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+scale_x_continuous(name="", limits=c(2001, 2010)) +
+scale_y_continuous(name="", formatter="comma") +
+scale_color_hue(name="year of data submission") +
+theme_bw()
+
+ggplot(data=subset(a, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+scale_x_continuous(name="", limits=c(2001, 2010)) +
+scale_y_continuous(name="", formatter="comma") +
+scale_color_hue(name="year of data submission") +
+theme_bw()
+
+ggplot(data=subset(a, dataSubmissionYear>2002), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+scale_x_continuous(name="", limits=c(2004, 2010)) +
+scale_y_continuous(name="", formatter="comma") +
+scale_color_hue(name="year of data submission") +
+theme_bw()
+
+
+ggplot(data=subset(a, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
+scale_y_continuous(name="") +
+scale_color_hue(name="year of data submission") +
+theme_bw()
+
+yearlyHistogram = function(df, year) {
+  df.year = subset(df, dataSubmissionYear==year)
+  num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
+  num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
+  fraction = round(min(1, num_with_reuse/num_total), 2)
+  plotHandle = ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + scale_x_discrete(name=paste("submitted in", year), breaks=c(0)) +scale_y_continuous(name="number of third-party mentions\n") + theme_bw()
+  print(paste(year, num_with_reuse, num_total, round(fraction, 2)))
+  return(list(year = year,
+              num_with_reuse = num_with_reuse,
+              num_total = num_total,
+              fraction = fraction,
+              plotHandle = plotHandle))
+}
+
+df2001 = yearlyHistogram(df.long.summary.gse, 2001)
+df2003 = yearlyHistogram(df.long.summary.gse, 2003)
+df2005 = yearlyHistogram(df.long.summary.gse, 2005)
+df2007 = yearlyHistogram(df.long.summary.gse, 2007)
+
+multiplot(df2001$plotHandle, df2003$plotHandle, df2005$plotHandle, df2007$plotHandle, cols=2)
+
+end.rcode-->
 
 
 ### Complementary evidence of data reuse from citation context
