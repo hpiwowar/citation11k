@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Thu Jul  5 14:39:14 2012</code>
+ * Generated on <code class="knitr inline">Thu Jul  5 17:57:14 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -136,7 +136,7 @@ Using PMC, we searched the full text of papers published between 2007 and 2010 f
 
 
 
-The analyses were last run on <code class="knitr inline">Thu Jul  5 14:39:31 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+The analyses were last run on <code class="knitr inline">Thu Jul  5 17:57:32 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 References:
 Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
@@ -177,7 +177,7 @@ files_. R package version 0.0-1.
 
 #### Data and script availability
 
-Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  
+Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
 The text Markdown version of this manuscript with interleaved statistical scripts using knitr (Xie, 2012) is also included in Dryad and at GitHub (https://github.com/hpiwowar/citation11k)[https://github.com/hpiwowar/citation11k].
 
@@ -319,25 +319,46 @@ We compared the distribution of those with errors to those without, calculated w
 </pre></div></div></div>
 
 
+####Complementary evidence of data reuse from citation context
+
+Possible reuse in the published literature over the period 2005-2010 for datasets deposited in 2005.
+
+We used ISI Web of Science to identify studies that used this method of data reuse attribution. For each dataset, we located the data collection article within ISI Web of Science and exported the list of all articles that cite this data collection article. This list of all citations was processed to subselect  150 random  citations, stratified by  the total  number of  times the data collection article had been cited.  The subselection of the ISI WoS results was saved as a  BibTeX file then uploaded to  the Mendeley group.
+
+Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
+
+
+
+
 ####Complementary evidence of data reuse from accession number attribution
 
-Because PMC contains only a subset of papers recorded in PubMed, we extrapolated to the expected number of articles in PubMed based on the ratios of papers in PMC to PubMed in this domain (measured as the number of articles indexed with the MeSH term “gene expression profiling” in PMC relative to the number of articles with the same MeSH term in all of PubMed; 2007:23%, 2008:32%, 2009:36%, 2010:25%). [Nature letter]
+Manually reviewing citation context does not scale well: we need a different way to identify large numbers of reuse instances.  A subset of reuses can be identfied by taking advantage of an attribution norm in some areas:  datasets are sometimes attributed directly, by mentioning the dataset identifier, or accession number, in the full-text of a research paper.  For obscure dataset  identifier strings, finding an identifier in a paper usually means the authors are a) talking about depositing the dataset or b) attributing dataset reuse.  We can distinguish these scenarious to a first approximation by looking at surname name overlap between investigators who deposited the dataset and authors on the paper that mentions the dataset, as described in [Beginning to Track.]  
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##    year num_pmc num_pubmed pmc_pmid_ratio
-## 1  2000     148        832        0.17788
-## 2  2001     298       1679        0.17749
-## 3  2002     382       2470        0.15466
-## 4  2003     568       3598        0.15787
-## 5  2004     862       4911        0.17552
-## 6  2005    1084       5905        0.18357
-## 7  2006    1319       6460        0.20418
-## 8  2007    1650       7062        0.23364
-## 9  2008    2629       8024        0.32764
-## 10 2009    3337       9015        0.37016
-## 11 2010    3609      10050        0.35910
-## 12 2011     914       9450        0.09672
-</pre></div><div class="output"><pre class="knitr">##    year num_gse_ids
-## 1  2000           0
+We used the NCBI eUtils library and custom Python code to obtain a list of datasets deposited into GEO each year, then searched PubMed Central for each of these dataset identifiers. For each PubMed Central paper that refered to a dataset identifier, we recorded itsPubMed Central ID, year of publication, and author surnames.
+
+PMC contains only a subset of papers recorded in PubMed.  To extrapolate from the number of hits we found in PubMed Central to the possible data reuses in all of PubMed we divided the number of hits we received in each publication year by the ratio of papers in PMC to papers in PubMed in this domain published that same year (same domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##       [,1]       
+##  [1,] "2000: 18%"
+##  [2,] "2001: 18%"
+##  [3,] "2002: 15%"
+##  [4,] "2003: 16%"
+##  [5,] "2004: 18%"
+##  [6,] "2005: 18%"
+##  [7,] "2006: 20%"
+##  [8,] "2007: 23%"
+##  [9,] "2008: 33%"
+## [10,] "2009: 37%"
+## [11,] "2010: 36%"
+## [12,] "2011: 10%"
+</pre></div></div></div>
+
+
+We searched for hits until through 2010: 2011 has a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
+
+The number of datasets deposited in GEO has grown over time.  To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year:
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##    year num_gse_ids
 ## 2  2001          13
 ## 3  2002          92
 ## 4  2003         523
@@ -347,20 +368,12 @@ Because PMC contains only a subset of papers recorded in PubMed, we extrapolated
 ## 8  2007        2711
 ## 9  2008        3279
 ## 10 2009        4313
-## 11 2010        5569
-## 12 2011        6801
 </pre></div></div></div>
 
 
 
 
-####Complementary evidence of data reuse from citation context
 
-Possible reuse in the published literature over the period 2005-2010 for datasets deposited in 2005.
-
-We used ISI Web of Science to identify studies that used this method of data reuse attribution. For each dataset, we located the data collection article within ISI Web of Science and exported the list of all articles that cite this data collection article. This list of all citations was processed to subselect  150 random  citations, stratified by  the total  number of  times the data collection article had been cited.  The subselection of the ISI WoS results was saved as a  BibTeX file then uploaded to  the Mendeley group.
-
-Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
 
 
 
@@ -791,25 +804,6 @@ To confirm that the erroniously-included articles were not driving the findings 
 </pre></div></div></div>
 
 
-
-### Complementary evidence of data reuse from accession number attribution
-
-Finally, to provide evidence on the timeline of data attribution, we report preliminary data on third-party data reuse.  Large-scale evidence is difficult to gather because it requires manual citation context classification, as described above.  A partial estimate is possible, however, due to attribution norms in some fields: count the number of times a dataset accession number is mentioned in the scientific literature. [Piwowar, Vision, Whitlock]
-
-A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline of third-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
-
-We identified 338 papers that appear to reuse the 2007 GEO datasets in a significant way.  We estimate that, as of the end of 2010, the whole of PubMed contains 1159 papers that mention GEO accession numbers in the context of novel reuse for datasets submitted in 2007 alone. Thus, for every ten datasets that it collects, we estimate that GEO contributes to at least four papers in the following three years.  [Piwowar, Vision, Whitlock]
-
-
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse1.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse2.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse3.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse4.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse5.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse6.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse7.png" class="plot" /></div><div class="rcode">
-<div class="output"><pre class="knitr">## [1] "2001 15 13 1"
-</pre></div><div class="output"><pre class="knitr">## [1] "2003 109 523 0.21"
-</pre></div><div class="output"><pre class="knitr">## [1] "2005 290 1393 0.21"
-</pre></div><div class="output"><pre class="knitr">## [1] "2007 474 2711 0.17"
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse8.png" class="plot" /></div></div>
-
-
-
 ### Complementary evidence of data reuse from citation context
 
 To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
@@ -820,6 +814,57 @@ Of the <code class="knitr inline">138</code> reviewed citations to articles with
 <code class="knitr inline">6</code>%
 with 95% confidence intervals [<code class="knitr inline">3</code>%
 , <code class="knitr inline">11</code>% ]
+
+
+### Complementary evidence of data reuse from accession number attribution
+
+
+Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.
+
+Author surnames in common with data submission team vs third party
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_authorVThirdParty.png" class="plot" /></div></div>
+
+
+Author vs third party, normalized by number of datasets deposited in the given year
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_authorVThirdParty_normalized.png" class="plot" /></div></div>
+
+
+Third-party reuse for all data depositing years, overlayed
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse.png" class="plot" /></div></div>
+
+
+Cumulative third-party reuse
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative.png" class="plot" /></div></div>
+
+
+Cumulative third-party reuse, normalized by number of datasets deposited each year
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized.png" class="plot" /></div></div>
+
+
+Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002.
+
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized_2003.png" class="plot" /></div></div>
+
+
+Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002, plotted as elapsed years since data submission.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized_2003_elapsed.png" class="plot" /></div></div>
+
+
+Distribution of reuse across individual datasets.
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## [1] "2001 15 13 1"
+</pre></div><div class="output"><pre class="knitr">## [1] "2003 109 523 0.21"
+</pre></div><div class="output"><pre class="knitr">## [1] "2005 290 1393 0.21"
+</pre></div><div class="output"><pre class="knitr">## [1] "2007 474 2711 0.17"
+</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets.png" class="plot" /></div></div>
+
 
 
 

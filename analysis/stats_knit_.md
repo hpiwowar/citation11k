@@ -297,7 +297,7 @@ end.rcode-->
 
 #### Data and script availability
 
-Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  
+Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
 The text Markdown version of this manuscript with interleaved statistical scripts using knitr <!--rinline citep(list(citation("knitr"))) --> is also included in Dryad and at GitHub (https://github.com/hpiwowar/citation11k)[https://github.com/hpiwowar/citation11k].
 
@@ -468,11 +468,32 @@ annotated_merged_created = lm(nCitedBy.log ~
              , dat.annotated.merged.created)
 end.rcode-->
 
+####Complementary evidence of data reuse from citation context
+
+Possible reuse in the published literature over the period 2005-2010 for datasets deposited in 2005.
+
+We used ISI Web of Science to identify studies that used this method of data reuse attribution. For each dataset, we located the data collection article within ISI Web of Science and exported the list of all articles that cite this data collection article. This list of all citations was processed to subselect  150 random  citations, stratified by  the total  number of  times the data collection article had been cited.  The subselection of the ISI WoS results was saved as a  BibTeX file then uploaded to  the Mendeley group.
+
+Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
+
+<!--begin.rcode citationContextData, echo=FALSE
+dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
+dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
+
+num.GEO.total = dim(dfTracking1k.GEO.subset)[1]
+num.GEO.reused = dim(subset(dfTracking1k.GEO.subset, TAG.dataset.reused=="dataset reused"))[1]
+annotated.prop = binconf(num.GEO.reused, num.GEO.total)
+end.rcode-->
+
 ####Complementary evidence of data reuse from accession number attribution
 
-Because PMC contains only a subset of papers recorded in PubMed, we extrapolated to the expected number of articles in PubMed based on the ratios of papers in PMC to PubMed in this domain (measured as the number of articles indexed with the MeSH term “gene expression profiling” in PMC relative to the number of articles with the same MeSH term in all of PubMed; 2007:23%, 2008:32%, 2009:36%, 2010:25%). [Nature letter]
+Manually reviewing citation context does not scale well: we need a different way to identify large numbers of reuse instances.  A subset of reuses can be identfied by taking advantage of an attribution norm in some areas:  datasets are sometimes attributed directly, by mentioning the dataset identifier, or accession number, in the full-text of a research paper.  For obscure dataset  identifier strings, finding an identifier in a paper usually means the authors are a) talking about depositing the dataset or b) attributing dataset reuse.  We can distinguish these scenarious to a first approximation by looking at surname name overlap between investigators who deposited the dataset and authors on the paper that mentions the dataset, as described in [Beginning to Track.]  
 
-<!--begin.rcode accessionReuse, echo=FALSE
+We used the NCBI eUtils library and custom Python code to obtain a list of datasets deposited into GEO each year, then searched PubMed Central for each of these dataset identifiers. For each PubMed Central paper that refered to a dataset identifier, we recorded itsPubMed Central ID, year of publication, and author surnames.
+
+PMC contains only a subset of papers recorded in PubMed.  To extrapolate from the number of hits we found in PubMed Central to the possible data reuses in all of PubMed we divided the number of hits we received in each publication year by the ratio of papers in PMC to papers in PubMed in this domain published that same year (same domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
+
+<!--begin.rcode accessionRatios, echo=FALSE
 
 dfPubmedPmcRatios = read.csv("data/pubmed_pmc_ratios.csv", header=TRUE, stringsAsFactors=F)
 
@@ -480,11 +501,21 @@ dfPubmedPmcRatios = read.csv("data/pubmed_pmc_ratios.csv", header=TRUE, stringsA
 dfPubmedPmcRatios$pmc_pmid_ratio = dfPubmedPmcRatios$num_pmc/dfPubmedPmcRatios$num_pubmed
 dfPubmedPmcRatios$year = as.numeric(dfPubmedPmcRatios$year)
 
-dfPubmedPmcRatios
+cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
+end.rcode-->
+
+We searched for hits until through 2010: 2011 has a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
+
+The number of datasets deposited in GEO has grown over time.  To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year:
+
+<!--begin.rcode dfPubmedGseCount, echo=FALSE
 
 dfPubmedGseCount = read.csv("data/pubmed_gse_count.csv", header=TRUE, stringsAsFactors=F)
 
-dfPubmedGseCount
+dfPubmedGseCount[2:10,]
+end.rcode-->
+
+<!--begin.rcode dfMentions, echo=FALSE
 
 header_string = "accession,gse,gds,submit_pmids,reuse_pmcid,reuse_pmids_for_pmc,this_submit_authors,this_reuse_authors,intersect,submit_affiliation,release_date,sep1,bioloink_filter,basic_reuse_filter,creation_filter,oa_excerpts,word_filters,sep2,reuse_affiliation,journal,year,date_published,medline_status,is_geo_reuse,reuse_is_oa,metaanal,mesh_filters,blank,setname"
 header = strsplit(header_string, ",")[[1]]
@@ -505,50 +536,25 @@ dfMentions$elapsedYears = dfMentions$paperPublishedYear  - dfMentions$dataSubmis
 # has to be long enough ago that papers are in PMC
 dfMentions = subset(dfMentions, paperPublishedYear < 2011)
 
+end.rcode-->
 
-#library(ggplot2)
-#library(rms)
-
-df.long.summary.byyear = ddply(dfMentions, .(elapsedYears, thirdPartyReuse, dataSubmissionYear), summarise, count=length(elapsedYears))
+<!--begin.rcode dfMentions_calcs, echo=FALSE
 
 df.long.summary.byyear.extrap = ddply(dfMentions, .(elapsedYears, thirdPartyReuse, dataSubmissionYear, pmc_pmid_ratio), summarise, count=length(elapsedYears))
 df.long.summary.byyear.extrap$extrap = df.long.summary.byyear.extrap$count / df.long.summary.byyear.extrap$pmc_pmid_ratio
-
 df.long.summary.byyear.extrap = merge(df.long.summary.byyear.extrap, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
 
-df.long.summary.reuse = subset(df.long.summary.byyear.extrap, thirdPartyReuse==TRUE)
+df.long.summary.reuse.only = subset(df.long.summary.byyear.extrap, thirdPartyReuse==TRUE)
 
+df.byyear.reuse.only = ddply(df.long.summary.reuse.only[with(df.long.summary.reuse.only, order(elapsedYears)),], c("dataSubmissionYear", "elapsedYears"), summarise, total = sum(extrap))
+df.byyear.reuse.only = merge(df.byyear.reuse.only, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
 
-b = ddply(df.long.summary.reuse[with(df.long.summary.reuse, order(elapsedYears)),], c("dataSubmissionYear", "elapsedYears"), summarise, total = sum(extrap))
-
-b = merge(b, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
-
-a = ddply(b[with(b, order(elapsedYears)),], c("dataSubmissionYear"), transform, NT = cumsum(total))
+df.cumulative.reuse.only = ddply(df.byyear.reuse.only[with(df.byyear.reuse.only, order(elapsedYears)),], c("dataSubmissionYear"), transform, NT = cumsum(total))
 
 df.long.summary.gse = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(gse, thirdPartyReuse, dataSubmissionYear), summarise, count=length(elapsedYears))
 
-
-
 end.rcode-->
 
-
-
-####Complementary evidence of data reuse from citation context
-
-Possible reuse in the published literature over the period 2005-2010 for datasets deposited in 2005.
-
-We used ISI Web of Science to identify studies that used this method of data reuse attribution. For each dataset, we located the data collection article within ISI Web of Science and exported the list of all articles that cite this data collection article. This list of all citations was processed to subselect  150 random  citations, stratified by  the total  number of  times the data collection article had been cited.  The subselection of the ISI WoS results was saved as a  BibTeX file then uploaded to  the Mendeley group.
-
-Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
-
-<!--begin.rcode citationContextData, echo=FALSE
-dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
-dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
-
-num.GEO.total = dim(dfTracking1k.GEO.subset)[1]
-num.GEO.reused = dim(subset(dfTracking1k.GEO.subset, TAG.dataset.reused=="dataset reused"))[1]
-annotated.prop = binconf(num.GEO.reused, num.GEO.total)
-end.rcode-->
 
 
 ## Results
@@ -797,18 +803,26 @@ gfm_table(anova(annotated_merged_created))
 calcCI.exp(annotated_merged_created, "factor(dataset.in.geo.or.ae).L")
 end.rcode-->
 
+### Complementary evidence of data reuse from citation context
+
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
+
+
+
+Of the <!--rinline num.GEO.total --> reviewed citations to articles with archived gene expression data, <!--rinline num.GEO.reused --> were in the context of data reuse
+<!--rinline 100*(round(annotated.prop[1], 2)) -->%
+with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->%
+, <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
+
 
 ### Complementary evidence of data reuse from accession number attribution
 
-Finally, to provide evidence on the timeline of data attribution, we report preliminary data on third-party data reuse.  Large-scale evidence is difficult to gather because it requires manual citation context classification, as described above.  A partial estimate is possible, however, due to attribution norms in some fields: count the number of times a dataset accession number is mentioned in the scientific literature. [Piwowar, Vision, Whitlock]
 
-A citation boost due to public data availability would come from authors who would not have otherwise had access to the data.  The timeline of third-party reuse can be estimated by identifying all papers that reuse data, then eliminating those with author names in common with the data collection team.  Results from tracking datasets deposited into GEO in 2007 were reported in (Piwowar, Vision, Whitlock).  As one can see from the figure, the rate of data reuse by third parties continues to increase three years after article publication.  
+Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.
 
-We identified 338 papers that appear to reuse the 2007 GEO datasets in a significant way.  We estimate that, as of the end of 2010, the whole of PubMed contains 1159 papers that mention GEO accession numbers in the context of novel reuse for datasets submitted in 2007 alone. Thus, for every ten datasets that it collects, we estimate that GEO contributes to at least four papers in the following three years.  [Piwowar, Vision, Whitlock]
+Author surnames in common with data submission team vs third party
 
-
-<!--begin.rcode display_accessionReuse, echo=FALSE
-
+<!--begin.rcode display_authorVThirdParty, echo=FALSE
 ggplot(df.long.summary.byyear.extrap, aes(x=elapsedYears, y=extrap, color=thirdPartyReuse)) + geom_line() + 
 scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
 scale_y_continuous(name="") +
@@ -817,7 +831,11 @@ scale_color_hue(name="",
                     breaks=c(FALSE, TRUE),
                     labels=c("data authors", "third-party authors")) +
 theme_bw()
+end.rcode-->
 
+Author vs third party, normalized by number of datasets deposited in the given year
+
+<!--begin.rcode display_authorVThirdParty_normalized, echo=FALSE
 ggplot(data=subset(df.long.summary.byyear.extrap, (dataSubmissionYear>2002) & (dataSubmissionYear<2009)), aes(x=elapsedYears, y=extrap/num_gse_ids, color=thirdPartyReuse)) + 
 geom_line() + 
 scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
@@ -827,44 +845,63 @@ scale_color_hue(name="",
                     breaks=c(FALSE, TRUE),
                     labels=c("data authors", "third-party authors")) +
 theme_bw()
+end.rcode-->
 
+Third-party reuse for all data depositing years, overlayed
 
-
-ggplot(data=subset(b, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=total, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+<!--begin.rcode display_accessionReuse, echo=FALSE
+ggplot(data=subset(df.byyear.reuse.only, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=total, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="", limits=c(2001, 2010)) +
 scale_y_continuous(name="", formatter="comma") +
 scale_color_hue(name="year of data submission") +
 theme_bw()
+end.rcode-->
 
+Cumulative third-party reuse
 
-
+<!--begin.rcode display_accessionReuse_cumulative, echo=FALSE
 # cumulative
-
-ggplot(data=subset(a, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="", limits=c(2001, 2010)) +
 scale_y_continuous(name="", formatter="comma") +
 scale_color_hue(name="year of data submission") +
 theme_bw()
+end.rcode-->
 
-ggplot(data=subset(a, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+Cumulative third-party reuse, normalized by number of datasets deposited each year
+
+<!--begin.rcode display_accessionReuse_cumulative_normalized, echo=FALSE
+ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="", limits=c(2001, 2010)) +
 scale_y_continuous(name="", formatter="comma") +
 scale_color_hue(name="year of data submission") +
 theme_bw()
+end.rcode-->
 
-ggplot(data=subset(a, dataSubmissionYear>2002), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002.
+
+
+<!--begin.rcode display_accessionReuse_cumulative_normalized_2003, echo=FALSE
+ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2002), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="", limits=c(2004, 2010)) +
 scale_y_continuous(name="", formatter="comma") +
 scale_color_hue(name="year of data submission") +
 theme_bw()
+end.rcode-->
 
+Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002, plotted as elapsed years since data submission.
 
-ggplot(data=subset(a, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
+<!--begin.rcode display_accessionReuse_cumulative_normalized_2003_elapsed, echo=FALSE
+ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
 scale_y_continuous(name="") +
 scale_color_hue(name="year of data submission") +
 theme_bw()
+end.rcode-->
 
+Distribution of reuse across individual datasets.
+
+<!--begin.rcode display_distAcrossDatasets, echo=FALSE
 yearlyHistogram = function(df, year) {
   df.year = subset(df, dataSubmissionYear==year)
   num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
@@ -887,18 +924,6 @@ df2007 = yearlyHistogram(df.long.summary.gse, 2007)
 multiplot(df2001$plotHandle, df2003$plotHandle, df2005$plotHandle, df2007$plotHandle, cols=2)
 
 end.rcode-->
-
-
-### Complementary evidence of data reuse from citation context
-
-To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
-
-
-
-Of the <!--rinline num.GEO.total --> reviewed citations to articles with archived gene expression data, <!--rinline num.GEO.reused --> were in the context of data reuse
-<!--rinline 100*(round(annotated.prop[1], 2)) -->%
-with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->%
-, <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
 
 
 
