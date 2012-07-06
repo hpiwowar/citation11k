@@ -923,6 +923,30 @@ df2007 = yearlyHistogram(df.long.summary.gse, 2007)
 
 multiplot(df2001$plotHandle, df2003$plotHandle, df2005$plotHandle, df2007$plotHandle, cols=2)
 
+# Log axis
+year = 2007
+df.year = subset(df.long.summary.gse, dataSubmissionYear==year)
+mybreaks = c(1, 3.5, 10, 35)
+
+ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + 
+scale_x_discrete(name="474 datasets with at least one reuse", breaks=c(0)) + scale_y_log10(name="number of third-party mentions\n", breaks=mybreaks, labels=mybreaks) + 
+  theme_bw()
+
+# cumulative distribution function
+num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
+num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
+placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
+for (accession in placeholder_zero_accessions) {
+  df.year = rbind(df.year, data.frame(gse=accession, thirdPartyReuse=TRUE, dataSubmissionYear=year, count=0))  
+}
+
+qtiles<-seq(0,1,0.01)
+q<-ddply(df.year,c(),summarise,quantile=qtiles,count=quantile(count,qtiles))
+ggplot(data=q, aes(x=count, y=quantile)) + geom_step() + 
+scale_x_continuous(name="\ncount of third-party reuses") +
+scale_y_continuous(name="cumulative probability\n") +
+theme_bw()
+
 end.rcode-->
 
 
