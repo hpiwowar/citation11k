@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Fri Jul  6 20:02:26 2012</code>
+ * Generated on <code class="knitr inline">Sat Jul  7 12:36:14 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -62,15 +62,15 @@ Scientists report that receiving more citations would be an important motivator 
 
 Several studies across several disciplines have found an association between data availability and number of citations recieved by a publication [cite studies below]. This evidence has been <a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">frequently referenced</a>, including in new policies that encourage and require data archiving [<a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">http://datadryad.org/jdap</a>]. It is important, therefore, to continue to strive for an accurate estimate of possible citation benefit.
 
-The present study hopes to improve previous estimates in several ways. First, the present study is large enough to inluce many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on the nubmer of citations that may be due to data reuse.
+The present study hopes to improve previous estimates in several ways. First, the present study is large enough to include many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on the number of citations that may be due to data reuse.
 
-Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse [Dudley] and well-supported by data sharing standards and infrastructure [Barrett], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar 2011].
+Gene expression microarray data provides a useful environment for the investigation: despite being valuable for reuse [Dudley] and well-supported by data sharing standards and infrastructure [Barrett], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar 2011].
 
 
 
 ## Methods
 
-### Dataset of citations to gene expression microarray studies
+### Citations to gene expression microarray studies
 
 #### Identification of relevant studies
 
@@ -126,7 +126,9 @@ Although Scopus now has an API that would facilitate easy programmatic access to
 
 Citation counts for <code class="knitr inline">10555</code> papers were gathered from Scopus in November 2011. 
 
-### Dataset of in-text mentions of gene expression microarray studies
+
+
+### Inline mentions of microarray dataset reuse
 
 To derive an estimate of the reuse of data in GEO, we took advantage of the conventions for citing GEO datasets through accession numbers and GEO’s integration with PubMed and PubMed Central (PMC). 
 
@@ -136,7 +138,7 @@ Using PMC, we searched the full text of papers published between 2007 and 2010 f
 
 
 
-The analyses were last run on <code class="knitr inline">Fri Jul  6 20:02:42 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+The analyses were last run on <code class="knitr inline">Sat Jul  7 12:36:28 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 References:
 Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
@@ -862,13 +864,32 @@ Cumulative third-party reuse, normalized by number of datasets deposited each ye
 
 Distribution of reuse across individual datasets.
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## [1] "2001 15 13 1"
-</pre></div><div class="output"><pre class="knitr">## [1] "2003 109 523 0.21"
-</pre></div><div class="output"><pre class="knitr">## [1] "2005 290 1393 0.21"
-</pre></div><div class="output"><pre class="knitr">## [1] "2007 474 2711 0.17"
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets1.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets2.png" class="plot" /></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets3.png" class="plot" /></div></div>
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## [1] "2001 15 13"
+</pre></div><div class="output"><pre class="knitr">## [1] "2003 109 523"
+</pre></div><div class="output"><pre class="knitr">## [1] "2005 290 1393"
+</pre></div><div class="output"><pre class="knitr">## [1] "2007 474 2711"
+</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets.png" class="plot" /></div></div>
 
 
+The number of datasets used in a reuse paper is increasing over time.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/numberDatasetsInReusePaper.png" class="plot" /></div></div>
+
+
+
+Reuse paper authors are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/distOfDatasetAge.png" class="plot" /></div></div>
+
+
+Is the number of reuse papers growing over time?  How does it compare with the availablility of datasets?
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/growthOfReusePapers.png" class="plot" /></div></div>
+
+
+Both are growing exponentially now, at about the same rate.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/growthOfReusePapersLog.png" class="plot" /></div></div>
 
 
 
@@ -894,7 +915,7 @@ Understanding data reuse patterns required a larger sample could easily be assem
 
 Our results suggest the data collection team published almost all of its reuse papers within two years of the data being made publicly available.  In contrast, data reuse papers by third-party authors continued to accumulate rapidly 6 years after the data was made publicly available.  The level of third-party data use was high: for 100 datasets deposited in year 0, we estimate that 40 papers in PubMed reused a dataset by year 2, 100 by year 4, and more than 150 by year 7.  This data reuse curve held remarkably constant for data deposited between 2004 and 2009.  Microarray datasets made available in 2001 and 2002 were reused much more often, probably because of their ground-breaking roles.  The reuse growth trend for data deposited in 2003 has been slower, perhaps because 2003 data is not as ground-breaking as earlier data, and is probably less standards-compliant than later data.
 
-These results suggest that the lower citation boost found for recent papers is likely due to relatively short followup time.
+These results suggest that the lower citation boost we observed for recent papers is due, at least in part, to a relatively short followup time.
 
 Analysis of the accession number mentions revealed that data reuse was driven by a broad base of datasets: at least 21% of the datasets deposited in both 2003 and 2007 had been reused by third parties, and 17% of datasets from 2009.  We note these proportions are gross underestimates since they only include reuses we observed as accession number mentions in PubMed Central; no attempt has been made to extrapolate these distribution statistics to all of PubMed, or to reflect attributions through citations.  Further, many important instances of data reuse do not leave a trace in the published literature, such as those in education and training. Nonetheless, even these conservative estimates suggest that reuse finds value in a wide range of datasets, not simply a "very reusable" elite.
 

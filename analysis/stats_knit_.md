@@ -150,15 +150,15 @@ Scientists report that receiving more citations would be an important motivator 
 
 Several studies across several disciplines have found an association between data availability and number of citations recieved by a publication [cite studies below]. This evidence has been <a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">frequently referenced</a>, including in new policies that encourage and require data archiving [<a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">http://datadryad.org/jdap</a>]. It is important, therefore, to continue to strive for an accurate estimate of possible citation benefit.
 
-The present study hopes to improve previous estimates in several ways. First, the present study is large enough to inluce many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on the nubmer of citations that may be due to data reuse.
+The present study hopes to improve previous estimates in several ways. First, the present study is large enough to include many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on the number of citations that may be due to data reuse.
 
-Clinical microarray data provides a useful environment for the investigation: despite being valuable for reuse [Dudley] and well-supported by data sharing standards and infrastructure [Barrett], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar 2011].
+Gene expression microarray data provides a useful environment for the investigation: despite being valuable for reuse [Dudley] and well-supported by data sharing standards and infrastructure [Barrett], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar 2011].
 
 
 
 ## Methods
 
-### Dataset of citations to gene expression microarray studies
+### Citations to gene expression microarray studies
 
 #### Identification of relevant studies
 
@@ -278,7 +278,9 @@ end.rcode-->
 
 Citation counts for <!--rinline dim(dfCitationsAttributesRaw)[1] --> papers were gathered from Scopus in November 2011. 
 
-### Dataset of in-text mentions of gene expression microarray studies
+
+
+### Inline mentions of microarray dataset reuse
 
 To derive an estimate of the reuse of data in GEO, we took advantage of the conventions for citing GEO datasets through accession numbers and GEO’s integration with PubMed and PubMed Central (PMC). 
 
@@ -526,14 +528,15 @@ header = strsplit(header_string, ",")[[1]]
 dfMentions = read.csv("data/all_records.csv", header=FALSE, stringsAsFactors=F)
 names(dfMentions) = header
 
-dfMentions = merge(dfPubmedPmcRatios, dfMentions, by="year")
-dfMentions = merge(dfPubmedGseCount, dfMentions, by="year")
-
 dfMentions$noAuthorOverlap = ((dfMentions$intersect) == "[]")
 dfMentions$thirdPartyReuse = dfMentions$noAuthorOverlap
 dfMentions$dataSubmissionYear = as.numeric(substr(dfMentions$setname, 10, 13))
 dfMentions$paperPublishedYear = dfMentions$year
 dfMentions$elapsedYears = dfMentions$paperPublishedYear  - dfMentions$dataSubmissionYear 
+dfMentions = subset(dfMentions, select=c(thirdPartyReuse, dataSubmissionYear, paperPublishedYear, elapsedYears, gse, reuse_pmcid))
+
+dfMentions = merge(dfMentions, dfPubmedPmcRatios[,c("pmc_pmid_ratio", "year")], by.x="paperPublishedYear", by.y="year", )
+dfMentions = merge(dfMentions, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year", )
 
 # has to be long enough ago that papers are in PMC
 dfMentions = subset(dfMentions, paperPublishedYear < 2011)
@@ -548,9 +551,8 @@ df.long.summary.byyear.extrap = merge(df.long.summary.byyear.extrap, dfPubmedGse
 
 df.long.summary.reuse.only = subset(df.long.summary.byyear.extrap, thirdPartyReuse==TRUE)
 
-df.byyear.reuse.only = ddply(df.long.summary.reuse.only[with(df.long.summary.reuse.only, order(elapsedYears)),], c("dataSubmissionYear", "elapsedYears"), summarise, total = sum(extrap))
+df.byyear.reuse.only = ddply(df.long.summary.reuse.only, c("dataSubmissionYear", "elapsedYears"), summarise, total = sum(extrap))
 df.byyear.reuse.only = merge(df.byyear.reuse.only, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
-
 df.cumulative.reuse.only = ddply(df.byyear.reuse.only[with(df.byyear.reuse.only, order(elapsedYears)),], c("dataSubmissionYear"), transform, NT = cumsum(total))
 
 df.long.summary.gse = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(gse, thirdPartyReuse, dataSubmissionYear), summarise, count=length(elapsedYears))
@@ -905,18 +907,29 @@ end.rcode-->
 Distribution of reuse across individual datasets.
 
 <!--begin.rcode display_distAcrossDatasets, echo=FALSE
+qtiles = seq(0,1,0.01)
 yearlyHistogram = function(df, year) {
-  df.year = subset(df, dataSubmissionYear==year)
-  num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-  num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-  fraction = round(min(1, num_with_reuse/num_total), 2)
-  plotHandle = ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + scale_x_discrete(name=paste("submitted in", year), breaks=c(0)) +scale_y_continuous(name="number of third-party mentions\n") + theme_bw(base_size=16)
-  print(paste(year, num_with_reuse, num_total, round(fraction, 2)))
-  return(list(year = year,
-              num_with_reuse = num_with_reuse,
-              num_total = num_total,
-              fraction = fraction,
-              plotHandle = plotHandle))
+    df.year = subset(df, dataSubmissionYear==year)
+
+    # cumulative distribution function
+    num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
+    num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
+    placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
+    for (accession in placeholder_zero_accessions) {
+        df.year = rbind(df.year, data.frame(gse=accession, thirdPartyReuse=TRUE, dataSubmissionYear=year, count=0))  
+    }
+
+    q = ddply(df.year, c(), summarise, quantile=qtiles, count=quantile(count, qtiles))
+    plotHandle = ggplot(data=q, aes(x=count, y=quantile)) + geom_step() + 
+        scale_x_continuous(name=paste("\ncount of third-party reuses\ndata submitted in", year), limits=c(0,40)) +
+        scale_y_continuous(name="cumulative probability\n") +
+        theme_bw(base_size=16)
+
+    print(paste(year, num_with_reuse, num_total))
+    return(list(year = year,
+                num_with_reuse = num_with_reuse,
+                num_total = num_total,
+                plotHandle = plotHandle))
 }
 
 df2001 = yearlyHistogram(df.long.summary.gse, 2001)
@@ -926,33 +939,78 @@ df2007 = yearlyHistogram(df.long.summary.gse, 2007)
 
 multiplot(df2001$plotHandle, df2003$plotHandle, df2005$plotHandle, df2007$plotHandle, cols=2)
 
-# Log axis
-year = 2007
-df.year = subset(df.long.summary.gse, dataSubmissionYear==year)
-mybreaks = c(1, 3.5, 10, 35)
+end.rcode-->
 
-ggplot(data=df.year, aes(x=reorder(gse, -count), y=0.1+count)) + geom_bar(width=1) + 
-scale_x_discrete(name="474 datasets with at least one reuse", breaks=c(0)) + scale_y_log10(name="number of third-party mentions\n", breaks=mybreaks, labels=mybreaks) + 
-  theme_bw(base_size=16)
+The number of datasets used in a reuse paper is increasing over time.
 
-# cumulative distribution function
-num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
-for (accession in placeholder_zero_accessions) {
-  df.year = rbind(df.year, data.frame(gse=accession, thirdPartyReuse=TRUE, dataSubmissionYear=year, count=0))  
-}
+<!--begin.rcode numberDatasetsInReusePaper, echo=FALSE
+dfGsePerReusePaper = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(reuse_pmcid, paperPublishedYear), summarise, count=length(unique(gse)))
 
-qtiles<-seq(0,1,0.01)
-q<-ddply(df.year,c(),summarise,quantile=qtiles,count=quantile(count,qtiles))
-ggplot(data=q, aes(x=count, y=quantile)) + geom_step() + 
-scale_x_continuous(name="\ncount of third-party reuses") +
-scale_y_continuous(name="cumulative probability\n") +
-theme_bw(base_size=16)
+qtiles = seq(0,1,0.01)
+breaks = c(0, 5, 10, 50, 100)
+
+dfCountsOfGsePerReusePaper = ddply(dfGsePerReusePaper, .(count, paperPublishedYear), summarise, number_reuse_papers=length(unique(reuse_pmcid)))
+q = ddply(dfGsePerReusePaper, "paperPublishedYear", summarise, quantile=qtiles, count=quantile(count, qtiles))
+ggplot(data=subset(q, paperPublishedYear>2001), aes(x=count, y=quantile)) + geom_step(weight=3) + 
+#    scale_x_log10(breaks=breaks, labels=breaks) +
+    scale_x_continuous("", breaks=seq(0, 30, 10), limits=c(0,30)) +
+    scale_y_continuous("") +
+    theme_bw(base_size=16) + facet_wrap(~ paperPublishedYear)
 
 end.rcode-->
 
 
+Reuse paper authors are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.
+
+<!--begin.rcode distOfDatasetAge, echo=FALSE
+
+# distribution of elapsed years per publication date
+dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thirdPartyReuse==TRUE)), .( elapsedYears, paperPublishedYear, num_gse_ids), summarise, count=length(gse))
+
+ggplot(data=subset(dfDatasetsByElapsed, paperPublishedYear>2004), aes(x=elapsedYears, y=count/num_gse_ids)) + geom_line() +
+  scale_x_continuous(name="", limits=c(0,9)) +
+ facet_wrap(~paperPublishedYear) + theme_bw(base_size=16) 
+
+end.rcode-->
+
+Is the number of reuse papers growing over time?  How does it compare with the availablility of datasets?
+
+<!--begin.rcode growthOfReusePapers, echo=FALSE
+dfCountUnique3rdpartyPapers = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(paperPublishedYear, pmc_pmid_ratio), summarise, count=length(unique(reuse_pmcid)))
+
+dfCountUnique3rdpartyPapers$extrap = with(dfCountUnique3rdpartyPapers, count/pmc_pmid_ratio)
+
+dfCountUnique3rdpartyPapers = ddply(dfCountUnique3rdpartyPapers, .(), transform, cumul_extrap=cumsum(extrap))
+
+dfCountUnique3rdpartyPapers = merge(dfCountUnique3rdpartyPapers, dfPubmedGseCount, by.x="paperPublishedYear", by.y="year")
+
+dfCountUnique3rdpartyPapers = ddply(dfCountUnique3rdpartyPapers, .(), transform, cumul_gse=cumsum(num_gse_ids))
+
+#not log
+ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
+scale_x_continuous(name="", limits=c(2001, 2010)) +
+scale_y_continuous(name="", formatter="comma") +
+#scale_y_log(name="", breaks=breaks, labels=breaks) +
+scale_color_hue(name="") +
+theme_bw(base_size=16) +
+geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
+
+end.rcode-->
+
+Both are growing exponentially now, at about the same rate.
+
+<!--begin.rcode growthOfReusePapersLog, echo=FALSE
+
+# log
+breaks=c(1, 10, 100, 1000, 10000, 30000)
+ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
+scale_x_continuous(name="", limits=c(2001, 2010)) +
+#scale_y_continuous(name="", formatter="comma") +
+scale_y_log(name="", breaks=breaks, labels=breaks) +
+scale_color_hue(name="") +
+theme_bw(base_size=16) +
+geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
+end.rcode-->
 
 
 ## Discussion
