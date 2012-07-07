@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Sat Jul  7 16:31:51 2012</code>
+ * Generated on <code class="knitr inline">Sat Jul  7 18:15:53 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -196,7 +196,7 @@ Because publication date is such a strong correlate with both citation rate and 
 
 
 
-####Validation for automated method of detecting data availability
+####Validation of automated method of detecting data availability
 
 Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
 
@@ -325,7 +325,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Sat Jul  7 16:32:26 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+Statistical analyses were last run on <code class="knitr inline">Sat Jul  7 18:16:27 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
@@ -342,12 +342,7 @@ We retained <code class="knitr inline">10557</code> articles published between 2
 
 
 
-The composition of this sample is spread across <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <div class="error"><pre class="knitr">
-Error in parse(text = code[i]) : 2:0: unexpected end of input
-1: 100*round(sum(sorted_journals), 2
-  ^
-
-</pre></div>% of the papers.
+The composition of this sample is spread across <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <code class="knitr inline">30</code>% of the papers.
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | Cancer Res               | 0.04 |
 ## | Proc Natl Acad Sci U S A | 0.04 |
@@ -612,17 +607,13 @@ The estimates of citation boost for papers published in each year, with 95% conf
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_regressionEstimatesByYear.png" class="plot" /></div></div>
 
 
-###Validation for automated method of detecting data availability
+###Validation of automated method of detecting data availability
 
 Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
 
 The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
 
-If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.
-
-To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.
-
-Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
+If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.  To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.  Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="number">206</span><span class="keyword">/</span><span class="number">226</span>
 </pre></div><div class="output"><pre class="knitr">## [1] 0.9115
@@ -714,13 +705,9 @@ To confirm that the erroniously-included articles were not driving the findings 
 
 These estimates of citation boost found in the multivariate regression were different from those found by (Piwowar et al 2007), even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
 
-First, Piwowar et al 2007 included only data from human cancer microarray trials published between 1999 and 2003 <check>, whereas the current study uses all gene expression microarray data studies in PubMed from 2001 through 2009. 
+First, Piwowar et al 2007 included only data from human cancer microarray trials published between 1999 and 2003 <check>, whereas the current study uses all gene expression microarray data studies in PubMed from 2001 through 2009. Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few possible covariates: publication date, journal impact factor, and country of the corresponding author.
 
-Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few possible covariates: publication date, journal impact factor, and country of the corresponding author.
-
-We attempted to reproduce that environment in the current study to see if we would find more comperable results.
-
-Limiting the current sample to datasets with MeSH terms "human" and "cancer" published from 2001 to 2003 retained 308 papers.  Running this subsample with  covariates from the Piwowar 2007 paper found a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+We attempted to reproduce that environment in the current study to see if we would find more comperable results.  Limiting the current sample to datasets with MeSH terms "human" and "cancer" published from 2001 to 2003 retained 308 papers.  Running this subsample with  covariates from the Piwowar 2007 paper found a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">)</span><span class="keyword">)</span>
 </pre></div><div class="output"><pre class="knitr">## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
@@ -854,21 +841,27 @@ These new estimates are lower than those found by previous studies.  The most si
 
 How can we interpret a citation boost of 10 to 30%?  Is it a large enough to motivate authors?  Future research is needed to understand author views on the trade-off between citation advantage (and other data archiving benefits) and perceived archiving costs.  For journals, a 10-30% citation boost is likely very motivating, given that journals currently fight for impact factor scores to two decimal places.  What about funders?  How is this citation boost related to more efficient and effective science?
 
+### data reuse
+
 A clear case can be made for data reuse contributing to a stellar scientific ROI [Nature letter], and at least part of an open data citation boost likely comes from data reuse attribution.  To verify that some of the data collection papers in this study were cited in the context of data reuse, we manually reviewed a random <code class="knitr inline">138</code> sample of the citations in our analysis.  We found that <code class="knitr inline">6</code>%
 (95% CI: <code class="knitr inline">3</code>%
 to <code class="knitr inline">11</code>%) of the citations were in the context of data reuse.  
 
-Understanding data reuse patterns required a larger sample could easily be assembled through manual classification of citation context.  Instead, our explorations of data reuse patterns leveraged an alternate practice for data reuse attribution: direct mention of a dataset's name and identifier (traditionally an accession number) within the body of a full-text research article.  
+Understanding data reuse patterns required a larger sample could easily be assembled through manual classification of citation context, so we collected a second dataset.  Our explorations of data reuse patterns leveraged an alternate practice for data reuse attribution: direct mention of a dataset's name and identifier (traditionally an accession number) within the body of a full-text research article.  
 
-Our results suggest the data collection team published almost all of its reuse papers within two years of the data being made publicly available.  In contrast, data reuse papers by third-party authors continued to accumulate rapidly 6 years after the data was made publicly available.  The level of third-party data use was high: for 100 datasets deposited in year 0, we estimate that 40 papers in PubMed reused a dataset by year 2, 100 by year 4, and more than 150 by year 7.  This data reuse curve held remarkably constant for data deposited between 2004 and 2009.  Microarray datasets made available in 2001 and 2002 were reused much more often, probably because of their ground-breaking roles.  The reuse growth trend for data deposited in 2003 has been slower, perhaps because 2003 data is not as ground-breaking as earlier data, and is probably less standards-compliant than later data.
+We found that the data collection team published almost all of its papers within two years of the data being made publicly available.  In contrast, data reuse papers by third-party authors continued to accumulate 6 years after the data was made publicly available.  The level of third-party data use was high: for 100 datasets deposited in year 0, we estimate that 40 papers in PubMed reused a dataset by year 2, 100 by year 4, and more than 150 by year 5.  This data reuse curve held remarkably constant for data deposited between 2004 and 2009.  Microarray datasets made available in 2001 and 2002 were reused much more often -- every single dataset deposited in 2001 has been reused in a third-party paper.  This is probably because of their ground-breaking roles.  The reuse growth trend for data deposited in 2003 has been slower, perhaps because 2003 data is not as ground-breaking as earlier data, and it is likely less standards-compliant and technically relevant than later data.
+
+Third-party reuse papers are being published at about the same rate as new datasets are made available.  Recent reuse analyses use more datasets, on average, than older reuse studies.  75% of reuse studies in 2010 used at least 3 datasets. Published analyses are most likely to include data published between 3 and 6 years ago, normalized for how many datasets were deposited each year.  
 
 These results suggest that the lower citation boost we observed for recent papers is due, at least in part, to a relatively short followup time.
 
-Analysis of the accession number mentions revealed that data reuse was driven by a broad base of datasets: at least 21% of the datasets deposited in both 2003 and 2007 had been reused by third parties, and 17% of datasets from 2009.  We note these proportions are gross underestimates since they only include reuses we observed as accession number mentions in PubMed Central; no attempt has been made to extrapolate these distribution statistics to all of PubMed, or to reflect attributions through citations.  Further, many important instances of data reuse do not leave a trace in the published literature, such as those in education and training. Nonetheless, even these conservative estimates suggest that reuse finds value in a wide range of datasets, not simply a "very reusable" elite.
+Analysis of the accession number mentions revealed that data reuse was driven by a broad base of datasets: at minimum of 20% of the datasets deposited between 2003 and 2007 have been reused by third parties.  We note these proportions are gross underestimates since they only include reuses we observed as accession number mentions in PubMed Central; no attempt has been made to extrapolate these distribution statistics to all of PubMed, or to reflect attributions through citations.  Further, many important instances of data reuse do not leave a trace in the published literature, such as those in education and training. Nonetheless, even these conservative estimates suggest that reuse finds value in a wide range of datasets, not simply a "very reusable" elite.
 
 Data reuse, and the attendant efficiencies and discoveries, is a primary motivation for requiring that research data be made available.  Consequently, accurate measurement of data reuse is particularly important.  Future work can improve on the current study and previous studies by considering and integrating all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- citations to the dataset as a first-class research object, and even mentions of the data collection investigators in acknowledgement sections.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.
 
 Estimates of data reuse could then be used to estimate the impact of policy decisions.  For example, do embargo periods decrease the level of data reuse?  Do restrictive or poorly articulated licencing terms decrease data reuse?  Which types of data reuse are facilitate by robust data standards and which types are unaffected?
+
+### other sources of citations
 
 We note that while an open data citation boost is likely largely driven by citation for data reuse, open data may directly or indirectly inspire citations for other reasons as well.  The literature on "Open Access Citation Benefit" has articulated several possible sources of OA citation boost, including Selection Bias and Early View ["Craig2007"].  Inspired by this work, we suggest several possible sources for an "Open Data Citation Benefit":
 
@@ -876,15 +869,17 @@ We note that while an open data citation boost is likely largely driven by citat
 1. *Credibility Signalling*. The credibility of research findings may be higher for research papers with available data. Such papers may be preferentially chosen background citations and/or the foundation of additional research.
 1. *Increased Visibility*. Citing authors may be more likely to encounter a research project with available data. More artifacts associated with a research project gives the project a larger footprint, increasing the likelihood that someone finds an aspect of the research. Links from data to the research paper may also increase the search ranking of the research paper.
 1. *Early View*. When data is made available before a paper is published, some citations may accrue earlier than otherwise because research methods and findings are encountered prior to paper publication.
-1. *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are most proud or confident in the results. ALTERNATIVELY, there is evidence that author self-selection bias may have a negative correlation with research quality in the case of Open Data [Wicherts 2011]: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection. 
+1. *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are most proud or confident in the results. Alternatively, there is evidence that author self-selection bias may have a negative correlation with research quality in the case of Open Data [Wicherts 2011]: authors may be less willing to share details for their most important and visible research in order to maintain a competitive edge and avoid the upheaval of error detection. 
 
 Importantly, almost all of these mechanisms are aligned with more efficient and effective science.  This means that fueling increased use, facilitated credibility determination, earlier access, improved discoverability, and a focus on best work through data availability is good for both investigators and the science community as a whole.  To address the main citation-related conflicting incentive, withholding data that might be important for finding weaknesses or faults, may require mandates.  Or, instead, perhaps the research community will quickly learn to associate withheld data with poor quality research.
 
 Although the estimated citation boost in the current study is consistent with observed data reuse alone, other sources may also have contributed.  Further work, with additional data, will be needed to understand the relative contributions from each source.  For example, analyses within the pubication output of a sample of data-collecting authors could support measurement of selection bias.  Observing search behaviour of researchers, and the returned search hit results, could provide evidence of increased visibility due to data availability.  Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of the findings.
 
-As evaluators move away from assessing research based on journal impact factor and toward article-level metrics, post-publication metrics rates will become icreasingly important indicators of research impact.  This study and associated work clearly demonstrates that improvements in tools and practice are needed to make impact tracking easier and more accurate, for day-to-day analysis as well as studies like this.  Researchers and research tools need libre access to the full-text of the research literature to support sophisticated text mining.  Citation databases are key building blocks of discovery: researchers need access to the services, and also to the code that support the services so they are empowered to add missing features.  Practice needs improvement too.  Currently data attribution practices are nonstandard, which inevitably leads to confusion and undercounting. 
+### tools, practices, and research
 
-Future work is needed to assess other important metrics of reuse, beyond citation.  The impact on practitioners, education, data journalism, and industry research are not captured by attibution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syallabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.  
+This study and associated work clearly demonstrate that improvements in tools and practice are needed to make impact tracking easier and more accurate, for day-to-day analysis as well as studies like this.  Researchers and research tools need libre access to the full-text of the research literature to support sophisticated text mining.  Citation databases are key building blocks of discovery: researchers need access to the services, and also to the code that support the services so they are empowered to add missing features.  Practice needs improvement too.  Currently data attribution practices are nonstandard, which inevitably leads to confusion and undercounting. 
+
+Future work is needed to assess other important metrics of reuse, beyond citation.  The impact on practitioners, education, data journalism, and industry research are not captured by attibution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syallabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.  As evaluators move away from assessing research based on journal impact factor and toward article-level metrics, post-publication metrics rates will become icreasingly important indicators of research impact.  
 
 It is important to remember that the primary rationale for making research data broadly available has nothing to do with evaluation metrics: full description of experimental process and findings is a tenant of science and publicly-funded science is a public resource [http://www.nature.com/news/open-your-minds-and-share-your-results-1.10895].  Nonetheless, robust evidence of personal benefit will help as science transitions to a culture that simply expects data.
 
@@ -903,11 +898,36 @@ Both authors discussed the results and implications and commented on the manuscr
 
 ## References
 
-see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/)
+See references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/) 
 
-- heather, give the papers in the mendeley library another read
+- Barrett, Dennis B Troup, Stephen E Wilhite, Pierre Ledoux, Carlos Evangelista, Irene F Kim, Maxim Tomashevsky, Kimberly A Marshall, Katherine H Phillippy, Patti M Sherman, Rolf N Muertter, Michelle Holko, Oluwabukunmi Ayanbule, Andrey Yefanov, Alexandra Soboleva (2011) NCBI GEO: archive for functional genomics data sets--10 years on.   Nucleic acids research 39 (Database issue) p. D1005-10
+- Bollen J, Van de Sompel H, Hagberg A, Chute R (2009) A Principal Component Analysis of 39 Scientific Impact Measures. PLoS ONE 4(6): e6022. doi:10.1371/journal.pone.0006022
+- Chavan, V. S., & Ingwersen, P. (2009). Towards a data publishing framework for primary biodiversity data: challenges and potentials for the biodiversity informatics community. BMC Bioinformatics, 10(Suppl 14), S2. Retrieved from http://www.biomedcentral.com/1471-2105/10/S14/S2
+- Dudley JT, Robert Tibshirani, Tarangini Deshpande, Atul J Butte (2009) Disease signatures are robust across tissues and experiments.  Molecular systems biology 5 p. 307
+- Ibanez, A., Larrañaga, P. and Bielza, C.  Bioinformatics, 25, 3303-3309 (2009). "Predicting citation count of Bioinformatics papers within four years of publication." http://bioinformatics.oxfordjournals.org/content/25/24/3303.full
+- Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., & McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991
+- Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
+- Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
+- Piwowar, Chapman (2010)  Recall and bias of retrieving gene expression microarray datasets through PubMed identifiers  Journal of Biomedical Discovery and Collaboration.  J Biomed Discov Collab. 2010; 5: 7–20.
+- Piwowar; Jonathan D. Carlson; and Todd J. Vision. Beginning to Track 1000 Datasets from Public Repositories into the Published Literature.  ASIS&T 2011.
+- Piwowar, H. A., Vision, T. J., & Whitlock, M. C. (2011). Data archiving is a good investment. Nature, 473(7347), 285-285. Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved. Retrieved from http://dx.doi.org/10.1038/473285a
+- Tenopir C, Allard S, Douglass K, Aydinoglu AU, Wu L, et al. (2011) Data Sharing by Scientists: Practices and Perceptions. PLoS ONE 6(6): e21101. doi:10.1371/journal.pone.0021101
 
-References:
+Other studies of citation benefit:
+
+- Gleditsch, Nils Petter & Håvard Strand, 2003. 'Posting Your Data: Will You Be Scooped or Will You Be Famous?', International Studies Perspectives 4(1): 89–97.
+- Henneken, Edwin A and Accomazzi, Alberto.  Linking to Data - Effect on Citation Rates in Astronomy. eprint arXiv:1111.3618 11/2011
+- Ioannidis et al. Repeatability of published microarray gene expression analyses  Nature Genetics 41, 149 - 155 (2009) .  doi:10.1038/ng.295
+- Pienta et al The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
+- Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
+- Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
+- http://www.komfor.net/blog/unbenanntemitteilung
+- Milia N, Congiu A, Anagnostou P, Montinaro F, Capocasa M, et al. (2012) Mine, Yours, Ours? Sharing Data on Human Genetic Variation. PLoS ONE 7(6): e37552. doi:10.1371/journal.pone.0037552
+- http://hprints.org/hprints-00714715
+
+References for knitr libraries:
+
 Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
 of Statistical Software_, *21*(12), pp. 1-20. <URL:
 http://www.jstatsoft.org/v21/i12/>.
@@ -948,148 +968,11 @@ http://yihui.name/knitr/>.
 
 
 
-### Experimenting with knitr citations
-Demo citing thank Carl for his great library! 
-[1] "(Boettiger, 2012)"
 
 
 
-Now cite everyone! 
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">citep</span><span class="keyword">(</span><span class="symbol">biblio</span><span class="keyword">[</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">biblio</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## [1] "(Bollen _et. al._ 2009; Chavan & Ingwersen, 2009; Gleditsch & Strand, 2003; Ib\\'{a}\\~{n}ez _et. al._ 2009; Ioannidis _et. al._ 2009; Ochsner _et. al._ 2008; Pienta _et. al._ 2010; Pienta _et. al._ 2006; Piwowar _et. al._ 2007; Piwowar _et. al._ 2011; Piwowar, 2011; character(0); Piwowar _et. al._ 2011; Piwowar & Chapman, 2010; Sears, 2011)"
-</pre></div></div></div>
 
 
-### demo bibliography
-
-Boettiger C (2012). _knitcitations: Citations for knitr markdown
-files_. R package version 0.0-1.
-
-Bollen J, Van de Sompel H, Hagberg A and Chute R (2009). "A principal
-component analysis of 39 scientific impact measures." _PloS one_,
-*4*(6), pp. e6022. ISSN 1932-6203, <URL:
-http://dx.doi.org/10.1371/journal.pone.0006022>, <URL:
-http://dx.plos.org/10.1371/journal.pone.0006022>.
-
-Chavan VS and Ingwersen P (2009). "Towards a data publishing framework
-for primary biodiversity data: challenges and potentials for the
-biodiversity informatics community." _BMC bioinformatics_, *10 Suppl
-1*(Suppl 14), pp. S2. ISSN 1471-2105, <URL:
-http://dx.doi.org/10.1186/1471-2105-10-S14-S2>, <URL:
-http://www.biomedcentral.com/1471-2105/10/S14/S2>.
-
-Gleditsch NP and Strand H (2003). "Posting your data: will you be
-scooped or will you be famous?" _International Studies Perspectives_,
-*4*(1), pp. 89-97. <URL:
-http://www.prio.no/Research-and-Publications/Publication/?oid=55406>.
-
-Ibáñez A, Larrañaga P and Bielza C (2009). "Predicting citation count
-of Bioinformatics papers within four years of publication."
-_Bioinformatics (Oxford, England)_, *25*(24), pp. 3303-9. ISSN
-1367-4811, <URL: http://dx.doi.org/10.1093/bioinformatics/btp585>,
-<URL:
-http://bioinformatics.oxfordjournals.org/cgi/content/abstract/25/24/3303>.
-
-Ioannidis JPA, Allison DB, Ball CA, Coulibaly I, Cui X, Culhane AC,
-Falchi M, Furlanello C, Game L, Jurman G, Mangion J, Mehta T, Nitzberg
-M, Page GP, Petretto E and Noort Vv (2009). "Repeatability of published
-microarray gene expression analyses." _Nature genetics_, *41*(2), pp.
-149-55. ISSN 1546-1718, <URL: http://dx.doi.org/10.1038/ng.295>, <URL:
-http://www.ncbi.nlm.nih.gov/pubmed/19174838>.
-
-Ochsner SA, Steffen DL, Stoeckert CJ and McKenna NJ (2008). "Much room
-for improvement in deposition rates of expression microarray datasets."
-_Nature methods_, *5*(12), pp. 991. ISSN 1548-7105, <URL:
-http://dx.doi.org/10.1038/nmeth1208-991>, <URL:
-http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2975491\&tool=pmcentrez\&rendertype=abstract>.
-
-Pienta AM, Alter GC and Lyle JA (2010). "The Enduring Value of Social
-Science Research: The Use and Reuse of Primary Research Data." _The
-Organisation, Economics and Policy of Scientific Research workshop_.
-<URL: http://hdl.handle.net/2027.42/78307>.
-
-Pienta A, McNally J and Gutmann M (2006). "The Research Data Life Cycle
-and the Probability of Secondary Use in Re-Analysis." <URL:
-http://paa2006.princeton.edu/download.aspx?submissionId=61527>.
-
-Piwowar HA, Day RB and Fridsma DS (2007). "Sharing detailed research
-data is associated with increased citation rate." _PLoS ONE_, *2*(3).
-<URL: http://dx.doi.org/10.1371%2Fjournal.pone.0000308>.
-
-Piwowar HA, Vision TJ and Whitlock MC (2011). "Data archiving is a good
-investment." _Nature_, *473*(7347), pp. 285. ISSN 1476-4687, <URL:
-http://dx.doi.org/10.1038/473285a>, <URL:
-http://dx.doi.org/10.1038/473285a>.
-
-Piwowar HA (2011). "Who Shares? Who Doesn't? Factors Associated with
-Openly Archiving Raw Research Data." _PLoS ONE_, *6*(7), pp. e18657.
-ISSN 1932-6203, <URL: http://dx.doi.org/10.1371/journal.pone.0018657>,
-<URL: http://dx.plos.org/10.1371/journal.pone.0018657>.
-
-Piwowar HA (????). "Data from: Who shares? Who doesn't? Factors
-associated with openly archiving raw research data." <URL:
-http://dx.doi.org/10.5061/dryad.mf1sd>, <URL:
-http://datadryad.org/handle/10255/dryad.33858>.
-
-Piwowar HA, Carlson JD and Vision TJ (2011). "Beginning to track 1000
-datasets from public repositories into the published literature."
-_Proceedings of the American Society for Information Science and
-Technology_, *48*(1), pp. 1-4. ISSN 00447870, <URL:
-http://dx.doi.org/10.1002/meet.2011.14504801337>, <URL:
-http://doi.wiley.com/10.1002/meet.2011.14504801337>.
-
-Piwowar H and Chapman W (2010). "Recall and bias of retrieving gene
-expression microarray datasets through PubMed identifiers." _Journal of
-biomedical discovery and collaboration_, *5*, pp. 7-20. ISSN 1747-5333,
-<URL: http://www.ncbi.nlm.nih.gov/pubmed/20349403>.
-
-Sears J (2011). "Data Sharing Effect on Article Citation Rate in
-Paleoceanography - KomFor." <URL:
-http://www.komfor.net/blog/unbenanntemitteilung>.
-
-
-
-### Other studies of citation benefit:
-
-- Gleditsch, Nils Petter & Håvard Strand, 2003. 'Posting Your Data: Will You Be Scooped or Will You Be Famous?', International Studies Perspectives 4(1): 89–97.
-- Henneken, Edwin A and Accomazzi, Alberto.  Linking to Data - Effect on Citation Rates in Astronomy. eprint arXiv:1111.3618 11/2011
-- Ioannidis et al. Repeatability of published microarray gene expression analyses  Nature Genetics 41, 149 - 155 (2009) .  doi:10.1038/ng.295
-- Pienta et al The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
-The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis 
-- Amy M. Pienta, George Alter, Jared Lyle.  The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.  http://hdl.handle.net/2027.42/78307 
-- Piwowar HA, Day RS, Fridsma DB (2007) Sharing Detailed Research Data Is Associated with Increased Citation Rate. PLoS ONE 2(3): e308. doi:10.1371/journal.pone.0000308
-- http://www.komfor.net/blog/unbenanntemitteilung
-- Milia N, Congiu A, Anagnostou P, Montinaro F, Capocasa M, et al. (2012) Mine, Yours, Ours? Sharing Data on Human Genetic Variation. PLoS ONE 7(6): e37552. doi:10.1371/journal.pone.0037552
-- http://hprints.org/hprints-00714715
-
-### Used in this analysis
-
-- Piwowar HA (2011) Who shares? Who doesn’t? Factors associated with openly archiving raw research data. PLoS ONE 6(7): e18657. doi:10.1371/journal.pone.0018657
-- Piwowar HA (2011) Data from: Who shares? Who doesn’t? Factors associated with openly archiving raw research data. Dryad Digital Repository. doi:10.5061/dryad.mf1sd
-- Heather A Piwowar, Wendy W Chapman (2010)  Recall and bias of retrieving gene expression microarray datasets through PubMed identifiers  Journal of Biomedical Discovery and Collaboration.  J Biomed Discov Collab. 2010; 5: 7–20.
-- Heather A. Piwowar; Jonathan D. Carlson; and Todd J. Vision. Beginning to Track 1000 Datasets from Public Repositories into the Published Literature.  ASIS&T 2011.
-
-### Also relevant:
-
-- (Data Usage Index):  Chavan, V. S., & Ingwersen, P. (2009). Towards a data publishing framework for primary biodiversity data: challenges and potentials for the biodiversity informatics community. BMC Bioinformatics, 10(Suppl 14), S2. Retrieved from http://www.biomedcentral.com/1471-2105/10/S14/S2
-- Piwowar, H. A., Vision, T. J., & Whitlock, M. C. (2011). Data archiving is a good investment. Nature, 473(7347), 285-285. Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved. Retrieved from http://dx.doi.org/10.1038/473285a
-- Bollen J, Van de Sompel H, Hagberg A, Chute R (2009) A Principal Component Analysis of 39 Scientific Impact Measures. PLoS ONE 4(6): e6022. doi:10.1371/journal.pone.0006022
-- Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., & McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991
-- Definitely some things about move to citation of datasets themselves
-- altmetrics on CV, away from impact factor
-
-<ul>
-  <li>Ochsner, S. A., Steffen, D. L., Stoeckert, C. J., &amp; McKenna, N. J. (2008). Much room for improvement in deposition rates of expression microarray datasets. Nature Methods. Retrieved from http://dx.doi.org/10.1038/nmeth1208-991</li>
-  <li>Tenopir C, Allard S, Douglass K, Aydinoglu AU, Wu L, et al. (2011) Data Sharing by Scientists: Practices and Perceptions. PLoS ONE 6(6): e21101. doi:10.1371/journal.pone.0021101</li>
-  <li>Piwowar HA (2011). "Who Shares? Who Doesn't? Factors Associated with Openly Archiving Raw Research Data." <em>PLoS ONE</em>, <em>6</em>(7), pp. e18657</li>
-  <li>Dudley JT, Robert Tibshirani, Tarangini Deshpande, Atul J Butte (2009) Disease signatures are robust across tissues and experiments.  Molecular systems biology 5 p. 307</li>
-  <li>Tanya Barrett, Dennis B Troup, Stephen E Wilhite, Pierre Ledoux, Carlos Evangelista, Irene F Kim, Maxim Tomashevsky, Kimberly A Marshall, Katherine H Phillippy, Patti M Sherman, Rolf N Muertter, Michelle Holko, Oluwabukunmi Ayanbule, Andrey Yefanov, Alexandra Soboleva (2011) NCBI GEO: archive for functional genomics data sets--10 years on.   Nucleic acids research 39 (Database issue) p. D1005-10</li>
-</ul>
-
-### Other studies of correlation with citations:
-
-- Bioinformatics, 25, 3303-3309 (2009). "Predicting citation count of Bioinformatics papers within four years of publication." Ibanez, A., Larrañaga, P. and Bielza, C.  http://bioinformatics.oxfordjournals.org/content/25/24/3303.full
 
 
 ## Abstract
