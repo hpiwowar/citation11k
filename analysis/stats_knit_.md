@@ -971,16 +971,23 @@ These new estimates are lower than those found by previous studies.  The most si
 
 How can we interpret a citation boost of 10 to 30%?  Is it a large enough to motivate authors?  Future research is needed to understand author views on the trade-off between citation advantage (and other data archiving benefits) and perceived archiving costs.  For journals, a 10-30% citation boost is likely very motivating, given that journals currently fight for impact factor scores to two decimal places.  What about funders?  How is this citation boost related to more efficient and effective science?
 
-Data reuse attribution is the most obvious source of an open data citation boost, and a clear case can be made for data reuse contributing to a stellar scientific ROI [Nature letter].  To verify that some of the citation boost did indeed come from data reuse, we manually reviewed a random <!--rinline num.GEO.total --> sample of the citations in our analysis.  We found that <!--rinline 100*(round(annotated.prop[1], 2)) -->%
+A clear case can be made for data reuse contributing to a stellar scientific ROI [Nature letter], and at least part of an open data citation boost likely comes from data reuse attribution.  To verify that some of the data collection papers in this study were cited in the context of data reuse, we manually reviewed a random <!--rinline num.GEO.total --> sample of the citations in our analysis.  We found that <!--rinline 100*(round(annotated.prop[1], 2)) -->%
 (95% CI: <!--rinline 100*(round(annotated.prop[2], 2)) -->%
 to <!--rinline 100*(round(annotated.prop[3], 2)) -->%) of the citations were in the context of data reuse.  
 
-To understand data reuse patterns in more depth would require a larger sample.  To explore relative patterns we relied on an alternate path to data reuse attribution: rather direct mention of a dataset's name and number within the body of a full-text research article.  Using search engines that permit searching a subset of the scientific literature and then extrapolating to the full content of PubMed, we estimate that ..... [heather pick up here]
+Understanding data reuse patterns required a larger sample could easily be assembled through manual classification of citation context.  Instead, our explorations of data reuse patterns leveraged an alternate practice for data reuse attribution: direct mention of a dataset's name and identifier (traditionally an accession number) within the body of a full-text research article.  
 
+Our results suggest the data collection team published almost all of its reuse papers within two years of the data being made publicly available.  In contrast, data reuse papers by third-party authors continued to accumulate rapidly 6 years after the data was made publicly available.  The level of third-party data use was high: for 100 datasets deposited in year 0, we estimate that 40 papers in PubMed reused a dataset by year 2, 100 by year 4, and more than 150 by year 7.  This data reuse curve held remarkably constant for data deposited between 2004 and 2009.  Microarray datasets made available in 2001 and 2002 were reused much more often, probably because of their ground-breaking roles.  The reuse growth trend for data deposited in 2003 has been slower, perhaps because 2003 data is not as ground-breaking as earlier data, and is probably less standards-compliant than later data.
 
+These results suggest that the lower citation boost we observed for recent papers is due, at least in part, to a relatively short followup time.
 
+Analysis of the accession number mentions revealed that data reuse was driven by a broad base of datasets: at least 21% of the datasets deposited in both 2003 and 2007 had been reused by third parties, and 17% of datasets from 2009.  We note these proportions are gross underestimates since they only include reuses we observed as accession number mentions in PubMed Central; no attempt has been made to extrapolate these distribution statistics to all of PubMed, or to reflect attributions through citations.  Further, many important instances of data reuse do not leave a trace in the published literature, such as those in education and training. Nonetheless, even these conservative estimates suggest that reuse finds value in a wide range of datasets, not simply a "very reusable" elite.
 
-In addition to data reuse, open data may inspire and faciliate citations in other ways.  The literature on "Open Access Citation Benefit" has articulated several possible sources of OA citation boost, including Selection Bias and Early View ["Craig2007"].  Inspired by this work, we suggest several possible sources for an "Open Data Citation Benefit":
+Data reuse, and the attendant efficiencies and discoveries, is a primary motivation for requiring that research data be made available.  Consequently, accurate measurement of data reuse is particularly important.  Future work can improve on the current study and previous studies by considering and integrating all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- citations to the dataset as a first-class research object, and even mentions of the data collection investigators in acknowledgement sections.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.
+
+Estimates of data reuse could then be used to estimate the impact of policy decisions.  For example, do embargo periods decrease the level of data reuse?  Do restrictive or poorly articulated licencing terms decrease data reuse?  Which types of data reuse are facilitate by robust data standards and which types are unaffected?
+
+We note that while an open data citation boost is likely largely driven by citation for data reuse, open data may directly or indirectly inspire citations for other reasons as well.  The literature on "Open Access Citation Benefit" has articulated several possible sources of OA citation boost, including Selection Bias and Early View ["Craig2007"].  Inspired by this work, we suggest several possible sources for an "Open Data Citation Benefit":
 
 1. *Data Reuse*. Papers with available datasets can be used in more ways than papers without data, and therefore may receive additional attributions upon published data reuse.
 1. *Credibility Signalling*. The credibility of research findings may be higher for research papers with available data. Such papers may be preferentially chosen background citations and/or the foundation of additional research.
@@ -990,81 +997,13 @@ In addition to data reuse, open data may inspire and faciliate citations in othe
 
 Importantly, almost all of these mechanisms are aligned with more efficient and effective science.  This means that fueling increased use, facilitated credibility determination, earlier access, improved discoverability, and a focus on best work through data availability is good for both investigators and the science community as a whole.  To address the main citation-related conflicting incentive, withholding data that might be important for finding weaknesses or faults, may require mandates.  Or, instead, perhaps the research community will quickly learn to associate withheld data with poor quality research.
 
-The estimated citation boost in the current study is consistent with observed data reuse alone, but the error bounds are large enough that other sources may also have contributed.  Further work, with additional data, will be needed to understand the relative contributions from each source.  For example, analyses within the pubication output of a sample of data-collecting authors could support measurement of selection bias.  Observing search behaviour of researchers, and the returned search hit results, could provide evidence of increased visibility due to data availability.  Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of the findings.
+Although the estimated citation boost in the current study is consistent with observed data reuse alone, other sources may also have contributed.  Further work, with additional data, will be needed to understand the relative contributions from each source.  For example, analyses within the pubication output of a sample of data-collecting authors could support measurement of selection bias.  Observing search behaviour of researchers, and the returned search hit results, could provide evidence of increased visibility due to data availability.  Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of the findings.
 
+As evaluators move away from assessing research based on journal impact factor and toward article-level metrics, post-publication metrics rates will become icreasingly important indicators of research impact.  This study and associated work clearly demonstrates that improvements in tools and practice are needed to make impact tracking easier and more accurate, for day-to-day analysis as well as studies like this.  Researchers and research tools need libre access to the full-text of the research literature to support sophisticated text mining.  Citation databases are key building blocks of discovery: researchers need access to the services, and also to the code that support the services so they are empowered to add missing features.  Practice needs improvement too.  Currently data attribution practices are nonstandard, which inevitably leads to confusion and undercounting. 
 
+Future work is needed to assess other important metrics of reuse, beyond citation.  The impact on practitioners, education, data journalism, and industry research are not captured by attibution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syallabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.  
 
-
-What would this look like in terms of data reuse?
-
-
-
-
-- the number of papers that reused data was still increasing rapidly after three years.  This suggests that the relatively low level of citation boost we observe for papers published in 2007-2009 may be because not enough time has passed for reuse articles to have been written in large quantity. 
-
-
-- potential for greater boost if authors always attributed data reuse through citations, rather than sometimes through in-text accession number (cite the "Beginning to Track 1k datasets" abstract for estimated breakdown of citations-to-papers vs attribution-through-accessionnumber for GEO data)  *this is parallel to one of the points in the limitations section.*
-- put these findings in the context of the history of gene expression microarray data: Todd''s email.  *suggestions on the discussion angle for this?*
-- unknown factor of how important poorly documented over time. documentation changes over time.  high citation early on, if real, may be true that high standardization is not a prereq for data reuse.  todd's email
-- don't know if changes over time
-
-- what is the citaiton boost
-- how uniform accross year and journals
-- changing standards like MIAME
-- role of covariates, and other ones we didn't look like liek standards
-- other caveates to results
-- how to does it relate to previous
-(variablility, belief, etc)
-
-*2. timeline of data reuse*
-
-*3. what is the cause of the boost*
-
-What might be the cause of a citation boost for papers with publicly available data?  
-
-*4. future work include this?*
-
-Data reuse, and the attendant efficiencies and discoveries, is a primary motivation for requiring that research data be made available.  Consequently, accurate measurement of data reuse is particularly important.  Future work can improve on previous studies by considering all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- and even acknowledgements to the data collection investigators.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.
-
-These estimates of data reuse could then be used to estimate the impact of policy decisions.  For example, do embargo periods decrease the level of data reuse?  Do restrictive or poorly articulated licencing terms decrease data reuse?  Which types of data reuse are facilitate by robust data standards and which types are unaffected?
-
-Future work is also needed to assess other important metrics of reuse, beyond citation.  The impact on practitioners, education, data journalism, and industry research are not captured by attibution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syallabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.
-
-- mention the paper that looked at the reuse attributes
-
-*5. implications.  wrap-up thoughts*
-
-The findings of this study suggest that papers with available data make a bigger impact on the scientific literature than similar papers without available data.  Making an impact is important to funders, journals, and authors themselves.  A ten percent increase in the impact of a research project is noteworthy, given that today journals fight for journal impact factor scores to two decimal places.  As evaluators move away from assessing research based on journal impact factor and toward article-level metrics, post-publication citation rates are becoming key indicators of research impact.  
-
-The strongest rationale for making research data broadly availble is not that it may increase one's citation count: full description of experimental process and findings is a tenant of science and publicly-funded science is a public resource [http://www.nature.com/news/open-your-minds-and-share-your-results-1.10895].  Nonetheless, robust evidence of personal benefit will help as science transitions to a culture that expects data to be widely available. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-*limitations.  work these into flow of discussion*
-
-- automated methods were imperfect: full text to the scientific literature would permit more sophisticated and accurate retrieval techniques based on full-text.
-- This is an underestimate of total reuse (some attribution through accession number, some attribution is in citations in supplementary information which is not indexed by Scopus, some papers that may cite aren''t indexed by Scopus) *maybe inlude this point in general discussion as mentioned below, rather than in limitations?*
-- Due to mechanics of accessing so many citations through Scopus website, weren''t able to get detailed timing of each citation, so all citation counts were censored as of the collection date rather than a fixed time period after the date of publication.  Also, we can''t tell if low level of citation boost in recent articles is because they have yet to accumulate or because the number of available datasets is now so large that the reuse level of any specific article has decreased.
-- (negative binomial is probably a better statistical technique than linear regression, but it isn''t standard)
-- we didn't gather evidence about when the data was made available, though previous work suggested it was usually at the time of paper publication (Piwowar 2007)
-- Correlation doesn''t imply causation.  Although this analysis includes more variables, other important ones are still missing: funder, funding levels, etc.
-
-*fit these in?*
-
-- Making data available doesn’t just increase the impact of research by a certain amount: opens it up to whole new *types* of use. 
-- Archiving data has costs, but the hassle of archiving data is very small 
-relative to all the work that goes into a research publication.
-
+It is important to remember that the primary rationale for making research data broadly available has nothing to do with evaluation metrics: full description of experimental process and findings is a tenant of science and publicly-funded science is a public resource [http://www.nature.com/news/open-your-minds-and-share-your-results-1.10895].  Nonetheless, robust evidence of personal benefit will help as science transitions to a culture that simply expects data.
 
 ## Acknowledgements
 
@@ -1082,6 +1021,8 @@ Both authors discussed the results and implications and commented on the manuscr
 ## References
 
 see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-citation/papers/)
+
+- heather, give the papers in the mendeley library another read
 
 ### Experimenting with knitr citations
 Demo citing thank Carl for his great library! 
