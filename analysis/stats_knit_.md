@@ -438,7 +438,7 @@ We followed that with a second regression that included several additional impor
              , dat.subset.previous.study)
 end.rcode-->
 
-####Complementary evidence of data reuse from citation context
+####Manual review of citation context
 
 We manually reviewed the citation context of some of these papers to determine how many of the citations were in the context of data reuse.
 
@@ -788,7 +788,7 @@ end.rcode-->
 
 
 
-### Complementary evidence of data reuse from citation context
+### Manual review of citation context
 
 To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science.  A sample of 138 citations were randomly selected and manually reviewed.  
 
@@ -798,7 +798,7 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 , <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
 
 
-### Complementary evidence of data reuse from accession number attribution
+### Data reuse patterns from accession number attribution
 
 
 Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.

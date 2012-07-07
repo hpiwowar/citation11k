@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Sat Jul  7 16:24:03 2012</code>
+ * Generated on <code class="knitr inline">Sat Jul  7 16:31:51 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -257,7 +257,7 @@ We followed that with a second regression that included several additional impor
 </pre></div></div></div>
 
 
-####Complementary evidence of data reuse from citation context
+####Manual review of citation context
 
 We manually reviewed the citation context of some of these papers to determine how many of the citations were in the context of data reuse.
 
@@ -325,7 +325,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Sat Jul  7 16:24:38 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+Statistical analyses were last run on <code class="knitr inline">Sat Jul  7 16:32:26 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
@@ -759,7 +759,7 @@ How is did this estimate change when we included additional covariates?  The sub
 
 
 
-### Complementary evidence of data reuse from citation context
+### Manual review of citation context
 
 To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science.  A sample of 138 citations were randomly selected and manually reviewed.  
 
@@ -769,7 +769,7 @@ with 95% confidence intervals [<code class="knitr inline">3</code>%
 , <code class="knitr inline">11</code>% ]
 
 
-### Complementary evidence of data reuse from accession number attribution
+### Data reuse patterns from accession number attribution
 
 
 Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.
