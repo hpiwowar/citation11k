@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Sat Jul  7 14:02:50 2012</code>
+ * Generated on <code class="knitr inline">Sat Jul  7 16:24:03 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -47,6 +47,7 @@ To extract the R code in a separate .R file called stats_knit_.R, run knit with 
 ## Goal
 1. Is there an association between data availability and citation rate, independently of important known citation predictors?
 1. Is there supporting evidence that additional citations are due to data reuse?
+1. What is the timeline of data reuse?
 
 ## Abstract
 
@@ -62,37 +63,28 @@ Scientists report that receiving more citations would be an important motivator 
 
 Several studies across several disciplines have found an association between data availability and number of citations recieved by a publication [cite studies below]. This evidence has been <a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">frequently referenced</a>, including in new policies that encourage and require data archiving [<a href="http://scholar.google.com/scholar?cites=10688057049876523086&amp;as_sdt=5,39&amp;sciodt=0,39&amp;hl=en">http://datadryad.org/jdap</a>]. It is important, therefore, to continue to strive for an accurate estimate of possible citation benefit.
 
-The present study hopes to improve previous estimates in several ways. First, the present study is large enough to include many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on the number of citations that may be due to data reuse.
-
-Gene expression microarray data provides a useful environment for the investigation: despite being valuable for reuse [Dudley] and well-supported by data sharing standards and infrastructure [Barrett], fewer than half of the studies that collect this data make it publicly available [Ochsner, Piwowar 2011].
-
+The present study hopes to improve previous estimates in several ways. First, the present study is large enough to include many key covariates that may have conflated estimates of citation boost in previous, smaller studies: Number of authors, author publication experience, institution, open access availability, and subject area. Second, the current analysis estimates how citation boost levels may change over time. Third, the current analysis includes evidence on patterns of data reuse.
 
 
 ## Methods
 
-### Citations to gene expression microarray studies
 
-#### Identification of relevant studies
+###Relationship between data availability and citation
+
+####Data collection
 
 
 
 
 The primary analysis in this paper examines the citation count of a gene expression microarray experiment, relative to availability of the experiment's data.
 
-The sample of microarray experiments used in the current analysis was previously determined (Piwowar 2011 PLoS ONE, data from Piwowar 2011 Dryad).  Briefly, a full-text query uncovered papers with keywords associated with relevant wet-lab methods.  The full-text query had been characterized with high precision (90%, 95% confidence interval 86% to 93%) and a moderate recall (56%, 52% to 61%) for this task.  Running the query in PubMed Central, HighWire Press, and Google Scholar revealed <code class="knitr inline">11603</code> distinct gene expression microarray papers.  The papers were published between 2000 and 2009.
+The sample of microarray experiments used in the current analysis was previously determined (Piwowar 2011 PLoS ONE, data from Piwowar 2011 Dryad).  Briefly, a full-text query uncovered papers with wet-lab methods related to gene expression microarray data collection.  The full-text query was characterized with high precision (90%, 95% confidence interval 86% to 93%) and a moderate recall (56%, 52% to 61%) for this task.  Running the query in PubMed Central, HighWire Press, and Google Scholar identified <code class="knitr inline">11603</code> distinct gene expression microarray papers.  The papers were published between 2000 and 2009.
 
-The current analysis retained papers published from 2001 through 2009.
-
-
-#### Assessment of data availability
-
-The independent variable of interest in this analysis is the availability of gene expression microarray data.  Data availability had been previously determined for our sample articles in Piwowar 2011, so we directly reused that dataset [Piwowar Dryad 2011].  This study limited its data hunt to just the two predominant gene expression microarray databases: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress.
+The independent variable of interest is the availability of gene expression microarray data.  Data availability had been previously determined for our sample articles in Piwowar 2011, so we directly reused that dataset [Piwowar Dryad 2011].  Datasets were considered available if they were discovered in either of the two predominant gene expression microarray databases: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress.
 
 "An earlier evaluation found that querying GEO and ArrayExpress with article PubMed identifiers located a representative 77% of all associated publicly available datasets [Piwowar 2010]. [We] used the same method for finding datasets associated with published articles in this study: [we] queried GEO for links to the PubMed identifiers in the analysis sample using the “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Articles linked from a dataset in either of these two centralized repositories were considered to have [publicly available data] for the endpoint of this study, and those without such a link were considered not to have [available] data." [Piwowar 2011]
 
-#### Study attributes
-
-Piwowar 2011 includes 124 attributes for each of the gene expression microarray studies in our sample.  The subset of attributes previously shown or suspected to correlate with citation rate were included in the current analysis:
+Piwowar 2011 included 124 attributes for each of the gene expression microarray studies in our sample.  We used a subset of these --attributes previously shown or suspected to correlate with citation rate:
 
 
 
@@ -112,9 +104,8 @@ Piwowar 2011 includes 124 attributes for each of the gene expression microarray 
 * study topic (human/animal/plant study, cancer/not cancer)
 * NIH funding of the study, if applicable
 
-#### Citation data
 
-This study required citation counts for thousands of articles identified through PubMed IDs. At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported this type of query. It was (and is) supported by Elsevier's Scopus citation database. Alas, none of our affiliated institutions subscribed to Scopus. Scopus does not offer individual subscriptions, and a personal email to a Scopus Product Manager went unanswered.
+This study required citation counts for thousands of articles, based on  PubMed ID. At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported looking up number of citations by PubMed ID. This type of query was (and is) supported by Elsevier's Scopus citation database. Alas, none of our affiliated institutions subscribed to Scopus. Scopus does not offer individual subscriptions. A personal email to a Scopus Product Manager went unanswered.
 
 One author (HAP) attempted to use the British Library's walk-in access of Scopus on its Reading Room computers during a trip overseas. Unfortunately, the British Library did not permit any method of electronic transfer of our PubMed identifier list onto the Reading Room computers, including internet document access, transferring a text file from a USB drive, or using the help desk as an intermediary (see related policies at http://www.bl.uk/reshelp/inrrooms/stp/cond/conditions.html). The Library was not willing to permit an exception in this case, and we were unwilling to manually type ten thousand PubMed identifiers into the Scopus search box in the Reading Room.
 HAP eventually obtained Scopus access through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate.
@@ -124,67 +115,10 @@ Although Scopus now has an API that would facilitate easy programmatic access to
 
 
 
-Citation counts for <code class="knitr inline">10555</code> papers were gathered from Scopus in November 2011. 
+Citation counts for <code class="knitr inline">10555</code> papers were exported from Scopus in November 2011. 
 
 
-
-### Inline mentions of microarray dataset reuse
-
-To derive an estimate of the reuse of data in GEO, we took advantage of the conventions for citing GEO datasets through accession numbers and GEO’s integration with PubMed and PubMed Central (PMC). 
-
-Using PMC, we searched the full text of papers published between 2007 and 2010 for mention of one or more of the 2,711 accession numbers assigned to data series submitted to GEO in 2007. We excluded those papers that a) had author names in common with those who deposited the data (since the original authors would presumably have access to the data even in the absence of the archive) and b) mentioned an accession number without building upon the dataset. [Nature letter]
-
-### Statistical methods
-
-
-
-The analyses were last run on <code class="knitr inline">Sat Jul  7 14:03:06 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
-
-References:
-Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
-of Statistical Software_, *21*(12), pp. 1-20. <URL:
-http://www.jstatsoft.org/v21/i12/>.
-
-Wickham H (2011). "The Split-Apply-Combine Strategy for Data Analysis."
-_Journal of Statistical Software_, *40*(1), pp. 1-29. <URL:
-http://www.jstatsoft.org/v40/i01/>.
-
-Jr FEH (2012). _rms: Regression Modeling Strategies_. R package version
-3.4-0, <URL: http://CRAN.R-project.org/package=rms>.
-
-Fox J (2010). _polycor: Polychoric and Polyserial Correlations_. R
-package version 0.7-8, <URL:
-http://CRAN.R-project.org/package=polycor>.
-
-Hajage D (2011). _ascii: Export R objects to several markup languages_.
-R package version 2.1, <URL: http://CRAN.R-project.org/package=ascii>.
-
-Wickham H (2009). _ggplot2: elegant graphics for data analysis_.
-Springer New York. ISBN 978-0-387-98140-6, <URL:
-http://had.co.nz/ggplot2/book>.
-
-Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley T,
-Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B (2011).
-_gplots: Various R programming tools for plotting data_. R package
-version 2.10.1, <URL: http://CRAN.R-project.org/package=gplots>.
-
-Xie Y (2012). _knitr: A general-purpose package for dynamic report
-generation in R_. R package version 0.6.7, <URL:
-http://yihui.name/knitr/>.
-
-Boettiger C (2012). _knitcitations: Citations for knitr markdown
-files_. R package version 0.0-1.
-
-
-
-#### Data and script availability
-
-Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
-
-The text Markdown version of this manuscript with interleaved statistical scripts using knitr (Xie, 2012) is also included in Dryad and at GitHub (https://github.com/hpiwowar/citation11k)[https://github.com/hpiwowar/citation11k].
-
-
-####Primary analysis of relationship between data availability and citation
+####Primary analysis
 
 The analysis included several multivariate linear regressions to evaluate the association between the public availability of a study's microarray data and the number of citations (after log transformation) it received. 
 
@@ -325,22 +259,30 @@ We followed that with a second regression that included several additional impor
 
 ####Complementary evidence of data reuse from citation context
 
-Possible reuse in the published literature over the period 2005-2010 for datasets deposited in 2005.
+We manually reviewed the citation context of some of these papers to determine how many of the citations were in the context of data reuse.
 
-We used ISI Web of Science to identify studies that used this method of data reuse attribution. For each dataset, we located the data collection article within ISI Web of Science and exported the list of all articles that cite this data collection article. This list of all citations was processed to subselect  150 random  citations, stratified by  the total  number of  times the data collection article had been cited.  The subselection of the ISI WoS results was saved as a  BibTeX file then uploaded to  the Mendeley group.
+We randomly selected 100 datasets deposited in GEO in 2005.  For each dataset, we located the data collection article within ISI Web of Science based on its title and authors, and exported the list of all articles that cited this data collection article. This list of all citations was processed to subselect  50 random  citations, stratified by  the totalnumber of times the data collection article had been cited.  
 
-Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  Tags were applied to the Mendeley citation  to indicate data reuse, no data reuse, or data reuse ambiguous as well as a confidence level of high, medium, or low.  We also applied a tag indicating location of the attribution, and the search strategy used to find the instance of reuse. [Beginning to Track]
-
-
+Manual review was performed for each instance of potential data reuse.  We located the article full text, read the relevant sections of the papers, and manually determined if the data from the associated dataset had been reused within the study.  [Beginning to Track]
 
 
-####Complementary evidence of data reuse from accession number attribution
 
-Manually reviewing citation context does not scale well: we need a different way to identify large numbers of reuse instances.  A subset of reuses can be identfied by taking advantage of an attribution norm in some areas:  datasets are sometimes attributed directly, by mentioning the dataset identifier, or accession number, in the full-text of a research paper.  For obscure dataset  identifier strings, finding an identifier in a paper usually means the authors are a) talking about depositing the dataset or b) attributing dataset reuse.  We can distinguish these scenarious to a first approximation by looking at surname name overlap between investigators who deposited the dataset and authors on the paper that mentions the dataset, as described in [Beginning to Track.]  
 
-We used the NCBI eUtils library and custom Python code to obtain a list of datasets deposited into GEO each year, then searched PubMed Central for each of these dataset identifiers. For each PubMed Central paper that refered to a dataset identifier, we recorded itsPubMed Central ID, year of publication, and author surnames.
+###Data reuse patterns from accession number attribution
 
-PMC contains only a subset of papers recorded in PubMed.  To extrapolate from the number of hits we found in PubMed Central to the possible data reuses in all of PubMed we divided the number of hits we received in each publication year by the ratio of papers in PMC to papers in PubMed in this domain published that same year (same domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
+####Data collection
+
+We collected a separate dataset to study reuse patterns because identifying data reuse from citations requires time-consuming classification of citation context.
+
+Datasets are sometimes attributed directly, through mention of the dataset identifier or accession number in the full-text of a research paper.  Third-party dataset resuse can be estimated from these mentions by excluding papers that were authored by members of the dataset collection team.
+
+We used the NCBI eUtils library and custom Python code to obtain a list of all datasets deposited into the Gene Expression Omnibus data repository, then searched PubMed Central for each of these dataset identifiers (using queries of the form "'GSEnnnn' OR 'GSE nnnn'"). For each hit we recorded the PubMed Central ID of the paper that mentioned the accession number, the year of paper publication, and the author surnames.  We also recorded the dataset accession number, the year of dataset publication, and the investigator names associated with the dataset record.
+
+####Statistical analysis
+
+We excluded papers with author surnames in common with those authors who deposited the original dataset, as described in [Beginning to Track.]  
+
+PubMed Central contains only a subset of papers recorded in PubMed. As described in [Beginning to Track.], to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##       [,1]       
 ##  [1,] "2000: 18%"
@@ -358,9 +300,9 @@ PMC contains only a subset of papers recorded in PubMed.  To extrapolate from th
 </pre></div></div></div>
 
 
-We searched for hits until through 2010: 2011 has a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
+We retained reuse candidates for papers published between 2001 and 2010: 2011 was within 12 months of data collection, and had a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
 
-The number of datasets deposited in GEO has grown over time.  To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year:
+To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year:
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##    year num_gse_ids
 ## 2  2001          13
@@ -381,23 +323,33 @@ The number of datasets deposited in GEO has grown over time.  To understand our 
 
 
 
+### Data and script availability
 
+Statistical analyses were last run on <code class="knitr inline">Sat Jul  7 16:24:38 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+
+Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
+
+The text Markdown version of this manuscript with interleaved statistical scripts using knitr (Xie, 2012) is also included in Dryad and at GitHub (https://github.com/hpiwowar/citation11k)[https://github.com/hpiwowar/citation11k].
 
 ## Results
 
-### Primary analysis of relationship between data availability and citation
+### Relationship between data availability and citation
 
 #### Description of cohort
 
-We begin with articles that have been identified as collecting gene expression microarray data by automatic algorithms looking for keywords in article full text (Piwowar 2011).  
+We retained <code class="knitr inline">10557</code> articles published between 2001 and 2009 that had been identified as collecting gene expression microarray data.
 
-For this analysis of citation behaviour, we retain articles published from 2001 through 2009: <code class="knitr inline">10557</code> articles.
 
-The composition of this sample is spread across XXX journals, with the top 12 journals accounting for XXX% of the papers.
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">sorted_journals</span> <span class="assignement">=</span> <span class="functioncall">sort</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_journal</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dec</span><span class="argument">=</span><span class="symbol">T</span><span class="keyword">)</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">12</span><span class="keyword">]</span>
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">cbind</span><span class="keyword">(</span><span class="functioncall">names</span><span class="keyword">(</span><span class="symbol">sorted_journals</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">round</span><span class="keyword">(</span><span class="symbol">sorted_journals</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## | Cancer Res               | 0.04 |
+
+The composition of this sample is spread across <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <div class="error"><pre class="knitr">
+Error in parse(text = code[i]) : 2:0: unexpected end of input
+1: 100*round(sum(sorted_journals), 2
+  ^
+
+</pre></div>% of the papers.
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | Cancer Res               | 0.04 |
 ## | Proc Natl Acad Sci U S A | 0.04 |
 ## | J Biol Chem              | 0.04 |
 ## | BMC Genomics             | 0.03 |
@@ -412,17 +364,16 @@ The composition of this sample is spread across XXX journals, with the top 12 jo
 </pre></div></div></div>
 
 
-Collecting gene expression micorarray data became more popular over time: XX% of articles in our sample were published in 2001, compared to YY% in 2009.
+Collecting gene expression micorarray data became more popular over time: <code class="knitr inline">2</code>% of articles in our sample were published in 2001, compared to <code class="knitr inline">15</code> % in 2009.
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">$</span><span class="symbol">pubmed_year_published</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributesRaw</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
 ## |---|------|------|------|------|------|------|------|------|------|
 ## | 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
 </pre></div></div></div>
 
 
+Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between <code class="knitr inline">0.248</code>% of papers in this sample and publicly available data.  
 
-Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between XXX% of papers in this sample and publicly available data.  
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">)</span>
 </pre></div><div class="output"><pre class="knitr">## 
 ##    0    1 
@@ -441,8 +392,7 @@ Articles published more recently were more likely to have associated datasets.
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/sharing_over_time.png" class="plot" /></div></div>
 
 
-The articles in our sample were cited between 0 and 2640 times, with an average of 32 citations per paper and a median of 16.  
-
+The articles in our sample were cited between <code class="knitr inline">0</code> and <code class="knitr inline">2643</code> times, with an average of <code class="knitr inline">31.5004</code> citations per paper and a median of <code class="knitr inline">16</code>.  
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span>
 </pre></div><div class="output"><pre class="knitr">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -811,9 +761,7 @@ How is did this estimate change when we included additional covariates?  The sub
 
 ### Complementary evidence of data reuse from citation context
 
-To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science: XXX total citations were found.  138 citations were randomly selected and manually reviewed.  
-
-
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science.  A sample of 138 citations were randomly selected and manually reviewed.  
 
 Of the <code class="knitr inline">138</code> reviewed citations to articles with archived gene expression data, <code class="knitr inline">8</code> were in the context of data reuse
 <code class="knitr inline">6</code>%
@@ -959,6 +907,47 @@ see references in [Mendeley library](http://www.mendeley.com/groups/2223913/11k-
 
 - heather, give the papers in the mendeley library another read
 
+References:
+Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
+of Statistical Software_, *21*(12), pp. 1-20. <URL:
+http://www.jstatsoft.org/v21/i12/>.
+
+Wickham H (2011). "The Split-Apply-Combine Strategy for Data Analysis."
+_Journal of Statistical Software_, *40*(1), pp. 1-29. <URL:
+http://www.jstatsoft.org/v40/i01/>.
+
+Jr FEH (2012). _rms: Regression Modeling Strategies_. R package version
+3.4-0, <URL: http://CRAN.R-project.org/package=rms>.
+
+Fox J (2010). _polycor: Polychoric and Polyserial Correlations_. R
+package version 0.7-8, <URL:
+http://CRAN.R-project.org/package=polycor>.
+
+Hajage D (2011). _ascii: Export R objects to several markup languages_.
+R package version 2.1, <URL: http://CRAN.R-project.org/package=ascii>.
+
+Wickham H (2009). _ggplot2: elegant graphics for data analysis_.
+Springer New York. ISBN 978-0-387-98140-6, <URL:
+http://had.co.nz/ggplot2/book>.
+
+Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley T,
+Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B (2011).
+_gplots: Various R programming tools for plotting data_. R package
+version 2.10.1, <URL: http://CRAN.R-project.org/package=gplots>.
+
+Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.6.7, <URL:
+http://yihui.name/knitr/>.
+
+Boettiger C (2012). _knitcitations: Citations for knitr markdown
+files_. R package version 0.0-1.
+
+Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.6.7, <URL:
+http://yihui.name/knitr/>.
+
+
+
 ### Experimenting with knitr citations
 Demo citing thank Carl for his great library! 
 [1] "(Boettiger, 2012)"
@@ -973,10 +962,6 @@ Now cite everyone!
 
 
 ### demo bibliography
-
-Xie Y (2012). _knitr: A general-purpose package for dynamic report
-generation in R_. R package version 0.6.7, <URL:
-http://yihui.name/knitr/>.
 
 Boettiger C (2012). _knitcitations: Citations for knitr markdown
 files_. R package version 0.0-1.
@@ -1107,7 +1092,9 @@ The Research Data Life Cycle and the Probability of Secondary Use in Re-Analysis
 - Bioinformatics, 25, 3303-3309 (2009). "Predicting citation count of Bioinformatics papers within four years of publication." Ibanez, A., Larrañaga, P. and Bielza, C.  http://bioinformatics.oxfordjournals.org/content/25/24/3303.full
 
 
-## Abstract (hasn't been updated)
+## Abstract
+
+(hasn't been updated to reflect all analyses)
 
 ### Background
 Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Previous studies have found that papers with publicly available datasets do indeed receive a higher number of citations than similar studies without available data.  However, previous studies were relatively small and did not control for many variables known to predict citation rate.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
@@ -1125,7 +1112,6 @@ n=<code class="knitr inline">138</code>)
 of citations to those studies were in the context of data reuse attribution.
 
 ### Discussion
-This analysis reveals a modest but substantiated boost in data citation rates across a wide selection of studies that made their data publicly available.  Though modest, the impact represented by these data attributions should not be underestimated: attribution in the context of data reuse demonstrates a real and demonstrable contribution to subsequent research.
 
 
 
