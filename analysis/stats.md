@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Sat Jul  7 12:36:14 2012</code>
+ * Generated on <code class="knitr inline">Sat Jul  7 14:02:50 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -138,7 +138,7 @@ Using PMC, we searched the full text of papers published between 2007 and 2010 f
 
 
 
-The analyses were last run on <code class="knitr inline">Sat Jul  7 12:36:28 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+The analyses were last run on <code class="knitr inline">Sat Jul  7 14:03:06 2012</code> with <code class="knitr inline">R version 2.14.2 (2012-02-29)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2011), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 References:
 Wickham H (2007). "Reshaping Data with the reshape Package." _Journal
@@ -696,7 +696,7 @@ Examining the citations of the  20 articles that did not create gene expression 
 
 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_manualAnnotationCreatedCitations.png" class="plot" /></div></div>
+
 
 
 This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
@@ -826,12 +826,12 @@ with 95% confidence intervals [<code class="knitr inline">3</code>%
 
 Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.
 
-Author surnames in common with data submission team vs third party
+Author surnames in common with data publication team vs third party.  One panel per year, with data deposited that year.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_authorVThirdParty.png" class="plot" /></div></div>
 
 
-Author vs third party, normalized by number of datasets deposited in the given year
+Author vs third party, normalized by number of datasets deposited in the given year.  One panel per year, with data deposited that year, normalized by number of datasets published that year.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_authorVThirdParty_normalized.png" class="plot" /></div></div>
 
@@ -857,29 +857,9 @@ Cumulative third-party reuse, normalized by number of datasets deposited each ye
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized_2003.png" class="plot" /></div></div>
 
 
-Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002, plotted as elapsed years since data submission.
+Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002, plotted as elapsed years since data publication.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized_2003_elapsed.png" class="plot" /></div></div>
-
-
-Distribution of reuse across individual datasets.
-
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## [1] "2001 15 13"
-</pre></div><div class="output"><pre class="knitr">## [1] "2003 109 523"
-</pre></div><div class="output"><pre class="knitr">## [1] "2005 290 1393"
-</pre></div><div class="output"><pre class="knitr">## [1] "2007 474 2711"
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets.png" class="plot" /></div></div>
-
-
-The number of datasets used in a reuse paper is increasing over time.
-
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/numberDatasetsInReusePaper.png" class="plot" /></div></div>
-
-
-
-Reuse paper authors are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.
-
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/distOfDatasetAge.png" class="plot" /></div></div>
 
 
 Is the number of reuse papers growing over time?  How does it compare with the availablility of datasets?
@@ -890,6 +870,25 @@ Is the number of reuse papers growing over time?  How does it compare with the a
 Both are growing exponentially now, at about the same rate.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/growthOfReusePapersLog.png" class="plot" /></div></div>
+
+
+
+
+The number of datasets used in a reuse paper is increasing over time. One panel for every year of publication, with papers published that year.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/numberDatasetsInReusePaper.png" class="plot" /></div></div>
+
+
+Distribution of reuse across individual datasets.  One panel for every year of publication, with papers published that year.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets.png" class="plot" /></div></div>
+
+
+Reuse paper authors are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  One panel for every year of publication, with papers published that year.
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/distOfDatasetAge.png" class="plot" /></div></div>
+
+
 
 
 

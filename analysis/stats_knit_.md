@@ -753,7 +753,7 @@ with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
 end.rcode-->
 
 
-<!--begin.rcode display_manualAnnotationCreatedCitations, echo=FALSE
+<!--begin.rcode display_manualAnnotationCreatedCitations, echo=FALSE, eval=FALSE
 ggplot(dfCitationsAnnotated, aes(1+nCitedBy, fill=factor(isCreated))) + geom_density(alpha=0.2) + 
 scale_fill_manual(name="",
                     values=cbgRaw, 
@@ -825,30 +825,30 @@ with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->
 
 Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.
 
-Author surnames in common with data submission team vs third party
+Author surnames in common with data publication team vs third party.  One panel per year, with data deposited that year.
 
 <!--begin.rcode display_authorVThirdParty, echo=FALSE
 ggplot(df.long.summary.byyear.extrap, aes(x=elapsedYears, y=extrap, color=thirdPartyReuse)) + geom_line() + 
-scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
-scale_y_continuous(name="") +
+scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
+scale_y_continuous(name="Number of papers\n", formatter="comma") +
 facet_wrap(~dataSubmissionYear) +
 scale_color_hue(name="",
                     breaks=c(FALSE, TRUE),
-                    labels=c("data authors", "third-party authors")) +
+                    labels=c("orig authors", "third-party authors")) +
 theme_bw(base_size=16)
 end.rcode-->
 
-Author vs third party, normalized by number of datasets deposited in the given year
+Author vs third party, normalized by number of datasets deposited in the given year.  One panel per year, with data deposited that year, normalized by number of datasets published that year.
 
 <!--begin.rcode display_authorVThirdParty_normalized, echo=FALSE
 ggplot(data=subset(df.long.summary.byyear.extrap, (dataSubmissionYear>2002) & (dataSubmissionYear<2009)), aes(x=elapsedYears, y=extrap/num_gse_ids, color=thirdPartyReuse)) + 
 geom_line() + 
-scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
-scale_y_continuous(name="") +
+scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
+scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets deposited in given year\n", formatter="comma") +
 facet_wrap(~dataSubmissionYear) +
-scale_color_hue(name="",
+scale_color_hue(name="Number of papers",
                     breaks=c(FALSE, TRUE),
-                    labels=c("data authors", "third-party authors")) +
+                    labels=c("orig authors", "third-party authors")) +
 theme_bw(base_size=16)
 end.rcode-->
 
@@ -856,9 +856,9 @@ Third-party reuse for all data depositing years, overlayed
 
 <!--begin.rcode display_accessionReuse, echo=FALSE
 ggplot(data=subset(df.byyear.reuse.only, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=total, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
+scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
+scale_y_continuous(name="Number of papers\n", formatter="comma") +
+scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
 
@@ -867,9 +867,9 @@ Cumulative third-party reuse
 <!--begin.rcode display_accessionReuse_cumulative, echo=FALSE
 # cumulative
 ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
+scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
+scale_y_continuous(name="Cumulative number of papers\n", formatter="comma") +
+scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
 
@@ -877,9 +877,9 @@ Cumulative third-party reuse, normalized by number of datasets deposited each ye
 
 <!--begin.rcode display_accessionReuse_cumulative_normalized, echo=FALSE
 ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
+scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
+scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets in given year\n", formatter="comma") +
+scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
 
@@ -888,89 +888,20 @@ Cumulative third-party reuse, normalized by number of datasets deposited each ye
 
 <!--begin.rcode display_accessionReuse_cumulative_normalized_2003, echo=FALSE
 ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2002), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="", limits=c(2004, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-scale_color_hue(name="year of data submission") +
+scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
+scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets in given year\n", formatter="comma") +
+scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
 
-Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002, plotted as elapsed years since data submission.
+Cumulative third-party reuse, normalized by number of datasets deposited each year, excluding datasets deposited in 2001 and 2002, plotted as elapsed years since data publication.
 
 <!--begin.rcode display_accessionReuse_cumulative_normalized_2003_elapsed, echo=FALSE
 ggplot(data=subset(df.cumulative.reuse.only, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="\nyears since data submission", limits=c(0, 8)) +
-scale_y_continuous(name="") +
-scale_color_hue(name="year of data submission") +
+scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
+scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets deposited in given year\n", formatter="comma") +
+scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
-end.rcode-->
-
-Distribution of reuse across individual datasets.
-
-<!--begin.rcode display_distAcrossDatasets, echo=FALSE
-qtiles = seq(0,1,0.01)
-yearlyHistogram = function(df, year) {
-    df.year = subset(df, dataSubmissionYear==year)
-
-    # cumulative distribution function
-    num_with_reuse = sum(with(subset(df.year, count>0), table(count)))
-    num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-    placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
-    for (accession in placeholder_zero_accessions) {
-        df.year = rbind(df.year, data.frame(gse=accession, thirdPartyReuse=TRUE, dataSubmissionYear=year, count=0))  
-    }
-
-    q = ddply(df.year, c(), summarise, quantile=qtiles, count=quantile(count, qtiles))
-    plotHandle = ggplot(data=q, aes(x=count, y=quantile)) + geom_step() + 
-        scale_x_continuous(name=paste("\ncount of third-party reuses\ndata submitted in", year), limits=c(0,40)) +
-        scale_y_continuous(name="cumulative probability\n") +
-        theme_bw(base_size=16)
-
-    print(paste(year, num_with_reuse, num_total))
-    return(list(year = year,
-                num_with_reuse = num_with_reuse,
-                num_total = num_total,
-                plotHandle = plotHandle))
-}
-
-df2001 = yearlyHistogram(df.long.summary.gse, 2001)
-df2003 = yearlyHistogram(df.long.summary.gse, 2003)
-df2005 = yearlyHistogram(df.long.summary.gse, 2005)
-df2007 = yearlyHistogram(df.long.summary.gse, 2007)
-
-multiplot(df2001$plotHandle, df2003$plotHandle, df2005$plotHandle, df2007$plotHandle, cols=2)
-
-end.rcode-->
-
-The number of datasets used in a reuse paper is increasing over time.
-
-<!--begin.rcode numberDatasetsInReusePaper, echo=FALSE
-dfGsePerReusePaper = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(reuse_pmcid, paperPublishedYear), summarise, count=length(unique(gse)))
-
-qtiles = seq(0,1,0.01)
-breaks = c(0, 5, 10, 50, 100)
-
-dfCountsOfGsePerReusePaper = ddply(dfGsePerReusePaper, .(count, paperPublishedYear), summarise, number_reuse_papers=length(unique(reuse_pmcid)))
-q = ddply(dfGsePerReusePaper, "paperPublishedYear", summarise, quantile=qtiles, count=quantile(count, qtiles))
-ggplot(data=subset(q, paperPublishedYear>2001), aes(x=count, y=quantile)) + geom_step(weight=3) + 
-#    scale_x_log10(breaks=breaks, labels=breaks) +
-    scale_x_continuous("", breaks=seq(0, 30, 10), limits=c(0,30)) +
-    scale_y_continuous("") +
-    theme_bw(base_size=16) + facet_wrap(~ paperPublishedYear)
-
-end.rcode-->
-
-
-Reuse paper authors are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.
-
-<!--begin.rcode distOfDatasetAge, echo=FALSE
-
-# distribution of elapsed years per publication date
-dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thirdPartyReuse==TRUE)), .( elapsedYears, paperPublishedYear, num_gse_ids), summarise, count=length(gse))
-
-ggplot(data=subset(dfDatasetsByElapsed, paperPublishedYear>2004), aes(x=elapsedYears, y=count/num_gse_ids)) + geom_line() +
-  scale_x_continuous(name="", limits=c(0,9)) +
- facet_wrap(~paperPublishedYear) + theme_bw(base_size=16) 
-
 end.rcode-->
 
 Is the number of reuse papers growing over time?  How does it compare with the availablility of datasets?
@@ -988,9 +919,8 @@ dfCountUnique3rdpartyPapers = ddply(dfCountUnique3rdpartyPapers, .(), transform,
 
 #not log
 ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-scale_y_continuous(name="", formatter="comma") +
-#scale_y_log(name="", breaks=breaks, labels=breaks) +
+scale_x_continuous(name="\nyear of data or paper publication", limits=c(2001, 2010)) +
+scale_y_continuous(name="Cumulative count\n", formatter="comma") +
 scale_color_hue(name="") +
 theme_bw(base_size=16) +
 geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
@@ -1004,13 +934,73 @@ Both are growing exponentially now, at about the same rate.
 # log
 breaks=c(1, 10, 100, 1000, 10000, 30000)
 ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
-scale_x_continuous(name="", limits=c(2001, 2010)) +
-#scale_y_continuous(name="", formatter="comma") +
-scale_y_log(name="", breaks=breaks, labels=breaks) +
+scale_x_continuous(name="\nyear of data or paper publication", limits=c(2001, 2010)) +
+scale_y_log(name="Cumulative count (log scale)\n", breaks=breaks, labels=breaks) +
 scale_color_hue(name="") +
 theme_bw(base_size=16) +
 geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
 end.rcode-->
+
+
+
+The number of datasets used in a reuse paper is increasing over time. One panel for every year of publication, with papers published that year.
+
+<!--begin.rcode numberDatasetsInReusePaper, echo=FALSE
+dfGsePerReusePaper = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(reuse_pmcid, paperPublishedYear), summarise, count=length(unique(gse)))
+
+qtiles = seq(0,1,0.01)
+breaks = c(0, 5, 10, 50, 100)
+
+dfCountsOfGsePerReusePaper = ddply(dfGsePerReusePaper, .(count, paperPublishedYear), summarise, number_reuse_papers=length(unique(reuse_pmcid)))
+q = ddply(dfGsePerReusePaper, "paperPublishedYear", summarise, quantile=qtiles, count=quantile(count, qtiles))
+ggplot(data=subset(q, paperPublishedYear>2001), aes(x=count, y=quantile)) + geom_step(weight=3) + 
+#    scale_x_log10(breaks=breaks, labels=breaks) +
+    scale_x_continuous("\nnumber of datasets attributed in a reuse paper", breaks=seq(0, 30, 10), limits=c(0,30)) +
+    scale_y_continuous(name="Cumulative probability\n") +
+    theme_bw(base_size=16) + facet_wrap(~ paperPublishedYear)
+
+end.rcode-->
+
+Distribution of reuse across individual datasets.  One panel for every year of publication, with papers published that year.
+
+<!--begin.rcode display_distAcrossDatasets, echo=FALSE
+qtiles = seq(0,1,0.01)
+
+dfCountReuseByGse = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(gse, dataSubmissionYear), summarise, count=length(elapsedYears))
+
+for (year in seq(2001, 2009)) {
+    num_with_reuse = sum(with(subset(df.long.summary.gse, dataSubmissionYear==year), table(count)))
+    num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
+    placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
+    for (accession in placeholder_zero_accessions) {
+        dfCountReuseByGse = rbind(dfCountReuseByGse, data.frame(gse=accession, dataSubmissionYear=year, count=0))  
+    }
+}
+
+q = ddply(dfCountReuseByGse, "dataSubmissionYear", summarise, quantile=qtiles, count=quantile(count, qtiles))
+ggplot(data=q, aes(x=count, y=quantile)) + geom_step() + 
+    scale_x_continuous(name="\nnumber of times a dataset has been attributed", limits=c(0,40)) +
+    scale_y_continuous(name="Cumulative probability\n") +
+    theme_bw(base_size=16) + facet_wrap(~ dataSubmissionYear)
+
+end.rcode-->
+
+Reuse paper authors are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  One panel for every year of publication, with papers published that year.
+
+<!--begin.rcode distOfDatasetAge, echo=FALSE
+
+# distribution of elapsed years per publication date
+dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thirdPartyReuse==TRUE)), .( elapsedYears, paperPublishedYear, num_gse_ids), summarise, count=length(gse))
+
+  ggplot(data=subset(dfDatasetsByElapsed, paperPublishedYear>2004), aes(x=elapsedYears, y=count/num_gse_ids)) + geom_line() +
+    scale_x_continuous(name="\nyears since data publication", limits=c(0,9)) +
+    scale_y_continuous(name="Proportion of all datasets published in given year\n") +    
+    facet_wrap(~paperPublishedYear) + 
+    theme_bw(base_size=16) 
+
+end.rcode-->
+
+
 
 
 ## Discussion
