@@ -56,6 +56,7 @@ To extract the R code in a separate .R file called stats_knit_.R, run knit with 
 # Clear the workspace and load package dependencies: 
 rm(list=ls())   
 require(ggplot2, quietly=T)
+require(scales, quietly=T)
 require(gplots, quietly=T)
 require(reshape2, quietly=T)
 require(plyr, quietly=T)
@@ -305,7 +306,7 @@ Citation count was log transformed to be consistent with prior literature.  Othe
 
 The independent variable of interest was represented as a 0 or 1 in the regression, describing whether or not associated data had been found in the data repositories.  The relationship of the data availability variable to  citation count was described with 95% confidence intervals after raising the regression coefficient to the power of e (since the log of the number of citations was used in the regression).
 
-<!--begin.rcode regressionAll
+<!--begin.rcode regressionAll, echo=FALSE
 fit_w_journal = lm(nCitedBy.log ~ 
           rcs(journal.impact.factor.tr, 3) +               
           rcs(pubmed.date.in.pubmed, 3) +
@@ -334,7 +335,7 @@ end.rcode-->
 
 Because publication date is such a strong correlate with both citation rate and data availability, we performed another analysis which stratified the sample by publication year, in addition to including publication date as a covariate.  Because the yearly regressions included fewer datapoints than the full regression, they supported a smaller number of covarites.  The yearly regressions included  date of publication, the journal which published the study, the journal impact factor, the journal's open access policy, the number of authors of the study, the citation score of the institution of the corresponding author, the previous number of PubMed Central citations recieved by the first and last author, whether the study was on cancer, and whether it used animals.
 
-<!--begin.rcode regressionByYear
+<!--begin.rcode regressionByYear, echo=FALSE
 
 # has a few less covariates than full model
 do_analysis = function(mydat) {
@@ -364,56 +365,13 @@ end.rcode-->
 
 
 
-####Validation of automated method of detecting data availability
-
-Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
-
-The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
-
-If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.
-
-<!--begin.rcode manualAnnotationCreatedData, echo=FALSE
-dfAnnotations = read.csv("data/Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
-# Get subset that has been annotated
-dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
-# Merge together annotations with citation information
-dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", by.y="PubMed.ID")
-
-# Clean the data, get variables in useful formats
-dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
-dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
-
-dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
-dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
-end.rcode-->
-
-We took steps to verify our assumption that the influence of articles erroniously identified these mistakenly-included articles is in fact small.  We began by manually reviewed a random 226 of the 11k (get exact number) articles to identify those which we were assuming had created gene expression microarray data but in fact had not.
-
-We compared the distribution of those with errors to those without, calculated whether they were statitically different, and ran a regression with the known-correct sample only.
-
-<!--begin.rcode manualAnnotationCreatedStats
-ttest_citedby = with(dfCitationsAnnotated, t.test(nCitedBy~isCreated))
-ttest_log_citedby = with(dfCitationsAnnotated, t.test(log(1+nCitedBy)~isCreated))
-wilcox_citedby = with(dfCitationsAnnotated, wilcox.test(nCitedBy~isCreated))
-end.rcode-->
 
 
-<!--begin.rcode manualAnnotationCreatedRegression
-annotated_merged_created = lm(nCitedBy.log ~ 
-  rcs(pubmed.date.in.pubmed, 3) +
-  rcs(journal.impact.factor.tr, 3) +               
-  rcs(num.authors.tr, 3) + 
-  rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-  factor(country.usa) +              
-  factor(dataset.in.geo.or.ae)
-             , dat.annotated.merged.created)
-end.rcode-->
-
-####Subset analysis to compare findings with Piwowar et al 2007
+#### Comparison to Piwowar et al 2007
 
 We ran two modified analyses to attempt to reproduce the findings of [Piwowar 2007].  First, we used a subset with roughly the same inclusion criteria as Piwowar 2007 -- studies on cancer, with humans, published prior to 2003 -- and the same regression coefficients: publication date, impact factor, and whether the corresponding author's address is in the USA.
 
-<!--begin.rcode RegressionAlaPrevStudy
+<!--begin.rcode RegressionAlaPrevStudy, echo=FALSE
   dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
 
   myfitprev = lm(nCitedBy.log ~ 
@@ -426,7 +384,7 @@ end.rcode-->
 
 We followed that with a second regression that included several additional important covariates:  number of authors and number of previous citations by the last author.
 
-<!--begin.rcode RegressionAlaPrevStudyMoreCovariates
+<!--begin.rcode RegressionAlaPrevStudyMoreCovariates, echo=FALSE
   myfit_prev_more = lm(nCitedBy.log ~ 
       rcs(pubmed.date.in.pubmed, 3) +
       rcs(journal.impact.factor.tr, 3) +               
@@ -585,56 +543,32 @@ df.long.summary = ddply(df.long, .(variable, value), summarise, proportion=sum(d
 ggplot(data=df.long.summary, aes(x=value, y=proportion)) +
   geom_smooth() +
   #facet_wrap(~variable) +
-  scale_y_continuous(name="proportion with available data\n", formatter='percent') + 
+  scale_y_continuous(name="proportion with available data\n", labels=percent) + 
   scale_x_continuous(name="", breaks=seq(2001,2009), labels=seq(2001,2009)) +
   theme_bw(base_size=16)
 
 end.rcode-->
 
-The articles in our sample were cited between <!--rinline min(dfCitationsAttributes$nCitedBy)--> and <!--rinline max(dfCitationsAttributes$nCitedBy)--> times, with an average of <!--rinline mean(dfCitationsAttributes$nCitedBy)--> citations per paper and a median of <!--rinline median(dfCitationsAttributes$nCitedBy)-->.  
+The articles in our sample were cited between <!--rinline min(dfCitationsAttributes$nCitedBy)--> and <!--rinline max(dfCitationsAttributes$nCitedBy)--> times, with an average of <!--rinline mean(dfCitationsAttributes$nCitedBy)--> citations per paper and a median of <!--rinline median(dfCitationsAttributes$nCitedBy)-->.
 
 <!--begin.rcode sharingVCitations
 summary(dfCitationsAttributes$nCitedBy)
 end.rcode-->
 
-Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and there is little visible difference in the distribution of citations between these two groups.
+Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and the distributions of citations between these two groups.
 
 <!--begin.rcode sharingVCitations_breakdown
 with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
 end.rcode-->
 
-<!--begin.rcode sharingVCitations_graph, echo=FALSE
-citation_breaks = c(0, 10, 100, 1000, 3000)
-ggplot(dfCitationsAttributesRaw, aes(1+nCitedBy, fill=factor(in_ae_or_geo))) + geom_density(alpha=0.2) + 
-scale_fill_manual(name="",
-                    breaks=c("0", "1"),
-                    labels=c("data NOT available", "data available"), 
-                    values=cbgRaw) + 
-scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
-#cbgFillPalette + 
-cbgColourPalette + theme_bw(base_size=16)
-end.rcode-->
-
 
 The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Because data archiving was relatively infrequent for articles published earlier, a difference in citation behaviour may be confounded with publication date.
 
-Indeed, we saw that for any given publication date, papers with associated data recieve more citations than those without.
-
-<!--begin.rcode citationsByYearBySharing, echo=FALSE
-
-median_citations_by_year = cbind(
-dataset_not_available = with(subset(dfCitationsAttributes, dataset.in.geo.or.ae==0), tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
-,
-dataset_available = with(subset(dfCitationsAttributes, dataset.in.geo.or.ae==1), tapply(nCitedBy, pubmed.year.published, median, na.rm=T))
-)
-round(median_citations_by_year, 0)
-
-end.rcode-->
-    
-This difference in citation is not driven by outliers: as shown by the distribution of citations over time, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
+Indeed, we saw that for any given publication date, papers with associated data recieved more citations than those without.Furthermore, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
 
 <!--begin.rcode citationDist, echo=FALSE 
 
+citation_breaks = c(0, 10, 100, 1000, 3000)
 ggplot(dfCitationsAttributes, aes(1+nCitedBy, fill=factor(dataset.in.geo.or.ae)), color="black") + 
 geom_density(alpha=0.2) + 
 scale_fill_manual(name="",
@@ -707,52 +641,11 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 end.rcode-->
 
-###Validation of automated method of detecting data availability
-
 Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
 
-The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
+We confirmed the inclusion of these had a small influence on the outcomes of our study. The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data, but was found to be not statisitically significantly different.  Furthermore, a subanalysis on the manually-curated articles was similar to the findings from the whole sample.
 
-If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.  To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.  Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
-
-<!--begin.rcode percent
-206/226
-end.rcode-->
-
-Examining the citations of the  20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
-
-<!--begin.rcode manualAnnotationCreatedCitations
-with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
-end.rcode-->
-
-
-<!--begin.rcode display_manualAnnotationCreatedCitations, echo=FALSE, eval=FALSE
-ggplot(dfCitationsAnnotated, aes(1+nCitedBy, fill=factor(isCreated))) + geom_density(alpha=0.2) + 
-scale_fill_manual(name="",
-                    values=cbgRaw, 
-                    breaks=c("created-microarray-data", "created-microarray-data-not"),
-                    labels=c("did collect microarray data", "did NOT collect microarray data")) + 
-scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
-#cbgFillPalette + 
-cbgColourPalette + theme_bw(base_size=16)
-end.rcode-->
-
-This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
-
-<!--begin.rcode display_manualAnnotationCreatedStats
-print(ttest_citedby)
-print(ttest_log_citedby)
-print(wilcox_citedby)
-end.rcode-->
-
-To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regression analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
-
-<!--begin.rcode display_manualAnnotationCreatedRegression
-gfm_table(anova(annotated_merged_created))
-calcCI.exp(annotated_merged_created, "factor(dataset.in.geo.or.ae).L")
-end.rcode-->
-
-### Subset analysis to compare findings with Piwowar et al 2007
+### Comparison to Piwowar et al 2007
 
 Our estimate of citation boost, <!--rinline 100*(citation.boost.coefs.journal$est-1) -->% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by Piwowar et al 2007], even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
 
@@ -796,7 +689,7 @@ We found <!--rinline dim(dfMentions)[1]--> mentions of GEO datasets in papers pu
 
 The number of reuse papers started to grow rapidly only after several years of dataset publication.
 
-<!--begin.rcode growthOfReusePapers, echo=FALSE
+<!--begin.rcode growthOfReusePapers, echo=TRUE
 dfCountUnique3rdpartyPapers = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(paperPublishedYear, pmc_pmid_ratio), summarise, count=length(unique(reuse_pmcid)))
 
 dfCountUnique3rdpartyPapers$extrap = with(dfCountUnique3rdpartyPapers, count/pmc_pmid_ratio)
@@ -810,22 +703,21 @@ dfCountUnique3rdpartyPapers = ddply(dfCountUnique3rdpartyPapers, .(), transform,
 #not log
 ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
 scale_x_continuous(name="\nyear of data or paper publication", limits=c(2001, 2010)) +
-scale_y_continuous(name="Cumulative count\n", formatter="comma") +
+scale_y_continuous(name="Cumulative count\n", labels=comma_format()) +
 scale_color_hue(name="") +
 theme_bw(base_size=16) +
 geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
 
 end.rcode-->
 
-In recent years both the number of datasets and the number of reuse papers are growing rapidly, at about the same rate.  
+In recent years both the number of datasets and the number of reuse papers are growing rapidly, at about the same rate.
 
 <!--begin.rcode growthOfReusePapersLog, echo=FALSE
 
 # log
-breaks=c(1, 10, 100, 1000, 10000, 30000)
 ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
 scale_x_continuous(name="\nyear of data or paper publication", limits=c(2001, 2010)) +
-scale_y_log(name="Cumulative count (log scale)\n", breaks=breaks, labels=breaks) +
+scale_y_continuous(name="Cumulative count (log scale)\n", trans="log", breaks=log_breaks()) +
 scale_color_hue(name="") +
 theme_bw(base_size=16) +
 geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
@@ -837,7 +729,7 @@ A panel displays the reuse of data published in the panel year, vs an x-axis of 
 <!--begin.rcode display_authorVThirdParty, echo=FALSE
 ggplot(dfCountReusePapers, aes(x=elapsedYears, y=extrap, color=thirdPartyReuse)) + geom_line() + 
 scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
-scale_y_continuous(name="Number of papers\n", formatter="comma") +
+scale_y_continuous(name="Number of papers\n", labels=comma_format()) +
 facet_wrap(~dataSubmissionYear) +
 scale_color_hue(name="",
                     breaks=c(FALSE, TRUE),
@@ -852,7 +744,7 @@ Figure A shows the cumulative number of third-party reuse papers, illustrating g
 # cumulative
 ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
-scale_y_continuous(name="Cumulative number of papers\n", formatter="comma") +
+scale_y_continuous(name="Cumulative number of papers\n", labels=comma_format()) +
 scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
@@ -862,7 +754,7 @@ Because the number of datasets published has grown dramatically with time, it is
 <!--begin.rcode display_accessionReuse_cumulative_normalized, echo=FALSE
 ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
-scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets in given year\n", formatter="comma") +
+scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets in given year\n", labels=comma_format()) +
 scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
@@ -872,7 +764,7 @@ We exclude the early years from the next plot to examine the pattern of data reu
 <!--begin.rcode display_accessionReuse_cumulative_normalized_2003_elapsed, echo=FALSE
 ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
-scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets deposited in given year\n", formatter="comma") +
+scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets deposited in given year\n", labels=comma_format()) +
 scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
@@ -1082,5 +974,93 @@ of citations to those studies were in the context of data reuse attribution.
 
 ### Discussion
 
+
+## Supplementary material
+
+
+###Validation of automated method of detecting data availability
+
+Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
+
+The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
+
+If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.  To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.  Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
+
+<!--begin.rcode percent
+206/226
+end.rcode-->
+
+Examining the citations of the  20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
+
+
+<!--begin.rcode manualAnnotationCreatedData, echo=FALSE
+dfAnnotations = read.csv("data/Mendeley_annotated_250_of_11k.csv", header=TRUE, stringsAsFactors=F)
+# Get subset that has been annotated
+dfAnnotationsAnnotated = subset(dfAnnotations, TAG.annotated == "11k-subset-reviewed")
+# Merge together annotations with citation information
+dfCitationsAnnotated = merge(dfAnnotationsAnnotated, dfCitations, by.x="pmid", by.y="PubMed.ID")
+
+# Clean the data, get variables in useful formats
+dfCitationsAnnotated$isCreated = factor(dfCitationsAnnotated$TAG.created)
+dfCitationsAnnotated$nCitedBy = as.numeric(dfCitationsAnnotated$Cited.by)
+
+dat.annotated.merged = merge(dfCitationsAnnotated, dfCitationsAttributes, by="pmid")
+dat.annotated.merged.created = subset(dat.annotated.merged, isCreated==levels(isCreated)[1])
+end.rcode-->
+
+We took steps to verify our assumption that the influence of articles erroniously identified these mistakenly-included articles is in fact small.  We began by manually reviewed a random 226 of the 11k (get exact number) articles to identify those which we were assuming had created gene expression microarray data but in fact had not.
+
+We compared the distribution of those with errors to those without, calculated whether they were statitically different, and ran a regression with the known-correct sample only.
+
+<!--begin.rcode manualAnnotationCreatedStats, echo=FALSE
+ttest_citedby = with(dfCitationsAnnotated, t.test(nCitedBy~isCreated))
+ttest_log_citedby = with(dfCitationsAnnotated, t.test(log(1+nCitedBy)~isCreated))
+wilcox_citedby = with(dfCitationsAnnotated, wilcox.test(nCitedBy~isCreated))
+end.rcode-->
+
+
+<!--begin.rcode manualAnnotationCreatedRegression, echo=FALSE
+annotated_merged_created = lm(nCitedBy.log ~ 
+  rcs(pubmed.date.in.pubmed, 3) +
+  rcs(journal.impact.factor.tr, 3) +               
+  rcs(num.authors.tr, 3) + 
+  rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+  factor(country.usa) +              
+  factor(dataset.in.geo.or.ae)
+             , dat.annotated.merged.created)
+end.rcode-->
+
+
+<!--begin.rcode manualAnnotationCreatedCitations
+with(dfCitationsAnnotated, summary(nCitedBy~isCreated))
+end.rcode-->
+
+
+<!--begin.rcode display_manualAnnotationCreatedCitations, echo=FALSE, eval=FALSE
+citation_breaks = c(0, 10, 100, 1000, 3000)
+ggplot(dfCitationsAnnotated, aes(1+nCitedBy, fill=factor(isCreated))) + geom_density(alpha=0.2) + 
+scale_fill_manual(name="",
+                    values=cbgRaw, 
+                    breaks=c("created-microarray-data", "created-microarray-data-not"),
+                    labels=c("did collect microarray data", "did NOT collect microarray data")) + 
+scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
+#cbgFillPalette + 
+cbgColourPalette + theme_bw(base_size=16)
+end.rcode-->
+
+This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
+
+<!--begin.rcode display_manualAnnotationCreatedStats
+print(ttest_citedby)
+print(ttest_log_citedby)
+print(wilcox_citedby)
+end.rcode-->
+
+To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regression analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
+
+<!--begin.rcode display_manualAnnotationCreatedRegression
+gfm_table(anova(annotated_merged_created))
+calcCI.exp(annotated_merged_created, "factor(dataset.in.geo.or.ae).L")
+end.rcode-->
 
 
