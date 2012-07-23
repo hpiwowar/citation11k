@@ -436,18 +436,16 @@ dfPubmedPmcRatios = read.csv("data/pubmed_pmc_ratios.csv", header=TRUE, stringsA
 dfPubmedPmcRatios$pmc_pmid_ratio = dfPubmedPmcRatios$num_pmc/dfPubmedPmcRatios$num_pubmed
 dfPubmedPmcRatios$year = as.numeric(dfPubmedPmcRatios$year)
 
-cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
+# cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
 end.rcode-->
 
 We retained reuse candidates for papers published between 2001 and 2010: 2011 was within 12 months of data collection, and had a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
 
-To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year:
+To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year.
 
 <!--begin.rcode dfPubmedGseCount, echo=FALSE
 
 dfPubmedGseCount = read.csv("data/pubmed_gse_count.csv", header=TRUE, stringsAsFactors=F)
-
-dfPubmedGseCount[2:10,]
 end.rcode-->
 
 <!--begin.rcode dfMentions, echo=FALSE
@@ -497,17 +495,15 @@ The text Markdown version of this manuscript with interleaved statistical script
 
 ## Results
 
-### Relationship between data availability and citation
-
 #### Description of cohort
 
-We retained <!--rinline dim(dfCitationsAttributes)[1] --> articles published between 2001 and 2009 that had been identified as collecting gene expression microarray data.
+We identified <!--rinline dim(dfCitationsAttributes)[1] --> articles published between 2001 and 2009 as collecting gene expression microarray data.
 
 <!--begin.rcode sorted_journals, echo=FALSE
 sorted_journals = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12]
 end.rcode-->
 
-The composition of this sample is spread across <!--rinline length(table(dfCitationsAttributesRaw$pubmed_journal)) --> journals, with the top 12 journals accounting for <!--rinline 100*round(sum(sorted_journals), 2)-->% of the papers.
+This sample was spread across <!--rinline length(table(dfCitationsAttributesRaw$pubmed_journal)) --> journals, with the top 12 journals accounting for <!--rinline 100*round(sum(sorted_journals), 2)-->% of the papers.
 
 <!--begin.rcode journalTable, echo=FALSE
 gfm_table(cbind(names(sorted_journals), round(sorted_journals, 2)))
@@ -515,56 +511,23 @@ prop2001 = 100*round(nrow(subset(dfCitationsAttributesRaw, pubmed_year_published
 prop2009 = 100*round(nrow(subset(dfCitationsAttributesRaw, pubmed_year_published=="2009"))/nrow(dfCitationsAttributesRaw)[1], 2)
 end.rcode-->
 
-Collecting gene expression micorarray data became more popular over time: <!--rinline prop2001-->% of articles in our sample were published in 2001, compared to <!--rinline prop2009--> % in 2009.
+More papers were published in later years: <!--rinline prop2001-->% of articles in our sample were published in 2001, compared to <!--rinline prop2009--> % in 2009.
 
 <!--begin.rcode yearTable, echo=FALSE
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
 end.rcode-->
 
-Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between <!--rinline summary(dfCitationsAttributes$dataset.in.geo.or.ae.int)["Mean"]-->% of papers in this sample and publicly available data.  
+Searching for datasets associated in the GEO and ArrayExpress repositories uncovered links for <!--rinline 100*summary(dfCitationsAttributes$dataset.in.geo.or.ae.int)["Mean"]-->% of papers in the sample.
 
-<!--begin.rcode sharing, fig.width=6, fig.height=6
-table(dfCitationsAttributes$dataset.in.geo.or.ae.int)
+The articles in our sample were cited between <!--rinline min(dfCitationsAttributes$nCitedBy)--> and <!--rinline max(dfCitationsAttributes$nCitedBy)--> times, with an average of <!--rinline round(mean(dfCitationsAttributes$nCitedBy), 0)--> citations per paper and a median of <!--rinline median(dfCitationsAttributes$nCitedBy)--> citations.
 
-gfm_table(table(dfCitationsAttributes$dataset.in.geo.or.ae.int)/nrow(dfCitationsAttributes))
+We confirmed the inclusion of articles mistakenly identified as creating gene expression microarry data had a small influence on the outcomes of our study. The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data, but was found to be not statisitically significantly different.  Furthermore, a subanalysis on the manually-curated articles was similar to the findings from the whole sample. (see supplementary materials)
 
-end.rcode-->
+### Data availability is associated with citation boost
 
+Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and the distributions were similar.
 
-Articles published more recently were more likely to have associated datasets.
-
-<!--begin.rcode sharing_over_time, fig.width=6, fig.height=6, cache=FALSE, echo=FALSE
-
-library(ggplot2)
-
-df.long = melt(dfCitationsAttributes, measure.vars=c('pubmed.year.published'))
-df.long.summary = ddply(df.long, .(variable, value), summarise, proportion=sum(dataset.in.geo.or.ae.int > 0) / length(dataset.in.geo.or.ae.int))
-
-ggplot(data=df.long.summary, aes(x=value, y=proportion)) +
-  geom_smooth() +
-  #facet_wrap(~variable) +
-  scale_y_continuous(name="proportion with available data\n", labels=percent) + 
-  scale_x_continuous(name="", breaks=seq(2001,2009), labels=seq(2001,2009)) +
-  theme_bw(base_size=16)
-
-end.rcode-->
-
-The articles in our sample were cited between <!--rinline min(dfCitationsAttributes$nCitedBy)--> and <!--rinline max(dfCitationsAttributes$nCitedBy)--> times, with an average of <!--rinline mean(dfCitationsAttributes$nCitedBy)--> citations per paper and a median of <!--rinline median(dfCitationsAttributes$nCitedBy)-->.
-
-<!--begin.rcode sharingVCitations
-summary(dfCitationsAttributes$nCitedBy)
-end.rcode-->
-
-Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and the distributions of citations between these two groups.
-
-<!--begin.rcode sharingVCitations_breakdown
-with(dfCitationsAttributes, tapply(nCitedBy, dataset.in.geo.or.ae.int, summary))
-end.rcode-->
-
-
-The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Because data archiving was relatively infrequent for articles published earlier, a difference in citation behaviour may be confounded with publication date.
-
-Indeed, we saw that for any given publication date, papers with associated data recieved more citations than those without.Furthermore, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
+We hasten to mention strong confunders.  The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Data archiving frequency is also correlated with time -- early articles were less likely to archive data [Piwowar 2011].  Indeed, we found that for any given publication date, papers with associated data recieved more citations than those without.  Furthermore, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
 
 <!--begin.rcode citationDist, echo=FALSE 
 
@@ -583,36 +546,17 @@ cbgColourPalette + theme_bw(base_size=16)
 
 end.rcode-->
 
-#### Correlations
-
-Other factors have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite]. 
-
-Cited by correlations.  It must be remembered that these are univariate correlations and so should not be interpreted without additional context.  For example, most open access publications were published recently, so relative to non-open access publications in this sample they have had less time to accumulate citations.
-
-<!--begin.rcode display_correlations_with_citations, warning=FALSE, echo=FALSE
-gfm_table(cbind(names(correlations_with_citations), round(correlations_with_citations, 2)))
-end.rcode-->
-
-Data availability correlations:
-
-<!--begin.rcode univariate_dataavail, warning=FALSE, echo=FALSE
-gfm_table(cbind(names(correlations_with_data_avail), round(correlations_with_data_avail, 2)))
-end.rcode-->
-
-#### Multivariate regression
- 
-Multivariate regression analysis can be useful to identify the relationship between data availability and citation rate, independently of other variables.
-
+Other variables have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite]. Single-variable correlations can be misleading, so we performed multivariate regression to characterize the relationship between data availability and citation rate, independently of these other variables.
 
 <!--begin.rcode display_regressionAll, echo=FALSE
 
-gfm_table(anova(fit_w_journal))
+#gfm_table(anova(fit_w_journal))
 citation.boost.coefs.journal = calcCI.exp(fit_w_journal, "factor(dataset.in.geo.or.ae).L")
-print(citation.boost.coefs.journal)
+#print(citation.boost.coefs.journal)
 
 end.rcode-->
 
-In this analysis, we found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
+We found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
 
 Estimate of the independent increase of citations due to data availability is  
 <!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
@@ -620,14 +564,45 @@ with 95% confidence intervals [<!--rinline 100*(citation.boost.coefs.journal$ciL
 , <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->% ]
 (p=<!--rinline format(citation.boost.coefs.journal$p, nsmall = 2) -->)
 
+
+
+### More covariates led to a more conservative estimate
+
+Our estimate of citation boost, <!--rinline 100*(citation.boost.coefs.journal$est-1) -->% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by [Piwowar et al 2007], even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
+
+First, Piwowar et al 2007 concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003), whereas the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
+
+We attempted to reproduce the prior analysis with the current data points.  Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with covariates used in the Piwowar 2007 paper resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+
+<!--begin.rcode display_RegressionAlaPrevStudy, echo=FALSE, eval=FALSE
+  gfm_table(anova(myfitprev))
+  calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
+end.rcode-->
+
+The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important covariates decreased the estimated effect to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%. 
+
+<!--begin.rcode display_RegressionAlaPrevStudyMoreCovariates, echo=FALSE, eval=FALSE
+  gfm_table(anova(myfit_prev_more))
+  calcCI.exp(myfit_prev_more, "factor(dataset.in.geo.or.ae).L")
+end.rcode-->
+
+### Data reuse contributes to citation boost
+
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science.  A sample of 138 citations were randomly selected and manually reviewed.  
+
+Of the <!--rinline num.GEO.total --> reviewed citations to articles with archived gene expression data, <!--rinline num.GEO.reused --> were in the context of data reuse
+<!--rinline 100*(round(annotated.prop[1], 2)) -->%
+with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->%
+, <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
+
+### Citation boost and reuse rates change over time
+
 Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually (with a subset of the covariates).
 
-The estimate of citation boost was different for different years of publication.
+The estimate of citation boost was different for different years of publication.  The estimates of citation boost for papers published in each year, with 95% confidence intervals:
 
-The estimates of citation boost for papers published in each year, with 95% confidence intervals:
-
-<!--begin.rcode regressionEstimatesByYear
-estimates_by_year
+<!--begin.rcode regressionEstimatesByYear, echo=FALSE
+#estimates_by_year
 end.rcode-->
 
 <!--begin.rcode display_regressionEstimatesByYear, echo=FALSE
@@ -641,55 +616,14 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
 
 end.rcode-->
 
-Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
 
-We confirmed the inclusion of these had a small influence on the outcomes of our study. The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data, but was found to be not statisitically significantly different.  Furthermore, a subanalysis on the manually-curated articles was similar to the findings from the whole sample.
-
-### Comparison to Piwowar et al 2007
-
-Our estimate of citation boost, <!--rinline 100*(citation.boost.coefs.journal$est-1) -->% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by Piwowar et al 2007], even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
-
-First, Piwowar et al 2007 concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003), whereas the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
-
-We attempted to reproduce the prior analysis with the current data points.  Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with covariates used in the Piwowar 2007 paper resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
-
-<!--begin.rcode display_RegressionAlaPrevStudy
-  gfm_table(anova(myfitprev))
-
-  calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
-end.rcode-->
-
-The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important covariates decreased the estimated effect to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%. 
-
-<!--begin.rcode display_RegressionAlaPrevStudyMoreCovariates
-
-  gfm_table(anova(myfit_prev_more))
-
-  calcCI.exp(myfit_prev_more, "factor(dataset.in.geo.or.ae).L")
-end.rcode-->
-
-
-
-### Manual review of citation context
-
-To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science.  A sample of 138 citations were randomly selected and manually reviewed.  
-
-Of the <!--rinline num.GEO.total --> reviewed citations to articles with archived gene expression data, <!--rinline num.GEO.reused --> were in the context of data reuse
-<!--rinline 100*(round(annotated.prop[1], 2)) -->%
-with 95% confidence intervals [<!--rinline 100*(round(annotated.prop[2], 2)) -->%
-, <!--rinline 100*(round(annotated.prop[3], 2)) -->% ]
-
-
-### Data reuse patterns from accession number attribution
-
-
-Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.  This is only a subset of all data reuse (it doesn't include attribution through citations, for example), but the patterns of reuse are likely similar across methods of attribution.
+To provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.  This is only a subset of all data reuse (it doesn't include attribution through citations, for example), but the patterns of reuse are likely similar across methods of attribution.
 
 We found <!--rinline dim(dfMentions)[1]--> mentions of GEO datasets in papers published between 2000 and 2010 within PubMed Central, including <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, count)), 0) --> by author teams that do not overlap those that deposited the data.  Extrapolating this to all of PubMed, we estimate there may be about <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, extrap)), 0)--> third-party reuses of GEO data attributed through accession numbers in all of PubMed, in papers published between 2000 and 2010.
 
-The number of reuse papers started to grow rapidly only after several years of dataset publication.
+The number of reuse papers started to grow rapidly only after several years of dataset publication.  In recent years both the number of datasets and the number of reuse papers are growing rapidly, at about the same rate.
 
-<!--begin.rcode growthOfReusePapers, echo=TRUE
+<!--begin.rcode growthOfReusePapers, echo=FALSE
 dfCountUnique3rdpartyPapers = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(paperPublishedYear, pmc_pmid_ratio), summarise, count=length(unique(reuse_pmcid)))
 
 dfCountUnique3rdpartyPapers$extrap = with(dfCountUnique3rdpartyPapers, count/pmc_pmid_ratio)
@@ -699,20 +633,6 @@ dfCountUnique3rdpartyPapers = ddply(dfCountUnique3rdpartyPapers, .(), transform,
 dfCountUnique3rdpartyPapers = merge(dfCountUnique3rdpartyPapers, dfPubmedGseCount, by.x="paperPublishedYear", by.y="year")
 
 dfCountUnique3rdpartyPapers = ddply(dfCountUnique3rdpartyPapers, .(), transform, cumul_gse=cumsum(num_gse_ids))
-
-#not log
-ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
-scale_x_continuous(name="\nyear of data or paper publication", limits=c(2001, 2010)) +
-scale_y_continuous(name="Cumulative count\n", labels=comma_format()) +
-scale_color_hue(name="") +
-theme_bw(base_size=16) +
-geom_line(aes(y=cumul_extrap, color="reuse papers,\nattribution by accession")) + geom_point(aes(y=cumul_extrap)) 
-
-end.rcode-->
-
-In recent years both the number of datasets and the number of reuse papers are growing rapidly, at about the same rate.
-
-<!--begin.rcode growthOfReusePapersLog, echo=FALSE
 
 # log
 ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
@@ -751,7 +671,7 @@ end.rcode-->
 
 Because the number of datasets published has grown dramatically with time, it is interesting to see the cumulative number of third-party reuses normalized by the number of datasets deposited each year.  Early years, 2001-2002, had relatively few data deposits but they have received a large amount of reuse.
 
-<!--begin.rcode display_accessionReuse_cumulative_normalized, echo=FALSE
+<!--begin.rcode display_accessionReuse_cumulative_normalized, echo=FALSE, eval=FALSE
 ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
 scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets in given year\n", labels=comma_format()) +
@@ -769,6 +689,7 @@ scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
 
+## Number of reuses in a paper increases with time
 
 The number of datasets used in a reuse paper was found to increase over time. Each panel reports analysis for reuse papers published that year, reusing data from any year.  In 2002-2004 almost all reuse papers only used one or two datasets.  By 2010, 25% of reuse papers used 3 or more datasets. 
 
@@ -776,20 +697,20 @@ The number of datasets used in a reuse paper was found to increase over time. Ea
 
 dfGsePerReusePaper = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(reuse_pmcid, paperPublishedYear), summarise, count=length(unique(gse)))
 
-qtiles = seq(0,1,0.01)
-breaks = c(0, 5, 10, 50, 100)
-
-dfCountsOfGsePerReusePaper = ddply(dfGsePerReusePaper, .(count, paperPublishedYear), summarise, number_reuse_papers=length(unique(reuse_pmcid)))
-q = ddply(dfGsePerReusePaper, "paperPublishedYear", summarise, quantile=qtiles, count=quantile(count, qtiles))
-ggplot(data=subset(q, paperPublishedYear>2001), aes(x=count, y=quantile)) + geom_step(weight=3) + 
-#    scale_x_log10(breaks=breaks, labels=breaks) +
-    scale_x_continuous("\nnumber of datasets attributed in a reuse paper", breaks=seq(0, 30, 10), limits=c(0,30)) +
-    scale_y_continuous(name="Cumulative probability\n") +
-    theme_bw(base_size=16) + facet_wrap(~ paperPublishedYear)
-
-#subset(q, paperPublishedYear==2010)
+breaks = c(1,5,10,50)
+ggplot(data=dfGsePerReusePaper, aes(x=factor(paperPublishedYear), y=count)) + 
+  geom_jitter(position = position_jitter(w = 0.1, h = 0.1)) +
+  scale_x_discrete("\nYear reuse paper was published") +
+  scale_y_continuous(name="Number of datasets per reuse paper\n", trans="log", breaks=breaks) +  
+  stat_summary(fun.y=mean, geom=c("line"), color="red", aes(group=1))
 
 end.rcode-->
+
+
+
+
+
+## Probability of reuse
 
 Reuse was not limited to just a few papers. Almost all datasets published in 2001 and 2002 have been reused at least once.  Newer datasets have been used less often, but we observed reuse of at least 20% of the datasets deposited in 2007.  The actual rate, across all methods of attribution and extrapolated to all of PubMed, is likely much higher. 
 
@@ -810,14 +731,19 @@ for (year in seq(2001, 2009)) {
 }
 
 q = ddply(dfCountReuseByGse, "dataSubmissionYear", summarise, quantile=qtiles, count=quantile(count, qtiles))
-ggplot(data=q, aes(x=count, y=quantile)) + geom_step() + 
-    scale_x_continuous(name="\nnumber of times a dataset has been attributed", limits=c(0,40)) +
-    scale_y_continuous(name="Cumulative probability\n") +
-    theme_bw(base_size=16) + facet_wrap(~ dataSubmissionYear)
+
+qq = subset(q, count %in% c(0, 2))
+
+qqq = ddply(qq, c("dataSubmissionYear", "count"), summarise, maxq=max(quantile))
+
+ggplot(data=qqq, aes(x=dataSubmissionYear, y=1-maxq, color=factor(count, labels=c("reused at least once", "reused at least three times")))) + geom_line() + geom_point() + 
+  scale_x_continuous("\nYear data was submitted") +
+  scale_y_continuous(name="Proportion of data submissions\n") + 
+scale_color_hue(name="")
 
 end.rcode-->
 
-Finally, what is the distribution of the age of datasets used by data reuse studies?  We found the authors of data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  
+What is the distribution of the age of datasets used by data reuse studies?  We found the authors of data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  
 
 One panel for every year of publication, with papers published that year.
 
@@ -833,8 +759,6 @@ dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thir
     theme_bw(base_size=16) 
 
 end.rcode-->
-
-
 
 
 ## Discussion

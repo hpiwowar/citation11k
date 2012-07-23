@@ -7,7 +7,7 @@
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Mon Jul 23 12:13:08 2012</code>
+ * Generated on <code class="knitr inline">Mon Jul 23 16:09:35 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
@@ -189,37 +189,14 @@ We excluded papers with author surnames in common with those authors who deposit
 
 PubMed Central contains only a subset of papers recorded in PubMed. As described in [Beginning to Track.], to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##       [,1]       
-##  [1,] "2000: 18%"
-##  [2,] "2001: 18%"
-##  [3,] "2002: 15%"
-##  [4,] "2003: 16%"
-##  [5,] "2004: 18%"
-##  [6,] "2005: 18%"
-##  [7,] "2006: 20%"
-##  [8,] "2007: 23%"
-##  [9,] "2008: 33%"
-## [10,] "2009: 37%"
-## [11,] "2010: 36%"
-## [12,] "2011: 10%"
-</pre></div></div></div>
+
 
 
 We retained reuse candidates for papers published between 2001 and 2010: 2011 was within 12 months of data collection, and had a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
 
-To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year:
+To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year.
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##    year num_gse_ids
-## 2  2001          13
-## 3  2002          92
-## 4  2003         523
-## 5  2004         847
-## 6  2005        1393
-## 7  2006        1814
-## 8  2007        2711
-## 9  2008        3279
-## 10 2009        4313
-</pre></div></div></div>
+
 
 
 
@@ -230,7 +207,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Mon Jul 23 12:13:45 2012</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2012), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
+Statistical analyses were last run on <code class="knitr inline">Mon Jul 23 16:10:11 2012</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2(Wickham, 2007), plyr(Wickham, 2011), rms(Jr, 2012), polycor(Fox, 2010), ascii(Hajage, 2011), ggplot2(Wickham, 2009), gplots(Bolker _et. al._ 2012), knitr(Xie, 2012), and knitcitations(Boettiger, 2012). P-values are two-tailed.  
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
@@ -238,16 +215,14 @@ The text Markdown version of this manuscript with interleaved statistical script
 
 ## Results
 
-### Relationship between data availability and citation
-
 #### Description of cohort
 
-We retained <code class="knitr inline">10557</code> articles published between 2001 and 2009 that had been identified as collecting gene expression microarray data.
+We identified <code class="knitr inline">10557</code> articles published between 2001 and 2009 as collecting gene expression microarray data.
 
 
 
 
-The composition of this sample is spread across <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <code class="knitr inline">30</code>% of the papers.
+This sample was spread across <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <code class="knitr inline">30</code>% of the papers.
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | Cancer Res               | 0.04 |
 ## | Proc Natl Acad Sci U S A | 0.04 |
@@ -264,7 +239,7 @@ The composition of this sample is spread across <code class="knitr inline">667</
 </pre></div></div></div>
 
 
-Collecting gene expression micorarray data became more popular over time: <code class="knitr inline">2</code>% of articles in our sample were published in 2001, compared to <code class="knitr inline">15</code> % in 2009.
+More papers were published in later years: <code class="knitr inline">2</code>% of articles in our sample were published in 2001, compared to <code class="knitr inline">15</code> % in 2009.
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
 ## |---|------|------|------|------|------|------|------|------|------|
@@ -272,198 +247,27 @@ Collecting gene expression micorarray data became more popular over time: <code 
 </pre></div></div></div>
 
 
-Searching for associated datasets in the GEO and ArrayExpress repository uncovered links between <code class="knitr inline">0.248</code>% of papers in this sample and publicly available data.  
+Searching for datasets associated in the GEO and ArrayExpress repositories uncovered links for <code class="knitr inline">24.8</code>% of papers in the sample.
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## 
-##    0    1 
-## 7940 2617 
-</pre></div><div class="source"><pre class="knitr">
-<span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">table</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">)</span><span class="keyword">/</span><span class="functioncall">nrow</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |   | 0    | 1    |
-## |---|------|------|
-## | 1 | 0.75 | 0.25 |
-</pre></div></div></div>
+The articles in our sample were cited between <code class="knitr inline">0</code> and <code class="knitr inline">2643</code> times, with an average of <code class="knitr inline">32</code> citations per paper and a median of <code class="knitr inline">16</code> citations.
 
+We confirmed the inclusion of articles mistakenly identified as creating gene expression microarry data had a small influence on the outcomes of our study. The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data, but was found to be not statisitically significantly different.  Furthermore, a subanalysis on the manually-curated articles was similar to the findings from the whole sample. (see supplementary materials)
 
+### Data availability is associated with citation boost
 
-Articles published more recently were more likely to have associated datasets.
+Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and the distributions were similar.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/sharing_over_time.png" class="plot" /></div></div>
-
-
-The articles in our sample were cited between <code class="knitr inline">0</code> and <code class="knitr inline">2643</code> times, with an average of <code class="knitr inline">31.5004</code> citations per paper and a median of <code class="knitr inline">16</code>.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">$</span><span class="symbol">nCitedBy</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     0.0     7.0    16.0    31.5    35.0  2640.0 
-</pre></div></div></div>
-
-
-Without accounting for any confounding factors, the mean number of citations between papers with available data and those without are the same, and the distributions of citations between these two groups.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCitationsAttributes</span><span class="keyword">,</span> <span class="functioncall">tapply</span><span class="keyword">(</span><span class="symbol">nCitedBy</span><span class="keyword">,</span> <span class="symbol">dataset.in.geo.or.ae.int</span><span class="keyword">,</span> <span class="symbol">summary</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## $`0`
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     0.0     7.0    16.0    31.6    35.0  2560.0 
-## 
-## $`1`
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     0.0     7.0    16.0    31.3    34.0  2640.0 
-## 
-</pre></div></div></div>
-
-
-
-The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Because data archiving was relatively infrequent for articles published earlier, a difference in citation behaviour may be confounded with publication date.
-
-Indeed, we saw that for any given publication date, papers with associated data recieved more citations than those without.Furthermore, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
+We hasten to mention strong confunders.  The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Data archiving frequency is also correlated with time -- early articles were less likely to archive data [Piwowar 2011].  Indeed, we found that for any given publication date, papers with associated data recieved more citations than those without.  Furthermore, the distribution of citations for older papers with available data is centered at a higher median than citations for papers without data available.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/citationDist.png" class="plot" /></div></div>
 
 
-#### Correlations
-
-Other factors have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite]. 
-
-Cited by correlations.  It must be remembered that these are univariate correlations and so should not be interpreted without additional context.  For example, most open access publications were published recently, so relative to non-open access publications in this sample they have had less time to accumulate citations.
-
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | nCitedBy.log                                  | 1     |
-## | journal.impact.factor.tr                      | 0.45  |
-## | last.author.num.prev.pmc.cites.tr             | 0.3   |
-## | journal.num.articles.2008.tr                  | 0.25  |
-## | last.author.year.first.pub.ago.tr             | 0.24  |
-## | institution.mean.norm.citation.score          | 0.24  |
-## | first.author.num.prev.pmc.cites.tr            | 0.24  |
-## | journal.microarray.creating.count.tr          | 0.23  |
-## | institution.harvard                           | 0.22  |
-## | first.author.year.first.pub.ago.tr            | 0.22  |
-## | institution.stanford                          | 0.21  |
-## | country.usa                                   | 0.18  |
-## | num.authors.tr                                | 0.17  |
-## | pubmed.is.core.clinical.journal               | 0.17  |
-## | last.author.num.prev.pubs.tr                  | 0.15  |
-## | institution.nci                               | 0.14  |
-## | pubmed.is.humans                              | 0.08  |
-## | pubmed.is.funded.nih                          | 0.07  |
-## | has.R.funding                                 | 0.07  |
-## | pubmed.is.plants                              | 0.07  |
-## | first.author.num.prev.pubs.tr                 | 0.06  |
-## | pubmed.is.cancer                              | 0.06  |
-## | nih.cumulative.years.tr                       | 0.03  |
-## | country.uk                                    | 0.03  |
-## | num.grants.via.nih.tr                         | 0.02  |
-## | nih.sum.avg.dollars.tr                        | 0.01  |
-## | pubmed.is.bacteria                            | 0.01  |
-## | dataset.in.geo.or.ae                          | 0.01  |
-## | last.author.num.prev.microarray.creations.tr  | 0.01  |
-## | pubmed.is.cultured.cells                      | -0.01 |
-## | first.author.num.prev.microarray.creations.tr | -0.01 |
-## | pubmed.is.geo.reuse                           | -0.01 |
-## | institution.is.govnt                          | -0.01 |
-## | country.australia                             | -0.02 |
-## | pubmed.is.funded.nih.intramural               | -0.03 |
-## | country.canada                                | -0.05 |
-## | institution.rank                              | -0.06 |
-## | last.author.female                            | -0.07 |
-## | first.author.female                           | -0.08 |
-## | country.japan                                 | -0.1  |
-## | pubmed.is.animals                             | -0.11 |
-## | country.china                                 | -0.19 |
-## | country.korea                                 | -0.26 |
-## | pubmed.is.open.access                         | -0.3  |
-## | pubmed.year.published                         | -0.58 |
-## | pubmed.date.in.pubmed                         | -0.59 |
-</pre></div></div></div>
+Other variables have been previously shown to be correlated with citation rate, including number of authors, author experience, author institution, open access status, and subject area [cite]. Single-variable correlations can be misleading, so we performed multivariate regression to characterize the relationship between data availability and citation rate, independently of these other variables.
 
 
-Data availability correlations:
-
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## | dataset.in.geo.or.ae                          | 1     |
-## | institution.stanford                          | 0.34  |
-## | pubmed.is.open.access                         | 0.29  |
-## | pubmed.date.in.pubmed                         | 0.28  |
-## | pubmed.year.published                         | 0.27  |
-## | journal.microarray.creating.count.tr          | 0.19  |
-## | pubmed.is.funded.nih                          | 0.15  |
-## | pubmed.is.funded.nih.intramural               | 0.15  |
-## | pubmed.is.bacteria                            | 0.14  |
-## | journal.impact.factor.tr                      | 0.13  |
-## | num.grants.via.nih.tr                         | 0.11  |
-## | nih.cumulative.years.tr                       | 0.11  |
-## | institution.mean.norm.citation.score          | 0.1   |
-## | has.R.funding                                 | 0.1   |
-## | last.author.num.prev.microarray.creations.tr  | 0.1   |
-## | pubmed.is.geo.reuse                           | 0.09  |
-## | last.author.num.prev.pmc.cites.tr             | 0.09  |
-## | nih.sum.avg.dollars.tr                        | 0.08  |
-## | institution.is.govnt                          | 0.07  |
-## | num.authors.tr                                | 0.06  |
-## | pubmed.is.plants                              | 0.06  |
-## | first.author.num.prev.microarray.creations.tr | 0.06  |
-## | country.canada                                | 0.06  |
-## | country.usa                                   | 0.05  |
-## | country.uk                                    | 0.05  |
-## | first.author.num.prev.pmc.cites.tr            | 0.04  |
-## | pubmed.is.animals                             | 0.03  |
-## | first.author.female                           | 0.03  |
-## | last.author.female                            | 0.02  |
-## | nCitedBy.log                                  | 0.01  |
-## | country.australia                             | 0     |
-## | last.author.num.prev.pubs.tr                  | -0.01 |
-## | institution.rank                              | -0.02 |
-## | first.author.num.prev.pubs.tr                 | -0.02 |
-## | last.author.year.first.pub.ago.tr             | -0.03 |
-## | journal.num.articles.2008.tr                  | -0.03 |
-## | pubmed.is.core.clinical.journal               | -0.04 |
-## | institution.harvard                           | -0.05 |
-## | first.author.year.first.pub.ago.tr            | -0.07 |
-## | pubmed.is.humans                              | -0.13 |
-## | pubmed.is.cultured.cells                      | -0.15 |
-## | pubmed.is.cancer                              | -0.16 |
-## | institution.nci                               | -0.18 |
-## | country.japan                                 | -0.21 |
-## | country.china                                 | -0.22 |
-## | country.korea                                 | -0.25 |
-</pre></div></div></div>
 
 
-#### Multivariate regression
- 
-Multivariate regression analysis can be useful to identify the relationship between data availability and citation rate, independently of other variables.
-
-
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">## |                                              | Df      | Sum Sq  | Mean Sq | F value | Pr(>F) |
-## |----------------------------------------------|---------|---------|---------|---------|--------|
-## | rcs(journal.impact.factor.tr, 3)             | 2.00    | 1134.56 | 567.28  | 1128.24 | 0.00   |
-## | rcs(pubmed.date.in.pubmed, 3)                | 2.00    | 1439.09 | 719.55  | 1431.07 | 0.00   |
-## | rcs(journal.num.articles.2008.tr, 3)         | 2.00    | 4.31    | 2.15    | 4.29    | 0.01   |
-## | rcs(journal.cited.halflife, 3)               | 2.00    | 11.54   | 5.77    | 11.48   | 0.00   |
-## | factor(pubmed.is.open.access)                | 1.00    | 0.15    | 0.15    | 0.29    | 0.59   |
-## | rcs(num.authors.tr, 3)                       | 2.00    | 68.61   | 34.31   | 68.23   | 0.00   |
-## | rcs(first.author.num.prev.pubs.tr, 3)        | 2.00    | 1.05    | 0.52    | 1.04    | 0.35   |
-## | rcs(first.author.num.prev.pmc.cites.tr, 3)   | 2.00    | 53.07   | 26.54   | 52.77   | 0.00   |
-## | rcs(first.author.year.first.pub.ago.tr, 3)   | 2.00    | 1.70    | 0.85    | 1.69    | 0.19   |
-## | rcs(last.author.num.prev.pubs.tr, 3)         | 2.00    | 2.22    | 1.11    | 2.20    | 0.11   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3)    | 2.00    | 28.92   | 14.46   | 28.76   | 0.00   |
-## | rcs(last.author.year.first.pub.ago.tr, 3)    | 2.00    | 1.82    | 0.91    | 1.81    | 0.16   |
-## | rcs(institution.mean.norm.citation.score, 3) | 2.00    | 0.36    | 0.18    | 0.36    | 0.70   |
-## | factor(country.usa)                          | 1.00    | 0.97    | 0.97    | 1.92    | 0.17   |
-## | factor(country.china)                        | 1.00    | 1.62    | 1.62    | 3.22    | 0.07   |
-## | factor(country.korea)                        | 1.00    | 1.89    | 1.89    | 3.76    | 0.05   |
-## | factor(pubmed.is.cancer)                     | 1.00    | 13.37   | 13.37   | 26.60   | 0.00   |
-## | factor(pubmed.is.animals)                    | 1.00    | 13.63   | 13.63   | 27.11   | 0.00   |
-## | factor(pubmed.is.plants)                     | 1.00    | 14.24   | 14.24   | 28.32   | 0.00   |
-## | factor(pubmed.is.core.clinical.journal)      | 1.00    | 4.53    | 4.53    | 9.02    | 0.00   |
-## | factor(pubmed_journal)                       | 422.00  | 364.83  | 0.86    | 1.72    | 0.00   |
-## | factor(dataset.in.geo.or.ae)                 | 1.00    | 9.47    | 9.47    | 18.84   | 0.00   |
-## | Residuals                                    | 3919.00 | 1970.48 | 0.50    |         |        |
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh p
-## Estimate factor(dataset.in.geo.or.ae).L 1.09  1.05   1.13 0
-</pre></div></div></div>
-
-
-In this analysis, we found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
+We found many of the variables were independently associated with citation rate, including number of authors, journal impact factor, the journal itself, the date of publication, the number of previous citations of the fist and last author, the number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.
 
 Estimate of the independent increase of citations due to data availability is  
 <code class="knitr inline">9</code>%
@@ -471,79 +275,25 @@ with 95% confidence intervals [<code class="knitr inline">5</code>%
 , <code class="knitr inline">13</code>% ]
 (p=<code class="knitr inline">0.00</code>)
 
-Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually (with a subset of the covariates).
-
-The estimate of citation boost was different for different years of publication.
-
-The estimates of citation boost for papers published in each year, with 95% confidence intervals:
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">estimates_by_year</span>
-</pre></div><div class="output"><pre class="knitr">##           year                          param  est ciLow ciHigh     p
-## Estimate  2001 factor(dataset.in.geo.or.ae).L 1.37  0.84   2.25 0.212
-## Estimate1 2002 factor(dataset.in.geo.or.ae).L 1.16  0.89   1.50 0.268
-## Estimate2 2003 factor(dataset.in.geo.or.ae).L 1.19  1.01   1.41 0.044
-## Estimate3 2004 factor(dataset.in.geo.or.ae).L 1.30  1.15   1.47 0.000
-## Estimate4 2005 factor(dataset.in.geo.or.ae).L 1.32  1.19   1.47 0.000
-## Estimate5 2006 factor(dataset.in.geo.or.ae).L 1.15  1.04   1.27 0.005
-## Estimate6 2007 factor(dataset.in.geo.or.ae).L 1.08  1.00   1.17 0.055
-## Estimate7 2008 factor(dataset.in.geo.or.ae).L 1.08  0.99   1.18 0.077
-## Estimate8 2009 factor(dataset.in.geo.or.ae).L 1.01  0.92   1.10 0.865
-</pre></div></div></div>
 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_regressionEstimatesByYear.png" class="plot" /></div></div>
+### More covariates led to a more conservative estimate
 
-
-Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
-
-We confirmed the inclusion of these had a small influence on the outcomes of our study. The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data, but was found to be not statisitically significantly different.  Furthermore, a subanalysis on the manually-curated articles was similar to the findings from the whole sample.
-
-### Comparison to Piwowar et al 2007
-
-Our estimate of citation boost, <code class="knitr inline">9</code>% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by Piwowar et al 2007], even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
+Our estimate of citation boost, <code class="knitr inline">9</code>% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by [Piwowar et al 2007], even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.  
 
 First, Piwowar et al 2007 concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003), whereas the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the Piwowar et al 2007 sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
 
 We attempted to reproduce the prior analysis with the current data points.  Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with covariates used in the Piwowar 2007 paper resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                  | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |----------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)    | 2.00   | 5.33   | 2.67    | 3.27    | 0.04   |
-## | rcs(journal.impact.factor.tr, 3) | 2.00   | 68.81  | 34.40   | 42.23   | 0.00   |
-## | factor(country.usa)              | 1.00   | 0.06   | 0.06    | 0.07    | 0.79   |
-## | factor(dataset.in.geo.or.ae)     | 1.00   | 4.35   | 4.35    | 5.34    | 0.02   |
-## | Residuals                        | 294.00 | 239.53 | 0.81    |         |        |
-</pre></div><div class="source"><pre class="knitr">
-  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfitprev</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.47  1.06   2.03 0.021
-</pre></div></div></div>
+
 
 
 The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important covariates decreased the estimated effect to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%. 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr">
-  <span class="functioncall">gfm_table</span><span class="keyword">(</span><span class="functioncall">anova</span><span class="keyword">(</span><span class="symbol">myfit_prev_more</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">## |                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |-------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 5.55   | 2.78    | 3.60    | 0.03   |
-## | rcs(journal.impact.factor.tr, 3)          | 2.00   | 66.95  | 33.47   | 43.35   | 0.00   |
-## | rcs(num.authors.tr, 3)                    | 2.00   | 12.97  | 6.49    | 8.40    | 0.00   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 9.46   | 4.73    | 6.12    | 0.00   |
-## | factor(country.usa)                       | 1.00   | 0.13   | 0.13    | 0.17    | 0.68   |
-## | factor(dataset.in.geo.or.ae)              | 1.00   | 0.66   | 0.66    | 0.85    | 0.36   |
-## | Residuals                                 | 283.00 | 218.53 | 0.77    |         |        |
-</pre></div><div class="source"><pre class="knitr">
-  <span class="functioncall">calcCI.exp</span><span class="keyword">(</span><span class="symbol">myfit_prev_more</span><span class="keyword">,</span> <span class="string">"factor(dataset.in.geo.or.ae).L"</span><span class="keyword">)</span>
-</pre></div><div class="output"><pre class="knitr">##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.18  0.83   1.66 0.357
-</pre></div></div></div>
 
 
 
-
-### Manual review of citation context
+### Data reuse contributes to citation boost
 
 To provide evidence on the proportion of the citation boost that may be caused by data reuse, we report the observed frequency with which papers that shared gene expression microarray data were cited in the context of data attribution.  Citations to papers that describe 100 datasets deposited into GEO in 2005 were collected using Web of Science.  A sample of 138 citations were randomly selected and manually reviewed.  
 
@@ -552,39 +302,26 @@ Of the <code class="knitr inline">138</code> reviewed citations to articles with
 with 95% confidence intervals [<code class="knitr inline">3</code>%
 , <code class="knitr inline">11</code>% ]
 
+### Citation boost and reuse rates change over time
 
-### Data reuse patterns from accession number attribution
+Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually (with a subset of the covariates).
+
+The estimate of citation boost was different for different years of publication.  The estimates of citation boost for papers published in each year, with 95% confidence intervals:
 
 
-Finally, to provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.  This is only a subset of all data reuse (it doesn't include attribution through citations, for example), but the patterns of reuse are likely similar across methods of attribution.
+
+
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_regressionEstimatesByYear.png" class="plot" /></div></div>
+
+
+
+To provide evidence on the timeline of data attribution, we report  data reuse activity attributed through direct dataset mentions.  This is only a subset of all data reuse (it doesn't include attribution through citations, for example), but the patterns of reuse are likely similar across methods of attribution.
 
 We found <code class="knitr inline">9274</code> mentions of GEO datasets in papers published between 2000 and 2010 within PubMed Central, including <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, count)), 0) --> by author teams that do not overlap those that deposited the data.  Extrapolating this to all of PubMed, we estimate there may be about <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, extrap)), 0)--> third-party reuses of GEO data attributed through accession numbers in all of PubMed, in papers published between 2000 and 2010.
 
-The number of reuse papers started to grow rapidly only after several years of dataset publication.
+The number of reuse papers started to grow rapidly only after several years of dataset publication.  In recent years both the number of datasets and the number of reuse papers are growing rapidly, at about the same rate.
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="symbol">dfCountUnique3rdpartyPapers</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">dfMentions</span><span class="keyword">,</span> <span class="symbol">thirdPartyReuse</span>==<span class="number">TRUE</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall">.</span><span class="keyword">(</span><span class="symbol">paperPublishedYear</span><span class="keyword">,</span> <span class="symbol">pmc_pmid_ratio</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">summarise</span><span class="keyword">,</span> <span class="argument">count</span><span class="argument">=</span><span class="functioncall">length</span><span class="keyword">(</span><span class="functioncall">unique</span><span class="keyword">(</span><span class="symbol">reuse_pmcid</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="symbol">dfCountUnique3rdpartyPapers</span><span class="keyword">$</span><span class="symbol">extrap</span> <span class="assignement">=</span> <span class="functioncall">with</span><span class="keyword">(</span><span class="symbol">dfCountUnique3rdpartyPapers</span><span class="keyword">,</span> <span class="symbol">count</span><span class="keyword">/</span><span class="symbol">pmc_pmid_ratio</span><span class="keyword">)</span>
-
-<span class="symbol">dfCountUnique3rdpartyPapers</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="symbol">dfCountUnique3rdpartyPapers</span><span class="keyword">,</span> <span class="functioncall">.</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">transform</span><span class="keyword">,</span> <span class="argument">cumul_extrap</span><span class="argument">=</span><span class="functioncall">cumsum</span><span class="keyword">(</span><span class="symbol">extrap</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="symbol">dfCountUnique3rdpartyPapers</span> <span class="assignement">=</span> <span class="functioncall">merge</span><span class="keyword">(</span><span class="symbol">dfCountUnique3rdpartyPapers</span><span class="keyword">,</span> <span class="symbol">dfPubmedGseCount</span><span class="keyword">,</span> <span class="argument">by.x</span><span class="argument">=</span><span class="string">"paperPublishedYear"</span><span class="keyword">,</span> <span class="argument">by.y</span><span class="argument">=</span><span class="string">"year"</span><span class="keyword">)</span>
-
-<span class="symbol">dfCountUnique3rdpartyPapers</span> <span class="assignement">=</span> <span class="functioncall">ddply</span><span class="keyword">(</span><span class="symbol">dfCountUnique3rdpartyPapers</span><span class="keyword">,</span> <span class="functioncall">.</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">transform</span><span class="keyword">,</span> <span class="argument">cumul_gse</span><span class="argument">=</span><span class="functioncall">cumsum</span><span class="keyword">(</span><span class="symbol">num_gse_ids</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="comment">#not log</span>
-<span class="functioncall">ggplot</span><span class="keyword">(</span><span class="argument">data</span><span class="argument">=</span><span class="symbol">dfCountUnique3rdpartyPapers</span><span class="keyword">,</span> <span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">x</span><span class="argument">=</span><span class="symbol">paperPublishedYear</span><span class="keyword">,</span> <span class="argument">y</span><span class="argument">=</span><span class="symbol">cumul_gse</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_point</span><span class="keyword">(</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_line</span><span class="keyword">(</span><span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">color</span><span class="argument">=</span><span class="string">"datasets\n"</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">scale_x_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">"\nyear of data or paper publication"</span><span class="keyword">,</span> <span class="argument">limits</span><span class="argument">=</span><span class="functioncall">c</span><span class="keyword">(</span><span class="number">2001</span><span class="keyword">,</span> <span class="number">2010</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">scale_y_continuous</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">"Cumulative count\n"</span><span class="keyword">,</span> <span class="argument">labels</span><span class="argument">=</span><span class="functioncall">comma_format</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">scale_color_hue</span><span class="keyword">(</span><span class="argument">name</span><span class="argument">=</span><span class="string">""</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">theme_bw</span><span class="keyword">(</span><span class="argument">base_size</span><span class="argument">=</span><span class="number">16</span><span class="keyword">)</span> <span class="keyword">+</span>
-<span class="functioncall">geom_line</span><span class="keyword">(</span><span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">y</span><span class="argument">=</span><span class="symbol">cumul_extrap</span><span class="keyword">,</span> <span class="argument">color</span><span class="argument">=</span><span class="string">"reuse papers,\nattribution by accession"</span><span class="keyword">)</span><span class="keyword">)</span> <span class="keyword">+</span> <span class="functioncall">geom_point</span><span class="keyword">(</span><span class="functioncall">aes</span><span class="keyword">(</span><span class="argument">y</span><span class="argument">=</span><span class="symbol">cumul_extrap</span><span class="keyword">)</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/growthOfReusePapers.png" class="plot" /></div></div>
-
-
-In recent years both the number of datasets and the number of reuse papers are growing rapidly, at about the same rate.
-
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/growthOfReusePapersLog.png" class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/growthOfReusePapers.png" class="plot" /></div></div>
 
 
 Almost all reuse papers by authors who collect and archive a given dataset (as estimated by surname overlap with data submission record) are published within two years of dataset publication.  This pattern contrasts sharply with data reuse by outside authors.
@@ -601,7 +338,7 @@ Figure A shows the cumulative number of third-party reuse papers, illustrating g
 
 Because the number of datasets published has grown dramatically with time, it is interesting to see the cumulative number of third-party reuses normalized by the number of datasets deposited each year.  Early years, 2001-2002, had relatively few data deposits but they have received a large amount of reuse.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized.png" class="plot" /></div></div>
+
 
 
 We exclude the early years from the next plot to examine the pattern of data reuse once gene expression datasets became more common.  Figure B shows cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication.
@@ -609,11 +346,18 @@ We exclude the early years from the next plot to examine the pattern of data reu
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized_2003_elapsed.png" class="plot" /></div></div>
 
 
+## Number of reuses in a paper increases with time
 
 The number of datasets used in a reuse paper was found to increase over time. Each panel reports analysis for reuse papers published that year, reusing data from any year.  In 2002-2004 almost all reuse papers only used one or two datasets.  By 2010, 25% of reuse papers used 3 or more datasets. 
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/numberDatasetsInReusePaper.png" class="plot" /></div></div>
 
+
+
+
+
+
+## Probability of reuse
 
 Reuse was not limited to just a few papers. Almost all datasets published in 2001 and 2002 have been reused at least once.  Newer datasets have been used less often, but we observed reuse of at least 20% of the datasets deposited in 2007.  The actual rate, across all methods of attribution and extrapolated to all of PubMed, is likely much higher. 
 
@@ -622,13 +366,11 @@ Distribution of reuse across individual datasets.  One panel for every year of r
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets.png" class="plot" /></div></div>
 
 
-Finally, what is the distribution of the age of datasets used by data reuse studies?  We found the authors of data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  
+What is the distribution of the age of datasets used by data reuse studies?  We found the authors of data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  
 
 One panel for every year of publication, with papers published that year.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/distOfDatasetAge.png" class="plot" /></div></div>
-
-
 
 
 
