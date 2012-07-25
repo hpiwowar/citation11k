@@ -799,6 +799,21 @@ Citations are blind to many important types of data reuse.  The impact of data o
 
 It is important to remember that the primary rationale for making research data broadly available has nothing to do with evaluation metrics: full description of experimental process and findings is a tenant of science and [publicly-funded science is a public resource](http://www.nature.com/news/open-your-minds-and-share-your-results-1.10895).  Nonetheless, robust evidence of personal benefit will help as science transitions from "data not shown" to a culture that simply expects data to be part of the published record.
 
+## Abstract
+
+### Background
+Attribution upon reuse of scientific data is important to reward data creators and to document the provenance of research findings.  Previous studies have found that papers with publicly available datasets receive a higher number of citations than similar studies without available data.  However, previous analyses did not control for many variables known to predict citation rate.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate patterns of data reuse.
+
+### Methods and Results
+In a multivariate regression on <!--rinline dim(dfCitationsAttributesRaw)[1] --> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
+<!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
+(95% confidence interval: [<!--rinline 100*(citation.boost.coefs.journal$ciLow-1) -->%
+to <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->%])
+more citations than similar studies without available data.  Date of publication, journal impact factor, open access status, number of authors, first and last author publication history, corresponding author country, institution citation mean score, and study topic were included as covariates.  The open data citation benefit varied with date of dataset deposition: a citation boost was most clear for papers published in 2004 and 2005, at about 30%.  Data-depositing authors published almost all their papers associated with their dataset within two years, whereas papers published by third-party investigators began to ramp up after two years and continued to accumulate rapidly past year six.  The level of third-party data use was high: for 100 datasets deposited in year 0, we estimate that 40 papers in PubMed reused a dataset by year 2, 100 by year 4, and more than 150 by year 5. Recent reuse analyses include more third-party datasets, on average, than early reuse studies: a quarter of reuse studies in 2010 used at least 3 datasets. Data reuse was distributed across a broad base of datasets: a conservative estimate finds that at least 20% of the datasets deposited between 2003 and 2007 have been reused at least once by third-parties. Third-party reuse papers are being published at about the same rate as new datasets are made available.
+
+### Discussion
+Robust evidence of an open data citation benefit requires multivariate analysis to isolate contributing effects.  Attribution practices that directly mention the dataset facilitate study of data reuse patterns. Evidence of data reuse and citation benefit is important for documenting the value of data archiving to both scientific progress and the data-collecting investigator.
+
 ## Acknowledgements
 
 - CISTI for Scopus access
@@ -820,27 +835,6 @@ end.rcode-->
 
 References are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) 
 
-## Abstract
-
-(hasn't been updated to reflect all analyses)
-
-### Background
-Attribution upon reuse of scientific data is important to reward data creators and document the provenance of research findings.  In many fields, data attribution commonly takes the form of citation to the paper that described the primary data collection.  Previous studies have found that papers with publicly available datasets do indeed receive a higher number of citations than similar studies without available data.  However, previous studies were relatively small and did not control for many variables known to predict citation rate.  In this analysis we look at citation rates while controlling for many known citation predictors, and investigate whether the estimated citation boost is consistent with evidence of data reuse.
-
-### Methods and Results
-In a multivariate linear regression on <!--rinline dim(dfCitationsAttributesRaw)[1] --> studies that created gene expression microarray data, we found that studies with data in centralized public repositories received 
-<!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
-(95% confidence interval: [<!--rinline 100*(citation.boost.coefs.journal$ciLow-1) -->%
-to <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->%)
-more citations than similar studies without available data.  Date of publication, journal impact factor, journal citation half-life, journal size, number of authors, first and last author number of previous publications and citations, corresponding author country, institution citation mean score, and study topic were included as covariates.  A small independent investigation of citations to microarray studies with publicly available data found that about 
-<!--rinline 100*(round(annotated.prop[1], 2)) -->%
-(95% CI: <!--rinline 100*(round(annotated.prop[2], 2)) -->%
-to <!--rinline 100*(round(annotated.prop[3], 2)) -->%, 
-n=<!--rinline num.GEO.total -->)
-of citations to those studies were in the context of data reuse attribution.
-
-### Discussion
-
 
 ## Supplementary material
 
@@ -857,7 +851,7 @@ If it were true that these erroniously-included articles recieved many more or m
 206/226
 end.rcode-->
 
-Examining the citations of the  20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
+Examining the citations of the 20 articles that did not create gene expression data revealed that these studies were cited less often than those that did create data: a mean of 26 citations compared to a mean of 32 citations.  The overall distribution of citations for articles that did not create gene expression data is closer to zero than the distribution of citations for articles that did create gene expression data.
 
 
 <!--begin.rcode manualAnnotationCreatedData, echo=FALSE
