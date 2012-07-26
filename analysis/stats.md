@@ -179,16 +179,41 @@ We used the NCBI eUtils library and custom Python code to obtain a list of all d
 
 We excluded papers with author surnames in common with those authors who deposited the original dataset, as described in  (Piwowar _et. al._ 2011).  
 
-PubMed Central contains only a subset of papers recorded in PubMed. As described in  (Piwowar _et. al._ 2011), to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
+PubMed Central contains only a subset of papers recorded in PubMed. As described in  (Piwowar _et. al._ 2011), to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).
 
-
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">##       [,1]       
+##  [1,] "2000: 18%"
+##  [2,] "2001: 18%"
+##  [3,] "2002: 15%"
+##  [4,] "2003: 16%"
+##  [5,] "2004: 18%"
+##  [6,] "2005: 18%"
+##  [7,] "2006: 20%"
+##  [8,] "2007: 23%"
+##  [9,] "2008: 33%"
+## [10,] "2009: 37%"
+## [11,] "2010: 36%"
+## [12,] "2011: 10%"
+</pre></div></div></div>
 
 
 We retained reuse candidates for papers published between 2001 and 2010: 2011 was within 12 months of data collection, and had a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
 
 To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year.
 
-
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">##    year num_gse_ids
+## 1  2000           0
+## 2  2001          13
+## 3  2002          92
+## 4  2003         523
+## 5  2004         847
+## 6  2005        1393
+## 7  2006        1814
+## 8  2007        2711
+## 9  2008        3279
+## 10 2009        4313
+## 11 2010        5569
+</pre></div></div></div>
 
 
 
@@ -199,7 +224,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Wed Jul 25 16:38:45 2012</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 (Wickham, 2007), plyr (Wickham, 2011), rms (Jr, 2012), polycor (Fox, 2010), ascii (Hajage, 2011), ggplot2 (Wickham, 2009), gplots (Bolker _et. al._ 2012), knitr (Xie, 2012), and knitcitations (Boettiger, 2012). P-values are two-tailed.
+Statistical analyses were last run on <code class="knitr inline">Thu Jul 26 09:52:52 2012</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 (Wickham, 2007), plyr (Wickham, 2011), rms (Jr, 2012), polycor (Fox, 2010), ascii (Hajage, 2011), ggplot2 (Wickham, 2009), gplots (Bolker _et. al._ 2012), knitr (Xie, 2012), and knitcitations (Boettiger, 2012). P-values are two-tailed.
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
@@ -249,7 +274,9 @@ The GEO and ArrayExpress repositories had links to associated datasets for <code
 
 Without accounting for any confounding factors, the mean number of citations were the same for papers with and without archived data, and the distribution of citations across the paper subsets were similar.
 
-We hasten to mention strong confounders.  The number of citations a paper has recieved is of course strongly correlated to the date it was published: older papers have had more time to accumulate citations.  The probability of data archiving is also correlated with the age of an article -- more recent articles are more likely to archive data (Piwowar, 2011).  Once we accounted for publication date, the distributions of citations were noticibly higher for paper with available data than those without.
+We hasten to mention strong confounders.  The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Publication date is also strongly correlated with the probability of data archiving -- more recent articles are more likely to archive data (Piwowar, 2011).  
+
+After stratifying by publication date, the distributions of citations were noticibly higher for paper with available data than those without, as seen in Figure 1.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure1.png"  class="plot" /></div></div>
 
@@ -260,7 +287,7 @@ Other variables have been shown to correlate with citation rate (Fu & Aliferis, 
 
 
 
-The multivariate regression included attributes to model an article's journal, journal impact factor, date of publication, number of authors, number of previous citations of the fist and last author, number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.  Citations were <code class="knitr inline">9</code>%
+The multivariate regression included attributes to represent an article's journal, journal impact factor, date of publication, number of authors, number of previous citations of the fist and last author, number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.  Citations were <code class="knitr inline">9</code>%
 higher for papers with available data, independent of other variables (95% confidence intervals [<code class="knitr inline">5</code>%
 , <code class="knitr inline">13</code>% ], p < 0.01).
 
@@ -272,97 +299,106 @@ Our estimate of citation boost, <code class="knitr inline">9</code>% as per the 
 
 First, (Piwowar _et. al._ 2007) concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003), whereas the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the (Piwowar _et. al._ 2007) sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
 
-We attempted to reproduce the prior analysis with the current data points.  Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with covariates used in the (Piwowar _et. al._ 2007) paper resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+We attempted to reproduce the prior analysis with the current data points to better understand the reasons for the disparate estimates.  Limiting the inclusion criteria for the current sample to papers published between 2001 and 2003, with MeSH terms "human" and "cancer", reduced the cohort to 308 papers.  Running this subsample with the covariates used in the (Piwowar _et. al._ 2007) paper (date of publication, impact factor, corresponding author country) resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%) when data is made available.
 
 
 
 
-The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important covariates decreased the estimated effect to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%. 
+The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important variables decreased the estimated effect of data archiving to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%.
 
 
 
 
-### Data reuse demonstrable component of citation boost
+### Data reuse is a demonstrable component of citation boost
 
-To provide evidence on the proportion of the citation boost that may be caused by data reuse, we randomly selected and manually reviewed  138 citations.  <code class="knitr inline">8</code> of the citations (<code class="knitr inline">6</code>%, 95%CI: <code class="knitr inline">3</code>% to 
-<code class="knitr inline">11</code>% ) were attributions for data reuse.
-
-
-### Citation boost over time
-
-Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.  The estimate of citation boost was varied by year of publication.  Recent years had a low boost.  Early years had wide confidence intervals.  Citation boost was about 30% for data published in 2004 and 2005.
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we randomly selected and manually reviewed  138 citations.  We identified <code class="knitr inline">8</code> of the citations (<code class="knitr inline">6</code>%, 95% CI: <code class="knitr inline">3</code>% to 
+<code class="knitr inline">11</code>% ) were in the context of attribution for data reuse.
 
 
+### Citation boost varies with time
+
+Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.  The estimate of citation boost  varied by year of publication.  Papers published recently had little evidence of citation boost for making data available.  The estimates for papers published in the early 2000s had wide confidence intervals, due to the relatively small number of publications.  As seen in Table 3 and Figure 2, a citation boost was most clear for papers published in 2004 and 2005, estimated at about 30%.
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">##       year  est ciLow ciHigh
+##  [1,] 2001 1.37  0.84   2.25
+##  [2,] 2002 1.16  0.89   1.50
+##  [3,] 2003 1.19  1.01   1.41
+##  [4,] 2004 1.30  1.15   1.47
+##  [5,] 2005 1.32  1.19   1.47
+##  [6,] 2006 1.15  1.04   1.27
+##  [7,] 2007 1.08  1.00   1.17
+##  [8,] 2008 1.08  0.99   1.18
+##  [9,] 2009 1.01  0.92   1.10
+</pre></div></div></div>
 
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure2.png"  class="plot" /></div></div>
 
-*Figure 2: Change in citation count when data is publicly available.  Estimates from multivariate analysis, lines indicate 95% confidence intervals of coefficient estimates*
+*Figure 2: Change in citation count when data is publicly available.  Estimates from multivariate analysis, lines indicate 95% confidence intervals of coefficient estimates.*
 
 
 ### Third-party data reuse grows at same rate as data archive
 
 A complementary dataset was collected and analyzed to characterize data reuse: direct mention of dataset accession numbers in the full text of papers.
 
-In total there were <code class="knitr inline">9274</code> mentions of GEO datasets in papers published between 2000 and 2010 within PubMed Central by <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, count)), 0) --> by author teams whose last names do not overlap those who deposited the data.  Extrapolating this to all of PubMed, we estimate there may be about <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, extrap)), 0)--> third-party reuses of GEO data attributed through accession numbers in all of PubMed, in papers published between 2000 and 2010.
+GEO contains <code class="knitr inline">20554</code> datasets deposited between 2000 and 2010.
 
-The number of reuse papers started to grow rapidly several years after data archiving rate started two grow.  In recent years both the number of datasets and the number of reuse papers have been growing rapidly, at about the same rate.
+In total there were <code class="knitr inline">9274</code> mentions of GEO datasets in papers published between 2000 and 2010 within PubMed Central across <code class="knitr inline">4543</code>  papers written by third-party authors (author teams whose last names do not overlap with those who deposited the data).  Extrapolating these findings from PubMed Central to all of PubMed, we estimate there may be about <code class="knitr inline">1.4081 &times; 10<sup>4</sup></code> third-party papers based on reuse of GEO data in papers published between 2000 and 2010, where the data reuse attribution is made through direct mention of a dataset accession number (rather than, for example, citing an associated paper).
+
+The number of datasets and the number of reuse papers have been growing rapidly, and are now growing at about the same rate.
 
 
 
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure3.png"  class="plot" /></div></div>
 
-*Figure 3*
+*Figure 3: Cumulative number of datasets deposited in GEO each year, and cumulative number of third-party reuse papers published that directly attribute GEO data published each year, log scale.*
 
 ### Data reuse picks up as primary author use winds down
 
-We found that almost all reuse papers by authors who collect and archive a given dataset (identified by surname overlap with data submission record) were published within two years of dataset publication.  This pattern contrasts sharply with data reuse by outside authors, as seen in Figure 4.  
+We found that almost all papers by the author team that archived a given dataset (identified by surname overlap with data submission record) were published within two years of dataset publication.  This pattern contrasts sharply with data reuse by outside authors, as seen in Figure 4.  
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure4.png"  class="plot" /></div></div>
 
 *Figure 4: Number of papers mentioning GEO accession numbers.  Each panel represents reuse of a particular year of dataset submissions, with number of mentions on the y axis, years since the intial publication on the x axis, and a line for reuses by the data collection team and a line for third-party investigators*
 
-The cumulative number of third-party reuse papers is illustrated in figure 5.  Separate lines are displayed for different dataset publication years.
+The cumulative number of third-party reuse papers is illustrated in Figure 5.  Separate lines are displayed for different dataset submission years.
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure5.png"  class="plot" /></div></div>
 
+*Figure 5: Cumuative number of third-party reuse papers, by date of reuse paper publication. Separate lines are displayed for different dataset submission years*
 
-Because the number of datasets published has grown dramatically with time, it is interesting to see the cumulative number of third-party reuses normalized by the number of datasets deposited each year.  Early years, 2001-2002, had relatively few data deposits but they have received a large amount of reuse.
+Early years of data submission, 2001-2002, had relatively few data deposits.  Relatively, their levels of data reuse are very high.
 
+We exclude the early years from the next plot to examine the pattern of data reuse once gene expression datasets became more common.  Figure 6 shows cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication.
 
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure6.png"  class="plot" /></div></div>
 
-
-We exclude the early years from the next plot to examine the pattern of data reuse once gene expression datasets became more common.  Figure B shows cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication.
-
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_accessionReuse_cumulative_normalized_2003_elapsed.png"  class="plot" /></div></div>
-
+*Figure 6: Cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication*
 
 ### Number of datasets in a reuse paper has increased
 
-The number of datasets used in a reuse paper was found to increase over time. Each panel reports analysis for reuse papers published that year, reusing data from any year.  In 2002-2004 almost all reuse papers only used one or two datasets.  By 2010, 25% of reuse papers used 3 or more datasets. 
+The number of datasets used in a reuse paper was found to increase over time. By 2010, 25% of reuse papers used 3 or more datasets. 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/numberDatasetsInReusePaper.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure7.png"  class="plot" /></div></div>
 
-
-
-
-
+*Figure 7: Scatterplot of year of publication of third-party reuse paper (with jitter) vs number of GEO datasets mentioned in the paper (log scale).  The line connects the mean number of datasets attributed in reuse papers vs publication year.*
 
 ### Reuse is distributed across many datasets
 
-Reuse was not limited to just a few papers. Almost all datasets published in 2001 and 2002 have been reused at least once.  Newer datasets have been used less often, but we observed reuse of at least 20% of the datasets deposited in 2007.  The actual rate, across all methods of attribution and extrapolated to all of PubMed, is likely much higher. 
+Reuse was not limited to just a few datasets. All datasets published in 2001 have been reused at least once and half were reused by at least three papers.  Newer datasets have been used less often, but we observed reuse of 20% of the datasets deposited between 2003 and 2007.  The actual rate, across all methods of attribution and extrapolated to all of PubMed, is likely much higher. 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/display_distAcrossDatasets.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure8.png"  class="plot" /></div></div>
 
+*Figure 8: Proportion of data reused by third-party papers vs year of data submission.  Conservative estimate, because only considers reuse by papers in PubMed Central, and only when reuse is attributed through direct mention of a GEO accession number*
 
 ### Data reused most often 3-6 years after publication
 
-What is the distribution of the age of datasets used by data reuse studies?  We found the authors of data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  
+Data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.
 
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure9.png"  class="plot" /></div></div>
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/distOfDatasetAge.png"  class="plot" /></div></div>
-
+*Figure 9: Each panel includes a cohort of data reuse papers published in a given year.  Line plots proportion of datasets submitted in previous years that were reused by reuse papers in the panel year.*  
 
 
 ## Discussion
@@ -393,7 +429,7 @@ These results suggest that the lower citation boost we observed for recent paper
 
 Analysis of the accession number mentions revealed that data reuse was driven by a broad base of datasets: more than 20% of the datasets deposited between 2003 and 2007 have been reused by third parties.  We note these proportions are gross underestimates since they only include reuses we observed as accession number mentions in PubMed Central; no attempt has been made to extrapolate these distribution statistics to all of PubMed, or to reflect attributions through citations.  Further, many important instances of data reuse do not leave a trace in the published literature, such as those in education and training. Nonetheless, even these conservative estimates suggest that third-party investigators find value in a wide range of datasets, not simply a "very reusable" elite.
 
-Future work can improve on these results by considering and integrating all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- citations to the dataset as a first-class research object, and even mentions of the data collection investigators in acknowledgement sections.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.
+Future work can improve on these results by considering and integrating all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- citations to the dataset as a first-class research object, and even mentions of the data collection investigators in acknowledgement sections.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.  Also, the method we use for determining third-party reuse based on author last name overlap with the data submission record is extremely crude.
 
 Data from current and future studies can start to be used to estimate the impact of policy decisions.  For example, do embargo periods decrease the level of data reuse?  Do restrictive or poorly articulated licencing terms decrease data reuse?  Which types of data reuse are facilitate by robust data standards and which types are unaffected?
 
@@ -671,7 +707,7 @@ To confirm that the erroniously-included articles were not driving the findings 
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Wed Jul 25 16:38:57 2012</code>
+ * Generated on <code class="knitr inline">Thu Jul 26 09:53:03 2012</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 

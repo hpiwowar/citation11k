@@ -103,7 +103,7 @@ end.rcode-->
 
 <!--begin.rcode colours, echo=FALSE
 #colourblind friendly palettes from http://wiki.stdout.org/rcookbook/Graphs/Colors%20(ggplot2)
-cbgRaw = c("#E69F00", "#56B4E9", "#009E73", "#999999", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbgRaw = c("#E69F00", "#56B4E9", "#009E73", "#999999", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 cbgFillPalette <- scale_fill_manual(values=cbgRaw)
 cbgColourPalette <- scale_colour_manual(values=cbgRaw)
 cbgColorPalette = cbgColourPalette
@@ -419,7 +419,7 @@ We used the NCBI eUtils library and custom Python code to obtain a list of all d
 
 We excluded papers with author surnames in common with those authors who deposited the original dataset, as described in  <!--rinline citep(biblio["piwowar2011beginni"])-->.  
 
-PubMed Central contains only a subset of papers recorded in PubMed. As described in  <!--rinline citep(biblio["piwowar2011beginni"])-->, to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).  
+PubMed Central contains only a subset of papers recorded in PubMed. As described in  <!--rinline citep(biblio["piwowar2011beginni"])-->, to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).
 
 <!--begin.rcode accessionRatios, echo=FALSE
 
@@ -429,7 +429,7 @@ dfPubmedPmcRatios = read.csv("data/pubmed_pmc_ratios.csv", header=TRUE, stringsA
 dfPubmedPmcRatios$pmc_pmid_ratio = dfPubmedPmcRatios$num_pmc/dfPubmedPmcRatios$num_pubmed
 dfPubmedPmcRatios$year = as.numeric(dfPubmedPmcRatios$year)
 
-# cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
+cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
 end.rcode-->
 
 We retained reuse candidates for papers published between 2001 and 2010: 2011 was within 12 months of data collection, and had a dramatically lower proportion of papers in PubMed Central because the NIH archiving requirements permit a 12 month embargo.
@@ -439,6 +439,9 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 <!--begin.rcode dfPubmedGseCount, echo=FALSE
 
 dfPubmedGseCount = read.csv("data/pubmed_gse_count.csv", header=TRUE, stringsAsFactors=F)
+
+subset(dfPubmedGseCount, year<2011)
+
 end.rcode-->
 
 <!--begin.rcode dfMentions, echo=FALSE
@@ -475,6 +478,8 @@ dfCountReusePapersThirdParty = ddply(subset(dfCountReusePapers, thirdPartyReuse=
 dfCountReusePapersThirdParty= merge(dfCountReusePapersThirdParty, dfPubmedGseCount, by.x="dataSubmissionYear", by.y="year")
 
 dfCountReusePapersThirdPartyCumulative = ddply(dfCountReusePapersThirdParty[with(dfCountReusePapersThirdParty, order(elapsedYears)),], c("dataSubmissionYear"), transform, NT = cumsum(total))
+
+total_extrap_reuse_papers = floor(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, extrap)))
 
 end.rcode-->
 
@@ -520,7 +525,9 @@ The GEO and ArrayExpress repositories had links to associated datasets for <!--r
 
 Without accounting for any confounding factors, the mean number of citations were the same for papers with and without archived data, and the distribution of citations across the paper subsets were similar.
 
-We hasten to mention strong confounders.  The number of citations a paper has recieved is of course strongly correlated to the date it was published: older papers have had more time to accumulate citations.  The probability of data archiving is also correlated with the age of an article -- more recent articles are more likely to archive data <!--rinline citep(biblio["piwowar2011who-sha"])-->.  Once we accounted for publication date, the distributions of citations were noticibly higher for paper with available data than those without.
+We hasten to mention strong confounders.  The number of citations a paper has recieved is strongly correlated to the date it was published: older papers have had more time to accumulate citations.  Publication date is also strongly correlated with the probability of data archiving -- more recent articles are more likely to archive data <!--rinline citep(biblio["piwowar2011who-sha"])-->.  
+
+After stratifying by publication date, the distributions of citations were noticibly higher for paper with available data than those without, as seen in Figure 1.
 
 <!--begin.rcode figure1, echo=FALSE 
 
@@ -550,7 +557,7 @@ citation.boost.coefs.journal = calcCI.exp(fit_w_journal, "factor(dataset.in.geo.
 
 end.rcode-->
 
-The multivariate regression included attributes to model an article's journal, journal impact factor, date of publication, number of authors, number of previous citations of the fist and last author, number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.  Citations were <!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
+The multivariate regression included attributes to represent an article's journal, journal impact factor, date of publication, number of authors, number of previous citations of the fist and last author, number of previous publications of the last author, whether the paper was about animals or plants, and whether the data was made publicly available.  Citations were <!--rinline 100*(citation.boost.coefs.journal$est-1) -->%
 higher for papers with available data, independent of other variables (95% confidence intervals [<!--rinline 100*(citation.boost.coefs.journal$ciLow-1) -->%
 , <!--rinline 100*(citation.boost.coefs.journal$ciHigh-1) -->% ], p < 0.01).
 
@@ -562,32 +569,32 @@ Our estimate of citation boost, <!--rinline 100*(citation.boost.coefs.journal$es
 
 First, <!--rinline citep(biblio["piwowar2007sharing"])--> concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003), whereas the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the <!--rinline citep(biblio["piwowar2007sharing"])--> sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
 
-We attempted to reproduce the prior analysis with the current data points.  Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with covariates used in the <!--rinline citep(biblio["piwowar2007sharing"])--> paper resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+We attempted to reproduce the prior analysis with the current data points to better understand the reasons for the disparate estimates.  Limiting the inclusion criteria for the current sample to papers published between 2001 and 2003, with MeSH terms "human" and "cancer", reduced the cohort to 308 papers.  Running this subsample with the covariates used in the <!--rinline citep(biblio["piwowar2007sharing"])--> paper (date of publication, impact factor, corresponding author country) resulted in a comperable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%) when data is made available.
 
 <!--begin.rcode display_RegressionAlaPrevStudy, echo=FALSE, eval=FALSE
   gfm_table(anova(myfitprev))
   calcCI.exp(myfitprev, "factor(dataset.in.geo.or.ae).L")
 end.rcode-->
 
-The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important covariates decreased the estimated effect to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%. 
+The subsample of 308 papers was large enough to include a few additional covariates: number of authors and citation history of the last author.  Including these important variables decreased the estimated effect of data archiving to 18% with a confidence interval that spanned a *loss* of 17% citations to a boost of 66%.
 
 <!--begin.rcode display_RegressionAlaPrevStudyMoreCovariates, echo=FALSE, eval=FALSE
   gfm_table(anova(myfit_prev_more))
   calcCI.exp(myfit_prev_more, "factor(dataset.in.geo.or.ae).L")
 end.rcode-->
 
-### Data reuse demonstrable component of citation boost
+### Data reuse is a demonstrable component of citation boost
 
-To provide evidence on the proportion of the citation boost that may be caused by data reuse, we randomly selected and manually reviewed  138 citations.  <!--rinline num.GEO.reused --> of the citations (<!--rinline 100*(round(annotated.prop[1], 2)) -->%, 95%CI: <!--rinline 100*(round(annotated.prop[2], 2)) -->% to 
-<!--rinline 100*(round(annotated.prop[3], 2)) -->% ) were attributions for data reuse.
+To provide evidence on the proportion of the citation boost that may be caused by data reuse, we randomly selected and manually reviewed  138 citations.  We identified <!--rinline num.GEO.reused --> of the citations (<!--rinline 100*(round(annotated.prop[1], 2)) -->%, 95% CI: <!--rinline 100*(round(annotated.prop[2], 2)) -->% to 
+<!--rinline 100*(round(annotated.prop[3], 2)) -->% ) were in the context of attribution for data reuse.
 
 
-### Citation boost over time
+### Citation boost varies with time
 
-Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.  The estimate of citation boost was varied by year of publication.  Recent years had a low boost.  Early years had wide confidence intervals.  Citation boost was about 30% for data published in 2004 and 2005.
+Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually.  The estimate of citation boost  varied by year of publication.  Papers published recently had little evidence of citation boost for making data available.  The estimates for papers published in the early 2000s had wide confidence intervals, due to the relatively small number of publications.  As seen in Table 3 and Figure 2, a citation boost was most clear for papers published in 2004 and 2005, estimated at about 30%.
 
-<!--begin.rcode regressionEstimatesByYear, echo=FALSE
-#estimates_by_year
+<!--begin.rcode table3, echo=FALSE
+with(estimates_by_year, cbind(year, est, ciLow, ciHigh))
 end.rcode-->
 
 <!--begin.rcode figure2, echo=FALSE
@@ -598,16 +605,18 @@ ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() +
   theme_bw(base_size=16) +
   geom_hline(color="grey50", linetype="dashed", aes(yintercept=1))
 end.rcode-->
-*Figure 2: Change in citation count when data is publicly available.  Estimates from multivariate analysis, lines indicate 95% confidence intervals of coefficient estimates*
+*Figure 2: Change in citation count when data is publicly available.  Estimates from multivariate analysis, lines indicate 95% confidence intervals of coefficient estimates.*
 
 
 ### Third-party data reuse grows at same rate as data archive
 
 A complementary dataset was collected and analyzed to characterize data reuse: direct mention of dataset accession numbers in the full text of papers.
 
-In total there were <!--rinline dim(dfMentions)[1]--> mentions of GEO datasets in papers published between 2000 and 2010 within PubMed Central by <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, count)), 0) --> by author teams whose last names do not overlap those who deposited the data.  Extrapolating this to all of PubMed, we estimate there may be about <!-- round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, extrap)), 0)--> third-party reuses of GEO data attributed through accession numbers in all of PubMed, in papers published between 2000 and 2010.
+GEO contains <!--rinline sum(subset(dfPubmedGseCount, year<2011, num_gse_ids))--> datasets deposited between 2000 and 2010.
 
-The number of reuse papers started to grow rapidly several years after data archiving rate started two grow.  In recent years both the number of datasets and the number of reuse papers have been growing rapidly, at about the same rate.
+In total there were <!--rinline dim(dfMentions)[1]--> mentions of GEO datasets in papers published between 2000 and 2010 within PubMed Central across <!--rinline round(sum(subset(dfCountReusePapers, thirdPartyReuse==TRUE, count)), 0) -->  papers written by third-party authors (author teams whose last names do not overlap with those who deposited the data).  Extrapolating these findings from PubMed Central to all of PubMed, we estimate there may be about <!--rinline total_extrap_reuse_papers--> third-party papers based on reuse of GEO data in papers published between 2000 and 2010, where the data reuse attribution is made through direct mention of a dataset accession number (rather than, for example, citing an associated paper).
+
+The number of datasets and the number of reuse papers have been growing rapidly, and are now growing at about the same rate.
 
 <!--begin.rcode growthOfReusePapers, echo=FALSE
 dfCountUnique3rdpartyPapers = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(paperPublishedYear, pmc_pmid_ratio), summarise, count=length(unique(reuse_pmcid)))
@@ -623,32 +632,33 @@ end.rcode-->
 
 <!--begin.rcode figure3, echo=FALSE
 # log
-ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets\n")) + 
-scale_x_continuous(name="\nyear of data or paper publication", limits=c(2001, 2010)) +
+ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse)) + geom_point() + geom_line(aes(color="datasets")) + 
+scale_x_continuous(name="\nyear of publication", limits=c(2001, 2010)) +
 scale_y_continuous(name="Cumulative count (log scale)\n", trans="log", breaks=log_breaks()) +
-scale_color_hue(name="") +
+scale_colour_manual(name="", values=cbgRaw) +
 theme_bw(base_size=16) +
 geom_line(aes(y=cumul_extrap, color="third-party reuse papers")) + geom_point(aes(y=cumul_extrap)) 
 end.rcode-->
-*Figure 3*
+*Figure 3: Cumulative number of datasets deposited in GEO each year, and cumulative number of third-party reuse papers published that directly attribute GEO data published each year, log scale.*
 
 ### Data reuse picks up as primary author use winds down
 
-We found that almost all reuse papers by authors who collect and archive a given dataset (identified by surname overlap with data submission record) were published within two years of dataset publication.  This pattern contrasts sharply with data reuse by outside authors, as seen in Figure 4.  
+We found that almost all papers by the author team that archived a given dataset (identified by surname overlap with data submission record) were published within two years of dataset publication.  This pattern contrasts sharply with data reuse by outside authors, as seen in Figure 4.  
 
 <!--begin.rcode figure4, echo=FALSE
 ggplot(dfCountReusePapers, aes(x=elapsedYears, y=extrap, color=thirdPartyReuse)) + geom_line() + 
 scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
 scale_y_continuous(name="Number of papers\n", labels=comma_format()) +
 facet_wrap(~dataSubmissionYear) +
-scale_color_hue(name="",
+scale_colour_manual(name="",
+                    values=cbgRaw,
                     breaks=c(FALSE, TRUE),
                     labels=c("orig authors", "third-party authors")) +
 theme_bw(base_size=16)
 end.rcode-->
 *Figure 4: Number of papers mentioning GEO accession numbers.  Each panel represents reuse of a particular year of dataset submissions, with number of mentions on the y axis, years since the intial publication on the x axis, and a line for reuses by the data collection team and a line for third-party investigators*
 
-The cumulative number of third-party reuse papers is illustrated in figure 5.  Separate lines are displayed for different dataset publication years.
+The cumulative number of third-party reuse papers is illustrated in Figure 5.  Separate lines are displayed for different dataset submission years.
 
 <!--begin.rcode figure5, echo=FALSE
 # cumulative
@@ -658,84 +668,78 @@ scale_y_continuous(name="Cumulative number of papers\n", labels=comma_format()) 
 scale_color_hue(name="year of data publication") +
 theme_bw(base_size=16)
 end.rcode-->
+*Figure 5: Cumuative number of third-party reuse papers, by date of reuse paper publication. Separate lines are displayed for different dataset submission years*
 
-Because the number of datasets published has grown dramatically with time, it is interesting to see the cumulative number of third-party reuses normalized by the number of datasets deposited each year.  Early years, 2001-2002, had relatively few data deposits but they have received a large amount of reuse.
+Early years of data submission, 2001-2002, had relatively few data deposits.  Relatively, their levels of data reuse are very high.
 
-<!--begin.rcode display_accessionReuse_cumulative_normalized, echo=FALSE, eval=FALSE
-ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2000), aes(x=dataSubmissionYear+elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
-scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
-scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets in given year\n", labels=comma_format()) +
-scale_color_hue(name="year of data publication") +
-theme_bw(base_size=16)
-end.rcode-->
+We exclude the early years from the next plot to examine the pattern of data reuse once gene expression datasets became more common.  Figure 6 shows cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication.
 
-We exclude the early years from the next plot to examine the pattern of data reuse once gene expression datasets became more common.  Figure B shows cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication.
-
-<!--begin.rcode display_accessionReuse_cumulative_normalized_2003_elapsed, echo=FALSE
+<!--begin.rcode figure6, echo=FALSE
 ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
 scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets deposited in given year\n", labels=comma_format()) +
-scale_color_hue(name="year of data publication") +
+scale_colour_manual(name="year of data publication", values=cbgRaw) +
 theme_bw(base_size=16)
 end.rcode-->
+*Figure 6: Cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication*
 
 ### Number of datasets in a reuse paper has increased
 
-The number of datasets used in a reuse paper was found to increase over time. Each panel reports analysis for reuse papers published that year, reusing data from any year.  In 2002-2004 almost all reuse papers only used one or two datasets.  By 2010, 25% of reuse papers used 3 or more datasets. 
+The number of datasets used in a reuse paper was found to increase over time. By 2010, 25% of reuse papers used 3 or more datasets. 
 
-<!--begin.rcode numberDatasetsInReusePaper, echo=FALSE
+<!--begin.rcode figure7, echo=FALSE
 
 dfGsePerReusePaper = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(reuse_pmcid, paperPublishedYear), summarise, count=length(unique(gse)))
 
 breaks = c(1,5,10,50)
 ggplot(data=dfGsePerReusePaper, aes(x=factor(paperPublishedYear), y=count)) + 
-  geom_jitter(position = position_jitter(w = 0.1, h = 0.1)) +
+  geom_jitter(position = position_jitter(w = 0.1, h = 0.1), color=cbgRaw[1]) +
   scale_x_discrete("\nYear reuse paper was published") +
   scale_y_continuous(name="Number of datasets per reuse paper\n", trans="log", breaks=breaks) +  
-  stat_summary(fun.y=mean, geom=c("line"), color="red", aes(group=1))
+  stat_summary(fun.y=mean, geom=c("line"), color=cbgRaw[2], aes(group=1)) +
+  cbgColourPalette + theme_bw(base_size=16)
 
 end.rcode-->
-
-
-
-
+*Figure 7: Scatterplot of year of publication of third-party reuse paper (with jitter) vs number of GEO datasets mentioned in the paper (log scale).  The line connects the mean number of datasets attributed in reuse papers vs publication year.*
 
 ### Reuse is distributed across many datasets
 
-Reuse was not limited to just a few papers. Almost all datasets published in 2001 and 2002 have been reused at least once.  Newer datasets have been used less often, but we observed reuse of at least 20% of the datasets deposited in 2007.  The actual rate, across all methods of attribution and extrapolated to all of PubMed, is likely much higher. 
+Reuse was not limited to just a few datasets. All datasets published in 2001 have been reused at least once and half were reused by at least three papers.  Newer datasets have been used less often, but we observed reuse of 20% of the datasets deposited between 2003 and 2007.  The actual rate, across all methods of attribution and extrapolated to all of PubMed, is likely much higher. 
 
-<!--begin.rcode display_distAcrossDatasets, echo=FALSE
+<!--begin.rcode figure8, echo=FALSE
 
 dfCountReuseByGse = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(gse, dataSubmissionYear), summarise, count=length(elapsedYears))
 
 for (year in seq(2001, 2009)) {
     num_with_reuse = sum(with(subset(dfCountReuseByGse, dataSubmissionYear==year), table(count)))
     num_total = dfPubmedGseCount[which(dfPubmedGseCount$year==year), "num_gse_ids"]
-    placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
-    for (accession in placeholder_zero_accessions) {
-        dfCountReuseByGse = rbind(dfCountReuseByGse, data.frame(gse=accession, dataSubmissionYear=year, count=0))  
+    if (num_with_reuse < num_total) {
+      placeholder_zero_accessions = paste("FAKE", seq(num_with_reuse+1, num_total), sep="")
+      for (accession in placeholder_zero_accessions) {
+          dfCountReuseByGse = rbind(dfCountReuseByGse, data.frame(gse=accession, dataSubmissionYear=year, count=0))  
+      }
     }
 }
 
 q = ddply(dfCountReuseByGse, "dataSubmissionYear", summarise, quantile=seq(0,1,0.01), count=quantile(count, seq(0,1,0.01)))
 
-qq = subset(q, count %in% c(0, 2))
+qq = subset(q, count %in% c(1, 3))
 
-qqq = ddply(qq, c("dataSubmissionYear", "count"), summarise, maxq=max(quantile))
+qqq = ddply(qq, c("dataSubmissionYear", "count"), summarise, maxq=min(quantile))
 
 ggplot(data=qqq, aes(x=dataSubmissionYear, y=1-maxq, color=factor(count, labels=c("reused at least once", "reused at least three times")))) + geom_line() + geom_point() + 
   scale_x_continuous("\nYear data was submitted") +
   scale_y_continuous(name="Proportion of data submissions\n") + 
-scale_color_hue(name="")
+scale_color_hue(name="") + theme_bw(base_size=16)
 
 end.rcode-->
+*Figure 8: Proportion of data reused by third-party papers vs year of data submission.  Conservative estimate, because only considers reuse by papers in PubMed Central, and only when reuse is attributed through direct mention of a GEO accession number*
 
 ### Data reused most often 3-6 years after publication
 
-What is the distribution of the age of datasets used by data reuse studies?  We found the authors of data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.  
+Data reuse papers are most likely to use data that is 3-6 years old by the time their paper is published, normalized for how many datasets were deposited each year.
 
-
-<!--begin.rcode distOfDatasetAge, echo=FALSE
+<!--begin.rcode figure9, echo=FALSE
 
 # distribution of elapsed years per publication date
 dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thirdPartyReuse==TRUE)), .( elapsedYears, paperPublishedYear, num_gse_ids), summarise, count=length(gse))
@@ -744,9 +748,11 @@ dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thir
     scale_x_continuous(name="\nyears since data publication", limits=c(0,9)) +
     scale_y_continuous(name="Proportion of all datasets published in given year\n") +    
     facet_wrap(~paperPublishedYear) + 
+    cbgColourPalette +
     theme_bw(base_size=16) 
 
 end.rcode-->
+*Figure 9: Each panel includes a cohort of data reuse papers published in a given year.  Line plots proportion of datasets submitted in previous years that were reused by reuse papers in the panel year.*  
 
 
 ## Discussion
@@ -777,7 +783,7 @@ These results suggest that the lower citation boost we observed for recent paper
 
 Analysis of the accession number mentions revealed that data reuse was driven by a broad base of datasets: more than 20% of the datasets deposited between 2003 and 2007 have been reused by third parties.  We note these proportions are gross underestimates since they only include reuses we observed as accession number mentions in PubMed Central; no attempt has been made to extrapolate these distribution statistics to all of PubMed, or to reflect attributions through citations.  Further, many important instances of data reuse do not leave a trace in the published literature, such as those in education and training. Nonetheless, even these conservative estimates suggest that third-party investigators find value in a wide range of datasets, not simply a "very reusable" elite.
 
-Future work can improve on these results by considering and integrating all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- citations to the dataset as a first-class research object, and even mentions of the data collection investigators in acknowledgement sections.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.
+Future work can improve on these results by considering and integrating all methods of data use attribution.  This holistic effort would include identifying citations to the paper that describes the data collection, mentions of the dataset identifier itself -- whether in full text, the references section, or supplementary information -- citations to the dataset as a first-class research object, and even mentions of the data collection investigators in acknowledgement sections.  The citations and mentions would need classification based on context to ensure they are in the context of data reuse.  Also, the method we use for determining third-party reuse based on author last name overlap with the data submission record is extremely crude.
 
 Data from current and future studies can start to be used to estimate the impact of policy decisions.  For example, do embargo periods decrease the level of data reuse?  Do restrictive or poorly articulated licencing terms decrease data reuse?  Which types of data reuse are facilitate by robust data standards and which types are unaffected?
 
