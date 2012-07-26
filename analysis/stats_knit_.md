@@ -149,24 +149,19 @@ This report on open data citation advantage improves on previous work in several
 
 ## Methods
 
-
-###Relationship between data availability and citation
-
-####Data collection
-
 <!--begin.rcode dfAttributes, echo=FALSE
 dfAttributes = read.csv("data/PLoSONE2011_rawdata.txt", sep="\t", header=TRUE, stringsAsFactors=F)
 end.rcode-->
 
-The primary analysis in this paper examines the citation count of a gene expression microarray experiment, relative to availability of the experiment's data.
+The analyses presented in this paper are primarily based on two independent large data collections.  The first data collection is a set of studies that create microarray data, attributes of these studies, and citation counts to these studies.  The second data collection is the set of papers within PubMed Central that mention a microarray accession number within their full text.
 
-The sample of microarray experiments used in the current analysis was previously determined <!--rinline citep(biblio[c("piwowar2011who-sha", "piwowar2011data-fr")])-->.  Briefly, a full-text query uncovered papers with wet-lab methods related to gene expression microarray data collection.  The full-text query was characterized with high precision (90%, 95% confidence interval 86% to 93%) and a moderate recall (56%, 52% to 61%) for this task.  Running the query in PubMed Central, HighWire Press, and Google Scholar identified <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers.  The papers were published between 2000 and 2009.
+###Data collection for citation analysis
 
-The independent variable of interest is the availability of gene expression microarray data.  Data availability had been previously determined for our sample articles in <!--rinline citep(biblio["piwowar2011who-sha"])-->, so we directly reused that dataset <!--rinline citep(biblio["piwowar2011data-fr"])-->.  Datasets were considered available if they were discovered in either of the two predominant gene expression microarray databases: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress.
+The data collection for citation analysis leveraged a previously collected dataset, <!--rinline citep(biblio[c("piwowar2011who-sha", "piwowar2011data-fr")])-->.  
 
-"An earlier evaluation found that querying GEO and ArrayExpress with article PubMed identifiers located a representative 77% of all associated publicly available datasets [Piwowar 2010]. [We] used the same method for finding datasets associated with published articles in this study: [we] queried GEO for links to the PubMed identifiers in the analysis sample using the “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Articles linked from a dataset in either of these two centralized repositories were considered to have [publicly available data] for the endpoint of this study, and those without such a link were considered not to have [available] data." <!--rinline citep(biblio["piwowar2011who-sha"])-->
+In that study, papers that generated microarray data were identified through a full-text query targeting wet-lab methods related to gene expression microarray data production.  The full-text query was characterized with high precision (90%, 95% confidence interval 86% to 93%) and a moderate recall (56%, 52% to 61%) for this task.  Running the query in PubMed Central, HighWire Press, and Google Scholar identified <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers.  The papers were published between 2000 and 2009.
 
-<!--rinline citep(biblio["piwowar2011who-sha"])--> included 124 attributes for each of the gene expression microarray studies in our sample.  We used a subset of these --attributes previously shown or suspected to correlate with citation rate:
+The independent variable of interest is the availability of gene expression microarray data.  In <!--rinline citep(biblio["piwowar2011data-fr"])-->, datasets were considered available if they were discovered in either of the two predominant gene expression microarray databases: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress.  "An earlier evaluation found that querying GEO and ArrayExpress with article PubMed identifiers located a representative 77% of all associated publicly available datasets [Piwowar 2010]. [We] used the same method for finding datasets associated with published articles in this study: [we] queried GEO for links to the PubMed identifiers in the analysis sample using the “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Articles linked from a dataset in either of these two centralized repositories were considered to have [publicly available data] for the endpoint of this study, and those without such a link were considered not to have [available] data." <!--rinline citep(biblio["piwowar2011who-sha"])-->
 
 <!--begin.rcode correlation_variables, warning=FALSE, echo=FALSE
 correlation_variables_string = "dataset.in.geo.or.ae
@@ -219,6 +214,8 @@ correlation_variables = strsplit(correlation_variables_string, "\n")[[1]]
 
 end.rcode-->
 
+We included a subset of attributes in the <!--rinline citep(biblio["piwowar2011who-sha"])--> dataset, retaining those previously shown or suspected to correlate with citation rate:
+
 * date of publication
 * journal
 * journal impact factor (2008)
@@ -235,7 +232,7 @@ end.rcode-->
 * NIH funding of the study, if applicable
 
 
-This study required citation counts for thousands of articles, based on  PubMed ID. At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported looking up number of citations by PubMed ID. This type of query was (and is) supported by Elsevier's Scopus citation database. Alas, none of our affiliated institutions subscribed to Scopus. Scopus does not offer individual subscriptions. A personal email to a Scopus Product Manager went unanswered.
+This current study required citation counts for thousands of articles, based on PubMed ID. At the time of data collection, neither Thomson Reuter's Web of Science nor Google Scholar supported looking up number of citations by PubMed ID. This type of query was (and is) supported by Elsevier's Scopus citation database. Alas, none of our affiliated institutions subscribed to Scopus. Scopus does not offer individual subscriptions. A personal email to a Scopus Product Manager went unanswered.
 
 One author (HAP) attempted to use the British Library's walk-in access of Scopus on its Reading Room computers during a trip overseas. Unfortunately, the British Library did not permit any method of electronic transfer of our PubMed identifier list onto the Reading Room computers, including internet document access, transferring a text file from a USB drive, or using the help desk as an intermediary (see related policies at http://www.bl.uk/reshelp/inrrooms/stp/cond/conditions.html). The Library was not willing to permit an exception in this case, and we were unwilling to manually type ten thousand PubMed identifiers into the Scopus search box in the Reading Room.
 HAP eventually obtained Scopus access through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate.
@@ -358,8 +355,6 @@ end.rcode-->
 
 
 
-
-
 #### Comparison to Piwowar et al 2007
 
 We ran two modified analyses to attempt to reproduce the findings of <!--rinline citep(biblio["piwowar2007sharing"])-->.  First, we used a subset with roughly the same inclusion criteria as <!--rinline citep(biblio["piwowar2007sharing"])--> -- studies on cancer, with humans, published prior to 2003 -- and the same regression coefficients: publication date, impact factor, and whether the corresponding author's address is in the USA.
@@ -406,8 +401,6 @@ annotated.prop = binconf(num.GEO.reused, num.GEO.total)
 end.rcode-->
 
 ###Data reuse patterns from accession number attribution
-
-####Data collection
 
 We collected a separate dataset to study reuse patterns because identifying data reuse from citations requires time-consuming classification of citation context.
 
