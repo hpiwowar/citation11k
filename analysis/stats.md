@@ -24,7 +24,7 @@ See the [end of this document](#about-this-doc) for information about generating
 
 #Data reuse and the open data citation advantage
 
-Heather A. Piwowar [1,2,4] and Todd J. Vision [1,2]
+Heather A. Piwowar [1,2,4] and Todd J. Vision [1,2,3]
 
 1. National Evolutionary Synthesis Center, Durham NC, USA
 2. Department of Biology, Duke University, Durham, NC, USA
@@ -152,7 +152,7 @@ To focus on data reuse by third party investigators (rather than authors attribu
 
 We retained papers published between 2001 and 2010 as reuse candidates. We excluded 2011 because it had a dramatically lower proportion of papers in PubMed Central at the time of our data collection: the NIH requirement to deposit a paper into PMC permits a 12 month embargo.
 
-To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission
+To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year.
 
 
 
@@ -165,7 +165,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Mon Jan 21 08:01:28 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 (Wickham, 2007), plyr (Wickham, 2011), rms (Jr, 2012), polycor (Fox, 2010), ascii (Hajage, 2011), ggplot2 (Wickham, 2009), gplots (Bolker _et. al._ 2012), knitr (Xie, 2012), and knitcitations (Boettiger, 2012). P-values are two-tailed.
+Statistical analyses were last run on <code class="knitr inline">Mon Jan 21 08:21:44 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 (Wickham, 2007), plyr (Wickham, 2011), rms (Jr, 2012), polycor (Fox, 2010), ascii (Hajage, 2011), ggplot2 (Wickham, 2009), gplots (Bolker _et. al._ 2012), knitr (Xie, 2012), and knitcitations (Boettiger, 2012). P-values are two-tailed.
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
@@ -627,7 +627,7 @@ To confirm that the erroniously-included articles were not driving the findings 
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Mon Jan 21 08:01:39 2013</code>
+ * Generated on <code class="knitr inline">Mon Jan 21 08:21:54 2013</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 

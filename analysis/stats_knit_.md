@@ -113,7 +113,7 @@ end.rcode-->
 
 #Data reuse and the open data citation advantage
 
-Heather A. Piwowar [1,2,4] and Todd J. Vision [1,2]
+Heather A. Piwowar [1,2,4] and Todd J. Vision [1,2,3]
 
 1. National Evolutionary Synthesis Center, Durham NC, USA
 2. Department of Biology, Duke University, Durham, NC, USA
@@ -400,7 +400,7 @@ end.rcode-->
 
 We retained papers published between 2001 and 2010 as reuse candidates. We excluded 2011 because it had a dramatically lower proportion of papers in PubMed Central at the time of our data collection: the NIH requirement to deposit a paper into PMC permits a 12 month embargo.
 
-To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission
+To understand our findings on a per-dataset basis, we stratified reuse estimates by year of dataset submission and normalized our reuse findings by the number of datasets deposited that year.
 
 <!--begin.rcode dfPubmedGseCount, echo=FALSE
 
