@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=7, fig.height=7, tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
+<!--roptions dev='png', fig.width=7, fig.height=7, fig.path="", tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
@@ -20,12 +20,16 @@ if (upload_images) {
 knit_hooks$set(plot = hook_plot_html)
 build_dep()
 
-require(knitcitations)
-cleanbib()
+library(knitcitations)
+
 # to get knitcitations:
 #library(devtools)
 #install_github("knitcitations", "cboettig")
- 
+
+cite_options(tooltip=TRUE, linked=TRUE)
+
+cleanbib()
+
 end.rcode-->
 
 See the [end of this document](#about-this-doc) for information about generating this document and how to generate it from source with knitr.
@@ -159,7 +163,7 @@ The main analysis in this paper examines the citation count of a gene expression
 ### Relationship between data availability and citation
 #### Data collection
 
-The sampling procedure for microarray experiments used in the current analysis is described in <!--rinline citep(biblio[c("piwowar2011who-sha", "piwowar2011data-fr")])-->; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers published between 2000 and 2009.
+The sampling procedure for microarray experiments used in the current analysis is described in <!--rinline citep(biblio[c("piwowar2011who-sha", "piwowar2011data-fr"), cito = "usesMethodIn"])-->; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers published between 2000 and 2009.
 Citation counts for 10,555 of these papers were found in Scopus and exported in November 2011.
 
 The independent variable of interest is the availability of gene expression microarray data. Data availability had been previously determined for our sample articles in <!--rinline citep(biblio["piwowar2011data-fr"])-->, so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. <!--rinline citep(biblio["piwowar2011data-fr"])--> queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, (H. Piwowar & Chapman, 2010) had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
@@ -776,12 +780,16 @@ Both authors contributed to the study design, discussed the results and implicat
 
 ## References
 
-<!--begin.rcode citations, echo=FALSE, cache=FALSE, results="asis"
-bibliography(sort=TRUE)
+Publication references are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration. 
+
+<!--begin.rcode citations, echo=FALSE, cache=FALSE, results='asis'
+bibliography()
 end.rcode-->  
 
-References are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) 
 
+## To Do
+
+cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM
 
 ## Supplementary material
 

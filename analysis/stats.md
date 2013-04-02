@@ -46,18 +46,48 @@ After accounting for other factors affecting citation rate, we find a robust cit
 
 ## Introduction
 
-"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection." (Piwowar _et. al._ 2007)
+"Sharing information facilitates science. Publicly sharing detailed research data–sample attributes, clinical factors, patient outcomes, DNA sequences, raw mRNA microarray measurements–with other researchers allows these valuable resources to contribute far beyond their original analysis. In addition to being used to confirm original results, raw data can be used to explore related or new hypotheses, particularly when combined with other publicly available data sets. Real data is indispensable when investigating and developing study methods, analysis techniques, and software implementations. The larger scientific community also benefits: sharing data encourages multiple perspectives, helps to identify errors, discourages fraud, is useful for training new researchers, and increases efficient use of funding and patient population resources by avoiding duplicate data collection." <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code>
 
 Making research data publicly available also has costs. Some of these costs are borne by society: For example, data archives must be created and maintained. Many costs, however, are borne by the data-collecting investigators: Data must be documented, formatted, and uploaded. Investigators may be afraid that other researchers will find errors in their results, or "scoop" additional analyses they have planned for the future.
 
-Personal incentives are important to balance these personal costs.  Scientists report that receiving additional citations is an important motivator for publicly archiving their data (Tenopir _et. al._ 2011).
+Personal incentives are important to balance these personal costs.  Scientists report that receiving additional citations is an important motivator for publicly archiving their data <code class="knitr inline">(<span class="showtooltip" title="Tenopir C, Allard S, Douglass K, Aydinoglu AU, Wu L, Read E,
+Manoff M and Frame M (2011). Data sharing by scientists:
+practices and perceptions. _PLoS one_, *6*(6), pp. e21101. ISSN
+1932-6203,  http://dx.doi.org/10.1371/journal.pone.0021101,
+ http://dx.plos.org/10.1371/journal.pone.0021101."><a href="http://dx.doi.org/10.1371/journal.pone.0021101">Tenopir _et. al._ 2011</a></span> )</code>.
 
-There is evidence that studies that make their data available do indeed receive more citations than similar studies that do not (Gleditsch & Strand, 2003; Piwowar _et. al._ 2007; Ioannidis _et. al._ 2009; Pienta _et. al._ 2010; Henneken & Accomazzi, 2011; Sears, 2011; Dorch, 2012). These findings have been referenced by new policies that encourage and require data archiving (e.g. Rausher, McPeek, Moore, Rieseberg, & Whitlock, 2010), demonstrating the appetite for evidence of personal benefit. 
+There is evidence that studies that make their data available do indeed receive more citations than similar studies that do not <code class="knitr inline">(<span class="showtooltip" title="Gleditsch NP and Strand H (2003). Posting your data: will you be
+scooped or will you be famous? _International Studies
+Perspectives_, *4*(1), pp. 89-97. 
+http://www.prio.no/Research-and-Publications/Publication/?oid=55406."><a href="http://www.prio.no/Research-and-Publications/Publication/?oid=55406">Gleditsch & Strand, 2003</a></span> ; <span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> ; <span class="showtooltip" title="Ioannidis JPA, Allison DB, Ball CA, Coulibaly I, Cui X, Culhane
+AC, Falchi M, Furlanello C, Game L, Jurman G, Mangion J, Mehta T,
+Nitzberg M, Page GP, Petretto E and Noort Vv (2009).
+Repeatability of published microarray gene expression analyses.
+_Nature genetics_, *41*(2), pp. 149-55. ISSN 1546-1718, 
+http://dx.doi.org/10.1038/ng.295, 
+http://www.ncbi.nlm.nih.gov/pubmed/19174838."><a href="http://dx.doi.org/10.1038/ng.295">Ioannidis _et. al._ 2009</a></span> ; <span class="showtooltip" title="Pienta AM, Alter GC and Lyle JA (2010). The Enduring Value of
+Social Science Research: The Use and Reuse of Primary Research
+Data. _The Organisation, Economics and Policy of Scientific
+Research workshop_.  http://hdl.handle.net/2027.42/78307."><a href="http://hdl.handle.net/2027.42/78307">Pienta _et. al._ 2010</a></span> ; <span class="showtooltip" title="Henneken EA and Accomazzi A (2011). Linking to Data - Effect on
+Citation Rates in Astronomy. _arXiv_, pp. 4. 1111.3618, 
+http://arxiv.org/abs/1111.3618."><a href="http://arxiv.org/abs/1111.3618">Henneken & Accomazzi, 2011</a></span> ; <span class="showtooltip" title="Sears J (2011). Data Sharing Effect on Article Citation Rate in
+Paleoceanography - KomFor. 
+http://www.komfor.net/blog/unbenanntemitteilung."><a href="http://www.komfor.net/blog/unbenanntemitteilung">Sears, 2011</a></span> ; <span class="showtooltip" title="Dorch B (2012). On the Citation Advantage of linking to data.
+_hprints_.  http://hprints.org/hprints-00714715."><a href="http://hprints.org/hprints-00714715">Dorch, 2012</a></span>  )</code>. These findings have been referenced by new policies that encourage and require data archiving (e.g. Rausher, McPeek, Moore, Rieseberg, & Whitlock, 2010), demonstrating the appetite for evidence of personal benefit. 
 
 
 In order for journals, institutions and funders to craft good data archiving policy, it is important to have an accurate estimate of the citation differential.  Calculating an accurate estimate differential is made difficult by the many confounding factors that influence citation rate.  In past studies, it has seldom been possible to adequately control these statistically, much less experimentally.   Here, we perform a large multivariate analysis of the citation differential for studies in which gene expression microarray data either was or was not made available in a public repository.  
 
-We seek to improve on prior work in several ways. First, the sample size is large – over two orders of magnitude larger than the prior study of (Piwowar _et. al._ 2007) on gene expression microarray data, which gives us the statistical power to account for a larger number of cofactors in the analyses. The resulting estimates thus isolate the association between data availability and citation rate with more accuracy. Second, this report goes beyond citation analysis to include analysis of data reuse attribution directly. We explore how data reuse patterns change over both the lifespan of a data repository and the lifespan of a dataset, as well as looking at the distribution of reuse across datasets in a repository.  
+We seek to improve on prior work in several ways. First, the sample size is large – over two orders of magnitude larger than the prior study of <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> on gene expression microarray data, which gives us the statistical power to account for a larger number of cofactors in the analyses. The resulting estimates thus isolate the association between data availability and citation rate with more accuracy. Second, this report goes beyond citation analysis to include analysis of data reuse attribution directly. We explore how data reuse patterns change over both the lifespan of a data repository and the lifespan of a dataset, as well as looking at the distribution of reuse across datasets in a repository.  
 
 ## Methods
 
@@ -69,10 +99,20 @@ The main analysis in this paper examines the citation count of a gene expression
 ### Relationship between data availability and citation
 #### Data collection
 
-The sampling procedure for microarray experiments used in the current analysis is described in (Piwowar, 2011; Piwowar, 2011); briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <code class="knitr inline">11603</code> distinct gene expression microarray papers published between 2000 and 2009.
+The sampling procedure for microarray experiments used in the current analysis is described in <div class="error"><pre class="knitr R">
+Error in `[.bibentry`(biblio, c("piwowar2011who-sha", "piwowar2011data-fr"),  : 
+  unused argument(s) (cito = "usesMethodIn")
+
+</pre></div>; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <code class="knitr inline">11603</code> distinct gene expression microarray papers published between 2000 and 2009.
 Citation counts for 10,555 of these papers were found in Scopus and exported in November 2011.
 
-The independent variable of interest is the availability of gene expression microarray data. Data availability had been previously determined for our sample articles in (Piwowar, 2011), so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. (Piwowar, 2011) queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, (H. Piwowar & Chapman, 2010) had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
+The independent variable of interest is the availability of gene expression microarray data. Data availability had been previously determined for our sample articles in <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Data from: Who shares? Who doesn't? Factors
+associated with openly archiving raw research data. _Dryad
+Digital Repository_.  http://dx.doi.org/10.5061/dryad.mf1sd,
+ http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd">Piwowar, 2011</a></span> )</code>, so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Data from: Who shares? Who doesn't? Factors
+associated with openly archiving raw research data. _Dryad
+Digital Repository_.  http://dx.doi.org/10.5061/dryad.mf1sd,
+ http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd">Piwowar, 2011</a></span> )</code> queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, (H. Piwowar & Chapman, 2010) had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
 
 #### Notes on challenges encountered when collecting citation data 
 
@@ -94,7 +134,11 @@ The core of our analysis is a set of multivariate linear regressions to evaluate
 
 Citation counts for <code class="knitr inline">10555</code> papers were exported from Scopus in November 2011. 
 
-We used a subset of the 124 attributes from (Piwowar, 2011) previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
+We used a subset of the 124 attributes from <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Who Shares? Who Doesn't? Factors Associated
+with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
+e18657. ISSN 1932-6203, 
+http://dx.doi.org/10.1371/journal.pone.0018657, 
+http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657">Piwowar, 2011b</a></span> )</code> previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
 
 Publishing experience was characterized by the number of years since the author's first paper in PubMed, the number of papers they have published, and the number of citations they have received in PubMed Central, estimated using Author-ity Clusters as described in (H. A. Piwowar, 2011). The subject of the study was characterized by whether the paper was classified as cancer, animals, or plants. For more information on study attributes see (H. A. Piwowar, 2011). Citation count was log transformed to be consistent with prior literature. Other count variables were square-root transformed. Continuous variables were represented with 3-part spines in the regression, using the rcs function in the R rms library.
 
@@ -112,7 +156,10 @@ The independent variable of data availability was represented as a 0 or 1 in the
 
 #### Compairson to 2007 study
 
-We ran two modified analyses to attempt to reproduce the findings of (Piwowar _et. al._ 2007) with the larger dataset of the current study. First, we used a subset with roughly the same inclusion criteria -- studies on cancer, with humans, published prior to 2003 -- and the same regression coefficients: publication date, impact factor, and whether the corresponding author's address is in the USA. We followed that with a second regression that included several additional important covariates: number of authors and number of previous citations by the last author.
+We ran two modified analyses to attempt to reproduce the findings of <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> with the larger dataset of the current study. First, we used a subset with roughly the same inclusion criteria -- studies on cancer, with humans, published prior to 2003 -- and the same regression coefficients: publication date, impact factor, and whether the corresponding author's address is in the USA. We followed that with a second regression that included several additional important covariates: number of authors and number of previous citations by the last author.
 
 
 
@@ -144,7 +191,17 @@ Datasets are sometimes attributed directly through mention of the dataset identi
 
 #### Statistical analysis
 
-To focus on data reuse by third party investigators (rather than authors attributing  datasets they had collected themselves), we excluded papers with author surnames in common with those authors who deposited the original dataset, as described in  (Piwowar _et. al._ 2011).  PubMed Central contains only a subset of papers recorded in PubMed. As described in (Piwowar _et. al._ 2011), to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).
+To focus on data reuse by third party investigators (rather than authors attributing  datasets they had collected themselves), we excluded papers with author surnames in common with those authors who deposited the original dataset, as described in  <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Carlson JD and Vision TJ (2011). Beginning to track
+1000 datasets from public repositories into the published
+literature. _Proceedings of the American Society for Information
+Science and Technology_, *48*(1), pp. 1-4. ISSN 00447870, 
+http://dx.doi.org/10.1002/meet.2011.14504801337, 
+http://doi.wiley.com/10.1002/meet.2011.14504801337."><a href="http://dx.doi.org/10.1002/meet.2011.14504801337">Piwowar _et. al._ 2011</a></span> )</code>.  PubMed Central contains only a subset of papers recorded in PubMed. As described in <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Carlson JD and Vision TJ (2011). Beginning to track
+1000 datasets from public repositories into the published
+literature. _Proceedings of the American Society for Information
+Science and Technology_, *48*(1), pp. 1-4. ISSN 00447870, 
+http://dx.doi.org/10.1002/meet.2011.14504801337, 
+http://doi.wiley.com/10.1002/meet.2011.14504801337."><a href="http://dx.doi.org/10.1002/meet.2011.14504801337">Piwowar _et. al._ 2011</a></span> )</code>, to extrapolate from the number of data reuses in PubMed Central to all possible data reuses in PubMed, we divided the yearly number of hits by the ratio of papers in PMC to papers in PubMed for this domain (domain was measured as the number of articles indexed with the MeSH term “gene expression profiling”).
 
 
 
@@ -165,11 +222,32 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Mon Jan 21 08:21:44 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 (Wickham, 2007), plyr (Wickham, 2011), rms (Jr, 2012), polycor (Fox, 2010), ascii (Hajage, 2011), ggplot2 (Wickham, 2009), gplots (Bolker _et. al._ 2012), knitr (Xie, 2012), and knitcitations (Boettiger, 2012). P-values are two-tailed.
+Statistical analyses were last run on <code class="knitr inline">Tue Apr  2 11:55:51 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
+_Journal of Statistical Software_, *21*(12), pp. 1-20. 
+http://www.jstatsoft.org/v21/i12/."><a href="http://www.jstatsoft.org/v21/i12/">Wickham, 2007</a></span> )</code>, plyr <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2011). The Split-Apply-Combine Strategy for Data
+Analysis. _Journal of Statistical Software_, *40*(1), pp. 1-29.
+ http://www.jstatsoft.org/v40/i01/."><a href="http://www.jstatsoft.org/v40/i01/">Wickham, 2011</a></span> )</code>, rms <code class="knitr inline">(<span class="showtooltip" title="Jr FEH (2012). _rms: Regression Modeling Strategies_. R package
+version 3.5-0,  http://CRAN.R-project.org/package=rms."><a href="http://CRAN.R-project.org/package=rms">Jr, 2012</a></span> )</code>, polycor <code class="knitr inline">(<span class="showtooltip" title="Fox J (2010). _polycor: Polychoric and Polyserial Correlations_. R
+package version 0.7-8, 
+http://CRAN.R-project.org/package=polycor."><a href="http://CRAN.R-project.org/package=polycor">Fox, 2010</a></span> )</code>, ascii <code class="knitr inline">(<span class="showtooltip" title="Hajage D (2011). _ascii: Export R objects to several markup
+languages_. R package version 2.1, 
+http://CRAN.R-project.org/package=ascii."><a href="http://CRAN.R-project.org/package=ascii">Hajage, 2011</a></span> )</code>, ggplot2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2009). _ggplot2: elegant graphics for data analysis_.
+Springer New York. ISBN 978-0-387-98140-6, 
+http://had.co.nz/ggplot2/book."><a href="http://had.co.nz/ggplot2/book">Wickham, 2009</a></span> )</code>, gplots <code class="knitr inline">(<span class="showtooltip" title="Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley
+T, Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B
+(2012). _gplots: Various R programming tools for plotting data_. R
+package version 2.11.0, 
+http://CRAN.R-project.org/package=gplots."><a href="http://CRAN.R-project.org/package=gplots">Bolker _et. al._ 2012</a></span> )</code>, knitr <code class="knitr inline">(<span class="showtooltip" title="Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.7, 
+http://CRAN.R-project.org/package=knitr."><a href="http://CRAN.R-project.org/package=knitr">Xie, 2012</a></span> )</code>, and knitcitations <code class="knitr inline">(<span class="showtooltip" title="Boettiger C (2013). _knitcitations: Citations for knitr markdown
+files_. R package version 0.4-5, 
+https://github.com/cboettig/knitcitations."><a href="https://github.com/cboettig/knitcitations">Boettiger, 2013</a></span> )</code>. P-values are two-tailed.
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
-The Markdown version of this manuscript with interleaved statistical scripts (Xie, 2012) is also at Dryad and in GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  References are available in a publicly available Mendeley group [name].
+The Markdown version of this manuscript with interleaved statistical scripts <code class="knitr inline">(<span class="showtooltip" title="Xie Y (2012). _knitr: A general-purpose package for dynamic report
+generation in R_. R package version 0.7, 
+http://CRAN.R-project.org/package=knitr."><a href="http://CRAN.R-project.org/package=knitr">Xie, 2012</a></span> )</code> is also at Dryad and in GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  References are available in a publicly available Mendeley group [name].
 
 ## Results
 
@@ -213,14 +291,22 @@ The GEO and ArrayExpress repositories had links to associated datasets for <code
 
 ### Data availability is associated with citation boost
 
-Without accounting for any confounding factors, the distribution of citations was similar for papers with and without archived data.  However, we hasten to mention several strong confounding factors.  For example, the number of citations a paper has received is of course strongly correlated to the date it was published: older papers have had more time to accumulate citations. Furthermore, the probability of data archiving is also correlated with the age of an article -- more recent articles are more likely to archive data (Piwowar, 2011). Accounting for publication date, the distribution of citations for papers with available data is right-shifted relative to the distribution for those without.  
+Without accounting for any confounding factors, the distribution of citations was similar for papers with and without archived data.  However, we hasten to mention several strong confounding factors.  For example, the number of citations a paper has received is of course strongly correlated to the date it was published: older papers have had more time to accumulate citations. Furthermore, the probability of data archiving is also correlated with the age of an article -- more recent articles are more likely to archive data <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Who Shares? Who Doesn't? Factors Associated
+with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
+e18657. ISSN 1932-6203, 
+http://dx.doi.org/10.1371/journal.pone.0018657, 
+http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657">Piwowar, 2011b</a></span> )</code>. Accounting for publication date, the distribution of citations for papers with available data is right-shifted relative to the distribution for those without.  
 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure1.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure1.png"  class="plot" /></div></div>
 
 *Figure 1: Citation density for papers with and without available microarray data, by year of study publication*
 
-Other variables have been shown to correlate with citation rate (Fu & Aliferis, 2008). Because single-variable correlations can be misleading, we performed multivariate regression to isolate the relationship between data availability and citation rate from confounders.
+Other variables have been shown to correlate with citation rate <code class="knitr inline">(<span class="showtooltip" title="Fu LD and Aliferis C (2008). Models for predicting and explaining
+citation count of biomedical articles. _AMIA ... Annual Symposium
+proceedings / AMIA Symposium. AMIA Symposium_, pp. 222-6. ISSN
+1942-597X, 
+http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2656101\&tool=pmcentrez\&rendertype=abstract."><a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2656101\&tool=pmcentrez\&rendertype=abstract">Fu & Aliferis, 2008</a></span> )</code>. Because single-variable correlations can be misleading, we performed multivariate regression to isolate the relationship between data availability and citation rate from confounders.
 
 
 
@@ -233,11 +319,23 @@ to <code class="knitr inline">13</code>% ]).
 
 ### More covariates led to a more conservative estimate
 
-Our estimate of citation boost, <code class="knitr inline">9</code>% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by (Piwowar _et. al._ 2007), even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.
+Our estimate of citation boost, <code class="knitr inline">9</code>% as per the multivariate regression, is notably smaller than the 69% (95% confidence intervals of 18 to 143%) citation advantage found by <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code>, even though both studies looked at publicly available gene expression microarray data. There are several possible reasons for this difference.
 
-First, (Piwowar _et. al._ 2007) concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003).  By contrast, the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the (Piwowar _et. al._ 2007) sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
+First, <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> concentrated on datasets from high-impact studies: human cancer microarray trials published in the early years of microarray analysis (between 1999 and 2003).  By contrast, the current study included gene expression microarray data studies on any subject published between 2001 and 2009. Second, because the <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> sample was small, the previous analysis included only a few covariates: publication date, journal impact factor, and country of the corresponding author.
 
-We attempted to reproduce the prior analysis with the current data.  We attempted to reproduce the (Piwowar et. al. 2007) analysis with the current data. Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with the covariates used in the (Piwowar _et. al._ 2007) paper resulted in a comparable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
+We attempted to reproduce the prior analysis with the current data.  We attempted to reproduce the (Piwowar et. al. 2007) analysis with the current data. Limiting the inclusion criteria to datasets with MeSH terms "human" and "cancer", and to papers published between 2001 and 2003, reduced the cohort to 308 papers.  Running this subsample with the covariates used in the <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> paper resulted in a comparable estimate to the 2007 paper: a citation increase of 47% (95% confidence intervals of 6% to 103%).
 
 
 
@@ -267,7 +365,7 @@ Because publication date is such as strong correlate with both citation rate and
 </pre></div></div></div>
 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure2.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure2.png"  class="plot" /></div></div>
 
 *Figure 2: Change in citation count when data is publicly available.  Estimates from multivariate analysis, lines indicate 95% confidence intervals of coefficient estimates.*
 
@@ -285,7 +383,7 @@ The number of reuse papers started to grow rapidly several years after data arch
 
 
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure3.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure3.png"  class="plot" /></div></div>
 
 *Figure 3: Cumulative number of datasets deposited in GEO each year, and cumulative number of third-party reuse papers published that directly attribute GEO data published each year, log scale.*
 
@@ -293,19 +391,19 @@ The level of third-party data use was high: for 100 datasets deposited in year 0
 
 We found that almost all instances of self reuse (identified by surname overlap with data submission record) were published within two years of dataset publication. This pattern contrasts sharply with third party data reuse, as seen in Figure 4.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure4.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure4.png"  class="plot" /></div></div>
 
 *Figure 4: Number of papers mentioning GEO accession numbers.  Each panel represents reuse of a particular year of dataset submissions, with number of mentions on the y axis, years since the intial publication on the x axis, and a line for reuses by the data collection team and a line for third-party investigators*
 
 The cumulative number of third-party reuse papers is illustrated in Figure 5.  Separate lines are displayed for different dataset publication years.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure5.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure5.png"  class="plot" /></div></div>
 
 *Figure 5: Cumuative number of third-party reuse papers, by date of reuse paper publication. Separate lines are displayed for different dataset submission years*
 
 Because the number of datasets published has grown dramatically with time, it is instructive to consider the cumulative number of third-party reuses normalized by the number of datasets deposited each year (Figure 6). In the earliest years for which data is available, 2001-2002, there were relatively few data deposits, but these datasets have been disproportionately reused. We exclude the early years from the plot to examine the pattern of data reuse once gene expression datasets became more common.  Since 2003, the rate at which individual datasets are reused has increased with each year of data publication.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure6.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure6.png"  class="plot" /></div></div>
 
 *Figure 6: Cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication*
 
@@ -313,7 +411,7 @@ Because the number of datasets published has grown dramatically with time, it is
 
 The number of distinct datasets used in a reuse paper was found to increase over time (Figure 7). In 2002-2004 almost all reuse papers only used one or two datasets. By 2010, 25% of reuse papers used 3 or more datasets.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure7.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure7.png"  class="plot" /></div></div>
 
 *Figure 7: Scatterplot of year of publication of third-party reuse paper (with jitter) vs number of GEO datasets mentioned in the paper (log scale).  The line connects the mean number of datasets attributed in reuse papers vs publication year.*
 
@@ -321,7 +419,7 @@ The number of distinct datasets used in a reuse paper was found to increase over
 
 Finally, it is of interest to know the distribution of reuse among datasets. Since our methods only detect reuse by papers in PubMed Central (a small proportion of the biomedical literature) and only when the accession number is given in the full text, our estimates of reuse are extremely conservative. Despite this, we found that reuse was not limited to just a few papers (Figure 8).  Nearly all datasets published in 2001 were reused at least once. The proportion of reused datasets declined in subsequent years, with a plateau of about 20% for data deposited between 2003 and 2007. The actual rate of reuse across all methods of attribution, and extrapolated to all of PubMed, is likely much higher
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure8.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure8.png"  class="plot" /></div></div>
 
 *Figure 8: Proportion of data reused by third-party papers vs year of data submission.  Conservative estimate, because only considers reuse by papers in PubMed Central, and only when reuse is attributed through direct mention of a GEO accession number*
 
@@ -329,7 +427,7 @@ Finally, it is of interest to know the distribution of reuse among datasets. Sin
 
 We found the authors of third-party data reuse papers were most likely to use data that was 3-6 years old by the time their paper was published, normalized for how many datasets were deposited each year (Figure 9).
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure/figure9.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure9.png"  class="plot" /></div></div>
 
 *Figure 9: Each panel includes a cohort of data reuse papers published in a given year.  Line plots proportion of datasets submitted in previous years that were reused by reuse papers in the panel year.*  
 
@@ -342,7 +440,13 @@ One of the main findings of this study is that papers for which expression micro
 (95% confidence interval: <code class="knitr inline">5</code>%
 to <code class="knitr inline">13</code>%), but the boost depended heavily on the year the dataset was made available. Datasets deposited very recently have so far received no (or few) additional citations, while those deposited in 2004-2005 showed a clear boost of about 30% (confidence intervals 15% to 48%). Older datasets also appeared to receive a citation boost, but the estimate is less precise because relatively little microarray data was collected or archived in the early 2000s.  
 
-The citation boost reported here is smaller than that reported in the previous study by (Piwowar _et. al._ 2007), which estimated a citation boost of 69% for human cancer gene expression microarray studies published before 2003 (95% confidence intervals of 18 to 143%). Our attempt to replicate the (Piwowar _et. al._ 2007) study here suggests that aspects of both the data and analysis can help to explain the quantitatively different results. It appears that clinically relevant datasets released early in the history of microarray analysis were particularly impactful. Importantly, however, the new analysis also suggested that the previous estimate was confounded by significant citation correlates, including the total number of authors and the citation history of the last author. This finding reinforces the importance of accounting for covariates through multivariate analysis and the need for large samples to support full analysis: the 69% estimate is probably too high, even for its high-impact sample. Nonetheless, a 10-30% citation boost may still be an effective motivator for data deposit, given that prestigious journals have been known advertise their impact factors to three decimal places [add http://occamstypewriter.org/scurry/2012/08/13/sick-of-impact-factors/  or http://dx.doi.org/10.1093/ije/dyl191].  
+The citation boost reported here is smaller than that reported in the previous study by <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code>, which estimated a citation boost of 69% for human cancer gene expression microarray studies published before 2003 (95% confidence intervals of 18 to 143%). Our attempt to replicate the <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+research data is associated with increased citation rate. _PLoS
+ONE_, *2*(3). 
+http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> study here suggests that aspects of both the data and analysis can help to explain the quantitatively different results. It appears that clinically relevant datasets released early in the history of microarray analysis were particularly impactful. Importantly, however, the new analysis also suggested that the previous estimate was confounded by significant citation correlates, including the total number of authors and the citation history of the last author. This finding reinforces the importance of accounting for covariates through multivariate analysis and the need for large samples to support full analysis: the 69% estimate is probably too high, even for its high-impact sample. Nonetheless, a 10-30% citation boost may still be an effective motivator for data deposit, given that prestigious journals have been known advertise their impact factors to three decimal places [add http://occamstypewriter.org/scurry/2012/08/13/sick-of-impact-factors/  or http://dx.doi.org/10.1093/ije/dyl191].  
 
 A paper with open data may be cited for reasons other than data reuse, and open data may be reused without citation of the original paper.  Ideally, we would like to separate these two phenomena (data reuse and paper citation) and measure how often the former results in the latter.  In our manual analysis of 138 citations to papers with open data, we observed that <code class="knitr inline">6</code>%
 (95% CI: <code class="knitr inline">3</code>%
@@ -360,13 +464,22 @@ Extrapolating from those papers from which the full text could be searched to al
 
 ### Reasons for the data citation boost
 
-While we cannot exclude that the open data citation boost is driven entirely by third-party data reuse, there may be other factors contributing to the effect either directly or indirectly. The literature on possible reasons for an “Open Access citation benefit” suggests a number of factors that may also be relevant to open data (CRAIG _et. al._ 2007). Building upon this work, we suggest several possible sources for an "Open Data citation benefit":
+While we cannot exclude that the open data citation boost is driven entirely by third-party data reuse, there may be other factors contributing to the effect either directly or indirectly. The literature on possible reasons for an “Open Access citation benefit” suggests a number of factors that may also be relevant to open data <code class="knitr inline">(<span class="showtooltip" title="CRAIG I, PLUME A, MCVEIGH M, PRINGLE J and AMIN M (2007). Do open
+access articles have greater citation impact?A critical review of
+the literature. _Journal of Informetrics_, *1*(3), pp. 239-248.
+ISSN 17511577,  http://dx.doi.org/10.1016/j.joi.2007.04.001,
+ http://dx.doi.org/10.1016/j.joi.2007.04.001."><a href="http://dx.doi.org/10.1016/j.joi.2007.04.001">CRAIG _et. al._ 2007</a></span> )</code>. Building upon this work, we suggest several possible sources for an "Open Data citation benefit":
 
 1.  *Data Reuse*. Papers with available datasets can be used in ways that papers without data cannot, and may receive additional citations as a results.
 2.  *Credibility Signalling*. The credibility of research findings may be higher for research papers with available data. Such papers may be preferentially chosen as background citations and/or the foundation of additional research.
 3.  *Increased Visibility*. Third party researchers may be more likely to encounter a paper that has available data, either by a direct link from the data or indirectly due to cross-promotion. For example, links from a data repository to a paper may increase the search ranking of the research paper.
 4.  *Early View*. When data is made available before a paper is published, some citations may accrue earlier than they would otherwise because of accelerated awareness of the methods, findings, etc.
-5.  *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are particularly proud or confident in the results (Wicherts _et. al._ 2011).  
+5.  *Selection Bias*. Authors may be more likely to publish data for papers they judge to be their best quality work, because they are particularly proud or confident in the results <code class="knitr inline">(<span class="showtooltip" title="Wicherts JM, Bakker M and Molenaar D (2011). Willingness to share
+research data is related to the strength of the evidence and the
+quality of reporting of statistical results. _PloS one_, *6*(11),
+pp. e26828. ISSN 1932-6203, 
+http://dx.doi.org/10.1371/journal.pone.0026828, 
+http://dx.plos.org/10.1371/journal.pone.0026828."><a href="http://dx.doi.org/10.1371/journal.pone.0026828">Wicherts _et. al._ 2011</a></span> )</code>.  
 
 Importantly, almost all of these mechanisms are aligned with more efficient and effective scientific progress: increased data use, facilitated credibility determination, earlier access, improved discoverability, and a focus on best work through data availability are good for both investigators and the science community as a whole. Working through the one area where incentives between scientific good and author incentives conflict, finding weaknesses or faults in published research, may require mandates. Or, instead, perhaps the research community will eventually come to associate withheld data with poor quality research, as it does today for findings that are not disclosed in a peer-reviewed paper (Ware 2008).
 
@@ -397,118 +510,38 @@ Both authors contributed to the study design, discussed the results and implicat
 
 ## References
 
-<p>Boettiger C (2012).
-<EM>knitcitations: Citations for knitr markdown files</EM>.
-R package version 0.1-0, <a href="https://github.com/cboettig/knitcitations">https://github.com/cboettig/knitcitations</a>.
+References are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration. 
 
-<p>Bolker GRWIRscadcbB, Bonebakker L, Gentleman R, Liaw WHA, Lumley T, Maechler M, Magnusson A, Moeller S, Schwartz M and Venables B (2012).
-<EM>gplots: Various R programming tools for plotting data</EM>.
-R package version 2.11.0, <a href="http://CRAN.R-project.org/package=gplots">http://CRAN.R-project.org/package=gplots</a>.
 
-<p>CRAIG I, PLUME A, MCVEIGH M, PRINGLE J and AMIN M (2007).
-&ldquo;Do open access articles have greater citation impact?A critical review of the literature.&rdquo;
-<EM>Journal of Informetrics</EM>, <B>1</B>(3), pp. 239&ndash;248.
-ISSN 17511577, <a href="http://dx.doi.org/10.1016/j.joi.2007.04.001">http://dx.doi.org/10.1016/j.joi.2007.04.001</a>, <a href="http://dx.doi.org/10.1016/j.joi.2007.04.001">http://dx.doi.org/10.1016/j.joi.2007.04.001</a>.
-
-<p>Dorch B (2012).
-&ldquo;On the Citation Advantage of linking to data.&rdquo;
-<EM>hprints</EM>.
-<a href="http://hprints.org/hprints-00714715">http://hprints.org/hprints-00714715</a>.
-
-<p>Fox J (2010).
-<EM>polycor: Polychoric and Polyserial Correlations</EM>.
-R package version 0.7-8, <a href="http://CRAN.R-project.org/package=polycor">http://CRAN.R-project.org/package=polycor</a>.
-
-<p>Fu LD and Aliferis C (2008).
-&ldquo;Models for predicting and explaining citation count of biomedical articles.&rdquo;
-<EM>AMIA ... Annual Symposium proceedings / AMIA Symposium. AMIA Symposium</EM>, pp. 222&ndash;6.
-ISSN 1942-597X, <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2656101\&amp;tool=pmcentrez\&amp;rendertype=abstract">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2656101\&amp;tool=pmcentrez\&amp;rendertype=abstract</a>.
-
-<p>Gleditsch NP and Strand H (2003).
-&ldquo;Posting your data: will you be scooped or will you be famous?&rdquo;
-<EM>International Studies Perspectives</EM>, <B>4</B>(1), pp. 89&ndash;97.
-<a href="http://www.prio.no/Research-and-Publications/Publication/?oid=55406">http://www.prio.no/Research-and-Publications/Publication/?oid=55406</a>.
-
-<p>Hajage D (2011).
-<EM>ascii: Export R objects to several markup languages</EM>.
-R package version 2.1, <a href="http://CRAN.R-project.org/package=ascii">http://CRAN.R-project.org/package=ascii</a>.
-
-<p>Henneken EA and Accomazzi A (2011).
-&ldquo;Linking to Data - Effect on Citation Rates in Astronomy.&rdquo;
-<EM>arXiv</EM>, pp. 4.
-1111.3618, <a href="http://arxiv.org/abs/1111.3618">http://arxiv.org/abs/1111.3618</a>.
-
-<p>Ioannidis JPA, Allison DB, Ball CA, Coulibaly I, Cui X, Culhane AC, Falchi M, Furlanello C, Game L, Jurman G, Mangion J, Mehta T, Nitzberg M, Page GP, Petretto E and Noort Vv (2009).
-&ldquo;Repeatability of published microarray gene expression analyses.&rdquo;
-<EM>Nature genetics</EM>, <B>41</B>(2), pp. 149&ndash;55.
-ISSN 1546-1718, <a href="http://dx.doi.org/10.1038/ng.295">http://dx.doi.org/10.1038/ng.295</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/19174838">http://www.ncbi.nlm.nih.gov/pubmed/19174838</a>.
-
-<p>Jr FEH (2012).
-<EM>rms: Regression Modeling Strategies</EM>.
-R package version 3.5-0, <a href="http://CRAN.R-project.org/package=rms">http://CRAN.R-project.org/package=rms</a>.
-
-<p>Pienta AM, Alter GC and Lyle JA (2010).
-&ldquo;The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data.&rdquo;
-<EM>The Organisation, Economics and Policy of Scientific Research workshop</EM>.
-<a href="http://hdl.handle.net/2027.42/78307">http://hdl.handle.net/2027.42/78307</a>.
-
-<p>Piwowar HA, Day RB and Fridsma DS (2007).
-&ldquo;Sharing detailed research data is associated with increased citation rate.&rdquo;
-<EM>PLoS ONE</EM>, <B>2</B>(3).
-<a href="http://dx.doi.org/10.1371/journal.pone.0000308">http://dx.doi.org/10.1371/journal.pone.0000308</a>.
-
-<p>Piwowar HA, Carlson JD and Vision TJ (2011).
-&ldquo;Beginning to track 1000 datasets from public repositories into the published literature.&rdquo;
-<EM>Proceedings of the American Society for Information Science and Technology</EM>, <B>48</B>(1), pp. 1&ndash;4.
-ISSN 00447870, <a href="http://dx.doi.org/10.1002/meet.2011.14504801337">http://dx.doi.org/10.1002/meet.2011.14504801337</a>, <a href="http://doi.wiley.com/10.1002/meet.2011.14504801337">http://doi.wiley.com/10.1002/meet.2011.14504801337</a>.
-
-<p>Piwowar HA (2011).
-&ldquo;Data from: Who shares? Who doesn't? Factors associated with openly archiving raw research data.&rdquo;
-<EM>Dryad Digital Repository</EM>.
-<a href="http://dx.doi.org/10.5061/dryad.mf1sd">http://dx.doi.org/10.5061/dryad.mf1sd</a>, <a href="http://datadryad.org/handle/10255/dryad.33858">http://datadryad.org/handle/10255/dryad.33858</a>.
-
-<p>Piwowar HA (2011).
-&ldquo;Who Shares? Who Doesn't? Factors Associated with Openly Archiving Raw Research Data.&rdquo;
-<EM>PLoS ONE</EM>, <B>6</B>(7), pp. e18657.
-ISSN 1932-6203, <a href="http://dx.doi.org/10.1371/journal.pone.0018657">http://dx.doi.org/10.1371/journal.pone.0018657</a>, <a href="http://dx.plos.org/10.1371/journal.pone.0018657">http://dx.plos.org/10.1371/journal.pone.0018657</a>.
-
-<p>Sears J (2011).
-&ldquo;Data Sharing Effect on Article Citation Rate in Paleoceanography - KomFor.&rdquo;
-<a href="http://www.komfor.net/blog/unbenanntemitteilung">http://www.komfor.net/blog/unbenanntemitteilung</a>.
-
-<p>Tenopir C, Allard S, Douglass K, Aydinoglu AU, Wu L, Read E, Manoff M and Frame M (2011).
-&ldquo;Data sharing by scientists: practices and perceptions.&rdquo;
-<EM>PLoS one</EM>, <B>6</B>(6), pp. e21101.
-ISSN 1932-6203, <a href="http://dx.doi.org/10.1371/journal.pone.0021101">http://dx.doi.org/10.1371/journal.pone.0021101</a>, <a href="http://dx.plos.org/10.1371/journal.pone.0021101">http://dx.plos.org/10.1371/journal.pone.0021101</a>.
-
-<p>Wicherts JM, Bakker M and Molenaar D (2011).
-&ldquo;Willingness to share research data is related to the strength of the evidence and the quality of reporting of statistical results.&rdquo;
-<EM>PloS one</EM>, <B>6</B>(11), pp. e26828.
-ISSN 1932-6203, <a href="http://dx.doi.org/10.1371/journal.pone.0026828">http://dx.doi.org/10.1371/journal.pone.0026828</a>, <a href="http://dx.plos.org/10.1371/journal.pone.0026828">http://dx.plos.org/10.1371/journal.pone.0026828</a>.
-
-<p>Wickham H (2007).
-&ldquo;Reshaping Data with the reshape Package.&rdquo;
-<EM>Journal of Statistical Software</EM>, <B>21</B>(12), pp. 1&ndash;20.
-<a href="http://www.jstatsoft.org/v21/i12/">http://www.jstatsoft.org/v21/i12/</a>.
-
-<p>Wickham H (2009).
-<EM>ggplot2: elegant graphics for data analysis</EM>.
-Springer New York.
-ISBN 978-0-387-98140-6, <a href="http://had.co.nz/ggplot2/book">http://had.co.nz/ggplot2/book</a>.
-
-<p>Wickham H (2011).
-&ldquo;The Split-Apply-Combine Strategy for Data Analysis.&rdquo;
-<EM>Journal of Statistical Software</EM>, <B>40</B>(1), pp. 1&ndash;29.
-<a href="http://www.jstatsoft.org/v40/i01/">http://www.jstatsoft.org/v40/i01/</a>.
-
-<p>Xie Y (2012).
-<EM>knitr: A general-purpose package for dynamic report generation in R</EM>.
-R package version 0.7, <a href="http://CRAN.R-project.org/package=knitr">http://CRAN.R-project.org/package=knitr</a>.
+- Carl Boettiger,   (2013) knitcitations: Citations for knitr markdown files.  [https://github.com/cboettig/knitcitations](https://github.com/cboettig/knitcitations)
+- Gregory Bolker, Lodewijk Bonebakker, Robert Gentleman, Wolfgang Liaw, Thomas Lumley, Martin Maechler, Arni Magnusson, Steffen Moeller, Marc Schwartz, Bill Venables,   (2012) gplots: Various R programming tools for plotting data.  [http://CRAN.R-project.org/package=gplots](http://CRAN.R-project.org/package=gplots)
+- I CRAIG, A PLUME, M MCVEIGH, J PRINGLE, M AMIN,   (2007) {Do open access articles have greater citation impact?A critical review of the literature}.  *Journal of Informetrics*  **1**  (3)   239-248  [10.1016/j.joi.2007.04.001](http://dx.doi.org/10.1016/j.joi.2007.04.001)
+- Bertil Dorch,   (2012) {On the Citation Advantage of linking to data}.  *hprints*  [http://hprints.org/hprints-00714715](http://hprints.org/hprints-00714715)
+- John Fox,   (2010) polycor: Polychoric and Polyserial Correlations.  [http://CRAN.R-project.org/package=polycor](http://CRAN.R-project.org/package=polycor)
+- Lawrence Fu, Constantin Aliferis,   (2008) {Models for predicting and explaining citation count of biomedical articles.}.  *AMIA ... Annual Symposium proceedings / AMIA Symposium. AMIA Symposium*  222-6  [http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2656101\&tool=pmcentrez\&rendertype=abstract](http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2656101\&tool=pmcentrez\&rendertype=abstract)
+- Nils Gleditsch, Havard Strand,   (2003) {Posting your data: will you be scooped or will you be famous?}.  *International Studies Perspectives*  **4**  (1)   89-97  [http://www.prio.no/Research-and-Publications/Publication/?oid=55406](http://www.prio.no/Research-and-Publications/Publication/?oid=55406)
+- David Hajage,   (2011) ascii: Export R objects to several markup languages.  [http://CRAN.R-project.org/package=ascii](http://CRAN.R-project.org/package=ascii)
+- Edwin Henneken, Alberto Accomazzi,   (2011) {Linking to Data - Effect on Citation Rates in Astronomy}.  *arXiv*  4-NA  [http://arxiv.org/abs/1111.3618](http://arxiv.org/abs/1111.3618)
+- John Ioannidis, David Allison, Catherine Ball, Issa Coulibaly, Xiangqin Cui, Aed\'{\i}n Culhane, Mario Falchi, Cesare Furlanello, Laurence Game, Giuseppe Jurman, Jon Mangion, Tapan Mehta, Michael Nitzberg, Grier Page, Enrico Petretto, Vera Noort,   (2009) {Repeatability of published microarray gene expression analyses.}.  *Nature genetics*  **41**  (2)   149-55  [10.1038/ng.295](http://dx.doi.org/10.1038/ng.295)
+- Frank Jr,   (2012) rms: Regression Modeling Strategies.  [http://CRAN.R-project.org/package=rms](http://CRAN.R-project.org/package=rms)
+- Amy Pienta, George Alter, Jared Lyle,   (2010) {The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data}.  *The Organisation, Economics and Policy of Scientific Research workshop*  [http://hdl.handle.net/2027.42/78307](http://hdl.handle.net/2027.42/78307)
+- Heather Piwowar, Roger Day, Douglas Fridsma,   (2007) {Sharing detailed research data is associated with increased citation rate}.  *PLoS ONE*  **2**  (3)   [http://dx.doi.org/10.1371/journal.pone.0000308](http://dx.doi.org/10.1371/journal.pone.0000308)
+- Heather Piwowar, Jonathan Carlson, Todd Vision,   (2011) {Beginning to track 1000 datasets from public repositories into the published literature}.  *Proceedings of the American Society for Information Science and Technology*  **48**  (1)   1-4  [10.1002/meet.2011.14504801337](http://dx.doi.org/10.1002/meet.2011.14504801337)
+- Heather Piwowar,   (2011) {Data from: Who shares? Who doesn't? Factors associated with openly archiving raw research data}.  *Dryad Digital Repository*  [10.5061/dryad.mf1sd](http://dx.doi.org/10.5061/dryad.mf1sd)
+- Heather Piwowar,   (2011) {Who Shares? Who Doesn't? Factors Associated with Openly Archiving Raw Research Data}.  *PLoS ONE*  **6**  (7)   e18657-NA  [10.1371/journal.pone.0018657](http://dx.doi.org/10.1371/journal.pone.0018657)
+- Jon Sears,   (2011) {Data Sharing Effect on Article Citation Rate in Paleoceanography - KomFor}.  [http://www.komfor.net/blog/unbenanntemitteilung](http://www.komfor.net/blog/unbenanntemitteilung)
+- Carol Tenopir, Suzie Allard, Kimberly Douglass, Arsev Aydinoglu, Lei Wu, Eleanor Read, Maribeth Manoff, Mike Frame,   (2011) {Data sharing by scientists: practices and perceptions.}.  *PLoS one*  **6**  (6)   e21101-NA  [10.1371/journal.pone.0021101](http://dx.doi.org/10.1371/journal.pone.0021101)
+- Jelte Wicherts, Marjan Bakker, Dylan Molenaar,   (2011) {Willingness to share research data is related to the strength of the evidence and the quality of reporting of statistical results.}.  *PloS one*  **6**  (11)   e26828-NA  [10.1371/journal.pone.0026828](http://dx.doi.org/10.1371/journal.pone.0026828)
+- Hadley Wickham,   (2007) Reshaping Data with the {reshape} Package.  *Journal of Statistical Software*  **21**  (12)   1-20  [http://www.jstatsoft.org/v21/i12/](http://www.jstatsoft.org/v21/i12/)
+- Hadley Wickham,   (2009) ggplot2: elegant graphics for data analysis.  [http://had.co.nz/ggplot2/book](http://had.co.nz/ggplot2/book)
+- Hadley Wickham,   (2011) The Split-Apply-Combine Strategy for Data Analysis.  *Journal of Statistical Software*  **40**  (1)   1-29  [http://www.jstatsoft.org/v40/i01/](http://www.jstatsoft.org/v40/i01/)
+- Yihui Xie,   (2012) knitr: A general-purpose package for dynamic report generation in R.  [http://CRAN.R-project.org/package=knitr](http://CRAN.R-project.org/package=knitr)
 
 
 
-References are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) 
+## To Do
 
+cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM
 
 ## Supplementary material
 
@@ -627,7 +660,7 @@ To confirm that the erroniously-included articles were not driving the findings 
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Mon Jan 21 08:21:54 2013</code>
+ * Generated on <code class="knitr inline">Tue Apr  2 11:55:52 2013</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
