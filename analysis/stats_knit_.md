@@ -1,4 +1,4 @@
-<!--roptions dev='png', fig.width=7, fig.height=7, fig.path="", tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/' -->
+<!--roptions dev='png', fig.width=7, fig.height=7, fig.path="", tidy=FALSE, cache=TRUE, echo=TRUE, message=FALSE, warning=FALSE, autodep=TRUE, cache.path='/tmp/knitr-cache/', comment='' -->
 
 <!--begin.rcode setup, echo=FALSE, cache=FALSE
 
@@ -145,12 +145,12 @@ Making research data publicly available also has costs. Some of these costs are 
 
 Personal incentives are important to balance these personal costs.  Scientists report that receiving additional citations is an important motivator for publicly archiving their data <!--rinline citep(biblio["tenopir2011data-sh"])-->.
 
-There is evidence that studies that make their data available do indeed receive more citations than similar studies that do not <!--rinline citep(biblio[c("gleditsch2003posting", "piwowar2007sharing", "ioannidis2009repeata", "pienta2010the-end", "henneken2011linking", "sears2011data-sh", "dorch2012on-the-")]) -->. These findings have been referenced by new policies that encourage and require data archiving (e.g. Rausher, McPeek, Moore, Rieseberg, & Whitlock, 2010), demonstrating the appetite for evidence of personal benefit. 
+There is evidence that studies that make their data available do indeed receive more citations than similar studies that do not <!--rinline citep(biblio[c("gleditsch2003posting", "piwowar2007sharing", "ioannidis2009repeata", "pienta2010the-end", "henneken2011linking", "sears2011data-sh", "dorch2012on-the-")]) -->. These findings have been referenced by new policies that encourage and require data archiving (e.g. <!--rinline citep(biblio["rausher2010data-ar"]) -->), demonstrating the appetite for evidence of personal benefit. 
 
 
 In order for journals, institutions and funders to craft good data archiving policy, it is important to have an accurate estimate of the citation differential.  Calculating an accurate estimate differential is made difficult by the many confounding factors that influence citation rate.  In past studies, it has seldom been possible to adequately control these statistically, much less experimentally.   Here, we perform a large multivariate analysis of the citation differential for studies in which gene expression microarray data either was or was not made available in a public repository.  
 
-We seek to improve on prior work in several ways. First, the sample size is large – over two orders of magnitude larger than the prior study of <!--rinline citep(biblio["piwowar2007sharing"])--> on gene expression microarray data, which gives us the statistical power to account for a larger number of cofactors in the analyses. The resulting estimates thus isolate the association between data availability and citation rate with more accuracy. Second, this report goes beyond citation analysis to include analysis of data reuse attribution directly. We explore how data reuse patterns change over both the lifespan of a data repository and the lifespan of a dataset, as well as looking at the distribution of reuse across datasets in a repository.  
+We seek to improve on prior work in several ways. First, the sample size is large – over two orders of magnitude larger than the first citation study of gene expression microarray data <!--rinline citep(biblio["piwowar2007sharing"])-->, which gives us the statistical power to account for a larger number of cofactors in the analyses. The resulting estimates thus isolate the association between data availability and citation rate with more accuracy. Second, this report goes beyond citation analysis to include analysis of data reuse attribution directly. We explore how data reuse patterns change over both the lifespan of a data repository and the lifespan of a dataset, as well as looking at the distribution of reuse across datasets in a repository.  
 
 ## Methods
 
@@ -163,10 +163,10 @@ The main analysis in this paper examines the citation count of a gene expression
 ### Relationship between data availability and citation
 #### Data collection
 
-The sampling procedure for microarray experiments used in the current analysis is described in <!--rinline citep(biblio[c("piwowar2011who-sha", "piwowar2011data-fr"), cito = "usesMethodIn"])-->; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers published between 2000 and 2009.
+The sampling procedure for microarray experiments used in the current analysis is described previously <!--rinline citep(biblio[c("piwowar2011who-sha", "piwowar2011data-fr")], cito="UsesMethodIn")-->; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <!--rinline dim(dfAttributes)[1] --> distinct gene expression microarray papers published between 2000 and 2009.
 Citation counts for 10,555 of these papers were found in Scopus and exported in November 2011.
 
-The independent variable of interest is the availability of gene expression microarray data. Data availability had been previously determined for our sample articles in <!--rinline citep(biblio["piwowar2011data-fr"])-->, so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. <!--rinline citep(biblio["piwowar2011data-fr"])--> queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, (H. Piwowar & Chapman, 2010) had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
+The independent variable of interest is the availability of gene expression microarray data. Data availability had been previously determined for our sample articles in <!--rinline citep(biblio["piwowar2011data-fr"], cito="usesDataFrom")-->, so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. <!--rinline citep(biblio["piwowar2011data-fr"])--> queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, <!--rinline citep(biblio["piwowar2010recall-"]) --> had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
 
 #### Notes on challenges encountered when collecting citation data 
 
@@ -251,7 +251,7 @@ The core of our analysis is a set of multivariate linear regressions to evaluate
 
 Citation counts for <!--rinline dim(dfCitationsAttributesRaw)[1] --> papers were exported from Scopus in November 2011. 
 
-We used a subset of the 124 attributes from <!--rinline citep(biblio["piwowar2011who-sha"])--> previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
+We used a subset of the 124 attributes from <!--rinline citep(biblio["piwowar2011who-sha"], cito="usesDataFrom")--> previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
 
 Publishing experience was characterized by the number of years since the author's first paper in PubMed, the number of papers they have published, and the number of citations they have received in PubMed Central, estimated using Author-ity Clusters as described in (H. A. Piwowar, 2011). The subject of the study was characterized by whether the paper was classified as cancer, animals, or plants. For more information on study attributes see (H. A. Piwowar, 2011). Citation count was log transformed to be consistent with prior literature. Other count variables were square-root transformed. Continuous variables were represented with 3-part spines in the regression, using the rcs function in the R rms library.
 
@@ -459,7 +459,7 @@ Statistical analyses were last run on <!--rinline date() --> with <!--rinline ve
 
 Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [GitHub pypub.  Heather, push changes!]
 
-The Markdown version of this manuscript with interleaved statistical scripts <!--rinline citep(list(citation("knitr"))) --> is also at Dryad and in GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  References are available in a publicly available Mendeley group [name].
+The Markdown version of this manuscript with interleaved statistical scripts <!--rinline citep(list(citation("knitr"))) --> is also at Dryad and in GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  Publication references are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration.
 
 ## Results
 
@@ -787,9 +787,17 @@ bibliography()
 end.rcode-->  
 
 
-## To Do
+## ToDo
 
-cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM
+* cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM
+* add citation to author-ity directly
+* fix citations to (H. A. Piwowar, 2011)
+
+## Before submitting
+
+* check length of abstract
+* fix tables in word format
+* remove funny {} from titles in references section?  by replacing {{ and }}, in bib
 
 ## Supplementary material
 

@@ -1,6 +1,6 @@
 
 
-<div class="chunk"><div class="rcode"><div class="error"><pre class="knitr R">## Error: 'prefix' is missing
+<div class="chunk"><div class="rcode"><div class="error"><pre class="knitr R">Error: 'prefix' is missing
 </pre></div></div></div>
 
 
@@ -79,12 +79,15 @@ Citation Rates in Astronomy. _arXiv_, pp. 4. 1111.3618,
 http://arxiv.org/abs/1111.3618."><a href="http://arxiv.org/abs/1111.3618">Henneken & Accomazzi, 2011</a></span> ; <span class="showtooltip" title="Sears J (2011). Data Sharing Effect on Article Citation Rate in
 Paleoceanography - KomFor. 
 http://www.komfor.net/blog/unbenanntemitteilung."><a href="http://www.komfor.net/blog/unbenanntemitteilung">Sears, 2011</a></span> ; <span class="showtooltip" title="Dorch B (2012). On the Citation Advantage of linking to data.
-_hprints_.  http://hprints.org/hprints-00714715."><a href="http://hprints.org/hprints-00714715">Dorch, 2012</a></span>  )</code>. These findings have been referenced by new policies that encourage and require data archiving (e.g. Rausher, McPeek, Moore, Rieseberg, & Whitlock, 2010), demonstrating the appetite for evidence of personal benefit. 
+_hprints_.  http://hprints.org/hprints-00714715."><a href="http://hprints.org/hprints-00714715">Dorch, 2012</a></span>  )</code>. These findings have been referenced by new policies that encourage and require data archiving (e.g. <code class="knitr inline">(<span class="showtooltip" title="Rausher MD, McPeek MA, Moore AJ, Rieseberg L and Whitlock MC
+(2010). Data archiving. _Evolution; international journal of
+organic evolution_, *64*(3), pp. 603-4. ISSN 1558-5646, 
+http://www.ncbi.nlm.nih.gov/pubmed/20050907."><a href="http://www.ncbi.nlm.nih.gov/pubmed/20050907">Rausher _et. al._ 2010</a></span> )</code>), demonstrating the appetite for evidence of personal benefit. 
 
 
 In order for journals, institutions and funders to craft good data archiving policy, it is important to have an accurate estimate of the citation differential.  Calculating an accurate estimate differential is made difficult by the many confounding factors that influence citation rate.  In past studies, it has seldom been possible to adequately control these statistically, much less experimentally.   Here, we perform a large multivariate analysis of the citation differential for studies in which gene expression microarray data either was or was not made available in a public repository.  
 
-We seek to improve on prior work in several ways. First, the sample size is large – over two orders of magnitude larger than the prior study of <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
+We seek to improve on prior work in several ways. First, the sample size is large – over two orders of magnitude larger than the first study of <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Day RB and Fridsma DS (2007). Sharing detailed
 research data is associated with increased citation rate. _PLoS
 ONE_, *2*(3). 
 http://dx.doi.org/10.1371/journal.pone.0000308."><a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar _et. al._ 2007</a></span> )</code> on gene expression microarray data, which gives us the statistical power to account for a larger number of cofactors in the analyses. The resulting estimates thus isolate the association between data availability and citation rate with more accuracy. Second, this report goes beyond citation analysis to include analysis of data reuse attribution directly. We explore how data reuse patterns change over both the lifespan of a data repository and the lifespan of a dataset, as well as looking at the distribution of reuse across datasets in a repository.  
@@ -99,20 +102,27 @@ The main analysis in this paper examines the citation count of a gene expression
 ### Relationship between data availability and citation
 #### Data collection
 
-The sampling procedure for microarray experiments used in the current analysis is described in <div class="error"><pre class="knitr R">
-Error in `[.bibentry`(biblio, c("piwowar2011who-sha", "piwowar2011data-fr"),  : 
-  unused argument(s) (cito = "usesMethodIn")
-
-</pre></div>; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <code class="knitr inline">11603</code> distinct gene expression microarray papers published between 2000 and 2009.
+The sampling procedure for microarray experiments used in the current analysis is described previously <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Who Shares? Who Doesn't? Factors Associated
+with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
+e18657. ISSN 1932-6203, 
+http://dx.doi.org/10.1371/journal.pone.0018657, 
+http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657" rel="http://purl.org/spar/cito/UsesMethodIn" >Piwowar, 2011</a></span> ; <span class="showtooltip" title="Piwowar HA (2011). Data from: Who shares? Who doesn't? Factors
+associated with openly archiving raw research data. _Dryad
+Digital Repository_.  http://dx.doi.org/10.5061/dryad.mf1sd,
+ http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd" rel="http://purl.org/spar/cito/UsesMethodIn" >Piwowar, 2011b</a></span>  )</code>; briefly, a full-text query uncovered papers that described wet-lab methods related to gene expression microarray data collection. The full-text query was characterized as having high precision (90%, with a 95% CI of 86% to 93%) and moderate recall (56%, CI of 52% to 61%) for this task. Running the query in PubMed Central, HighWire Press, and Google Scholar identified <code class="knitr inline">11603</code> distinct gene expression microarray papers published between 2000 and 2009.
 Citation counts for 10,555 of these papers were found in Scopus and exported in November 2011.
 
 The independent variable of interest is the availability of gene expression microarray data. Data availability had been previously determined for our sample articles in <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Data from: Who shares? Who doesn't? Factors
 associated with openly archiving raw research data. _Dryad
 Digital Repository_.  http://dx.doi.org/10.5061/dryad.mf1sd,
- http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd">Piwowar, 2011</a></span> )</code>, so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Data from: Who shares? Who doesn't? Factors
+ http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd" rel="http://purl.org/spar/cito/usesDataFrom" >Piwowar, 2011b</a></span> )</code>, so we directly reused that dataset. Datasets were considered to be publicly available if they were discoverable in either of the two most widely-used gene expression microarray repositories: NCBI's Gene Expression Omnibus (GEO), and EBI's ArrayExpress. <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Data from: Who shares? Who doesn't? Factors
 associated with openly archiving raw research data. _Dryad
 Digital Repository_.  http://dx.doi.org/10.5061/dryad.mf1sd,
- http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd">Piwowar, 2011</a></span> )</code> queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, (H. Piwowar & Chapman, 2010) had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
+ http://datadryad.org/handle/10255/dryad.33858."><a href="http://dx.doi.org/10.5061/dryad.mf1sd">Piwowar, 2011b</a></span> )</code> queried GEO for links to the PubMed identifiers in the analysis sample using “pubmed_gds [filter]” and queried ArrayExpress by searching for each PubMed identifier in a downloaded copy of the ArrayExpress database. Earlier, <code class="knitr inline">(<span class="showtooltip" title="Piwowar H and Chapman W (2010). Recall and bias of retrieving
+gene expression microarray datasets through PubMed identifiers.
+_Journal of biomedical discovery and collaboration_, *5*, pp.
+7-20. ISSN 1747-5333, 
+http://www.ncbi.nlm.nih.gov/pubmed/20349403."><a href="http://www.ncbi.nlm.nih.gov/pubmed/20349403">Piwowar & Chapman, 2010</a></span> )</code> had found that querying GEO and ArrayExpress with PubMed article identifiers recovered 77% of the associated publicly available datasets.  
 
 #### Notes on challenges encountered when collecting citation data 
 
@@ -138,7 +148,7 @@ We used a subset of the 124 attributes from <code class="knitr inline">(<span cl
 with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
 e18657. ISSN 1932-6203, 
 http://dx.doi.org/10.1371/journal.pone.0018657, 
-http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657">Piwowar, 2011b</a></span> )</code> previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
+http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657" rel="http://purl.org/spar/cito/usesDataFrom" >Piwowar, 2011</a></span> )</code> previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
 
 Publishing experience was characterized by the number of years since the author's first paper in PubMed, the number of papers they have published, and the number of citations they have received in PubMed Central, estimated using Author-ity Clusters as described in (H. A. Piwowar, 2011). The subject of the study was characterized by whether the paper was classified as cancer, animals, or plants. For more information on study attributes see (H. A. Piwowar, 2011). Citation count was log transformed to be consistent with prior literature. Other count variables were square-root transformed. Continuous variables were represented with 3-part spines in the regression, using the rcs function in the R rms library.
 
@@ -222,7 +232,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Tue Apr  2 11:55:51 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
+Statistical analyses were last run on <code class="knitr inline">Tue Apr  2 13:29:05 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used include reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
 _Journal of Statistical Software_, *21*(12), pp. 1-20. 
 http://www.jstatsoft.org/v21/i12/."><a href="http://www.jstatsoft.org/v21/i12/">Wickham, 2007</a></span> )</code>, plyr <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2011). The Split-Apply-Combine Strategy for Data
 Analysis. _Journal of Statistical Software_, *40*(1), pp. 1-29.
@@ -247,7 +257,7 @@ Raw data and statistical scripts are available in the Dryad data repository at [
 
 The Markdown version of this manuscript with interleaved statistical scripts <code class="knitr inline">(<span class="showtooltip" title="Xie Y (2012). _knitr: A general-purpose package for dynamic report
 generation in R_. R package version 0.7, 
-http://CRAN.R-project.org/package=knitr."><a href="http://CRAN.R-project.org/package=knitr">Xie, 2012</a></span> )</code> is also at Dryad and in GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  References are available in a publicly available Mendeley group [name].
+http://CRAN.R-project.org/package=knitr."><a href="http://CRAN.R-project.org/package=knitr">Xie, 2012</a></span> )</code> is also at Dryad and in GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  Publication references are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration.
 
 ## Results
 
@@ -260,27 +270,27 @@ We identified <code class="knitr inline">10557</code> articles published between
 
 The papers were published in <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <code class="knitr inline">30</code>% of the papers (Table 2).
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">## | Cancer Res               | 0.04 |
-## | Proc Natl Acad Sci U S A | 0.04 |
-## | J Biol Chem              | 0.04 |
-## | BMC Genomics             | 0.03 |
-## | Physiol Genomics         | 0.03 |
-## | PLoS One                 | 0.02 |
-## | J Bacteriol              | 0.02 |
-## | J Immunol                | 0.02 |
-## | Blood                    | 0.02 |
-## | Clin Cancer Res          | 0.02 |
-## | Plant Physiol            | 0.02 |
-## | Mol Cell Biol            | 0.01 |
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">| Cancer Res               | 0.04 |
+| Proc Natl Acad Sci U S A | 0.04 |
+| J Biol Chem              | 0.04 |
+| BMC Genomics             | 0.03 |
+| Physiol Genomics         | 0.03 |
+| PLoS One                 | 0.02 |
+| J Bacteriol              | 0.02 |
+| J Immunol                | 0.02 |
+| Blood                    | 0.02 |
+| Clin Cancer Res          | 0.02 |
+| Plant Physiol            | 0.02 |
+| Mol Cell Biol            | 0.01 |
 </pre></div></div></div>
 
 *Table 1: Proportion of sample published in most common journals*
 
 More microarray papers were published in later years: <code class="knitr inline">2</code>% of articles in our sample were published in 2001, compared to <code class="knitr inline">15</code> % in 2009 (Table 3).
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">## |   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
-## |---|------|------|------|------|------|------|------|------|------|
-## | 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">|   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
+|---|------|------|------|------|------|------|------|------|------|
+| 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
 </pre></div></div></div>
 
 *Table 2: Proportion of sample published each year*
@@ -295,7 +305,7 @@ Without accounting for any confounding factors, the distribution of citations wa
 with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
 e18657. ISSN 1932-6203, 
 http://dx.doi.org/10.1371/journal.pone.0018657, 
-http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657">Piwowar, 2011b</a></span> )</code>. Accounting for publication date, the distribution of citations for papers with available data is right-shifted relative to the distribution for those without.  
+http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657">Piwowar, 2011</a></span> )</code>. Accounting for publication date, the distribution of citations for papers with available data is right-shifted relative to the distribution for those without.  
 
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure1.png"  class="plot" /></div></div>
@@ -352,16 +362,16 @@ The subsample of 308 papers was large enough to include a few additional covaria
 
 Because publication date is such as strong correlate with both citation rate and data availability, we also ran regressions for each publication year individually. The estimate of citation boost varied by year of publication. The citation boost was greatest for data published in 2004 and 2005, at about 30%. Earlier years showed citation boosts with wider confidence intervals due to relatively small sample sizes, while more recently published data showed a less pronounced citation boost. 
 
-<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">##       year  est ciLow ciHigh
-##  [1,] 2001 1.37  0.84   2.25
-##  [2,] 2002 1.16  0.89   1.50
-##  [3,] 2003 1.19  1.01   1.41
-##  [4,] 2004 1.30  1.15   1.47
-##  [5,] 2005 1.32  1.19   1.47
-##  [6,] 2006 1.15  1.04   1.27
-##  [7,] 2007 1.08  1.00   1.17
-##  [8,] 2008 1.08  0.99   1.18
-##  [9,] 2009 1.01  0.92   1.10
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">      year  est ciLow ciHigh
+ [1,] 2001 1.37  0.84   2.25
+ [2,] 2002 1.16  0.89   1.50
+ [3,] 2003 1.19  1.01   1.41
+ [4,] 2004 1.30  1.15   1.47
+ [5,] 2005 1.32  1.19   1.47
+ [6,] 2006 1.15  1.04   1.27
+ [7,] 2007 1.08  1.00   1.17
+ [8,] 2008 1.08  0.99   1.18
+ [9,] 2009 1.01  0.92   1.10
 </pre></div></div></div>
 
 
@@ -510,7 +520,7 @@ Both authors contributed to the study design, discussed the results and implicat
 
 ## References
 
-References are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration. 
+Publication references are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration. 
 
 
 - Carl Boettiger,   (2013) knitcitations: Citations for knitr markdown files.  [https://github.com/cboettig/knitcitations](https://github.com/cboettig/knitcitations)
@@ -526,9 +536,11 @@ References are available in a publicly-available [Mendeley group](http://www.men
 - Frank Jr,   (2012) rms: Regression Modeling Strategies.  [http://CRAN.R-project.org/package=rms](http://CRAN.R-project.org/package=rms)
 - Amy Pienta, George Alter, Jared Lyle,   (2010) {The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data}.  *The Organisation, Economics and Policy of Scientific Research workshop*  [http://hdl.handle.net/2027.42/78307](http://hdl.handle.net/2027.42/78307)
 - Heather Piwowar, Roger Day, Douglas Fridsma,   (2007) {Sharing detailed research data is associated with increased citation rate}.  *PLoS ONE*  **2**  (3)   [http://dx.doi.org/10.1371/journal.pone.0000308](http://dx.doi.org/10.1371/journal.pone.0000308)
+- Heather Piwowar, Wendy Chapman,   (2010) {Recall and bias of retrieving gene expression microarray datasets through PubMed identifiers.}.  *Journal of biomedical discovery and collaboration*  **5**  7-20  [http://www.ncbi.nlm.nih.gov/pubmed/20349403](http://www.ncbi.nlm.nih.gov/pubmed/20349403)
 - Heather Piwowar, Jonathan Carlson, Todd Vision,   (2011) {Beginning to track 1000 datasets from public repositories into the published literature}.  *Proceedings of the American Society for Information Science and Technology*  **48**  (1)   1-4  [10.1002/meet.2011.14504801337](http://dx.doi.org/10.1002/meet.2011.14504801337)
 - Heather Piwowar,   (2011) {Data from: Who shares? Who doesn't? Factors associated with openly archiving raw research data}.  *Dryad Digital Repository*  [10.5061/dryad.mf1sd](http://dx.doi.org/10.5061/dryad.mf1sd)
 - Heather Piwowar,   (2011) {Who Shares? Who Doesn't? Factors Associated with Openly Archiving Raw Research Data}.  *PLoS ONE*  **6**  (7)   e18657-NA  [10.1371/journal.pone.0018657](http://dx.doi.org/10.1371/journal.pone.0018657)
+- Mark Rausher, Mark McPeek, Allen Moore, Loren Rieseberg, Michael Whitlock,   (2010) {Data archiving.}.  *Evolution; international journal of organic evolution*  **64**  (3)   603-4  [http://www.ncbi.nlm.nih.gov/pubmed/20050907](http://www.ncbi.nlm.nih.gov/pubmed/20050907)
 - Jon Sears,   (2011) {Data Sharing Effect on Article Citation Rate in Paleoceanography - KomFor}.  [http://www.komfor.net/blog/unbenanntemitteilung](http://www.komfor.net/blog/unbenanntemitteilung)
 - Carol Tenopir, Suzie Allard, Kimberly Douglass, Arsev Aydinoglu, Lei Wu, Eleanor Read, Maribeth Manoff, Mike Frame,   (2011) {Data sharing by scientists: practices and perceptions.}.  *PLoS one*  **6**  (6)   e21101-NA  [10.1371/journal.pone.0021101](http://dx.doi.org/10.1371/journal.pone.0021101)
 - Jelte Wicherts, Marjan Bakker, Dylan Molenaar,   (2011) {Willingness to share research data is related to the strength of the evidence and the quality of reporting of statistical results.}.  *PloS one*  **6**  (11)   e26828-NA  [10.1371/journal.pone.0026828](http://dx.doi.org/10.1371/journal.pone.0026828)
@@ -539,9 +551,9 @@ References are available in a publicly-available [Mendeley group](http://www.men
 
 
 
-## To Do
+## ToDo
 
-cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM
+* cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM
 
 ## Supplementary material
 
@@ -555,7 +567,7 @@ The papers that are erroniously included in our subset to not create gene expres
 If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.  To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.  Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R">206/226
-</pre></div><div class="output"><pre class="knitr R">## [1] 0.9115
+</pre></div><div class="output"><pre class="knitr R">[1] 0.9115
 </pre></div></div></div>
 
 
@@ -578,16 +590,16 @@ We compared the distribution of those with errors to those without, calculated w
 
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R"><span class="functioncall">with</span>(dfCitationsAnnotated, <span class="functioncall">summary</span>(nCitedBy~isCreated))
-</pre></div><div class="output"><pre class="knitr R">## nCitedBy    N=226, 4 Missing
-## 
-## +---------+---------------------------+---+--------+
-## |         |                           |  N|nCitedBy|
-## +---------+---------------------------+---+--------+
-## |isCreated|    created-microarray-data|206|   31.86|
-## |         |created-microarray-data-not| 20|   26.30|
-## +---------+---------------------------+---+--------+
-## |  Overall|                           |226|   31.37|
-## +---------+---------------------------+---+--------+
+</pre></div><div class="output"><pre class="knitr R">nCitedBy    N=226, 4 Missing
+
++---------+---------------------------+---+--------+
+|         |                           |  N|nCitedBy|
++---------+---------------------------+---+--------+
+|isCreated|    created-microarray-data|206|   31.86|
+|         |created-microarray-data-not| 20|   26.30|
++---------+---------------------------+---+--------+
+|  Overall|                           |226|   31.37|
++---------+---------------------------+---+--------+
 </pre></div></div></div>
 
 
@@ -598,61 +610,61 @@ We compared the distribution of those with errors to those without, calculated w
 This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R"><span class="functioncall">print</span>(ttest_citedby)
-</pre></div><div class="output"><pre class="knitr R">## 
-## 	Welch Two Sample t-test
-## 
-## data:  nCitedBy by isCreated 
-## t = 0.5747, df = 22.61, p-value = 0.5712
-## alternative hypothesis: true difference in means is not equal to 0 
-## 95 percent confidence interval:
-##  -14.47  25.59 
-## sample estimates:
-##     mean in group created-microarray-data 
-##                                     31.86 
-## mean in group created-microarray-data-not 
-##                                     26.30 
-## 
+</pre></div><div class="output"><pre class="knitr R">
+	Welch Two Sample t-test
+
+data:  nCitedBy by isCreated 
+t = 0.5747, df = 22.61, p-value = 0.5712
+alternative hypothesis: true difference in means is not equal to 0 
+95 percent confidence interval:
+ -14.47  25.59 
+sample estimates:
+    mean in group created-microarray-data 
+                                    31.86 
+mean in group created-microarray-data-not 
+                                    26.30 
+
 </pre></div><div class="source"><pre class="knitr R"><span class="functioncall">print</span>(ttest_log_citedby)
-</pre></div><div class="output"><pre class="knitr R">## 
-## 	Welch Two Sample t-test
-## 
-## data:  log(1 + nCitedBy) by isCreated 
-## t = 1.331, df = 21.77, p-value = 0.1968
-## alternative hypothesis: true difference in means is not equal to 0 
-## 95 percent confidence interval:
-##  -0.2003  0.9175 
-## sample estimates:
-##     mean in group created-microarray-data 
-##                                     2.991 
-## mean in group created-microarray-data-not 
-##                                     2.632 
-## 
+</pre></div><div class="output"><pre class="knitr R">
+	Welch Two Sample t-test
+
+data:  log(1 + nCitedBy) by isCreated 
+t = 1.331, df = 21.77, p-value = 0.1968
+alternative hypothesis: true difference in means is not equal to 0 
+95 percent confidence interval:
+ -0.2003  0.9175 
+sample estimates:
+    mean in group created-microarray-data 
+                                    2.991 
+mean in group created-microarray-data-not 
+                                    2.632 
+
 </pre></div><div class="source"><pre class="knitr R"><span class="functioncall">print</span>(wilcox_citedby)
-</pre></div><div class="output"><pre class="knitr R">## 
-## 	Wilcoxon rank sum test with continuity correction
-## 
-## data:  nCitedBy by isCreated 
-## W = 2440, p-value = 0.1733
-## alternative hypothesis: true location shift is not equal to 0 
-## 
+</pre></div><div class="output"><pre class="knitr R">
+	Wilcoxon rank sum test with continuity correction
+
+data:  nCitedBy by isCreated 
+W = 2440, p-value = 0.1733
+alternative hypothesis: true location shift is not equal to 0 
+
 </pre></div></div></div>
 
 
 To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regression analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R"><span class="functioncall">gfm_table</span>(<span class="functioncall">anova</span>(annotated_merged_created))
-</pre></div><div class="output"><pre class="knitr R">## |                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
-## |-------------------------------------------|--------|--------|---------|---------|--------|
-## | rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 83.82  | 41.91   | 73.91   | 0.00   |
-## | rcs(journal.impact.factor.tr, 3)          | 2.00   | 18.69  | 9.35    | 16.48   | 0.00   |
-## | rcs(num.authors.tr, 3)                    | 2.00   | 4.03   | 2.01    | 3.55    | 0.03   |
-## | rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 4.79   | 2.40    | 4.22    | 0.02   |
-## | factor(country.usa)                       | 1.00   | 0.05   | 0.05    | 0.09    | 0.77   |
-## | factor(dataset.in.geo.or.ae)              | 1.00   | 5.68   | 5.68    | 10.03   | 0.00   |
-## | Residuals                                 | 177.00 | 100.37 | 0.57    |         |        |
+</pre></div><div class="output"><pre class="knitr R">|                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
+|-------------------------------------------|--------|--------|---------|---------|--------|
+| rcs(pubmed.date.in.pubmed, 3)             | 2.00   | 83.82  | 41.91   | 73.91   | 0.00   |
+| rcs(journal.impact.factor.tr, 3)          | 2.00   | 18.69  | 9.35    | 16.48   | 0.00   |
+| rcs(num.authors.tr, 3)                    | 2.00   | 4.03   | 2.01    | 3.55    | 0.03   |
+| rcs(last.author.num.prev.pmc.cites.tr, 3) | 2.00   | 4.79   | 2.40    | 4.22    | 0.02   |
+| factor(country.usa)                       | 1.00   | 0.05   | 0.05    | 0.09    | 0.77   |
+| factor(dataset.in.geo.or.ae)              | 1.00   | 5.68   | 5.68    | 10.03   | 0.00   |
+| Residuals                                 | 177.00 | 100.37 | 0.57    |         |        |
 </pre></div><div class="source"><pre class="knitr R"><span class="functioncall">calcCI.exp</span>(annotated_merged_created, <span class="string">"<span class="functioncall">factor</span>(dataset.<span class="keyword">in</span>.geo.or.ae).L"</span>)
-</pre></div><div class="output"><pre class="knitr R">##                                   param  est ciLow ciHigh     p
-## Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
+</pre></div><div class="output"><pre class="knitr R">                                  param  est ciLow ciHigh     p
+Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
 </pre></div></div></div>
 
 
@@ -660,7 +672,7 @@ To confirm that the erroniously-included articles were not driving the findings 
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Tue Apr  2 11:55:52 2013</code>
+ * Generated on <code class="knitr inline">Tue Apr  2 13:29:06 2013</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
