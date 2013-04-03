@@ -229,7 +229,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Wed Apr  3 02:43:44 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used included reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
+Statistical analyses were last run on <code class="knitr inline">Wed Apr  3 03:01:13 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used included reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
 _Journal of Statistical Software_, *21*(12), pp. 1-20. 
 http://www.jstatsoft.org/v21/i12/."><a href="http://www.jstatsoft.org/v21/i12/">Wickham, 2007</a></span> )</code>, plyr <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2011). The Split-Apply-Combine Strategy for Data
 Analysis. _Journal of Statistical Software_, *40*(1), pp. 1-29.
@@ -250,7 +250,7 @@ http://CRAN.R-project.org/package=knitr."><a href="http://CRAN.R-project.org/pac
 files_. R package version 0.4-5, 
 https://github.com/cboettig/knitcitations."><a href="https://github.com/cboettig/knitcitations">Boettiger, 2013</a></span> )</code>. P-values were two-tailed.
 
-Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [TODO GitHub pypub.  Heather, add link, push changes!]
+Raw data and statistical scripts are available in the Dryad data repository at [data uploaded to Dryad at the time of article acceptance; citation will be included once known].  Data collection scripts are on GitHub at [https://github.com/hpiwowar/georeuse](https://github.com/hpiwowar/georeuse) and [https://github.com/hpiwowar/pypub](https://github.com/hpiwowar/pypub).
 
 The Markdown version of this manuscript with interleaved statistical scripts <code class="knitr inline">(<span class="showtooltip" title="Xie Y (2012). _knitr: A general-purpose package for dynamic report
 generation in R_. R package version 0.7, 
@@ -742,7 +742,7 @@ Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Wed Apr  3 02:43:46 2013</code>
+ * Generated on <code class="knitr inline">Wed Apr  3 03:01:14 2013</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 

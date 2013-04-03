@@ -453,7 +453,7 @@ end.rcode-->
 
 Statistical analyses were last run on <!--rinline date() --> with <!--rinline version$version.string -->.  Packages used included reshape2 <!--rinline citep(list(citation("reshape2"))) -->, plyr <!--rinline citep(list(citation("plyr"))) -->, rms <!--rinline citep(list(citation("rms"))) -->, polycor <!--rinline citep(list(citation("polycor"))) -->, ascii <!--rinline citep(list(citation("ascii"))) -->, ggplot2 <!--rinline citep(list(citation("ggplot2"))) -->, gplots <!--rinline citep(list(citation("gplots"))) -->, knitr <!--rinline citep(list(citation("knitr"))) -->, and knitcitations <!--rinline citep(list(citation("knitcitations"))) -->. P-values were two-tailed.
 
-Raw data and statistical scripts are available in the Dryad data repository at [url and citation to be determined and included upon article acceptance].  Data collection scripts are at [TODO GitHub pypub.  Heather, add link, push changes!]
+Raw data and statistical scripts are available in the Dryad data repository at [data uploaded to Dryad at the time of article acceptance; citation will be included once known].  Data collection scripts are on GitHub at [https://github.com/hpiwowar/georeuse](https://github.com/hpiwowar/georeuse) and [https://github.com/hpiwowar/pypub](https://github.com/hpiwowar/pypub).
 
 The Markdown version of this manuscript with interleaved statistical scripts <!--rinline citep(list(citation("knitr"))) --> is on GitHub [https://github.com/hpiwowar/citation11k](https://github.com/hpiwowar/citation11k).  Publication references are available in a publicly-available [Mendeley group](http://www.mendeley.com/groups/2223913/11k-citation/papers/) to facilitate exploration.
 
