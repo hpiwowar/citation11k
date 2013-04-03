@@ -229,7 +229,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Wed Apr  3 01:07:34 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used included reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
+Statistical analyses were last run on <code class="knitr inline">Wed Apr  3 02:43:44 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used included reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
 _Journal of Statistical Software_, *21*(12), pp. 1-20. 
 http://www.jstatsoft.org/v21/i12/."><a href="http://www.jstatsoft.org/v21/i12/">Wickham, 2007</a></span> )</code>, plyr <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2011). The Split-Apply-Combine Strategy for Data
 Analysis. _Journal of Statistical Software_, *40*(1), pp. 1-29.
@@ -472,7 +472,7 @@ http://www.ncbi.nlm.nih.gov/pubmed/20050907."><a href="http://www.ncbi.nlm.nih.g
 
 ### Challenges collecting citation data 
 
-This study required obtaining citation counts for thousands of articles using PubMed IDs.  This was not possible at the time of data collection using either Thomson Reuter's Web of Science or Google Scholar. While this type of query was (and is) supported by Elsevier's Scopus database, we lacked institutional access to Scopus, individual subscriptions were not available, and attempts to request access through Scopus staff were unsuccessful.  One of us (HP) attempted to use the British Library's walk-in access of Scopus while visiting the UK. Unfortunately, the British Library’s policies did not permit any method of electronic input of the PubMed identifier list.  HP eventually obtained official access to Scopus through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate because she had recently lived in the United States.
+This study required obtaining citation counts for thousands of articles using PubMed IDs.  This was not supported at the time of data collection using either Thomson Reuter's Web of Science or Google Scholar. While this type of query was (and is) supported by Elsevier's Scopus database, we lacked institutional access to Scopus, individual subscriptions were not available, and attempts to request access through Scopus staff were unsuccessful.  One of us (HP) attempted to use the British Library's walk-in access of Scopus while visiting the UK. Unfortunately, the British Library’s policies did not permit any method of electronic input of the PubMed identifier list (the list is 10,000 elements long).  HP eventually obtained official access to Scopus through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate because she had recently lived in the United States.
 
 Our understanding of research practice suffers because access to tools and data is so difficult.
 
@@ -512,7 +512,10 @@ Importantly, almost all of these mechanisms are aligned with more efficient and 
 alternatives. _PRC Summary Papers 4_. 
 http://www.publishingresearch.net/documents/PRCsummary4Warefinal.pdf."><a href="http://www.publishingresearch.net/documents/PRCsummary4Warefinal.pdf">Ware, 2008</a></span> )</code>.
 
-The citation boost in the current study is consistent with observed data reuse alone, but it is possible some of the other sources postulated above may have contributed citations for the studies with available data. Further work will be needed to understand the relative contributions from each source. For example, in-depth analyses of all publications from a set of data-collecting authors could support measurement of selection bias. Observing search behavior of researchers, and the returned search hit results, could characterize increased visibility due to data availability. Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of research findings.
+The citation boost in the current study is consistent with data reuse observed in this study and the small-scale annotation reported in <code class="knitr inline">(<span class="showtooltip" title="Rung J and Brazma A (2013). Reuse of public genome-wide gene
+expression data. _Nature reviews. Genetics_, *14*(2), pp. 89-99.
+ISSN 1471-0064, 
+http://www.ncbi.nlm.nih.gov/pubmed/23269463."><a href="http://www.ncbi.nlm.nih.gov/pubmed/23269463">Rung & Brazma, 2013</a></span> )</code>.  Nonetheless, it is possible some of the other sources postulated above may have contributed citations for the studies with available data. Further work will be needed to understand the relative contributions from each source. For example, in-depth analyses of all publications from a set of data-collecting authors could support measurement of selection bias. Observing search behavior of researchers, and the returned search hit results, could characterize increased visibility due to data availability. Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of research findings.
 
 ### Future work
 
@@ -524,6 +527,25 @@ Scholarly Communication_, *1*(1). ISSN 2162-3309,
 http://jlsc-pub.org/jlsc/vol1/iss1/6."><a href="http://jlsc-pub.org/jlsc/vol1/iss1/6">Mooney & Newton, 2012</a></span> )</code> is also a significant obstacle, and undoubtedly led to undercounting in the present study.  There is much room for improvement, and we are hopeful about recent steps toward data citation standards taken by initiatives such as DataCite.
 
 Data from current and future studies can start to be used to estimate the impact of policy decisions. For example, do embargo periods decrease the level of data reuse? Do restrictive or poorly articulated licensing terms decrease data reuse? Which types of data reuse are facilitates by robust data standards and which types are unaffected?
+
+Qualitative assessment of data reuse is an essential complement to large-scale quantitative analyses.  Repeating and extending previous studies will help us to understand the potential of data reuse, areas of progress, and remaining challenges (e.g. <code class="knitr inline">(<span class="showtooltip" title="Zimmerman AS (2003). Data Sharing and Secondary Use of Scientific
+Data: Experiences of Ecologists. _Dissertations and Theses (Ph.D.
+and Master's)_.  http://hdl.handle.net/2027.42/39373."><a href="http://hdl.handle.net/2027.42/39373">Zimmerman, 2003</a></span> ; <span class="showtooltip" title="Wan X and Pavlidis P (2007). Sharing and reusing gene expression
+profiling data in neuroscience. _Neuroinformatics_, *5*(3), pp.
+161-75. ISSN 1539-2791, 
+http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2980754\&tool=pmcentrez\&rendertype=abstract."><a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2980754\&tool=pmcentrez\&rendertype=abstract">Wan & Pavlidis, 2007</a></span> ; <span class="showtooltip" title="Wynholds LA, Wallis JC, Borgman CL, Sands A and Traweek S (2012).
+Data, data use, and scientific inquiry. In _Proceedings of the
+12th ACM/IEEE-CS joint conference on Digital Libraries - JCDL
+'12_, pp. 19. ISBN 9781450311540, 
+http://dx.doi.org/10.1145/2232817.2232822, 
+http://dl.acm.org/citation.cfm?id=2232817.2232822
+http://dl.acm.org/citation.cfm?doid=2232817.2232822."><a href="http://dx.doi.org/10.1145/2232817.2232822">Wynholds _et. al._ 2012</a></span> ; <span class="showtooltip" title="Rolland B and Lee CP (2013). Beyond trust and reliability. In
+_Proceedings of the 2013 conference on Computer supported
+cooperative work - CSCW '13_, pp. 435. 
+http://dl.acm.org/citation.cfm?id=2441776.2441826."><a href="http://dl.acm.org/citation.cfm?id=2441776.2441826">Rolland & Lee, 2013</a></span>  )</code>).  Usage statistics from primary data repositories and value-added repositories are also useful sources of insight into reuse patterns <code class="knitr inline">(<span class="showtooltip" title="Rung J and Brazma A (2013). Reuse of public genome-wide gene
+expression data. _Nature reviews. Genetics_, *14*(2), pp. 89-99.
+ISSN 1471-0064, 
+http://www.ncbi.nlm.nih.gov/pubmed/23269463."><a href="http://www.ncbi.nlm.nih.gov/pubmed/23269463">Rung & Brazma, 2013</a></span> )</code>.
 
 Citations are blind to many important types of data reuse.  The impact of data on practitioners, educators, data journalists, and industry researchers are not captured by attribution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syllabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.  As evaluators move away from assessing research based on journal impact factor and toward article-level metrics, post-publication metrics rates will become increasingly important indicators of research impact<code class="knitr inline">(<span class="showtooltip" title="Piwowar H (2013). Value all research products. _Nature_,
 *493*(7431), pp. 159. ISSN 1476-4687, 
@@ -577,50 +599,31 @@ Publication references are available in a publicly-available [Mendeley group](ht
 - Heather Piwowar,   (2011) {Who Shares? Who Doesn't? Factors Associated with Openly Archiving Raw Research Data}.  *PLoS ONE*  **6**  (7)   e18657-NA  [10.1371/journal.pone.0018657](http://dx.doi.org/10.1371/journal.pone.0018657)
 - Heather Piwowar,   (2013) {Value all research products.}.  *Nature*  **493**  (7431)   159-NA  [10.1038/493159a](http://dx.doi.org/10.1038/493159a)
 - Mark Rausher, Mark McPeek, Allen Moore, Loren Rieseberg, Michael Whitlock,   (2010) {Data archiving.}.  *Evolution; international journal of organic evolution*  **64**  (3)   603-4  [http://www.ncbi.nlm.nih.gov/pubmed/20050907](http://www.ncbi.nlm.nih.gov/pubmed/20050907)
+- Betsy Rolland, Charlotte Lee,   (2013) {Beyond trust and reliability}.  435-NA  [http://dl.acm.org/citation.cfm?id=2441776.2441826](http://dl.acm.org/citation.cfm?id=2441776.2441826)
+- Johan Rung, Alvis Brazma,   (2013) {Reuse of public genome-wide gene expression data.}.  *Nature reviews. Genetics*  **14**  (2)   89-99  [http://www.ncbi.nlm.nih.gov/pubmed/23269463](http://www.ncbi.nlm.nih.gov/pubmed/23269463)
 - Jon Sears,   (2011) {Data Sharing Effect on Article Citation Rate in Paleoceanography - KomFor}.  [http://www.komfor.net/blog/unbenanntemitteilung](http://www.komfor.net/blog/unbenanntemitteilung)
 - Richard Smith,   (2006) {Commentary: the power of the unrelenting impact factor--is it a force for good or harm?}.  *International journal of epidemiology*  **35**  (5)   1129-30  [http://ije.oxfordjournals.org/content/35/5/1129.full](http://ije.oxfordjournals.org/content/35/5/1129.full)
 - Carol Tenopir, Suzie Allard, Kimberly Douglass, Arsev Aydinoglu, Lei Wu, Eleanor Read, Maribeth Manoff, Mike Frame,   (2011) {Data sharing by scientists: practices and perceptions.}.  *PLoS one*  **6**  (6)   e21101-NA  [10.1371/journal.pone.0021101](http://dx.doi.org/10.1371/journal.pone.0021101)
+- Xiang Wan, Paul Pavlidis,   (2007) {Sharing and reusing gene expression profiling data in neuroscience.}.  *Neuroinformatics*  **5**  (3)   161-75  [http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2980754\&tool=pmcentrez\&rendertype=abstract](http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2980754\&tool=pmcentrez\&rendertype=abstract)
 - Mark Ware,   (2008) {Peer review: benefits, perceptions and alternatives}.  *PRC Summary Papers 4*  [http://www.publishingresearch.net/documents/PRCsummary4Warefinal.pdf](http://www.publishingresearch.net/documents/PRCsummary4Warefinal.pdf)
 - Jelte Wicherts, Marjan Bakker, Dylan Molenaar,   (2011) {Willingness to share research data is related to the strength of the evidence and the quality of reporting of statistical results.}.  *PloS one*  **6**  (11)   e26828-NA  [10.1371/journal.pone.0026828](http://dx.doi.org/10.1371/journal.pone.0026828)
 - Hadley Wickham,   (2007) Reshaping Data with the {reshape} Package.  *Journal of Statistical Software*  **21**  (12)   1-20  [http://www.jstatsoft.org/v21/i12/](http://www.jstatsoft.org/v21/i12/)
 - Hadley Wickham,   (2009) ggplot2: elegant graphics for data analysis.  [http://had.co.nz/ggplot2/book](http://had.co.nz/ggplot2/book)
 - Hadley Wickham,   (2011) The Split-Apply-Combine Strategy for Data Analysis.  *Journal of Statistical Software*  **40**  (1)   1-29  [http://www.jstatsoft.org/v40/i01/](http://www.jstatsoft.org/v40/i01/)
+- Laura Wynholds, Jillian Wallis, Christine Borgman, Ashley Sands, Sharon Traweek,   (2012) {Data, data use, and scientific inquiry}.  19-NA  [10.1145/2232817.2232822](http://dx.doi.org/10.1145/2232817.2232822)
 - Yihui Xie,   (2012) knitr: A general-purpose package for dynamic report generation in R.  [http://CRAN.R-project.org/package=knitr](http://CRAN.R-project.org/package=knitr)
+- Ann Zimmerman,   (2003) {Data Sharing and Secondary Use of Scientific Data: Experiences of Ecologists}.  *Dissertations and Theses (Ph.D. and Master's)*  [http://hdl.handle.net/2027.42/39373](http://hdl.handle.net/2027.42/39373)
 
 
 
-## ToDo
-
-
-* cite the nature arrayexpress one  Reuse of public genome-wide gene expression data.   <code class="knitr inline">(<span class="showtooltip" title="Rung J and Brazma A (2013). Reuse of public genome-wide gene
-expression data. _Nature reviews. Genetics_, *14*(2), pp. 89-99.
-ISSN 1471-0064, 
-http://www.ncbi.nlm.nih.gov/pubmed/23269463."><a href="http://www.ncbi.nlm.nih.gov/pubmed/23269463">Rung & Brazma, 2013</a></span> )</code>
-* cite the ubc one from 2007 palis lab? Wan Sharing and reusing gene expression profiling data in neuroscience.    <code class="knitr inline">(<span class="showtooltip" title="Wan X and Pavlidis P (2007). Sharing and reusing gene expression
-profiling data in neuroscience. _Neuroinformatics_, *5*(3), pp.
-161-75. ISSN 1539-2791, 
-http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2980754\&tool=pmcentrez\&rendertype=abstract."><a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2980754\&tool=pmcentrez\&rendertype=abstract">Wan & Pavlidis, 2007</a></span> )</code>
-* cite the microarray reuse one Usage Patterns of Open Genomic Data  xia2012usage-p  <code class="knitr inline">(<span class="showtooltip" title="Mooney H and Newton M (2012). The Anatomy of a Data Citation:
-Discovery, Reuse, and Credit. _Journal of Librarianship and
-Scholarly Communication_, *1*(1). ISSN 2162-3309, 
-http://jlsc-pub.org/jlsc/vol1/iss1/6."><a href="http://jlsc-pub.org/jlsc/vol1/iss1/6">Mooney & Newton, 2012</a></span> )</code>
-* cite the tracking 1000 paper to say x is probably a small percentage?    <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Carlson JD and Vision TJ (2011). Beginning to track
-1000 datasets from public repositories into the published
-literature. _Proceedings of the American Society for Information
-Science and Technology_, *48*(1), pp. 1-4. ISSN 00447870, 
-http://dx.doi.org/10.1002/meet.2011.14504801337, 
-http://doi.wiley.com/10.1002/meet.2011.14504801337."><a href="http://dx.doi.org/10.1002/meet.2011.14504801337">Piwowar _et. al._ 2011</a></span> )</code>
-* maybe cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM  <code class="knitr inline">(<span class="showtooltip" title="Rolland B and Lee CP (2013). Beyond trust and reliability. In
-_Proceedings of the 2013 conference on Computer supported
-cooperative work - CSCW '13_, pp. 435. 
-http://dl.acm.org/citation.cfm?id=2441776.2441826."><a href="http://dl.acm.org/citation.cfm?id=2441776.2441826">Rolland & Lee, 2013</a></span> )</code>
  
 ## Before submitting
 
 * fix tables in word format
 * remove funny {} from titles in references section?  by replacing {{ and }}, in bib
+* change " )" to ")" to fix funny citation formatting
 * go through the four piwowar 2011 and differentiate with a-d
-* fix rms citation
+* fix rms citation with Jr
 
 ## Supplemental Article S1
 
@@ -739,7 +742,7 @@ Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Wed Apr  3 01:07:35 2013</code>
+ * Generated on <code class="knitr inline">Wed Apr  3 02:43:46 2013</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 

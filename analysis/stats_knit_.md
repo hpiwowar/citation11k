@@ -734,7 +734,7 @@ Another result of importance from the citation analysis is that papers based on 
 
 ### Challenges collecting citation data 
 
-This study required obtaining citation counts for thousands of articles using PubMed IDs.  This was not possible at the time of data collection using either Thomson Reuter's Web of Science or Google Scholar. While this type of query was (and is) supported by Elsevier's Scopus database, we lacked institutional access to Scopus, individual subscriptions were not available, and attempts to request access through Scopus staff were unsuccessful.  One of us (HP) attempted to use the British Library's walk-in access of Scopus while visiting the UK. Unfortunately, the British Library’s policies did not permit any method of electronic input of the PubMed identifier list.  HP eventually obtained official access to Scopus through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate because she had recently lived in the United States.
+This study required obtaining citation counts for thousands of articles using PubMed IDs.  This was not supported at the time of data collection using either Thomson Reuter's Web of Science or Google Scholar. While this type of query was (and is) supported by Elsevier's Scopus database, we lacked institutional access to Scopus, individual subscriptions were not available, and attempts to request access through Scopus staff were unsuccessful.  One of us (HP) attempted to use the British Library's walk-in access of Scopus while visiting the UK. Unfortunately, the British Library’s policies did not permit any method of electronic input of the PubMed identifier list (the list is 10,000 elements long).  HP eventually obtained official access to Scopus through a Research Worker agreement with Canada's National Research Library (NRC-CISTI), after being fingerprinted to obtain a police clearance certificate because she had recently lived in the United States.
 
 Our understanding of research practice suffers because access to tools and data is so difficult.
 
@@ -760,7 +760,7 @@ While we cannot exclude that the open data citation boost is driven entirely by 
 
 Importantly, almost all of these mechanisms are aligned with more efficient and effective scientific progress: increased data use, facilitated credibility determination, earlier access, improved discoverability, and a focus on best work through data availability are good for both investigators and the science community as a whole. Working through the one area where incentives between scientific good and author incentives conflict, finding weaknesses or faults in published research, may require mandates. Or, instead, perhaps the research community will eventually come to associate withheld data with poor quality research, as it does today for findings that are not disclosed in a peer-reviewed paper <!--rinline citep(biblio["ware2008peer-re"]) -->.
 
-The citation boost in the current study is consistent with observed data reuse alone, but it is possible some of the other sources postulated above may have contributed citations for the studies with available data. Further work will be needed to understand the relative contributions from each source. For example, in-depth analyses of all publications from a set of data-collecting authors could support measurement of selection bias. Observing search behavior of researchers, and the returned search hit results, could characterize increased visibility due to data availability. Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of research findings.
+The citation boost in the current study is consistent with data reuse observed in this study and the small-scale annotation reported in <!--rinline citep(biblio["rung2013reuse-o"]) -->.  Nonetheless, it is possible some of the other sources postulated above may have contributed citations for the studies with available data. Further work will be needed to understand the relative contributions from each source. For example, in-depth analyses of all publications from a set of data-collecting authors could support measurement of selection bias. Observing search behavior of researchers, and the returned search hit results, could characterize increased visibility due to data availability. Hypothetical examples could be provided to authors to determine whether they would be systematically more likely to cite a paper with available data in situations where they are considering the credibility of research findings.
 
 ### Future work
 
@@ -769,6 +769,9 @@ Additional future work can improve on these results by considering and integrati
 The obstacles encountered in obtaining the citation data needed for this study, as described earlier in the Discussion, demonstrate that improvements in tools and practice are needed to make impact tracking easier and more accurate, for day-to-day analysis as well as studies for evidence-based policy. Such research is hamstrung without programmatic access to the full-text of the research literature and to the citation databases that underpin impact assessment. The lack of conventions and tool support for data attribution <!--rinline citep(biblio["mooney2012the-ana"])--> is also a significant obstacle, and undoubtedly led to undercounting in the present study.  There is much room for improvement, and we are hopeful about recent steps toward data citation standards taken by initiatives such as DataCite.
 
 Data from current and future studies can start to be used to estimate the impact of policy decisions. For example, do embargo periods decrease the level of data reuse? Do restrictive or poorly articulated licensing terms decrease data reuse? Which types of data reuse are facilitates by robust data standards and which types are unaffected?
+
+Qualitative assessment of data reuse is an essential complement to large-scale quantitative analyses.  Repeating and extending previous studies will help us to understand the potential of data reuse, areas of progress, and remaining challenges (e.g. <!--rinline citep(biblio[c(
+"zimmerman2003data-sh", "wan2007sharing", "wynholds2012data-da", "rolland2013beyond-")])-->).  Usage statistics from primary data repositories and value-added repositories are also useful sources of insight into reuse patterns <!--rinline citep(biblio["rung2013reuse-o"]) -->.
 
 Citations are blind to many important types of data reuse.  The impact of data on practitioners, educators, data journalists, and industry researchers are not captured by attribution patterns in the scientific literature.  Altmetrics indicators uncover discussions in social social media, syllabi, patents, and theses: analyzing such indicators for datasets would provide valuable evidence of reuse beyond the scientific literature.  As evaluators move away from assessing research based on journal impact factor and toward article-level metrics, post-publication metrics rates will become increasingly important indicators of research impact<!--rinline citep(biblio["piwowar2013value-a"])-->.
 
@@ -799,21 +802,14 @@ bibliography()
 end.rcode-->  
 
 
-## ToDo
-
-
-* cite the nature arrayexpress one  Reuse of public genome-wide gene expression data.   <!--rinline citep(biblio["rung2013reuse-o"])-->
-* cite the ubc one from 2007 palis lab? Wan Sharing and reusing gene expression profiling data in neuroscience.    <!--rinline citep(biblio["wan2007sharing"])-->
-* cite the microarray reuse one Usage Patterns of Open Genomic Data  xia2012usage-p  <!--rinline citep(biblio["mooney2012the-ana"])-->
-* cite the tracking 1000 paper to say x is probably a small percentage?    <!--rinline citep(biblio["piwowar2011beginni"])-->
-* maybe cite this one too?  https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=205fd337cf&view=att&th=13d179723f28b727&attid=0.1&disp=inline&realattid=f_hdncatyy0&safe=1&zw&saduie=AG9B_P9p0uhmDzT1RdBXS3fP_03I&sadet=1361916486480&sads=qJfeblz39THtmt_2roiWtDYJAbM  <!--rinline citep(biblio["rolland2013beyond-"])-->
  
 ## Before submitting
 
 * fix tables in word format
 * remove funny {} from titles in references section?  by replacing {{ and }}, in bib
+* change " )" to ")" to fix funny citation formatting
 * go through the four piwowar 2011 and differentiate with a-d
-* fix rms citation
+* fix rms citation with Jr
 
 ## Supplemental Article S1
 
