@@ -130,16 +130,15 @@ http://www.ncbi.nlm.nih.gov/pubmed/20349403."><a href="http://www.ncbi.nlm.nih.g
 
 
 
-
-The core of our analysis is a set of multivariate linear regressions to evaluate the association between the public availability of a study's microarray data and the number of citations received by the study.  To explore what variables to include in these regressions, we first looked at correlations between the number of citations and a set of candidate variables, using Pearson correlations for numeric variables and polyserial correlations for binary and categorical variables. We also calculated correlations amongst all variables to investigate collinearity.
-
 Citation counts for <code class="knitr inline">10555</code> papers were exported from Scopus in November 2011. 
 
-We used a subset of the 124 attributes from <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Who Shares? Who Doesn't? Factors Associated
+The core of our analysis is a set of multivariate linear regressions to evaluate the association between the public availability of a study's microarray data and the number of citations received by the study.  
+
+To explore which variables to include in these regressions, we first looked at correlations between the number of citations and a set of candidate variables. We also calculated correlations amongst all variables to investigate collinearity.  We used a subset of the 124 attributes from <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Who Shares? Who Doesn't? Factors Associated
 with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
 e18657. ISSN 1932-6203, 
 http://dx.doi.org/10.1371/journal.pone.0018657, 
-http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657" rel="http://purl.org/spar/cito/usesDataFrom" >Piwowar, 2011</a></span> )</code> previously shown or suspected to correlate with citation rate (Table 1).  The main analysis was run across all papers in the sample with covariates found to a have significant pairwise correlation with citation rate. These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
+http://dx.plos.org/10.1371/journal.pone.0018657."><a href="http://dx.doi.org/10.1371/journal.pone.0018657" rel="http://purl.org/spar/cito/usesDataFrom" >Piwowar, 2011</a></span> )</code> previously shown or suspected to correlate with citation rate.  We selected covariates found to a have pairwise correlation with citation rate greater than 0.1 or less than -0.1 using Pearson correlations for numeric variables and polyserial correlations for binary and categorical variables (Table 1). These included: the date of publication, the journal which published the study, the journal impact factor, the journal citation half-life, the number of articles published by the journal, the journal's open access policy, whether the journal is considered a core clinical journal by MEDLINE, the number of authors of the study, the country of the corresponding author, the citation score of the institution of the corresponding author, the publishing experience of the first and last author, and the subject of the study itself.
 
 Publishing experience was characterized by the number of years since the author's first paper in PubMed, the number of papers the author has published, and the number of citations the author has received from PubMed Central, estimated using Author-ity Clusters. The topic of the study was characterized by whether the MeSH terms classified it as related to cancer, animals, or plants. For more information on study attributes see <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA (2011). Who Shares? Who Doesn't? Factors Associated
 with Openly Archiving Raw Research Data. _PLoS ONE_, *6*(7), pp.
@@ -154,6 +153,57 @@ The independent variable of data availability was represented as 0 or 1 in the r
 
 
 
+
+
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">|                                               | corr  |
+|-----------------------------------------------|-------|
+| nCitedBy.log                                  | 1.00  |
+| journal.impact.factor.tr                      | 0.45  |
+| last.author.num.prev.pmc.cites.tr             | 0.30  |
+| journal.num.articles.2008.tr                  | 0.25  |
+| last.author.year.first.pub.ago.tr             | 0.24  |
+| institution.mean.norm.citation.score          | 0.24  |
+| first.author.num.prev.pmc.cites.tr            | 0.24  |
+| journal.microarray.creating.count.tr          | 0.23  |
+| first.author.year.first.pub.ago.tr            | 0.22  |
+| country.usa                                   | 0.18  |
+| num.authors.tr                                | 0.17  |
+| pubmed.is.core.clinical.journal               | 0.17  |
+| last.author.num.prev.pubs.tr                  | 0.15  |
+| pubmed.is.humans                              | 0.08  |
+| pubmed.is.funded.nih                          | 0.07  |
+| has.R.funding                                 | 0.07  |
+| pubmed.is.plants                              | 0.07  |
+| first.author.num.prev.pubs.tr                 | 0.06  |
+| pubmed.is.cancer                              | 0.06  |
+| nih.cumulative.years.tr                       | 0.03  |
+| country.uk                                    | 0.03  |
+| num.grants.via.nih.tr                         | 0.02  |
+| nih.sum.avg.dollars.tr                        | 0.01  |
+| pubmed.is.bacteria                            | 0.01  |
+| dataset.in.geo.or.ae                          | 0.01  |
+| last.author.num.prev.microarray.creations.tr  | 0.01  |
+| pubmed.is.cultured.cells                      | -0.01 |
+| first.author.num.prev.microarray.creations.tr | -0.01 |
+| pubmed.is.geo.reuse                           | -0.01 |
+| institution.is.govnt                          | -0.01 |
+| country.australia                             | -0.02 |
+| pubmed.is.funded.nih.intramural               | -0.03 |
+| country.canada                                | -0.05 |
+| institution.rank                              | -0.06 |
+| last.author.female                            | -0.07 |
+| first.author.female                           | -0.08 |
+| country.japan                                 | -0.10 |
+| pubmed.is.animals                             | -0.11 |
+| country.china                                 | -0.19 |
+| country.korea                                 | -0.26 |
+| pubmed.is.open.access                         | -0.30 |
+| pubmed.year.published                         | -0.58 |
+| pubmed.date.in.pubmed                         | -0.59 |
+</pre></div></div></div>
+
+*Table 1: Univariate correlations between article attributes and number of citations.  Citations were log transformed, count variables were square root transformed. Pearson correlations were used for numeric variables and polyserial correlations for binary and categorical variables.*
 
 
 
@@ -198,7 +248,7 @@ Datasets are sometimes attributed directly through mention of the dataset identi
 
 #### Statistical analysis
 
-To focus on data reuse by third party investigators (rather than authors attributing  datasets they had collected themselves), we excluded papers with author surnames in common with those authors who deposited the original dataset, as described in  <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Carlson JD and Vision TJ (2011). Beginning to track
+To focus on data reuse by third party investigators (rather than authors attributing  datasets they had collected themselves), we excluded papers with author surnames in common with those authors who deposited the original dataset, as in  <code class="knitr inline">(<span class="showtooltip" title="Piwowar HA, Carlson JD and Vision TJ (2011). Beginning to track
 1000 datasets from public repositories into the published
 literature. _Proceedings of the American Society for Information
 Science and Technology_, *48*(1), pp. 1-4. ISSN 00447870, 
@@ -229,7 +279,7 @@ To understand our findings on a per-dataset basis, we stratified reuse estimates
 
 ### Data and script availability
 
-Statistical analyses were last run on <code class="knitr inline">Wed Apr  3 03:01:13 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used included reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
+Statistical analyses were last run on <code class="knitr inline">Sat Aug 24 06:07:36 2013</code> with <code class="knitr inline">R version 2.15.1 (2012-06-22)</code>.  Packages used included reshape2 <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2007). Reshaping Data with the reshape Package.
 _Journal of Statistical Software_, *21*(12), pp. 1-20. 
 http://www.jstatsoft.org/v21/i12/."><a href="http://www.jstatsoft.org/v21/i12/">Wickham, 2007</a></span> )</code>, plyr <code class="knitr inline">(<span class="showtooltip" title="Wickham H (2011). The Split-Apply-Combine Strategy for Data
 Analysis. _Journal of Statistical Software_, *40*(1), pp. 1-29.
@@ -265,7 +315,12 @@ We identified <code class="knitr inline">10557</code> articles published between
 
 
 
-The papers were published in <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <code class="knitr inline">30</code>% of the papers (Table 1).
+Publicly available datasets in GEO or ArrayExpress had been found for <code class="knitr inline">2617</code>  of these articles (<code class="knitr inline">25</code>%, 95% confidence intervals: <code class="knitr inline">24, 26</code>). 
+
+
+
+
+The papers were published in <code class="knitr inline">667</code> journals, with the top 12 journals accounting for <code class="knitr inline">30</code>% of the papers (Table 2).
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">| Cancer Res               | 0.04 |
 | Proc Natl Acad Sci U S A | 0.04 |
@@ -281,16 +336,16 @@ The papers were published in <code class="knitr inline">667</code> journals, wit
 | Mol Cell Biol            | 0.01 |
 </pre></div></div></div>
 
-*Table 1: Proportion of sample published in most common journals*
+*Table 2: Proportion of sample published in most common journals*
 
-Microarray papers were published more frequently in later years: <code class="knitr inline">2</code>% of articles in our sample were published in 2001, compared to <code class="knitr inline">15</code> % in 2009 (Table 2).
+Microarray papers were published more frequently in later years: <code class="knitr inline">2</code>% of articles in our sample were published in 2001, compared to <code class="knitr inline">15</code> % in 2009 (Table 3).
 
 <div class="chunk"><div class="rcode"><div class="output"><pre class="knitr R">|   | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 |
 |---|------|------|------|------|------|------|------|------|------|
 | 1 | 0.02 | 0.05 | 0.08 | 0.11 | 0.13 | 0.12 | 0.17 | 0.18 | 0.15 |
 </pre></div></div></div>
 
-*Table 2: Proportion of sample published each year*
+*Table 3: Proportion of sample published each year*
 
 The papers were cited between <code class="knitr inline">0</code> and <code class="knitr inline">2643</code> times, with an average of <code class="knitr inline">32</code> citations per paper and a median of <code class="knitr inline">16</code> citations.
 
@@ -374,7 +429,7 @@ year	estimate [95% confidence interval]</pre></div><div class="output"><pre clas
 2008	1.08 	[0.99, 	1.18] 
 2009	1.01 	[0.92, 	1.1]</pre></div></div></div>
 
-*Table 3: Estimated citation boost multiplier for studies with publicly available data, by year of study publication*
+*Table 4: Estimated citation boost multiplier for studies with publicly available data, by year of study publication*
 
 <div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure2.png"  class="plot" /></div></div>
 
@@ -412,35 +467,35 @@ The cumulative number of third-party reuse papers is illustrated in Figure 5.  S
 
 *Figure 5: Cumuative number of third-party reuse papers, by date of reuse paper publication. Separate lines are displayed for different dataset submission years*
 
-Because the number of datasets published has grown dramatically with time, it is instructive to consider the cumulative number of third-party reuses normalized by the number of datasets deposited each year (Figure 6). In the earliest years for which data is available, 2001-2002, there were relatively few data deposits, but these datasets have been disproportionately reused. We exclude the early years from the plot to examine the pattern of data reuse once gene expression datasets became more common.  Since 2003, the rate at which individual datasets are reused has increased with each year of data publication.
+Because the number of datasets published has grown dramatically with time, it is instructive to consider the cumulative number of third-party reuses normalized by the number of datasets deposited each year (Supplementary Figure 1). In the earliest years for which data is available, 2001-2002, there were relatively few data deposits, but these datasets have been disproportionately reused. We exclude the early years from the plot to examine the pattern of data reuse once gene expression datasets became more common.  Since 2003, the rate at which individual datasets are reused has increased with each year of data publication.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure6.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/suppfigure1.png"  class="plot" /></div></div>
 
-*Figure 6: Cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication*
+*Supplementary Figure 1: Cumulative third-party reuse, normalized by number of datasets deposited each year, plotted as elapsed years since data publication*
 
 ### Growth in the number of datasets in each reuse paper over time
 
-The number of distinct datasets used in a reuse paper was found to increase over time (Figure 7). In 2002-2004 almost all reuse papers only used one or two datasets. By 2010, 25% of reuse papers used 3 or more datasets.
+The number of distinct datasets used in a reuse paper was found to increase over time (Figure 6). In 2002-2004 almost all reuse papers only used one or two datasets. By 2010, 25% of reuse papers used 3 or more datasets.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure7.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure6.png"  class="plot" /></div></div>
 
-*Figure 7: Scatterplot of year of publication of third-party reuse paper (with jitter) vs number of GEO datasets mentioned in the paper (log scale).  The line connects the mean number of datasets attributed in reuse papers vs publication year.*
+*Figure 6: Scatterplot of year of publication of third-party reuse paper (with jitter) vs number of GEO datasets mentioned in the paper (log scale).  The line connects the mean number of datasets attributed in reuse papers vs publication year.*
 
 ### Distribution of reuse across datasets
 
-It is useful to know the distribution of reuse amongst datasets. Since our methods only detect reuse by papers in PubMed Central (a small proportion of the biomedical literature) and only when the accession number is given in the full text, our estimates of reuse are extremely conservative. Despite this, we found that reuse was not limited to just a few papers (Figure 8).  Nearly all datasets published in 2001 were reused at least once. The proportion of reused datasets declined in subsequent years, with a plateau of about 20% for data deposited between 2003 and 2007. The actual rate of reuse across all methods of attribution, and extrapolated to all of PubMed, is likely much higher
+It is useful to know the distribution of reuse amongst datasets. Since our methods only detect reuse by papers in PubMed Central (a small proportion of the biomedical literature) and only when the accession number is given in the full text, our estimates of reuse are extremely conservative. Despite this, we found that reuse was not limited to just a few papers (Figure 7).  Nearly all datasets published in 2001 were reused at least once. The proportion of reused datasets declined in subsequent years, with a plateau of about 20% for data deposited between 2003 and 2007. The actual rate of reuse across all methods of attribution, and extrapolated to all of PubMed, is likely much higher
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure8.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure7.png"  class="plot" /></div></div>
 
-*Figure 8: Proportion of data reused by third-party papers vs year of data submission.  Lower bound, because only considers reuse by papers in PubMed Central, and only when reuse is attributed through direct mention of a GEO accession number*
+*Figure 7: Proportion of data reused by third-party papers vs year of data submission.  Lower bound, because only considers reuse by papers in PubMed Central, and only when reuse is attributed through direct mention of a GEO accession number*
 
 ### Distribution of the age of reused data
 
-We found the authors of third-party data reuse papers were most likely to use data that was 3-6 years old by the time their paper was published, normalized for how many datasets were deposited each year (Figure 9).  For example, in aggregate, we found that microarray reuse papers from 2005 mentioned the accession numbers of more than 5% of all datasets that had been submitted two years earlier, in 2003. Reuse papers from 2008 mentioned about 7% of the datasets submitted two years prior (in 2006), more than 10% of the datasets submitted 3 and 4 years prior (2005 and 2004), and about 7% of the datasets submitted 5 years earlier, in 2003.
+We found the authors of third-party data reuse papers were most likely to use data that was 3-6 years old by the time their paper was published, normalized for how many datasets were deposited each year (Figure 8).  For example, in aggregate, we found that microarray reuse papers from 2005 mentioned the accession numbers of more than 5% of all datasets that had been submitted two years earlier, in 2003. Reuse papers from 2008 mentioned about 7% of the datasets submitted two years prior (in 2006), more than 10% of the datasets submitted 3 and 4 years prior (2005 and 2004), and about 7% of the datasets submitted 5 years earlier, in 2003.
 
-<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure9.png"  class="plot" /></div></div>
+<div class="chunk"><div class="rimage default"><img src="http://dl.dropbox.com/u/5485507/11kCitationStudy/paper/citation11k/analysis/figure8.png"  class="plot" /></div></div>
 
-*Figure 9: Proportion of data submissions that contributed to data reuse papers, by year of reuse paper publication and dataset submission.  Each panel includes a cohort of data reuse papers published in a given year.  The lines indicate the proportion of datasets that were mentioned, in aggregate, by the data reuse papers, by the year of dataset publication.  The proportion is relative to the total number of datasets submitted in a given year.*  
+*Figure 8: Proportion of data submissions that contributed to data reuse papers, by year of reuse paper publication and dataset submission.  Each panel includes a cohort of data reuse papers published in a given year.  The lines indicate the proportion of datasets that were mentioned, in aggregate, by the data reuse papers, by the year of dataset publication.  The proportion is relative to the total number of datasets submitted in a given year.*  
 
 ## Discussion
 
@@ -562,7 +617,7 @@ http://ije.oxfordjournals.org/content/35/5/1129.full."><a href="http://ije.oxfor
 
 ## Acknowledgements
 
-The authors thank Angus Whyte for suggestions on study design. We thank Jonathan Carlson and Estephanie Sta. Maria for their hard work on data collection and annotation.  Michael Whitlock and the Biodiversity Research Centre at the University of British Columbia provided community and resources. Finally, we are grateful to everyone who helped with access to Scopus, particularly Andre Vellino, CISTI, and friends at the British Library. 
+The authors thank Angus Whyte for suggestions on study design. We thank Jonathan Carlson and Estephanie Sta. Maria for their hard work on data collection and annotation.  Michael Whitlock and the Biodiversity Research Centre at the University of British Columbia provided community and resources. Finally, we are grateful to everyone who helped with access to Scopus, particularly Andre Vellino, Tom Pollard, CISTI, and friends at the British Library. 
 
 ## Funding
 
@@ -623,7 +678,8 @@ Publication references are available in a publicly-available [Mendeley group](ht
 * remove funny {} from titles in references section?  by replacing {{ and }}, in bib
 * change " )" to ")" to fix funny citation formatting
 * go through the four piwowar 2011 and differentiate with a-d
-* fix rms citation with Jr
+* fix rms citation with Jr --> Harrell
+* figure legends need fixing?  see guide_legend
 
 ## Supplemental Article S1
 
@@ -632,9 +688,9 @@ Publication references are available in a publicly-available [Mendeley group](ht
 
 Our method of identifying which articles create gene expression microarray data made a nontrivial number of errors: about 10% of the articles it identified as creating gene expression microarray data do not in fact create gene expression datasets [cite].
 
-The papers that are erroniously included in our subset to not create gene expression data, so they certainly don''t have associated archived datasets: all  erroniously included papers were automatically classified in the "no archived data" group. 
+The papers that are erroneously included in our subset to not create gene expression data, so they certainly don't have associated archived datasets: all  erroneously included papers were automatically classified in the "no archived data" group. 
 
-If it were true that these erroniously-included articles recieved many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.  To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.  Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
+If it were true that these erroneously-included articles received many more or many fewer citations than other articles in the group, their inclusion could influence the findings of this study.  To verify our assumption that the influence of these mistakenly-included articles is in fact small, we manually reviewed a random 226 of the 11k (get exact number) articles.  Of these manually reviewed articles, 206 did indeed create gene expression microarray data, and 20 did not (but satisfied the boolean-search query for other reasons).  
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R">206/226
 </pre></div><div class="output"><pre class="knitr R">[1] 0.9115
@@ -647,9 +703,9 @@ Examining the citations of the 20 articles that did not create gene expression d
 
 
 
-We took steps to verify our assumption that the influence of articles erroniously identified these mistakenly-included articles is in fact small.  We began by manually reviewed a random 226 of the 11k (get exact number) articles to identify those which we were assuming had created gene expression microarray data but in fact had not.
+We took steps to verify our assumption that the influence of articles erroneously identified these mistakenly-included articles is in fact small.  We began by manually reviewed a random 226 of the 11k (get exact number) articles to identify those which we were assuming had created gene expression microarray data but in fact had not.
 
-We compared the distribution of those with errors to those without, calculated whether they were statitically different, and ran a regression with the known-correct sample only.
+We compared the distribution of those with errors to those without, calculated whether they were statistically different, and ran a regression with the known-correct sample only.
 
 
 
@@ -677,7 +733,7 @@ We compared the distribution of those with errors to those without, calculated w
 
 
 
-This difference, however, was found to be not statisitically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
+This difference, however, was found to be not statistically significantly different at the p<0.05 level, using either a t-test on the log of the citation counts or a Wilcoxon rank sum test on the raw citation counts.
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R"><span class="functioncall">print</span>(ttest_citedby)
 </pre></div><div class="output"><pre class="knitr R">
@@ -720,7 +776,7 @@ alternative hypothesis: true location shift is not equal to 0
 </pre></div></div></div>
 
 
-To confirm that the erroniously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regression analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
+To confirm that the erroneously-included articles were not driving the findings about the citation relationship with data availability, we ran a multivariate regression analysis on the subsample of 206 articles that we manually determined did in fact generate gene expression microarray data.  The estimated effect is statistically significant and similar to the findings from the whole sample.
 
 <div class="chunk"><div class="rcode"><div class="source"><pre class="knitr R"><span class="functioncall">gfm_table</span>(<span class="functioncall">anova</span>(annotated_merged_created))
 </pre></div><div class="output"><pre class="knitr R">|                                           | Df     | Sum Sq | Mean Sq | F value | Pr(>F) |
@@ -742,7 +798,7 @@ Estimate factor(dataset.in.geo.or.ae).L 1.32  1.11   1.57 0.002
  * author of this file: Heather Piwowar, <hpiwowar@gmail.com>
  * license: CC0
  * Acknowledgements: thanks to Yihui Xie for knitr and Carl Boettiger for his clear examples of this literate programming framework. 
- * Generated on <code class="knitr inline">Wed Apr  3 03:01:14 2013</code>
+ * Generated on <code class="knitr inline">Sat Aug 24 06:08:20 2013</code>
 
 To execute the R code in this file and embed the results in the text, I start R, set the working directory, then run the following:
 
