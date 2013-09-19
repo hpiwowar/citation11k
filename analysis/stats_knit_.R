@@ -19,12 +19,16 @@ if (upload_images) {
 knit_hooks$set(plot = hook_plot_html)
 build_dep()
 
-require(knitcitations)
-cleanbib()
+library(knitcitations)
+
 # to get knitcitations:
 #library(devtools)
 #install_github("knitcitations", "cboettig")
- 
+
+cite_options(tooltip=TRUE, linked=TRUE)
+
+cleanbib()
+
 
 
 ## @knitr knitCitationsBibtexExperiment
@@ -131,9 +135,6 @@ pubmed.is.open.access
 institution.rank
 institution.mean.norm.citation.score
 institution.is.govnt
-institution.nci
-institution.stanford
-institution.harvard
 pubmed.is.funded.nih.intramural
 pubmed.is.funded.nih
 num.grants.via.nih.tr
@@ -196,10 +197,15 @@ rownames(mycorr) = rownames(myhetcorr$correlations)
 
 # Correlations with citation
 correlations_with_citations = sort(mycorr[,"nCitedBy.log"], dec=T)
+correlations_with_citations_df = data.frame(corr=correlations_with_citations)
 
 # Correlations with data availability
 correlations_with_data_avail = sort(mycorr[,"dataset.in.geo.or.ae"], dec=T)
 
+
+
+## @knitr table1
+gfm_table(correlations_with_citations_df)
 
 
 ## @knitr regressionAll
@@ -227,6 +233,28 @@ fit_w_journal = lm(nCitedBy.log ~
           factor(pubmed_journal) +          
           factor(dataset.in.geo.or.ae)
            , dfCitationsAttributes)
+
+
+## @knitr RegressionAlaPrevStudy
+  dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
+
+  myfitprev = lm(nCitedBy.log ~ 
+      rcs(pubmed.date.in.pubmed, 3) +
+      rcs(journal.impact.factor.tr, 3) +               
+      factor(country.usa) +              
+      factor(dataset.in.geo.or.ae)
+               , dat.subset.previous.study)
+
+
+## @knitr RegressionAlaPrevStudyMoreCovariates
+  myfit_prev_more = lm(nCitedBy.log ~ 
+      rcs(pubmed.date.in.pubmed, 3) +
+      rcs(journal.impact.factor.tr, 3) +               
+      rcs(num.authors.tr, 3) + 
+      rcs(last.author.num.prev.pmc.cites.tr, 3) +      
+      factor(country.usa) +              
+      factor(dataset.in.geo.or.ae)
+             , dat.subset.previous.study)
 
 
 ## @knitr regressionByYear
@@ -257,28 +285,6 @@ for (year in seq(2001, 2009)) {
 
 
 
-## @knitr RegressionAlaPrevStudy
-  dat.subset.previous.study = subset(dfCitationsAttributes, (pubmed.year.published<2003) & (pubmed.is.cancer==1) & (pubmed.is.humans==1))
-
-  myfitprev = lm(nCitedBy.log ~ 
-      rcs(pubmed.date.in.pubmed, 3) +
-      rcs(journal.impact.factor.tr, 3) +               
-      factor(country.usa) +              
-      factor(dataset.in.geo.or.ae)
-               , dat.subset.previous.study)
-
-
-## @knitr RegressionAlaPrevStudyMoreCovariates
-  myfit_prev_more = lm(nCitedBy.log ~ 
-      rcs(pubmed.date.in.pubmed, 3) +
-      rcs(journal.impact.factor.tr, 3) +               
-      rcs(num.authors.tr, 3) + 
-      rcs(last.author.num.prev.pmc.cites.tr, 3) +      
-      factor(country.usa) +              
-      factor(dataset.in.geo.or.ae)
-             , dat.subset.previous.study)
-
-
 ## @knitr citationContextData
 dfTracking1k = read.csv("data/tracking1k_20111008.csv", sep=",", header=TRUE, stringsAsFactors=F)
 dfTracking1k.GEO.subset = subset(dfTracking1k, TAG.source=="WoS" & TAG.confidence!="low confidence" & is.na(duplicates & TAG.repository=="GEO" & (TAG.dataset.reused=="dataset reused" | TAG.dataset.reused=="dataset not reused")))
@@ -296,14 +302,14 @@ dfPubmedPmcRatios = read.csv("data/pubmed_pmc_ratios.csv", header=TRUE, stringsA
 dfPubmedPmcRatios$pmc_pmid_ratio = dfPubmedPmcRatios$num_pmc/dfPubmedPmcRatios$num_pubmed
 dfPubmedPmcRatios$year = as.numeric(dfPubmedPmcRatios$year)
 
-cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
+# cbind(with(dfPubmedPmcRatios, paste(year, ": ", round(pmc_pmid_ratio*100, 0), "%", sep="")))
 
 
 ## @knitr dfPubmedGseCount
 
 dfPubmedGseCount = read.csv("data/pubmed_gse_count.csv", header=TRUE, stringsAsFactors=F)
 
-subset(dfPubmedGseCount, year<2011)
+# subset(dfPubmedGseCount, year<2011)
 
 
 
@@ -346,17 +352,24 @@ total_extrap_reuse_papers = floor(sum(subset(dfCountReusePapers, thirdPartyReuse
 
 
 
+## @knitr data_available_numbers
+data_available_numbers = table(dfCitationsAttributesRaw$in_ae_or_geo)
+data_available_ttest = t.test(dfCitationsAttributesRaw$in_ae_or_geo)
+
+
 ## @knitr sortedjournals
 sorted_journals = sort(table(dfCitationsAttributesRaw$pubmed_journal)/nrow(dfCitationsAttributesRaw), dec=T)[1:12]
 
 
-## @knitr table1
+## @knitr table2
 gfm_table(cbind(names(sorted_journals), round(sorted_journals, 2)))
+
 prop2001 = 100*round(nrow(subset(dfCitationsAttributesRaw, pubmed_year_published=="2001"))/nrow(dfCitationsAttributesRaw)[1], 2)
+
 prop2009 = 100*round(nrow(subset(dfCitationsAttributesRaw, pubmed_year_published=="2009"))/nrow(dfCitationsAttributesRaw)[1], 2)
 
 
-## @knitr table2
+## @knitr table3
 gfm_table(table(dfCitationsAttributesRaw$pubmed_year_published)/nrow(dfCitationsAttributesRaw))
 
 
@@ -373,7 +386,7 @@ facet_grid(pubmed.year.published~.) +
 scale_y_continuous(breaks=c(0, 0.5), labels=c(0, 0.5)) + 
 scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
 #cbgFillPalette + 
-cbgColourPalette + theme_bw(base_size=16)
+cbgColourPalette + theme_bw(base_size=32)
 
 
 
@@ -395,16 +408,17 @@ citation.boost.coefs.journal = calcCI.exp(fit_w_journal, "factor(dataset.in.geo.
   calcCI.exp(myfit_prev_more, "factor(dataset.in.geo.or.ae).L")
 
 
-## @knitr table3
-with(estimates_by_year, cbind(year, est, ciLow, ciHigh))
+## @knitr table4
+cat("\nyear\testimate [95% confidence interval]")
+with(estimates_by_year, cat(paste("\n", year, "\t", est, " \t[", ciLow, ", \t", ciHigh, "]", sep="")))
 
 
 ## @knitr figure2
 ggplot(estimates_by_year, aes(x=year, y=est)) + geom_line() + 
   geom_errorbar(width=.1, aes(ymin=ciLow, ymax=ciHigh)) +
-  scale_x_continuous(name="", breaks=seq(2001, 2009)) +
-  scale_y_continuous(name='change in citation count when data is publicly available\n', limits=c(.5, 2.5), breaks=seq(0.5, 2.5, .5), labels=c("-50%", "0", "+50%", "+100%", "+150%")) + 
-  theme_bw(base_size=16) +
+  scale_x_continuous(name="year of study publication", breaks=seq(2001, 2009)) +
+  scale_y_continuous(name='increased citation count for studies with publicly available data\n', limits=c(.5, 2.5), breaks=seq(0.5, 2.5, .5), labels=c("-50%", "0", "+50%", "+100%", "+150%")) + 
+  theme_bw(base_size=32) +
   geom_hline(color="grey50", linetype="dashed", aes(yintercept=1))
 
 
@@ -426,7 +440,7 @@ ggplot(data=dfCountUnique3rdpartyPapers, aes(x=paperPublishedYear, y=cumul_gse))
 scale_x_continuous(name="\nyear of publication", limits=c(2001, 2010)) +
 scale_y_continuous(name="Cumulative count (log scale)\n", trans="log", breaks=log_breaks()) +
 scale_colour_manual(name="", values=cbgRaw) +
-theme_bw(base_size=16) +
+theme_bw(base_size=32) +
 geom_line(aes(y=cumul_extrap, color="third-party reuse papers")) + geom_point(aes(y=cumul_extrap)) 
 
 
@@ -439,7 +453,7 @@ scale_colour_manual(name="",
                     values=cbgRaw,
                     breaks=c(FALSE, TRUE),
                     labels=c("orig authors", "third-party authors")) +
-theme_bw(base_size=16)
+theme_bw(base_size=32)
 
 
 ## @knitr figure5
@@ -448,18 +462,18 @@ ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>20
 scale_x_continuous(name="\npublication year of reuse paper", limits=c(2001, 2010)) +
 scale_y_continuous(name="Cumulative number of papers\n", labels=comma_format()) +
 scale_color_hue(name="year of data publication") +
-theme_bw(base_size=16)
+theme_bw(base_size=32)
 
 
-## @knitr figure6
+## @knitr suppfigure1
 ggplot(data=subset(dfCountReusePapersThirdPartyCumulative, dataSubmissionYear>2002), aes(x=elapsedYears, y=NT/num_gse_ids, group=dataSubmissionYear, color=factor(dataSubmissionYear))) + geom_point() + geom_line() + 
 scale_x_continuous(name="\nyears since data publication", limits=c(0, 8)) +
 scale_y_continuous(name="Cumulative number of papers\nnormalized by number of datasets deposited in given year\n", labels=comma_format()) +
 scale_colour_manual(name="year of data publication", values=cbgRaw) +
-theme_bw(base_size=16)
+theme_bw(base_size=32)
 
 
-## @knitr figure7
+## @knitr figure6
 
 dfGsePerReusePaper = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(reuse_pmcid, paperPublishedYear), summarise, count=length(unique(gse)))
 
@@ -469,11 +483,11 @@ ggplot(data=dfGsePerReusePaper, aes(x=factor(paperPublishedYear), y=count)) +
   scale_x_discrete("\nYear reuse paper was published") +
   scale_y_continuous(name="Number of datasets per reuse paper\n", trans="log", breaks=breaks) +  
   stat_summary(fun.y=mean, geom=c("line"), color=cbgRaw[2], aes(group=1)) +
-  cbgColourPalette + theme_bw(base_size=16)
+  cbgColourPalette + theme_bw(base_size=32)
 
 
 
-## @knitr figure8
+## @knitr figure7
 
 dfCountReuseByGse = ddply(subset(dfMentions, thirdPartyReuse==TRUE), .(gse, dataSubmissionYear), summarise, count=length(elapsedYears))
 
@@ -497,11 +511,11 @@ qqq = ddply(qq, c("dataSubmissionYear", "count"), summarise, maxq=min(quantile))
 ggplot(data=qqq, aes(x=dataSubmissionYear, y=1-maxq, color=factor(count, labels=c("reused at least once", "reused at least three times")))) + geom_line() + geom_point() + 
   scale_x_continuous("\nYear data was submitted") +
   scale_y_continuous(name="Proportion of data submissions\n") + 
-scale_color_hue(name="") + theme_bw(base_size=16)
+scale_color_hue(name="") + theme_bw(base_size=32)
 
 
 
-## @knitr figure9
+## @knitr figure8
 
 # distribution of elapsed years per publication date
 dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thirdPartyReuse==TRUE)), .( elapsedYears, paperPublishedYear, num_gse_ids), summarise, count=length(gse))
@@ -511,12 +525,12 @@ dfDatasetsByElapsed = ddply(subset(dfMentions, (dataSubmissionYear>2002) & (thir
     scale_y_continuous(name="Proportion of all datasets published in given year\n") +    
     facet_wrap(~paperPublishedYear) + 
     cbgColourPalette +
-    theme_bw(base_size=16) 
+    theme_bw(base_size=32) 
 
 
 
 ## @knitr citations
-bibliography(sort=TRUE)
+bibliography()
 
 
 ## @knitr percent
@@ -568,7 +582,7 @@ scale_fill_manual(name="",
                     labels=c("did collect microarray data", "did NOT collect microarray data")) + 
 scale_x_log10(name="\nnumber of citations", breaks=citation_breaks+1, labels=citation_breaks) + 
 #cbgFillPalette + 
-cbgColourPalette + theme_bw(base_size=16)
+cbgColourPalette + theme_bw(base_size=32)
 
 
 ## @knitr display_manualAnnotationCreatedStats
