@@ -318,8 +318,8 @@ dfPubmedGseCount = read.csv("data/pubmed_gse_count.csv", header=TRUE, stringsAsF
 header_string = "accession,gse,gds,submit_pmids,reuse_pmcid,reuse_pmids_for_pmc,this_submit_authors,this_reuse_authors,intersect,submit_affiliation,release_date,sep1,bioloink_filter,basic_reuse_filter,creation_filter,oa_excerpts,word_filters,sep2,reuse_affiliation,journal,year,date_published,medline_status,is_geo_reuse,reuse_is_oa,metaanal,mesh_filters,blank,setname"
 header = strsplit(header_string, ",")[[1]]
 
-# cat records_20*.csv > all_records.csv
-dfMentions = read.csv("data/all_records.csv", header=FALSE, stringsAsFactors=F)
+# cat records_20*.csv > GEO_dataset_attributes.csv
+dfMentions = read.csv("data/GEO_dataset_attributes.csv", header=TRUE, stringsAsFactors=F)
 names(dfMentions) = header
 
 dfMentions$noAuthorOverlap = ((dfMentions$intersect) == "[]")
